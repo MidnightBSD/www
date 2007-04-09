@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Documentation :: Install</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="../../images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/index.html" title="Home">Home</a></li>
+            <li><a href="/about/index.html" title="About">About</a></li>
+            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
+            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
+
+            <li><a href="/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
+            <li><a href="/support/index.html" title="Support">Support</a></li>
+        </ul>
+</div>
+
+<h2>Installation</h2>
+
+<p>While MidnightBSD plans to target moderate and novice users, currently installation is too difficult for beginners to *NIX like operating systems.  Experience with BSD, Linux, or another *NIX like system is very helpful.
+FreeBSD users familiar with sysinstall should have no problem with this procedure.  You may also consult the FreeBSD Handbook for additional information not found on this page.</p>
+
+<h3>Preparing for installation</h3>
+
+<p>You may download MidnightBSD from our FTP server or any mirrors.  You will need disk 1 of a release or snapshot in order to install MidnightBSD.</p>
+
+<p>You will need free space on your hard drive.  While the system runs very well on a few gigabytes of disk space, we recommend at least 15GB of space for use with mports on a desktop.  An Intel Pentium class computer or equivalent is required.  We have removed 486 support from the default install, although it can be compiled in.  At least 48MB of RAM is required for installation.</p>
+
+<p>Depending on your needs, various graphics cards are supported at different levels. Many network cards are supported as well as a few wireless network cards.  We will document them at a later time. Many onboard
+audio controllers are supported as well as other cards like the Creative Labs Sound Blaster Audigy and Audigy 2 
+families.</p>
+
+<p>MidnightBSD can co-exist with Microsoft Windows or Linux on the same disk.   It is recommended that you
+use GRUB from Linux if you wish to dual boot MidnightBSD with Linux.  For Windows, the included boot loader
+is sufficient. (Windows XP was tested).  Third party boot managers such as System Commander 8.20 are supported as well.  I currently dual boot Windows XP SP2 and MidnightBSD with System Commander on my primary desktop.</p>
+
+<p>You may also install MidnightBSD using a virtualization product such as qemu, Microsoft Virtual PC, or VMware. Parallels has not been tested to my knowledge.</p>
+
+<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your favorite CD burning software.  I've used Roxio Easy Media Creator and Toast on my PC and Mac respectively as well as burncd.</p>
+
+<h3>Installing MidnightBSD</h3>
+
+<p>Insert the MidnightBSD CD into your CD-ROM drive and start up your PC.  On some systems, you may need to enter the BIOS to enable booting from the CD-ROM drive first.  On some systems, there is a button you can push to select
+the CD-ROM drive.  For instance, on some Dell systems you can press F12 and then pick the CD-ROM drive.</p>
+
+<p>You should see a red and blue screen come up after a few moments preceded by a lot of white and black text.  If several minutes pass with no activity and you do not see this screen, please report it.  There maybe a bug or an incompatibility with your system we can work to fix. </p>
+
+<p>From this point, you may follow the steps in sysinstall to complete installation.  On snapshots and possibly the first release, X11 (XORG) and packages are not present.  Do not attempt to install these items or you will receive errors.  We hope to resolve this by 0.2 release.</p>
+
+<h3>Example Hardware Configurations</h3>
+
+<p>Here is a list of systems that MidnightBSD has been tested on.</p>
+
+<p>Dell Precision 650  (Dual 2.0Ghz Xeon 1GB ECC RAM SCSI and IDE.  Onboard sound, NIC work.)</p>
+<p>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard.  Onboard sound untested,
+network card works, IDE channels do not work (CD-ROM, etc).  Sata controller works in recent snapshots. Sound
+Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected.</p>
+
+<p>Custom Built Nvidia nForce 2 w/ sata raid (MSI motherboard) 512mb PC2700 DDR, 2 sata disks in gmirror raid 1
+configuration, 1 ide disk for boot partition, onboard sound, Geforce 5200 AGP 8x.  Onboard NIC (nvidia maclan) did not work correctly, but an OEM Intel em worked as expected.  Some disk corruption occured on the sata raid setup, but determined to be a faulty drive.</p>
+
+<p>Compaq Cyrix based 366Mhz (?)  system.  X11 was not tested, but all devices including an included 3com 905 NIC worked as expected.</p>
+
+<p>Dell PowerEdge 5300?  Xeon 550Mhz PIII 512MB RAM, all scsi system.  Works as expected including integrated ATI
+graphics.</p>
+
+<p>Virtual PC for Windows works as expected.  VPC 7 for Mac OS X works except the CDROM drive is "lost" during install.  If you can get it installed using ftp install, it will work fine.</p>
+
+<p>VMware player works under Windows Vista.</p>
+
+<p>Early releases were tested on a Sun Ultra 10 3D creator.  The system died however.</p>
+
+<p>One of our developers uses qemu often with the system.  It is included in mports.  I believe he's also run MidnightBSD virtualized inside of OpenBSD.</p>
+
+<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD.  Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2 beta.</p>
+
+<h3>More to come...</h3>
+
+<p>This needs more work. :)</p>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt</p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
