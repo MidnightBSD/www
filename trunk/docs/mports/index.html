@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Documentation :: mports</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="../../images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/index.html" title="Home">Home</a></li>
+            <li><a href="/about/index.html" title="About">About</a></li>
+            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
+            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
+
+            <li><a href="/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
+            <li><a href="/support/index.html" title="Support">Support</a></li>
+        </ul>
+</div>
+
+ <h2>mports</h2>
+ 
+ <h3>Introduction</h3>
+ 
+ <p>mports is the MidnightBSD ports collection.  It contains hundreds of ported software applications
+ ready to use on MidnightBSD.  mports simplifies installing software packages on your desktop system.</p>
+ 
+ <p>In the future, mports will also include precompiled packages to speed up the installation process.  An
+ automated software update system is planned.  There are a few precompiled software packages on the
+ MidnightBSD FTP server.</p>
+ 
+ <h3>Using mports</h3>
+ 
+ <p>You can install mports during the installation of MidnightBSD.  If you forgot to do so, you may download
+ the latest mports by using <em>csup</em> or <em>cvs</em>.  Execute the command <br />csup /usr/share/examples/cvsup/mports-supfile<br />
+ to download the mports.  Alternatively, you can use <br />
+ mkdir /usr/mports<br />
+ cd /usr<br />
+ cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports</p>
+ 
+ <p>Updating mports periodically is recommended.  New versions of software and additional software are added all the time.  Keeping up to date will help you maintain best security practices and possibly give you new features
+ and functionality or bug fixes. </p>
+ 
+ <p>To install an mport, simply do the following:
+ <br />cd /usr/mports
+ <br />Pick a category from the file system list or use make search key=term where term is what you want to search for.  Once you have the mport, you can type make install clean to install it and clean up the compiling mess.  
+ </p>
+ 
+ <p>It is recommended that you install mports/sysutils/portupgrade at your convenience.  It will allow you to
+ upgrade mports and install mports much easier.  You can simply type portinstall portname to install a port called portname.  It can speed up the process considerably.</p>
+ 
+ <p>To uninstall a port, simply goto the directory of the mport and type make deinstall</p>
+ 
+ <p>There are also utilities like pkg_add, pkg_delete and so forth included in the base system.  pkg_add -r portname can fetch a precompiled package from the MidnightBSD server and install it for you.  You can also install your own packages.  There are many possibilities.</p>
+ 
+ <h3>History</h3>
+ 
+ <p>MidnightBSD uses the FreeBSD ports collection.  Over time it will gradually diverge.  Most of the ports files were imported Sat Sep 16 23:33:52 2006 EDT.  NetBSD's pkgsrc was considered, but at the time it did not fit our
+ needs.  We may look at it again in the future.</p>
+ 
+ <p>The initial import of mports was done by our security officer, archite.  mports maintainership was transfered
+ to wintellect after some initial work by laffer1.  Currently, all commiters have access to add and modify mports. You may contact any commiter about mports problems or additions.  For infrastructure questions or concerns, direct them to wintellect.  (use the alias at midnightbsd.org)</p>
+ 
+ <h3>Future Plans</h3>
+ 
+ <p>The MidnightBSD Project hopes to add a graphical mports management application in future versions with
+ automatic software update functionality as well as base system software updating.</p>
+ 
+ <p>This document is incomplete.  It will be more complete in the future.</p>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt</p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
