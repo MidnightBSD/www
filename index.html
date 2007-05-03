@@ -49,6 +49,8 @@ MidnightBSD
 
 <p><a href="http://bugreport.midnightbsd.org/">View/Report</a> Bugs.</p>
 
+<p>View our <a href="mports/README.html">ports</a> with descriptions.</p>
+
 <table>
 	<thead>
 	<tr>
@@ -67,31 +69,20 @@ MidnightBSD
 	</tbody>
 </table>
 
-<table>
-	<thead>
-	<tr>
-		<th>Security</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-		<tr>
-			<td>
-			March 10, 2007<br />
-			While many of the DST changes were imported last year, we decided to cover all cases and import
-			the latest tzdata2007c.  Users concerned about DST changes should update their sources
-			and rebuild.  The java ports may not have DST changes in place.  We will review that issue.
-			</td>
-		</tr>
-		<tr>
-			<td>
-			Jaunary 23, 2007<br />
-			A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available.  Please 
-			update your /etc/rc.d/jail file from cvs.  Patches will not be created until our first release.
-			</td>
-		</tr>
-	</tbody>
-</table>
+<h3>Security</h3>
+
+<p>May 2, 2007<br />
+<p>CURRENT and STABLE both have the patch for ipv6 type 0 routing headers.  The problem is that ipv6 routing headers could be run over the same link multiple times. 
+</p>
+<p>March 10, 2007<br />
+While many of the DST changes were imported last year, we decided to cover all cases and import
+the latest tzdata2007c.  Users concerned about DST changes should update their sources
+and rebuild.  The java ports may not have DST changes in place.  We will review that issue.
+</p>
+<p>Jaunary 23, 2007<br />
+A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available.  Please 
+update your /etc/rc.d/jail file from cvs.  Patches will not be created until our first release.
+</p>
 
 <script type="text/javascript"><!--
 google_ad_client = "pub-1321195614665440";
