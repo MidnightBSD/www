@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Documentation :: mports :: Fake</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="../../images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/index.html" title="Home">Home</a></li>
+            <li><a href="/about/index.html" title="About">About</a></li>
+            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
+            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
+
+            <li><a href="/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
+            <li><a href="/support/index.html" title="Support">Support</a></li>
+        </ul>
+
+	<p><a href="/index.html" title="English">EN</a> <a href="/ru/index.html" 
+        title="Russian">RU</a></p>
+</div>
+
+ <h2>mports's Fake System</h2>
+ 
+ <h3>Introduction</h3>
+ 
+ <p>The fake system is a large change for the mports system, which has caused many ports to destabilize.  This document is intended to give developers an understanding of the issues that cause fake errors, and the knowledge to fix those errors.</p>
+ 
+ <p>The fake system goes through the following steps to install a port:</p>
+ 
+ <ol>
+ <li>The port is fetched, extracted, patched, configured, and built as normal.  There are no changes to these parts of the system.</li>
+ 
+ <li>The port is installed into a temporary directory called <code>FAKE_DESTDIR</code>.  This is usually <code>${WRKDIR}/fake-inst-${ARCH}</code>.  <br />The actual installs is done as follows:
+ <ol>
+
+ 	<li><code>${FAKE_DESTDIR}/${PREFIX}</code> is created, and populated with the directory layout with <code>mtree</code>.</li>
+
+ 	<li>The pre-fake target is called.  This target runs in the normal environment.</li>
+
+ 	<li>The pre-install target (if it exists) is called.  This target does <em>not</em> run in a normal environment.  Instead, several variables are prepended with the <code>FAKE_DESTDIR</code>.  These variables are <code>PREFIX</code>, <code>LINUXBASE</code>, and <code>KMODDIR</code>.  Note that <code>PREFIX</code> is used to define many other variables, so much so that almost all the variables used in an install target are faked.  This means that a pre-install target can do something like:<pre>${CP} myconfig ${PREFIX}/etc</pre>and it just works.  If you need the real prefix it is available as <code>TRUE_PREFIX</code>.
+ 	</li>
+
+ 	<li>The pre-su-install target (if it exists) is called in the fake environment.</li>
+
+ 	<li>By default the dist's makefile (the makefile down in <code>WRKSRC</code>) is called like this (simplified for clarity): <pre>make DESTDIR=${FAKE_DESTDIR} install</pre>  However, if your port has a 	do-install target, this will be called instead in the fake environment.</li>
+ 	
+ 	<li>The post-install target (if it exists) is called in the fake environment.</li>
+ 	
+ 	<li>The post-fake target is called in the normal environment.</li>
+ </ol></li>
+ 
+ <li>A package is created from the files installed in <code>FAKE_DESTDIR</code>.</li>
+ 
+ <li>This package is installed</li>
+ 
+ </ol>
+ 
+ <h3>When Things Go Wrong</h3>
+ 
+ <p>Often when fake fails, the first sign will be an error when the man pages are compressed.  This is because compressing man pages is the first step that assumes files to be correctly installed in <code>FAKE_DESTDIR</code>.  Several things can cause a fake install to fail, this document will attempt to cover the common cases.</p>
+ 
+ <h4>No DESTDIR Support</h4>
+ 
+ <p><code>DESTDIR</code> is a variable used by many projects for staged installs, which is exactly what we are doing.  <code>DESTDIR</code> is prepended onto every install path.  The <a href="http://www.gnu.org/prep/standards/html_node/DESTDIR.html">GNU Coding Standards page on <code>DESTDIR</code></a> is an excellent reference.</p>
+ 
+ <p>Most recent projects using the GNU build tools (especially if automake is used) support <code>DESTDIR</code>, as do perl modules, ruby modules, GNUStep modules, and many other projects.  Our experience has shown that approximately 75% of ports try to support DESTDIR.</p>
+ 
+ <p>Sometimes there is no DESTDIR support, which will require one of two fixes.  If the project is small, you many be able to simply patch the project's makefile.  For example, this is a patch, ironically, to GNU patch:</p>
+ 
+ <pre> install:: all installdirs
+-       $(INSTALL_PROGRAM) patch$(EXEEXT) $(bindir)/$(patch_name)$(EXEEXT)
+-       -$(INSTALL_DATA) $(srcdir)/patch.man $(man1dir)/$(patch_name)$(man1ext)
++       $(INSTALL_PROGRAM) patch$(EXEEXT) ${DESTDIR}$(bindir)/$(patch_name)$(EXEEXT)
++       -$(INSTALL_DATA) $(srcdir)/patch.man ${DESTDIR}$(man1dir)/$(patch_name)$(man1ext)
+
+ installdirs::
+-       $(SHELL) $(srcdir)/mkinstalldirs $(bindir) $(man1dir)
++       $(SHELL) $(srcdir)/mkinstalldirs ${DESTDIR}$(bindir) ${DESTDIR}$(man1dir)</pre>
+
+<p>A quick and dirty hack is to override <code>prefix</code> in the port makefile:</p>
+
+<pre>FAKE_MAKEARGS+= prefix=${FAKE_DESTDIR}${PREFIX}</pre>
+
+<p>This works, but if you ever configure the package with a separate <code>exec_prefix</code> things will break.</p>
+
+<p><code>DESTDIR</code> is occasionally called something different, the most common case being <code>INSTALL_ROOT</code>.  Simply set the <code>DESTDIRNAME</code> variable in the port's makefile.</p>
+
+<h4>Broken DESTDIR Support</h4>
+
+<p><code>DESTDIR</code> support can be tricky for authors to correctly implement.  Subtle flaws can lead to broken ports.  These are often difficult to track down and fix, as it requires to the port maintainer to learn the software package's installation scheme.</p>
+
+<p>Packages that use automake normally &quot;just work&quot;.  However, authors often forget about <code>DESTDIR</code> in hand made targets.  Any such target will have to be patched.</p>
+
+<p>If your package wants to run a binary to generate files during an install, this <em>may</em> need to be moved to a pkg-install script.  This depends on if the binary in question is expecting to run after the final installation.  There are no hard and fast rules here, as the port's maintainer you'll have to use your judgement.  If you need your path to include fake installed binaries, set the <code>bin</code> option: <code>FAKE_OPTS= bin</code></p>
+
+<p>Sometimes a package will expect to be able to link to its shared libraries at some point in the install.  This will fail as the linker has no knowledge of the <code>FAKE_DESTDIR</code>, nor should it.  Set the <code>libs</code> option to add the right information to the fake environment: <code>FAKE_OPTS= libs</code></p>
+
+<p>Most packages will not let you override both <code>DESTDIR</code> and <code>PREFIX</code> (note uppercase).  However, if your package does, you will need to set the <code>trueprefix</code> option, as <code>PREFIX</code> is normally faked to <code>${FAKE_DESTDIR}${PREFIX}</code>.</p>
+ 
+<h4>Binary Ports</h4>
+
+<p>Binary ports are often a problem because they use non-standard installation schemes.  They are often a bit too cute; a bit too hacky.  It may it end up being easier to make a do-install target than to dive in and modify an installation script.</p>
+ 
+<h4>GNUStep Ports</h4>
+
+<p>We have upgraded to gnustep-make 2.0, which has excellent <code>DESTDIR</code> support.  However gnustep-make 2 does not create a <code>library_paths.openapp</code> file.  This file has not be used in years and its removal is a good idea; just be sure to remove it from the plist as well.</p>
+
+<h3>Minor Notes</h3>
+
+<p>Port makefiles used to have to reproduce the steps of <code>pkg_add</code>, for example run pkg-install scripts or display a pkg-message.  Makefiles should no longer do this.</p>
+
+<p>Most of the sub-systems (for example the linux-rpm or python sub-systems) have been updated to work properly with fake.  Some are not yet moved over however.  If you encounter such a sub-system consult with the ctriv@ before committing any fix.</p>
+
+<p>If your linux port is installing with the wrong permissions, make sure you have the most recent version of <code>cpio</code>.</p>
+ 
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt</p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
