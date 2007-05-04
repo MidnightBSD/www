@@ -71,16 +71,29 @@
  
  <h3>History</h3>
  
- <p>MidnightBSD uses the FreeBSD ports collection.  Over time it will gradually diverge.  Most of the ports files were imported Sat Sep 16 23:33:52 2006 EDT.  NetBSD's pkgsrc was considered, but at the time it did not fit our
- needs.  We may look at it again in the future.</p>
+ <p>MidnightBSD uses the FreeBSD ports collection.  Over time it has begun to diverge.  Several projects have been influential in the design of the mports system, notably OpenBSD.</p>
  
  <p>The initial import of mports was done by our security officer, archite.  mports maintainership was transfered
  to wintellect after some initial work by laffer1.  Currently, all commiters have access to add and modify mports. You may contact any commiter about mports problems or additions.  For infrastructure questions or concerns, direct them to wintellect.  (use the alias at midnightbsd.org)</p>
  
- <h3>Future Plans</h3>
+ <h3>Differences Between FreeBSD's ports and mports</h3>
  
- <p>The MidnightBSD Project hopes to add a graphical mports management application in future versions with
- automatic software update functionality as well as base system software updating.</p>
+ <p>FreeBSD's ports install directly into the system at install time, mports however uses a process called &quot;fake&quot; to make a package and then installs that package.  This simplifies the logic of the ports system.  Code does not need to be duplicated for installation from the port and installation from the package.  The change is very recent, and at this time we are still testing the port tree to insure that all ports function properly under the &quot;fake&quot; system.</p>
+ 
+ <p>For information on common reasons for &quot;fake&quot; errors, see the 
+ <a href="fake.html">fake transition page</a>.</p>
+ 
+ <h3>Future Directions</h3>
+ 
+ <ul>
+ <li>A new package scheme is early planning.  It would be based on FreeBSD's package system, but have several new features such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, and a radically improved package database.</li>
+ 
+ <li>A package distribution system along the lines of apt-get or CPAN.</li>
+ 
+ <li>The MidnightBSD Project hopes to add a graphical mports management application in future versions with automatic software update functionality as well as base system software updating.</li>
+ 
+ <li>As time goes by we are trying to simplify the mports system.  FreeBSD's ports have years of backwards compatibly code and many features that we simply don't need.</li>
+ </ul>
  
  <p>This document is incomplete.  It will be more complete in the future.</p>
 
