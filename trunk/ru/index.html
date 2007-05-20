@@ -34,23 +34,35 @@
         title="Russian">RU</a></p>
 </div>
 
-<h2>Вступление</h2>
+<h2>Введение</h2>
 
-<p>MidnightBSD является веткой развития операционной системы FreeBSD. Важнейшими целями данного проекта являются создание простого в использовании рабочего стола с графическим управлением портов и конфигурирование системы с использованием GNUstep. Значительная часть операционной системы основана на BSD лицензии.</p>
+<p>MidnightBSD – это настольная операционная система 
+на сегодняшний день совместимая с x86 (включая Pentium® и Athlon™), 
+а также в скором времени и amd64 (включая Opteron™, Athlon™64 и EM64T) 
+архитектурами. Первоначально она была основана на FreeBSD 6.1 beta. 
+Ключевой целью проекта является создание простой в использовании и доступной 
+для понимания BSD подобной системы.</p>
 
 <span style="text-align: center;">
 <a href="../download/index.html"><img src="../images/dvd.png"></a><br />
-Download<br/>
+Загрузить<br/>
 MidnightBSD
 </span>
 
-<p><a href="http://www.cafepress.com/midnightbsd">Purchase</a> MidnightBSD merchandise to support the project.</p>
+<p><a href="http://www.cafepress.com/midnightbsd">Покупайте товары MidnightBSD,
+чтобы помочь проекту.</a></p>
 
-<p>Track development and changes to MidnightBSD with our <a href="http://www.justjournal.com/users/mbsd">development blog</a>. </p>
+<p><a href="http://www.justjournal.com/users/mbsd">Покупайте товары MidnightBSD,
+чтобы помочь проекту.</a>. </p>
 
-<p>We now have a <a href="http://forums.midnightbsd.org/">Forum</a>.  You can also chat with us via IRC on FreeNode #midnightbsd.</p>
+<p><a href="http://forums.midnightbsd.org/">Теперь у нас есть форум.</a> 
+Также создан канал в IRC на FreeNode #midnightbsd,
+на котором Вы можете встретиться с нами и пообщаться.</p>
 
-<p><a href="http://bugreport.midnightbsd.org/">View/Report</a> Bugs.</p>
+
+<p><a href="http://bugreport.midnightbsd.org/">Узнать/сообщить об ошибке</a></p>
+
+<p>Изучите наши порты с описаниями</p>
 
 <table>
 	<thead>
@@ -70,19 +82,21 @@ MidnightBSD
 	</tbody>
 </table>
 
-<h3>Security</h3>
+<h3>Безопасность</h3>
 
-<p>May 2, 2007<br />
-CURRENT and STABLE both have the patch for ipv6 type 0 routing headers.  The problem is that ipv6 routing headers could be run over the same link multiple times.
+<p>2 мая 2007<br />
+Выпущен патч для ipv6 type 0 заголовков маршрутизации для обоих веток STABLE и 
+CURRENT. Проблема заключалась в том, что заголовки маршрутизации ipv6 не проходили 
+через одно существующее соединение несколько раз.</p>
+<p>10 марта 2007<br />
+Так как было внесено довольно много DST изменений за последний год, мы решили 
+создать пакет tzdata2006с, который вносит все обновления. Заинтересованные
+пользователи должны обновить свои исходники и пересобрать среду. На java портах 
+может не оказаться DST обновлений, однако скоро это будет исправлено.
 </p>
-<p>March 10, 2007<br />
-While many of the DST changes were imported last year, we decided to cover all cases and import
-the latest tzdata2007c.  Users concerned about DST changes should update their sources
-and rebuild.  The java ports may not have DST changes in place.  We will review that issue.
-</p>
-<p>Jaunary 23, 2007<br />
-A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available.  Please
-update your /etc/rc.d/jail file from cvs.  Patches will not be created until our first release.
+<p>23 января 2007<br />
+Эксплойт «symlink» был обнаружен в jail system MidnightBSD. Проблема решена, 
+обновите файл /etc/rc.d/jail через cvs. 
 </p>
 
 <script type="text/javascript"><!--
@@ -107,6 +121,8 @@ google_color_url = "AECCEB";
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="../copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt</p>
+    
+    <p>$MidnightBSD$</p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
     </script>
