@@ -37,34 +37,61 @@
 <h2>Developer</h2>
 
 <p>Welcome to MidnightBSD development. </p>
-<p>If you are interested in joining the MidnightBSD project, please e-mail<a href="mailto:luke@midnightbsd.org"> luke@midnightbsd.org</a>. We are looking for programmers with all types of skills, port maintainers, documentation and website maintainers, and people interested in mirroring.</p>
+<p>If you are interested in joining the MidnightBSD project, please e-mail 
+<a href="mailto:luke@midnightbsd.org">luke@midnightbsd.org</a>. We are looking 
+for programmers with all types of skills, port maintainers, documentation and
+website maintainers, and people interested in mirroring.</p>
 <h2>Background</h2>
-<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is to create a BSD with ease of use and simplicity in mind. </p>
+<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is 
+to create a BSD with ease of use and simplicity in mind. </p>
 <p><strong>Goals</strong></p>
 <ul>
-  <li>Create an easy to use desktop environment with basic functionality and a full graphical administration interface.</li>
-  <li>Create a unique window manager designed with ease of use in mind. We will not use full blown desktop environments like KDE or Gnome.</li>
-  <li>Integrate <a href="http://gnustep.org/information/aboutGNUstep.html">GNUstep</a> into the system, but maintain BSD licensing on our own code whenever possible. The kernel and most userland software must be BSD licensed. </li>
-  <li>Incorperate new technologies from other BSD projects that may interest desktop users. OpenBSD's OpenNTPD, OpenSSH, and wireless drivers are examples. </li>
-  <li>Create our own ports system based on FreeBSD's ports. The system would have a graphical interface and existing utilities would be merged into a library so identical functionality is maintained on the gui and command line. </li>
-  <li>Setup a binary update system so that users do no need to compile patches or new releases to get security updates or bug fixes.</li>
-  <li>Listen to user feedback to improve the system. At times, many open source projects fail to listen to users making systems more difficult to use and decreasing scope.</li>
+  <li>Create an easy to use desktop environment with basic functionality and a 
+  full graphical administration interface.</li>
+  <li>Create a unique window manager designed with ease of use in mind. We will 
+  not use full blown desktop environments like KDE or Gnome.</li>
+  <li>Integrate <a href="http://gnustep.org/information/aboutGNUstep.html">GNUstep</a>
+  into the system, but maintain BSD licensing on our own code whenever possible. 
+  The kernel and most userland software must be BSD licensed. </li>
+  <li>Incorperate new technologies from other BSD projects that may interest 
+  desktop users. OpenBSD's OpenNTPD, OpenSSH, and wireless drivers are examples. </li>
+  <li>Create our own ports system based on FreeBSD's ports. The system would have
+  a graphical interface and existing utilities would be merged into a library so 
+  identical functionality is maintained on the gui and command line. </li>
+  <li>Setup a binary update system so that users do no need to compile patches or
+  new releases to get security updates or bug fixes.</li>
+  <li>Listen to user feedback to improve the system. At times, many open source 
+  projects fail to listen to users making systems more difficult to use and 
+  decreasing scope.</li>
 </ul>
-<p>Initially for 1.0 release, I'd like to have a new installer (wheither it be <a href="http://www.dragonflybsd.org/">DragonFlyBSD</a>'s or a new one) along with a basic graphical environment. WindowMaker, Firefox, Thunderbird, and a few other applications. From there, based on user feedback, I'd like to build on the solid base of FreeBSD.  There is still debate about the choice
-of window manager.  I'm considering several alternatives.  I've already been flooded with e-mail.</p>
-<p>To clarify, this is a fork of <a href="http://www.freebsd.org">FreeBSD</a>. I'm not creating a distro* like <a href="http://desktopbsd.net/">DesktopBSD</a> or 
+<p>Initially for 1.0 release, I'd like to have a new installer (wheither it be 
+<a href="http://www.dragonflybsd.org/">DragonFlyBSD</a>'s or a new one) along 
+with a basic graphical environment. WindowMaker, Firefox, Thunderbird, and a 
+few other applications. From there, based on user feedback, I'd like to build 
+on the solid base of FreeBSD.  There is still debate about the choice
+of window manager.  I'm considering several alternatives.  I've already been 
+flooded with e-mail.</p>
+<p>To clarify, this is a fork of <a href="http://www.freebsd.org">FreeBSD</a>. 
+I'm not creating a distro* like <a href="http://desktopbsd.net/">DesktopBSD</a> or 
 <a href="http://www.pcbsd.org">PC-BSD</a>.</p>
 
-<p>Update: (March 2007)<br /><br />We are planning on using WindowMaker until the Etoile Project is farther
-along with their work.  Etoile is in mports as are many other GNUstep based software packages.</p>
+<p>Update: (March 2007)<br /><br />We are planning on using WindowMaker until 
+the Etoile Project is farther
+along with their work.  Etoile is in mports as are many other GNUstep based
+software packages.</p>
 
-<p>* distro is often used in the Linux community.  Some BSD folks hate that term applied to other projects. My
-working definition is a system with core componets (kernel, large parts of userland) that are not developed by
-the entity releasing the operating environment.  It is a collection of software grouped together possibly with an
-installer.  This can be applied to Live CD projects, BSD firewall projects, PC-BSD, DesktopBSD, and non BSD projects like Fedora, Gentoo, and so on.</p>
+<p>* distro is often used in the Linux community.  Some BSD folks hate that 
+term applied to other projects. My
+working definition is a system with core componets (kernel, large parts of 
+userland) that are not developed by
+the entity releasing the operating environment.  It is a collection of software
+grouped together possibly with an
+installer.  This can be applied to Live CD projects, BSD firewall projects, PC-BSD,
+DesktopBSD, and non BSD projects like Fedora, Gentoo, and so on.</p>
 
 <h2>Source Code</h2>
-<p>The source code is accessible via the web using <a href="http://www.midnightbsd.org/cgi-bin/cvsweb.cgi">cvsweb</a> or by anonymous cvs.</p>
+<p>The source code is accessible via the web using 
+<a href="http://www.midnightbsd.org/cgi-bin/cvsweb.cgi">cvsweb</a> or by anonymous cvs.</p>
 
 <p>cvs server: stargazer.midnightbsd.org<br />
    CVSROOT=anoncvs@stargazer.midnightbsd.org:/home/cvs<br />
@@ -79,7 +106,9 @@ installer.  This can be applied to Live CD projects, BSD firewall projects, PC-B
 
 <!-- BEGIN FOOTER -->
 <div id="footer">
-    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt</p>
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
+    <br />$MidnightBSD$
+    </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
     </script>
