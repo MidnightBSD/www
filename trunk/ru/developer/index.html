@@ -34,70 +34,45 @@
         title="Russian">RU</a></p>
 </div>
 
-<h2>Developer</h2>
+<h2>Разработчики</h2>
 
-<p>Welcome to MidnightBSD development. </p>
-<p>If you are interested in joining the MidnightBSD project, please e-mail 
-<a href="mailto:luke@midnightbsd.org">luke@midnightbsd.org</a>. We are looking 
-for programmers with all types of skills, port maintainers, documentation and
-website maintainers, and people interested in mirroring.</p>
+<p>Если Вы заинтересованы в разработке проекта MidnightBSD, пожалуйста, пишите по адресу luke@midnightbsd.org. Мы ищем программистов всех типов программной верстки,
+веб-разработчиков, разработчиков документаций, людей, заинтересованных в зеркалировании проекта.  
+</p>
 <h2>Background</h2>
-<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is 
-to create a BSD with ease of use and simplicity in mind. </p>
-<p><strong>Goals</strong></p>
-<ul>
-  <li>Create an easy to use desktop environment with basic functionality and a 
-  full graphical administration interface.</li>
-  <li>Create a unique window manager designed with ease of use in mind. We will 
-  not use full blown desktop environments like KDE or Gnome.</li>
-  <li>Integrate <a href="http://gnustep.org/information/aboutGNUstep.html">GNUstep</a>
-  into the system, but maintain BSD licensing on our own code whenever possible. 
-  The kernel and most userland software must be BSD licensed. </li>
-  <li>Incorperate new technologies from other BSD projects that may interest 
-  desktop users. OpenBSD's OpenNTPD, OpenSSH, and wireless drivers are examples. </li>
-  <li>Create our own ports system based on FreeBSD's ports. The system would have
-  a graphical interface and existing utilities would be merged into a library so 
-  identical functionality is maintained on the gui and command line. </li>
-  <li>Setup a binary update system so that users do no need to compile patches or
-  new releases to get security updates or bug fixes.</li>
-  <li>Listen to user feedback to improve the system. At times, many open source 
-  projects fail to listen to users making systems more difficult to use and 
-  decreasing scope.</li>
-</ul>
-<p>Initially for 1.0 release, I'd like to have a new installer (wheither it be 
-<a href="http://www.dragonflybsd.org/">DragonFlyBSD</a>'s or a new one) along 
-with a basic graphical environment. WindowMaker, Firefox, Thunderbird, and a 
-few other applications. From there, based on user feedback, I'd like to build 
-on the solid base of FreeBSD.  There is still debate about the choice
-of window manager.  I'm considering several alternatives.  I've already been 
-flooded with e-mail.</p>
-<p>To clarify, this is a fork of <a href="http://www.freebsd.org">FreeBSD</a>. 
-I'm not creating a distro* like <a href="http://desktopbsd.net/">DesktopBSD</a> or 
-<a href="http://www.pcbsd.org">PC-BSD</a>.</p>
+<p>Как уже говорилось, MidnightBSD базируется на бета-версии  проекта FreeBSD 6.1. Цель проекта – это создание простой в использовании и доступной для понимания BSD- подобной системы.</p>
+<p><strong>Цели</strong></p>
 
-<p>Update: (March 2007)<br /><br />We are planning on using WindowMaker until 
-the Etoile Project is farther
-along with their work.  Etoile is in mports as are many other GNUstep based
-software packages.</p>
 
-<p>* distro is often used in the Linux community.  Some BSD folks hate that 
-term applied to other projects. My
-working definition is a system with core componets (kernel, large parts of 
-userland) that are not developed by
-the entity releasing the operating environment.  It is a collection of software
-grouped together possibly with an
-installer.  This can be applied to Live CD projects, BSD firewall projects, PC-BSD,
-DesktopBSD, and non BSD projects like Fedora, Gentoo, and so on.</p>
+<p>Создание простого в использовании рабочего стола с базовой функциональностью и наиболее полным графическим интерфейсом админитратора. Создание уникального, интуитивно понятного менеджера окон. Нашей целью не ставится создание тяжелой графической системы типа KDE или Gnome, а более простой и функциональной.
+Интегрировать GNUstep в систему, но оставить основную часть кода системы на BSD лицензии. Ядро и большая часть пользовательских программ должна быть основана на BSD.
+Внедрить из других BSD проектов те новые технологии, которые могут заинтересовать пользователей, например, проекты OpenBSD: OpenNTPD, OpenSSH и драйверы на беспроводное оборудование.
+Создать собственную систему портов, основанную на системе, используемой в FreeBSD портах. Система будет иметь графический интерфейс и утилиты для использования портов и работать с ними как в графическом, так и в консольном режимах.
+Установить систему обновлений бинарными пакетами, это позволит не компилировать патчи и обновления при установке.
+</p><p>
+Совершенствовать систему согласно пользовательским запросам. Просто были примеры в истории, когда проекты вымирали, потому что их разработчики переставали слушать пользователей.
+</p>
 
-<h2>Source Code</h2>
-<p>The source code is accessible via the web using 
-<a href="http://www.midnightbsd.org/cgi-bin/cvsweb.cgi">cvsweb</a> or by anonymous cvs.</p>
+<p>Примерно в релизе 1.0 будет присутствовать новый инсталлятор (к примеру,  инсталятор DragonFlyBSD или какой-нибудь еще) с базовым графическим интерфейсом. Будут присутствовать WindowMaker, Firefox, Thunderbird и некоторые другие приложения. Все новое, требующееся пользователю, будет построено на устойчивой базе FreeBSD. До сих пор ведутся споры в выборе оконного менеджера. Я рассматриваю несколько вариантов, однако количество предложений со стороны пользователей через e-mail растут.
+</p>
 
-<p>cvs server: stargazer.midnightbsd.org<br />
+<p>Для ясности, данный проект – это ветка развития FreeBSD. Но мы не собираемся создавать distro* , как например, DesktopBSD или PC-BSD.
+</p>
+
+
+<p>Новости: (март 2007)<br /><br />Мы планируем использовать WindowMaker от Etoile Project. Etoile можно найти на mport’ах , как и многие другие приложения, основанные на GNUstep.</p>
+
+<p>*distro – данный термин часто используется в обществе линуксоидов. Некоторые пользователи BSD систем не любят данный термин, относящийся к другим проетам. По моему определению, это система с центральными компонентами (ядро, определенные части пользовательской системы), которые не разрабатывались в совокупности с визуальной средой. Это , так называемые, кучи приложений , устанавливаемые одним инсталлятором. Это относится к проектам LiveCD, проектам BSD-firewall, PC-BSD, DesktopBSD, а также к не BSD проетам, таким как Fedora, Gentoo и так далее.</p>
+
+<h2>Исходный код</h2>
+<p>Исходный код может быть доступен с помощью утилиты <a href="http://www.midnightbsd.org/cgi-bin/cvsweb.cgi">cvsweb</a> 
+или более анонимной - cvs.</p>
+
+<p>Cvs сервер: stargazer.midnightbsd.org<br />
    CVSROOT=anoncvs@stargazer.midnightbsd.org:/home/cvs<br />
-   This is accessible via ssh only.  password is anoncvs</p>
+   Данные доступны только с использованием ssh. Пароль anoncvs.</p>
    
-<p><a href="http://www.allbsd.org/">allbsd.org</a> is also mirroring our CVS server now.</p>
+<p>На сайте <a href="http://www.allbsd.org/">allbsd.org</a> также размещено наше CVS зеркало.</p>
    
 <p><a href="cvsup.hml">CVSup</a></p>
 
@@ -107,7 +82,7 @@ DesktopBSD, and non BSD projects like Fedora, Gentoo, and so on.</p>
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
-    <br />$MidnightBSD: www/developer/index.html,v 1.3 2007/05/20 20:24:34 laffer1 Exp $
+    <br />$MidnightBSD: www/ru/developer/index.html,v 1.1 2007/05/20 20:27:52 laffer1 Exp $
     </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
