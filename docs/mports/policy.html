@@ -40,7 +40,7 @@
 
 <h2>LICENSE</h2>
 
-<p>Every port should define a LICENSE variable with a valid license. <i>This feature is not let implemented, a list of valid licenses is not available.</i></p>
+<p>Every port should define a LICENSE variable with a valid license. <i>This feature is not yet implemented, a list of valid licenses is not available.</i></p>
 
 <h2>INSTALLS_SHLIB</h2>
 
@@ -52,7 +52,7 @@
 
 <h2>OSVERSION</h2>
 
-<p>No port should use OSVERSION.  Currently this refers to the FreeBSD version that MBSD branched from.  This will not always be the case.  Eventually this will refer to the MidnightBSD version.  To facility this change, the old uses of OSVERSION must be removed.</p>
+<p>No port should use OSVERSION.  Currently this refers to the FreeBSD version that MBSD branched from.  This will not always be the case.  Eventually this will refer to the MidnightBSD version.  To facilitate this change, the old uses of OSVERSION must be removed.</p>
 
 <h2>Sub Files</h2>
 
@@ -76,7 +76,7 @@
 
 <h2>pre-su-install</h2>
 
-<p>Now that su is not used in the fake process, the pre-su-install target is deprecated.  Usually it can be moved to pre-install target, but if it is doing anything with the plist the maintainer will need to use their judgement to determine the correct fix.</p>
+<p>Now that su is not used in the fake process, the pre-su-install target is deprecated.  Usually it can be moved to the pre-install target, but if it is doing anything with the plist the maintainer will need to use their judgement to determine the correct fix.</p>
 
 
 </div>
@@ -85,7 +85,7 @@
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
-    <br />$MidnightBSD: www/docs/mports/index.html,v 1.4 2007/05/20 20:24:34 laffer1 Exp $
+    <br />$MidnightBSD: www/docs/mports/policy.html,v 1.1 2007/05/22 21:33:39 ctriv Exp $
     </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
