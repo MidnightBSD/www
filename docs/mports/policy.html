@@ -78,6 +78,16 @@
 
 <p>Now that su is not used in the fake process, the pre-su-install target is deprecated.  Usually it can be moved to the pre-install target, but if it is doing anything with the plist the maintainer will need to use their judgement to determine the correct fix.</p>
 
+<h2>Old Variables</h2>
+
+<p>The following variables are no longer used (they are either totally deprecated, or needed by older FreeBSD versions):</p>
+
+<ul>
+<li>USE_GETOPT_LONG</li>
+<li>USE_REINPLACE</li>
+</ul>
+
+<p>No port should use these variables</p>
 
 </div>
 <!-- END CONTENT -->
@@ -85,7 +95,7 @@
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
-    <br />$MidnightBSD: www/docs/mports/policy.html,v 1.1 2007/05/22 21:33:39 ctriv Exp $
+    <br />$MidnightBSD: www/docs/mports/policy.html,v 1.2 2007/05/23 06:13:27 ctriv Exp $
     </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
