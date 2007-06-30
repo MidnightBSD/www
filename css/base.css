@@ -6,9 +6,9 @@ body {
 	color: black; 
 	background: gray url('/images/mbsd_bggray.png');
 	margin: 0;
-    font: 12px Helvetica, Arial, sans-serif;
-    letter-spacing: 2px;
-    line-height: 1.3em;
+	font: 12px Helvetica, Arial, sans-serif;
+	letter-spacing: 1px;
+	line-height: 1.3em;
 }
 
 h3 {
