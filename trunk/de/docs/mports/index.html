@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Dokumentation :: MPorts</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="/images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/de/index.html" title="Startseite">Startseite</a></li>
+            <li><a href="/de/about/index.html" title="&Uuml;ber MidnightBSD">Info</a></li>
+            <li><a href="/de/download/index.html" title="MidnightBSD Bezugsquellen">Bezugsquellen</a></li>
+            <li><a href="/de/docs/index.html" title="Dokumentation">Dokumentation</a></li>
+
+            <li><a href="/de/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Entwicklung">Entwicklung</a></li>
+            <li><a href="/de/support/index.html" title="Hilfe">Hilfe</a></li>
+        </ul>
+
+	<p><a href="/index.html" title="English">EN</a>
+	   <a href="/ru/index.html" title="Russian">RU</a>
+	   <a href="/de/index.html" title="German">DE</a>
+	</p>
+</div>
+
+ <h2>MPorts</h2>
+ 
+ <h3>Einf&uuml;hrung</h3>
+ 
+ <p>
+ MPorts ist die Port-Sammlung von MidnightBSD. Sie enth&auml;lt hunderte von Programmen,
+ die sofort installiert und benutzt werden k&ouml;nnen. Die MPorts stellen dabei einen
+ einfachen Weg dar, Software auf Ihrem Desktop-System zu installieren.
+ </p>
+ 
+ <p>
+ In Zukunft werden auch vorkompilierte Pakete bereitgestellt um die
+ Installation zu beschleunigen. Es liegen bereits ein paar fertige Pakete
+ auf den MidnightBSD ftp-Servern bereit. Des weiteren sind automatisierte Updates
+ des Systems geplant.
+ </p>
+ 
+ <h3>MPorts benutzen</h3>
+ 
+ <p>
+ Sie k&ouml;nnen die MPorts w&auml;hrend der Installation von MidnightBSD mit
+ installieren. Sie k&ouml;nnen diesen Schritt auch nachtr&auml;glich durchf&uuml;hren,
+ indem Sie mit <em>csup</em> oder <em>cvs</em> die aktuelle MPort-Sammlung
+ herunterladen. F&uuml;hren Sie dazu den Befehl
+ <br />csup /usr/share/examples/cvsup/mports-supfile<br />
+ aus. Alternativ k&ouml;nnen Sie<br />
+ mkdir /usr/mports<br />
+ cd /usr<br />
+ cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports<br />
+ verwenden.</p>
+ 
+ <p>
+ Wir empfehlen die MPorts regelm&auml;&szlig;ig zu aktualisieren. Es wird
+ st&auml;ndig neue Software den MPorts hinzugef&uuml;gt bzw. vorhandene Software
+ aktualisiert. Die regelm&auml;&szlig;ige Aktualisierung Ihrer installierten
+ Software bietet Ihnen neben einem guten Schutz vor Sicherheitsl&uuml;cken auch
+ die Verbesserung der Software, sei es durch die Behebung von Programmfehlern
+ oder durch die Verbesserung der Funktionalit&auml;t.
+ </p>
+ 
+ <p>Um einen MPort zu installieren sind die folgenden einfachen Schritte notwendig:
+ <br />cd /usr/mports
+ <br />W&auml;hlen Sie eine Kategorie aus der Liste der Verzeichnisse aus oder
+ verwenden Sie make search key=term, wobei term das Suchwort darstellt.
+ Sobald Sie den genauen MPort kennen, den Sie installieren m&ouml;chten, wechseln
+ Sie in dessen Verzeichnis und f&uuml;hren dort make install clean aus. Dadurch
+ wird der MPort gebaut und installiert. Danach werden die tempor&auml;r angelegten
+ Dateien und Verzeichnisse, welche f&uuml;r den Bau ben&ouml;tigt wurden, entfernt.
+ </p>
+ 
+ <p>
+ F&uuml;r eine einfachere Verwaltung der Software wird empfohlen,
+ mports/sysutils/portupgrade zu installieren. Dieses Softwarepaket erleichtert die
+ Installation und Aktualisierung Ihrer Software. Sie k&ouml;nnen dann ganz einfach
+ durch portinstall portname den Port namens portname installieren. So wird dieser
+ Prozess nochmals beschleunigt.
+ </p>
+ 
+ <p>
+ Um einen Port wieder zu entfernen m&uuml;ssen Sie in das zugeh&ouml;rige
+ MPort-Verzeichnis gehen und make deinstall aufrufen.
+ </p>
+ 
+ <p>
+ Des weiteren gibt es n&uuml;tzliche Programme wie pkg_add und pkg_delete
+ als Teil des Grundsystems. Mit pkg_add -r portname wird ein vorkompiliertes
+ Paket vom MidnightBSD Server heruntergeladen und installiert. Sie k&ouml;nnen
+ auch Ihre eigenen Pakete installieren.
+ </p>
+ 
+ <h3>Geschichte</h3>
+ 
+ <p>
+ MidnightBSD verwendet die FreeBSD Port-Sammlung. Mit der Zeit kamen jedoch
+ Ver&auml;nderungen durch MidnightBSD hinzu. Dabei hatten mehrere andere Projekte
+ Einflu&szlig; auf die Entwicklung, haupts&auml;chlich OpenBSD.
+ </p>
+ 
+ <p>
+ Die Einf&uuml;hrung der MPorts wurde von unseren Security Officer, archite,
+ vorgenommen. Nach weiterer Arbeit durch laffer1 wurde die Verwaltung der
+ MPorts an wintellect &uuml;bertragen. Derzeit haben alle Commiter die
+ Berechtigung, &Auml;nderungen an den MPorts vorzunehmen. Falls Sie Probleme
+ oder W&uuml;nsche bzgl. eines Ports haben, k&ouml;nnen Sie sich an
+ irgendeinen der Commiter wenden. Falls Sie Fragen oder ein Anliegen
+ zur Infrastruktur haben, so richten Sie sich
+ bitte an wintellect (wintellect at midnightbsd.org).
+ </p>
+ 
+ <h3>Unterschiede zwischen FreeBSD-Ports und MidnightBSD-Ports</h3>
+ 
+ <p>
+ FreeBSD-Ports installieren die Programme direkt in das System.
+ MidnightBSD-Ports verwenden Anstelle der direkten Installation einen
+ sogenannten &quot;fake&quot;-Prozess, bei dem zuerst ein Paket
+ erstellt wird, welches anschlie&szlig;end installiert wird.
+ Dadurch wird die Logik des Port-Systems vereinfacht.
+ Es mu&szlig; kein Code f&uuml;r die Installation aus den Ports und
+ &uuml;ber ein Paket doppelt geschrieben werden.
+ Diese Ver&auml;nderung ist noch ziemlich neu. Derzeit wird die gesamte
+ Port-Sammlung mit dem &quot;fake&quot; getestet.
+ </p>
+ 
+ <p>
+ F&uuml;r Informationen zu h&auml;ufig auftretenden Fehlern bei
+ &quot;fake&quot; lesen Sie bitte die
+ <a href="fake.html">fake transition page</a>.
+ </p>
+ 
+ <p>
+ Wir bem&uuml;hen uns MPorts mehr zu standartisieren als es die
+ FreeBSD-Ports sind. Bitte lesen Sie <a href="policy.html">policy page</a>
+ f&uuml;r weitere Informationen zu aktuellen Port-Standards.
+ </p>
+ 
+ <h3>Ideen f&uuml;r die Zukunft</h3>
+ 
+ <ul>
+    <li>
+    Es ist ein neues Paketmodell geplant. Dieses w&uuml;rde auf dem
+    Paketsystem von FreeBSD basieren, jedoch weitere Eigenschaften wie
+    geb&uuml;ndelte Pakete (mehrere Pakete zusammen in einem Paket),
+    kryptographische Signierung von Paketen, "native option support"
+    sowie eine drastisch verbesserte Paketdatenbank bieten.
+    </li>
+    <li>
+    Ein System zur Verteilung von Paketen &auml;hnlich wie apt-get
+    oder CPAN.
+    </li>
+    <li>
+    Das MidnightBSD-Projekt hofft, in Zukunft ein grafisches
+    Paketverwaltungsprogramm mit automatischer Aktualisierung
+    der installierten Software und des
+    Grundsystems bereitstellen zu k&ouml;nnen.
+    </li>
+    <li>
+    Mit der Zeit wollen wir das MPort-System vereinfachen. Das
+    FreeBSD-Portsystem enth&auml;lt Code um jahrelange
+    Abw&auml;rtskompatibilit&auml;t zu gew&auml;hrleisten sowie
+    viele andere Features, die wir nicht ben&ouml;tigen.
+    </li>
+ </ul>
+ 
+ <p>
+ Diese Seite ist unvollst&auml;ndig. Sie wird in Zukunft noch vervollst&auml;ndigt.</p>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
+    <br />$MidnightBSD: www/docs/mports/index.html,v 1.5 2007/05/22 21:33:39 ctriv Exp $
+    </p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
