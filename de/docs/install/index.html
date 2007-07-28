@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Dokumentation :: Installation</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="/images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/de/index.html" title="Startseite">Startseite</a></li>
+            <li><a href="/de/about/index.html" title="&Uuml;ber MidnightBSD">Info</a></li>
+            <li><a href="/de/download/index.html" title="MidnightBSD Bezugsquellen">Bezugsquellen</a></li>
+            <li><a href="/de/docs/index.html" title="Dokumentation">Dokumentation</a></li>
+
+            <li><a href="/de/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Entwicklung">Entwicklung</a></li>
+            <li><a href="/de/support/index.html" title="Hilfe">Hilfe</a></li>
+        </ul>
+
+	<p><a href="/index.html" title="English">EN</a>
+	   <a href="/ru/index.html" title="Russian">RU</a>
+	   <a href="/de/index.html" title="German">DE</a>
+	</p>
+</div>
+
+<h2>Installation</h2>
+
+<p>
+Obwohl MidnightBSD eigentlich f&uuml;r Anf&auml;nger und fortgeschrittene Benutzer attraktiv sein
+soll, ist die aktuelle Installation f&uuml;r *NIX-Neulinge zu schwierig. Erfahrungen mit BSD, Linux
+oder einem anderen *NIX artigen System sind sehr hilfreich. FreeBSD Benutzer, die mit sysinstall
+vertraut sind, sollten keine Probleme bei der Installation haben. Des weiteren bietet das FreeBSD
+Handbuch zus&auml;tzliche Informationen, die nicht auf dieser Webseite stehen.
+</p>
+
+<h3>Vorbereitung der Installation</h3>
+
+<p>Sie m&uuml;ssen MidnightBSD von unserem FTP Server oder einem der Mirror herunterladen.
+F&uuml;r die Installation ben&ouml;tigen Sie Disk 1 eines Releases oder Snapshots.
+</p>
+
+<p>
+Sie werden etwas freien Platz auf Ihrer Festplatte benötigen. Obwohl das System mit wenigen
+Gigabytes Plattenplatz sehr gut l&auml;uft empfehlen wir f&uuml;r die Verwendung von MPorts
+auf einem Desktop-System mindestens 15GB. Es wird ein PC der Intel Pentium-Klasse empfohlen.
+Die Unterst&uuml;tzung f&uuml;r 486 wurde aus der Standardinstallation entfernt, sie kann
+jedoch mit einkompiliert werden. F&uuml;r die Installation werden mindestens 48MB RAM
+ben&ouml;tigt.
+</p>
+
+<p>
+Verschiedene Grafikkarten werden unterschiedlich gut unterst&uuml;tzt.
+Des weiteren werden viele Netzwerkkarten und einn paar WLAN-Karten unterst&uuml;tzt.
+Eine Liste wird später noch angegeben.
+Es werden neben vielen Onboard-Soundkarten auch die Creative Labs Sound Blaster
+Audigy und Audigy 2 Familien unterst&uuml;tzt.
+</p>
+
+<p>
+MidnightBSD kann neben Microsoft Windows oder Linux auf derselben Festplatte installiert werden.
+Beim Einsatz von MidnightBSD und Linux wird die Verwendung von GRUB empfohlen. Beim Einsatz
+von MidnightBSD und Windows wird der in Windows enthaltene Bootmanager empfohlen
+(Windows XP wurde getestet). Bootmanager von Drittherstellern wie z.B.
+System Commander 8.20 werden ebenfalls unterst&uuml;tzt.
+</p>
+
+<p>
+Sie k&ouml;nnen MidnightBSD ebenfalls in einer Virtualisierungssoftware wie qemu,
+Microsoft Virtual PC oder VMWare benutzen. Parallels wurde bisher noch nicht
+getestet.
+</p>
+
+<h3>MidnightBSD installieren</h3>
+
+<p>
+Legen Sie die MidnightBSD CD in Ihr CD-ROM Laufwerk ein und starten Sie Ihren PC.
+Eventuell m&uuml;ssen Sie in Ihrem BIOS das Booten von CD aktivieren.
+Auf manchen Systemen gibt es eine Taste, &uuml;ber die man direkt das Medium
+zum Booten ausw&auml;hlen kann. So kann man beispielsweise auf einigen Systemen
+von Dell nach dem Einschalten die Taste F12 bet&auml;tigen und dann aus
+einem Men&uuml; das CD-ROM Laufwerk ausw&auml;hlen.
+</p>
+
+<p>
+Beim Booten von der MidnightBSD-CD sollten Sie zuerst eine Menge wei&szlig;en
+Textes und danach einen roten und blauen Bildschirm sehen. Falls mehrere Minuten
+vergehen ohne das etwas passiert, und Sie auch nicht obigen Bildschirm sehen,
+dann melden Sie dieses Problem bitte. Es k&ouml;nnte ein Bug oder eine
+Inkompatibilit&auml;t mit Ihrem System vorliegen, welche wir beseitigen wollen.
+</p>
+
+<p>
+Ab diesem Punkt sollten Sie den Anweisungen von sysinstall folgen um die
+Installation abzuschlie&szlig;en. Den Snapshots und eventuell dem ersten
+Release wird leider kein X11 (XORG) als fertiges Paket beiliegen.
+Versuchen Sie bitte nicht dieses zu installieren. Sie w&uuml;rden nur
+jede Menge Fehlermeldungen bekommen. Wir hoffen dieses Problem mit dem
+Release von MidnightBSD 0.2 zu beseitigen.
+</p>
+
+<h3>Beispiel einer Hardwarekonfiguration</h3>
+
+<p>Hier ist eine Liste von Systemen auf denen MidnightBSD getestet wurde.</p>
+
+<p>Dell Precision 650  (Dual 2.0Ghz Xeon 1GB ECC RAM SCSI und IDE.  Onboard Sound, NIC funktioniert.)</p>
+<p>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard.  Onboard sound untested,
+network card works, IDE channels do not work (CD-ROM, etc).  Sata controller works in recent snapshots. Sound
+Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected.</p>
+
+<p>Custom Built Nvidia nForce 2 w/ sata raid (MSI motherboard) 512mb PC2700 DDR, 2 sata disks in gmirror raid 1
+configuration, 1 ide disk for boot partition, onboard sound, Geforce 5200 AGP 8x.  Onboard NIC (nvidia maclan) did not work correctly, but an OEM Intel em worked as expected.  Some disk corruption occured on the sata raid setup, but determined to be a faulty drive.</p>
+
+<p>Compaq Cyrix based 366Mhz (?)  system.  X11 was not tested, but all devices including an included 3com 905 NIC worked as expected.</p>
+
+<p>Dell PowerEdge 5300?  Xeon 550Mhz PIII 512MB RAM, all scsi system.  Works as expected including integrated ATI
+graphics.</p>
+
+<p>Virtual PC for Windows works as expected.  VPC 7 for Mac OS X works except the CDROM drive is "lost" during install.  If you can get it installed using ftp install, it will work fine.</p>
+
+<p>VMware player works under Windows Vista.</p>
+
+<p>Early releases were tested on a Sun Ultra 10 3D creator.  The system died however.</p>
+
+<p>One of our developers uses qemu often with the system.  It is included in mports.  I believe he's also run MidnightBSD virtualized inside of OpenBSD.</p>
+
+<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD.  Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2 beta.</p>
+
+<h3>More to come...</h3>
+
+<p>This needs more work. :)</p>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
+    <br />$MidnightBSD: www/docs/install/index.html,v 1.3 2007/05/20 20:24:34 laffer1 Exp $
+    </p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
