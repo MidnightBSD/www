@@ -57,15 +57,16 @@ function MM_swapImage() { //v3.0
             <li><a href="/support/index.html" title="Support">Support</a></li>
         </ul>
 
-	<p><a href="/index.html" title="English">EN</a> <a href="/ru/index.html" 
-        title="Russian">RU</a></p>
+	<p><a href="/de/index.html" title="German">DE</a> <a href="/index.html" title="English">EN</a> 
+           <a href="/ru/index.html" title="Russian">RU</a>
+        </p>
 
 	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="images/feed.gif" alt="RSS Feed" /> <a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
 
-	<p style="border-top: thin dashed silver; padding-top: 10px;"><a href="http://click.linksynergy.com/fs-bin/click?id=P*wIZOq1sCA&offerid=102327.10000065&type=4&subid=0"><img alt="TigerDirect" border="0" src="http://images.tigerdirect.com/email/affiliate_new/120x90upromise.gif"></a><img border="0" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=P*wIZOq1sCA&bids=102327.10000065&type=4&subid=0">
+	<p style="border-top: thin dashed silver; padding-top: 10px;"><a href="http://click.linksynergy.com/fs-bin/click?id=P*wIZOq1sCA&offerid=102327.10000065&type=4&subid=0"><img alt="TigerDirect" src="http://images.tigerdirect.com/email/affiliate_new/120x90upromise.gif" /></a><img width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=P*wIZOq1sCA&bids=102327.10000065&type=4&subid=0" />
 	</p>
 	
-	<p><a href="http://click.linksynergy.com/fs-bin/click?id=P*wIZOq1sCA&offerid=85078.10000140&subid=0&type=4">		<img border="0" alt="Logo Dell Home Systems 120x40" src="http://ad.linksynergy.com/fs-bin/show?id=P*wIZOq1sCA&bids=85078.10000140&subid=0&type=4"></a></p>
+	<p><a href="http://click.linksynergy.com/fs-bin/click?id=P*wIZOq1sCA&offerid=85078.10000140&subid=0&type=4">		<img alt="Logo Dell Home Systems 120x40" src="http://ad.linksynergy.com/fs-bin/show?id=P*wIZOq1sCA&bids=85078.10000140&subid=0&type=4" /></a></p>
 </div>
 
 <h2>Introduction</h2>
@@ -76,12 +77,12 @@ function MM_swapImage() { //v3.0
 <caption><span style="color: #333; text-decoration: underline;">MidnightBSD in action</span></caption>
 <tbody>
 <tr>
-<td colspan="3" width="400"><img src="images/screen_login.jpg" alt="screen shot: using MidnightBSD" id="screen" /></td>
+<td colspan="3" style="width: 400px;"><img src="images/screen_login.jpg" alt="screen shot: using MidnightBSD" id="screen" /></td>
 </tr>
 <tr>
-<td width="33%"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_login.jpg',0)"><img width="100" height="75" src="images/screen_login.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
-<td width="33%" align="center"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_wm.jpg',0)"><img width="100" height="75" src="images/screen_wm.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
-<td width="34%" align="right"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_boot.jpg',0)"><img width="100" height="75" src="images/screen_boot.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
+<td style="width: 33%"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_login.jpg',0)"><img width="100" height="75" src="images/screen_login.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
+<td style="width: 33%" align="center"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_wm.jpg',0)"><img width="100" height="75" src="images/screen_wm.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
+<td style="width: 34%" align="right"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_boot.jpg',0)"><img width="100" height="75" src="images/screen_boot.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
 </tr>
 </tbody>
 </table>
@@ -109,6 +110,8 @@ MidnightBSD
 
 <p>View our <a href="mports/README.html">ports</a> with descriptions.</p>
 
+<p>Subscribe to our <a href="/mailman/listinfo">mailing lists.</a></p>
+
 <table>
 	<thead>
 	<tr>
@@ -129,6 +132,10 @@ MidnightBSD
 
 <h3>Security</h3>
 
+<p>August 1, 2007<br />
+BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues.  BIND is now equivalent to 9.3.4p1.
+</p>
+
 <p>May 2, 2007<br />
 CURRENT and STABLE both have the patch for ipv6 type 0 routing headers.  The problem is that ipv6 routing headers could be run over the same link multiple times. 
 </p>
@@ -138,7 +145,7 @@ the latest tzdata2007c.  Users concerned about DST changes should update their s
 and rebuild.  The java ports may not have DST changes in place.  We will review that issue.
 </p>
 <p>Jaunary 23, 2007<br />
-A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available.  Please 
+A &quot;symlink&quot; exploit was found in the MidnightBSD jail system. A fix was made available.  Please 
 update your /etc/rc.d/jail file from cvs.  Patches will not be created until our first release.
 </p>
 
@@ -165,7 +172,7 @@ google_color_url = "AECCEB";
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
-    <br />$MidnightBSD: www/index.html,v 1.15 2007/07/24 19:46:58 laffer1 Exp $
+    <br />$MidnightBSD: www/index.html,v 1.16 2007/07/24 20:25:18 laffer1 Exp $
     </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
