@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>MidnightBSD :: Dokumentation :: MPorts</title>
+<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+</head>
+
+<body>
+
+<!-- BEGIN HEADER -->
+<div id="header">
+    <span id="logo">
+	    <img src="/images/mbsd_newlogo.png" alt="MidnightBSD [logo]" />
+	</span>  
+</div>
+<!-- END HEADER -->
+
+<div id="content">
+
+<div id="rnav">
+        <ul>
+            <li><a href="/de/index.html" title="Startseite">Startseite</a></li>
+            <li><a href="/de/about/index.html" title="&Uuml;ber MidnightBSD">Info</a></li>
+            <li><a href="/de/download/index.html" title="MidnightBSD Bezugsquellen">Bezugsquellen</a></li>
+            <li><a href="/de/docs/index.html" title="Dokumentation">Dokumentation</a></li>
+
+            <li><a href="/de/community/index.html" title="Community">Community</a></li>
+            <li><a href="/developer/index.html" title="Entwicklung">Entwicklung</a></li>
+            <li><a href="/de/support/index.html" title="Hilfe">Hilfe</a></li>
+        </ul>
+
+	<p><a href="/index.html" title="English">EN</a>
+	   <a href="/ru/index.html" title="Russian">RU</a>
+	   <a href="/de/index.html" title="German">DE</a>
+	</p>
+</div>
+
+<h1>MPorts Richtlinien</h1>
+
+<p>
+Im Folgenden werden Richtlinien f&uuml;r das Verhalten und den
+Aufbau von Ports aufgef&uuml;hrt. <em>Jedes mal</em>, wenn
+ein Port erstellt oder aktualisiert wird, sollte er auf die
+Einhaltung dieser Richtlinien hin &uuml;berpr&uuml;ft werden.
+Diese Seite wird ab und zu aktualisiert und sollte daher
+&ouml;fters nachgelesen werden.
+</p>
+
+<h2>LICENSE</h2>
+
+<p>
+Jeder Port sollte eine LICENSE-Variable mit einer g&uuml;ltigen
+Lizenz definieren. Eine Liste der g&uuml;ltigen Lizenzen wird
+durch Aufruf des Targets <code>license-list</code> angezeigt.
+Die LICENSE-Variable sollte unmittelbar hinter der COMMENT-Variable
+aufgef&uuml;hrt werden.
+</p>
+
+<h2>INSTALLS_SHLIB</h2>
+
+<p>
+Ports sollten anstatt der INSTALLS_SHLIB-Variable die
+USE_LDCONFIG-Variable verwenden.
+</p>
+
+<h2>MASTER_SITES</h2>
+
+<p>
+Jeder Port sollte mindestens 2 Hauptbezugsquellen angeben.
+</p>
+
+<h2>OSVERSION</h2>
+
+<p>
+Kein Port sollte die Variable OSVERSION verwenden. Derzeit bezieht
+sich diese Variable auf die FreeBSD-Version, von der MidnightBSD
+abstammt. Dies wird nicht immer so sein. Eventuell wird sich diese
+Variable in Zukunft auf die MidnightBSD-Version beziehen. Um dies
+zu erm&ouml;glichen sollte die alte Verwendung dieser Variable
+aus den Ports entfernt werden.
+</p>
+
+<h2>SUB_FILES</h2>
+
+<p>
+Falls Dateien wie pkg-message oder pkg-install variable Substitutionen
+ben&ouml;tigen sollte das SUB_FILES Framework daf&uuml;r verwendet
+werden. Selbstgebaute L&ouml;sungen sollten vermieden werden.
+</p>
+
+<h2>Fake Cleanups</h2>
+
+<p>
+Ports sollten weder das pkg-install Skript aufrufen, noch die
+Paketnachricht anzeigen. Diese Aufgaben sollten pkg_add &uuml;berlassen
+werden.
+</p>
+
+<h2>pkg-message Format</h2>
+
+<p>
+Die pkg-message-Datei sollte einfach wie m&ouml;glich aufgebaut sein.
+Sie sollte keine ascii-Bilder oder Zeilenumbr&uuml;che enthalten.
+Der Inhalt der Datei k&ouml;nnte in einer GUI dargestellt werden und
+sollte daher nicht auf die Kommandozeile optimiert werden.
+</p>
+
+<h2>OPTIONS</h2>
+
+<p>
+Die Variable OPTIONS sollte verwendet werden, sobald der Port einen
+oder mehrere Schalter besitzt. Das MPort-Paketsystem kann Optionen
+nur verwenden, wenn diese auch definiert wurden.
+</p>
+
+<h2>Man Pages</h2>
+
+<p>
+Sehr alte FreeBSD-Ports verwenden die Variable MANX f&uuml;r Manpages
+nicht. Ein solcher Port sollte so angepasst werden, das er diese
+Varaible benutzt. Dies ist wichtig da ansonsten beim Entfernen eines
+installierten Paketes die Manpages nicht mit gel&ouml;scht werden.
+</p>
+
+<h2>pre-su-install</h2>
+
+<p>
+Da su im fake-Prozess nicht verwendet wird ist das Target pre-su-install
+veraltet. Normalerweise k&ouml;nnen die darin enthaltenen Anweisungen
+in das pre-install Target verschoben werden. Falls dabei jedoch
+Ver&auml;nderungen an der plist-Datei vorgenommen werden mu&szlig; der
+Maintainer entscheiden wie das Problem gel&ouml;st werden soll.
+</p>
+
+<h2>Veraltete Variablen</h2>
+
+<p>
+Die folgenden Variablen werden nicht mehr verwendet (sie sind entweder
+v&ouml;llig veraltet oder werden durch &auml;lteren FreeBSD Versionen
+ben&ouml;tigt):
+</p>
+
+<ul>
+<li>USE_GETOPT_LONG</li>
+<li>USE_REINPLACE</li>
+</ul>
+
+<p>
+Kein Port sollte diese Variablen verwenden.
+</p>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div id="footer">
+    <p id="footertext"><a href="/copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
+    <br />$MidnightBSD: www/docs/mports/policy.html,v 1.4 2007/06/06 19:12:12 ctriv Exp $
+    </p>
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-560995-2";
+    urchinTracker();
+    </script>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>
