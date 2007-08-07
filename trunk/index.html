@@ -73,6 +73,47 @@ function MM_swapImage() { //v3.0
 
 <p style="text-indent: 3em; line-height: 1.5; margin-bottom: 20px;">MidnightBSD is a desktop operating system for x86 compatible (including Pentium&reg; and Athlon&#8482;), and soon amd64 compatible (including Opteron&#8482;, Athlon&#8482;64, and EM64T) architectures. It was originally based on <a href="http://www.freebsd.org/">FreeBSD</a> 6.1 Beta.  The goal of the project is to create a BSD with ease of use and simplicity in mind.</p>
 
+<h3>MidnightBSD 0.1-RELEASE</h3>
+
+<p>
+<strong>August 6, 2007</strong>  
+MidnightBSD 0.1-RELEASE is now available.  It includes several software packages
+such as ksh, sudo, OpenNTPD, gcc 3.4.4, BIND 9.3.4 (plus patch) and others in
+the base system.  Disc 1 ISO includes the entire Operating System and X11 (xorg 6.9)
+packages.  Disc 2 ISO includes a selection of additional packages such as 
+GNUstep, bash 3, zsh, and cups-base.  There are additional packages on our FTP
+server.  More will be added in a few days.  Only disc 1 is required for installation. 
+This release is intended for enthusiests, developers and people interested in
+new operating systems that can handle bugs.  The core OS is stable, but many
+elements such as ports are in flux.  
+</p>
+
+<p>Get 0.1:  <a href="http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.1/ ">Mirror 1</a>
+<a href="ftp://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.1">Mirror 2</a>
+<a href="http://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/0.1/">Official
+site (slow)</a></p>
+
+<h4>0.1-RELEASE Errata</h4>
+<pre>
+Installation issues 
+
+projectcenter.app package is missing dependancies on disc2. 
+mutt package is missing urlview dependancy on disc2. 
+
+GNUstep package includes gdnc which is missing libgcc_s.so.1. 
+
+bash 3 and gmake missing libintl.so.6. This can be fixed by uninstalling gettext 
+and building it from the port. A new package was placed on the FTP server.
+
+System issues 
+
+CVSUP example for updating src fetches CURRENT instead of RELENG_0_1 
+
+Using Virtual PC for Windows: 
+If you install MidnightBSD in VPC, you will need to set hint.acpi.0.disabled="1" 
+in /boot/device.hints This will help with the "calcru: negative runtime of" issue. 
+</pre>
+
 <table>
 <caption><span style="color: #333; text-decoration: underline;">MidnightBSD in action</span></caption>
 <tbody>
@@ -172,7 +213,7 @@ google_color_url = "AECCEB";
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <p id="footertext"><a href="copyright/index.html">Legal Notices</a> | Copyright 2005-2007 Lucas Holt
-    <br />$MidnightBSD: www/index.html,v 1.16 2007/07/24 20:25:18 laffer1 Exp $
+    <br />$MidnightBSD: www/index.html,v 1.17 2007/08/02 06:21:31 laffer1 Exp $
     </p>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
