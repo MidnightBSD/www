@@ -1,10 +1,13 @@
-/* CSS Document */
+/* 
+   CSS Document for MidnightBSD.org
+   $MidnightBSD$ 
+*/
 
 @import "/css/font-normal.css";
 
 body {
 	color: black; 
-	background: gray url('/images/mbsd_bggray.png');
+	background-color: white;
 	margin: 0;
 	font: 12px Helvetica, Arial, sans-serif;
 	letter-spacing: 1px;
@@ -49,21 +52,22 @@ img {
 	height: 90px; 
 	background-color: #6dcff6; 
 	color: white;
-    margin: 0; 
+	margin: 0; 
 	padding-bottom: 0;
 }
 
 #content {
-    background: white; 
+	background: white; 
 	width: 700px; 
 	margin: 0;
-	margin-left: 160px; 
+	margin-left: 160px;
 	padding: 20px;
 }
 
 #logo {
-	margin-top: 20px; 
-	margin-left: 100px;
+	margin-top: 20px;
+	text-align: left; 
+	margin-left: 100px; 
 }
 
 #rnav {
@@ -73,41 +77,41 @@ img {
 }
 
 #topnav {
-  text-align: left;
-  color: white;
-  background: black;
-  font-size: 0.9em;
-  margin: 0;
-  padding: 0;
-  height: 2em;
-  overflow: visible;
-  margin-top: 7px;
+	text-align: left;
+	color: white;
+	background: black;
+	font-size: 0.9em;
+	margin: 0;
+	padding: 0;
+	height: 2em;
+	overflow: visible;
+	margin-top: 7px;
 }
 
 #topnavlist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  padding-left: 140px;
-  padding-top: 1px;
-  height: 2em;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-left: 140px;
+	padding-top: 1px;
+	height: 2em;
 }
 
 #topnavlist li {
-  padding: 0 1em 0 1.2em;
-  display: inline;
-  border-left: 1px solid #B4B4B4;
+	padding: 0 1em 0 1.2em;
+	display: inline;
+	border-left: 1px solid #B4B4B4;
 }
 
 #topnavlist li a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 #topnavlist li:first-child {
-  border-left: 0;
-  padding-left: 0;
+	border-left: 0;
+	padding-left: 0;
 }
 
 /* Category Navigation */
@@ -199,11 +203,11 @@ img {
 	width: 100%; 
 	background-color: #6dcff6; 
 	color: white;
-    margin: 0; 
+	margin: 0; 
 	padding: 5px; 
 	left: 0;
 }
 
 #footertext {
-  margin-left: 175px;
+	margin-left: 175px;
 }
