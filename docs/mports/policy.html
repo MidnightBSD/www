@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>MidnightBSD :: Documentation :: mports</title>
 <link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.6 2007/08/22 00:56:25 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.7 2007/09/19 15:19:02 ctriv Exp $ -->
 </head>
 
 <body>
@@ -86,6 +86,14 @@
 </ul>
 
 <p>No port should use these variables</p>
+
+<h2>Interactive Scripts</h2>
+
+<p>No pkg-install or pkg-deinstall script should expect to run in an interactive envirement.  They should not prompt the user or expect input from the user.</p>
+
+<h2>pkg-req</h2>
+
+<p>Package requirement scripts are deprecated.  There is only one such script at the moment and its function will be reimplemented under the mport package system.</p>
 
 </div>
 <!-- END CONTENT -->
