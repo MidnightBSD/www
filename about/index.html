@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>MidnightBSD :: About</title>
 <link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/about/index.html,v 1.4 2007/08/22 00:35:42 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/about/index.html,v 1.5 2007/08/22 00:56:24 laffer1 Exp $ -->
 </head>
 
 <body>
@@ -26,8 +26,16 @@
             <li><a href="/support/index.html" title="Support">Support</a></li>
         </ul>
 
-	<p><a href="/index.html" title="English">EN</a> <a href="/ru/index.html" 
-        title="Russian">RU</a></p>
+	<p><a href="/index.html" title="English">EN</a> 
+	<a href="/de/index.html" title="German">DE</a>
+	<a href="/ru/index.html" title="Russian">RU</a>
+	</p>
+        
+        <p>
+        <a href="http://click.linksynergy.com/fs-bin/click?id=P*wIZOq1sCA&offerid=84864&subid=0"><img
+        alt="Toshiba - Toshibadirect.com" width="120" height="60" 
+        src="http://ad.linksynergy.com/fs-bin/show?id=P*wIZOq1sCA&bids=84864&gridnum=6&catid=62&subid=0" /></a>
+        </p>
 </div>
 
 
@@ -44,21 +52,39 @@
 <div id="contentwrap">
 	<h2>About</h2>
 <p>
-MidnightBSD is a FreeBSD derived Operating System.  A critical goal of the project is to create an easy to use desktop environment with graphical ports management, and system configuration using GNUstep.  The vast majority of the operating system will maintain a BSD license.</p>
+MidnightBSD is a FreeBSD derived Operating System.  A critical goal of the project
+is to create an easy to use desktop environment with graphical ports management, 
+and system configuration using GNUstep.  The vast majority of the operating system
+will maintain a BSD license. Certain software packages use other licenses such
+as X.org, GCC, and GNUstep.</p>
 
 <p>
-MidnightBSD was forked from FreeBSD 6.1 beta.  The system was forked to allow us to customize and integrate the environment including the ports and system configuration.  We wish for the system to appeal to beginners as well as command line tools for more experienced BSD users.  Many operating systems are under active development.  With MidnightBSD, we wish to focus on optimization and usability improvements for desktop users.  The FreeBSD project has developed a reliable server operating environment, but often usability and performance on the desktop is overlooked.  Scheduling, allocation of resources, security settings, and available application support should be tailored to desktop users.  Many of the BSD projects are tailored to servers or older hardware.  Others are distributions of FreeBSD with a nice graphical user interface, but still suffer from server centric design under the hood.  We did not fork FreeBSD as a result of a falling out, but rather as an excellent starting point.  It should be viewed as a compliment to the FreeBSD developers who have worked very hard on FreeBSD 5.x and 6.x.
+MidnightBSD was forked from FreeBSD 6.1 beta.  The system was forked to allow us 
+to customize and integrate the environment including the ports and system configuration.  
+We wish for the system to appeal to beginners as well as command line tools for 
+more experienced BSD users.  Many operating systems are under active development.  
+With MidnightBSD, we wish to focus on optimization and usability improvements for 
+desktop users.  The FreeBSD project has developed a reliable server operating environment, 
+but often usability and performance on the desktop is overlooked.  Scheduling, 
+allocation of resources, security settings, and available application support 
+should be tailored to desktop users.  Many of the BSD projects are tailored 
+to servers or older hardware.  Others are distributions of FreeBSD with a nice 
+graphical user interface, but still suffer from server centric design under the 
+hood.  We did not fork FreeBSD as a result of a falling out, but rather as an 
+excellent starting point.  It should be viewed as a compliment to the FreeBSD 
+developers who have worked very hard on FreeBSD 5.x and 6.x.
 </p>
 
 <p>We hope to create something unique.  Project goals include:</p>
 
 <ol>
-<li>A new window and login manager.</li>
+<li>A new window and login manager. [Replaced by Etoile]</li>
 <li>Centralized system preferences while maintaining the BSD style on the command line.</li>
-<li>A graphical ports and package management system.  Currently we use a derivative of FreeBSD ports.</li>
+<li>A graphical ports and package management system.  Currently we use a derivative of FreeBSD ports.
+[Now we have mports]</li>
 <li>Work on various portions of the kernel including syscons, process and disk scheduling, imports of FreeBSD and OpenBSD drivers, etc.</li>
-<li>Importing useful features from OpenBSD and NetBSD.</li>
-<li>Improving security with little distraction to the end user.</li>
+<li>Importing useful features from DragonFly, OpenBSD and NetBSD.</li>
+<li>Improving security with little distraction to the end user. [ipfw is enabled in CURRENT, many other changes are coming]</li>
 </ol>	
 	
 </div>
