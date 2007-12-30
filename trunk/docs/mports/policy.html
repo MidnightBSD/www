@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>MidnightBSD :: Documentation :: mports</title>
 <link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.9 2007/10/19 15:07:30 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.10 2007/10/19 17:27:53 laffer1 Exp $ -->
 </head>
 
 <body>
@@ -96,6 +96,14 @@
 <h2>Interactive Scripts</h2>
 
 <p>No pkg-install or pkg-deinstall script should expect to run in an interactive envirement.  They should not prompt the user or expect input from the user.</p>
+
+<h2>Plist and Echo</h2>
+
+<p>Don't expect to be able to echo things to the user from the plist during
+a <code>@exec</code> or <code>@unexec</code> directive.  It will work fine
+with the old FreeBSD pkg_* tools, but the behavior is undefined under
+libmport.  The user might see what you have to say, it might not. If in
+doubt use a pkg-install script or a pkg-message file.</p>
 
 <h2>pkg-req</h2>
 
