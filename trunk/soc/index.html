@@ -1,103 +1,110 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>MidnightBSD :: Summer of Code</title>
-<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/soc/index.html,v 1.2 2008/03/05 05:31:04 laffer1 Exp $ -->
-</head>
-
-<body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>MidnightBSD :: Summer of Code</title>
+		<link rel="stylesheet" type="text/css" media="all" href="../css/base.css" />
+<!-- $MidnightBSD: www/soc/index.html,v 1.3 2008/03/09 04:50:03 raven Exp $ -->
+		<style type="text/css" media="screen">
+		<!--
+		table { border-collapse: collapse; }
+		table td { padding: 20px; }
+		table th { background: #fff; border-bottom: 5px solid #555; }
+		.easy { border-bottom: 5px solid #9bf43c; }
+		.easymedium { border-bottom: 5px solid #cbf43c; }
+		.medium { border-bottom: 5px solid #f4c73c; }
+		.mediumhard { border-bottom: 5px solid #f4793c; }
+		.hard { border-bottom: 5px solid #f00; }
+		-->
+		</style>
+	</head>
+	<body>
 
 <!--#include virtual="/header.html" -->
-
-<div id="content">
-
-<div id="rnav">
-        <ul>
-            <li><a href="/index.html" title="Home">Home</a></li>
-            <li><a href="/about/index.html" title="About">About</a></li>
-            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
-            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
-
-            <li><a href="/community/index.html" title="Community">Community</a></li>
-            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
-            <li><a href="/support/index.html" title="Support">Support</a></li>
-        </ul>
-
-	<p>
-	    <a href="/de/index.html" title="German">DE</a> 
-	    <a href="/index.html" title="English">EN</a> 
-        <a href="/ru/index.html" title="Russian">RU</a>
-    </p>
-
-	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="/images/feed.gif" alt="RSS Feed" /> 
-	<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
-        
-</div>
-
-<h2>SoC Ideas</h2>
-
-<p>Here is a list of ideas for the Google Summer of Code.  Feel free to consider any of these ideas or a project of your own choosing.</p>
-
-<table border="1" style="border:solid;border-width:1px;">
-<tr bgcolor="grey">
-	<td width="50%"></td>
-	<td><b>Difficulty</b></td>
-	<td><b>Helpful Knowledge</b></td>
-</tr>
-<tr>
-	<td>Installer for OS: A graphical installer written using a toolkit currently ported to MidnightBSD.  Could be Gtk, QT, etc.  The system must be easy to use with minimal questions for the user.  Possible examples might be the OS X installer or PC-BSD's installer. </td>
-	<td>Medium</td>
-	<td>Familiar with the install process; Background in Gtk, QT, etc.</td>
-</tr>
-<tr>
-	<td>A system preferences management system:  This would allow the user to customize what services are running, and manage network settings.</td>
-	<td>Medium</td>
-	<td>Background in Gtk, QT, etc.</td>
-</tr>
-<tr>
-	<td>Software Update: Develop a system using the new mport tool to update operating system components as packages.</td>
-	<td>Medium</td>
-	<td>C, Background in Gtk or other GUI toolkit</td>
-</tr>
-<tr>
-	<td>Port ZFS from FreeBSD/Solaris.</td>
-	<td>Hard</td>
-	<td>C, C++, Familiar with filesystems</td>
-</tr>
-<tr>
-	<td>Veryify the SUS and POSIX compliance of system utilities and interfaces in the system. Report on these and offer suggestions to fix them</td>
-	<td>Medium</td>
-	<td>C; Good BSD background; Familiar with SUS and POSIX standards.</td>
-</tr>
-<tr>
-	<td>Write software applications for desktop users that run on MidnightBSD using GNUstep, Gtk or QT</td>
-	<td>Easy to Medium</td>
-	<td>Familiar with GUI toolkit; C, C++ or Objective C</td>
-</tr>
-<tr>
-	<td>Write a firewall management application (graphical) for PF or IPFW.</td>
-	<td>Medium</td>
-	<td>C or C++</td>
-</tr>
-<tr>
-	<td>Port Gjournal from FreeBSD.</td>
-	<td>Medium to Hard</td>
-	<td>C; Familiar with basic filesystem concepts</td>
-</tr>
-<tr>
-	<td>Port wireless drivers from the other BSDs.</td>
-	<td>Medium to Hard</td>
-	<td>C or C++</td>
-</tr>
-</table>
-
-</div>
+		<div id="content">
+			<div id="rnav">
+				<ul>
+					<li><a href="/index.html" title="Home">Home</a></li>
+					<li><a href="/about/index.html" title="About">About</a></li>
+					<li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
+					<li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
+					<li><a href="/community/index.html" title="Community">Community</a></li>
+					<li><a href="/developer/index.html" title="Developers">Developers</a></li>
+					<li><a href="/support/index.html" title="Support">Support</a></li>
+				</ul>
+				<p>
+					<a href="/de/index.html" title="German">DE</a>
+					<a href="/index.html" title="English">EN</a>
+					<a href="/ru/index.html" title="Russian">RU</a>
+				</p>
+				<p style="border-top: thin dashed silver; padding-top: 10px;">
+					<img src="/images/feed.gif" alt="RSS Feed" />
+					<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a>
+				</p>
+			</div>
+			<h2>SoC Ideas</h2>
+			<p>Here is a list of ideas for the Google Summer of Code.  Feel free to consider any of these ideas or a project of your own choosing.
+			</p>
+			<table>
+				<tr>
+					<th></th>
+					<th><b>Difficulty</b></th>
+					<th><b>Helpful Knowledge</b></th>
+				</tr>
+				<tr>
+					<td>Installer for OS: A graphical installer written using a toolkit currently ported to MidnightBSD.  Could be Gtk, QT, etc.  The system must be easy to use with minimal questions for the user.  Possible examples might be the OS X installer or PC-BSD's installer.
+					</td>
+					<td><span class="medium">Medium</span></td>
+					<td>Familiar with the install process; Background in Gtk, QT, etc.</td>
+				</tr>
+				<tr>
+					<td>A system preferences management system:  This would allow the user to customize what services are running, and manage network settings.
+					</td>
+					<td><span class="medium">Medium</span></td>
+					<td>Background in Gtk, QT, etc.</td>
+				</tr>
+				<tr>
+					<td>Software Update: Develop a system using the new mport tool to update operating system components as packages.
+					</td>
+					<td><span class="medium">Medium</span></td>
+					<td>C, Background in Gtk or other GUI toolkit</td>
+				</tr>
+				<tr>
+					<td>Port ZFS from FreeBSD/Solaris.</td>
+					<td><span class="hard">Hard</span></td>
+					<td>C, C++, Familiar with filesystems</td>
+				</tr>
+				<tr>
+					<td>Veryify the SUS and POSIX compliance of system utilities and interfaces in the system. Report on these and offer suggestions to fix them
+					</td>
+					<td><span class="medium">Medium</span></td>
+					<td>C; Good BSD background; Familiar with SUS and POSIX standards.</td>
+				</tr>
+				<tr>
+					<td>Write software applications for desktop users that run on MidnightBSD using GNUstep, Gtk or QT</td>
+					<td><span class="easymedium">Easy to Medium</span></td>
+					<td>Familiar with GUI toolkit; C, C++ or Objective C</td>
+				</tr>
+				<tr>
+					<td>Write a firewall management application (graphical) for PF or IPFW.</td>
+					<td><span class="medium">Medium<span></td>
+					<td>C or C++</td>
+				</tr>
+				<tr>
+					<td>Port Gjournal from FreeBSD.</td>
+					<td><span class="mediumhard">Medium to Hard</span></td>
+					<td>C; Familiar with basic filesystem concepts</td>
+				</tr>
+				<tr>
+					<td>Port wireless drivers from the other BSDs.</td>
+					<td><span class="mediumhard">Medium to Hard</span></td>
+					<td>C or C++</td>
+				</tr>
+			</table>
+		</div>
 <!-- END CONTENT -->
 
 <!--#include virtual="/footer.html" -->
-
-</body>
+	</body>
 </html>
