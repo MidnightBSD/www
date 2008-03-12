@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>MidnightBSD :: Documentation :: mports :: Fake</title>
 <link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/docs/mports/fake.html,v 1.7 2007/10/19 17:27:53 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/docs/mports/fake.html,v 1.8 2008/03/09 07:12:26 laffer1 Exp $ -->
 </head>
 
 <body>
@@ -96,9 +96,7 @@
 
 <p>A quick and dirty hack is to override <code>prefix</code> in the port makefile:</p>
 
-<pre>FAKE_MAKEARGS+= prefix=${FAKE_DESTDIR}${PREFIX}</pre>
-
-<p>This works, but if you ever configure the package with a separate <code>exec_prefix</code> things will break.</p>
+<pre>FAKE_OPTS=	prefixhack</pre>
 
 <p><code>DESTDIR</code> is occasionally called something different, the most common case being <code>INSTALL_ROOT</code>.  Simply set the <code>DESTDIRNAME</code> variable in the port's makefile.</p>
 
