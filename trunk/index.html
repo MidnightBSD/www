@@ -11,7 +11,7 @@ content="MidnightBSD, BSD, UNIX, Desktop, OS, Support, Ports, Release, Applicati
 <link rel="stylesheet" type="text/css" media="all" href="css/base.css" />
 <link rel="alternate" type="application/rss+xml" href="http://cia.vc/stats/project/MidnightBSD/.rss" title="CVS Commit Log"/>
 <link rel="alternate" type="application/rss+xml" href="http://www.justjournal.com/users/mbsd/rss" title="Developer Blog"/>
-<!-- $MidnightBSD: www/index.html,v 1.32 2008/01/31 16:56:10 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/index.html,v 1.33 2008/03/09 07:12:25 laffer1 Exp $ -->
 <script type="text/javascript">
 <!--
 function MM_swapImgRestore() { //v3.0
@@ -78,55 +78,8 @@ and soon amd64 compatible (including Opteron&#8482;, Athlon&#8482;64, and EM64T)
 architectures. It was originally based on <a href="http://www.freebsd.org/">FreeBSD</a> 
 6.1 Beta.  The goal of the project is to create a BSD with ease of use and simplicity in mind.</p>
 
-<h3>MidnightBSD 0.1-RELEASE</h3>
-
-<p>
-<strong>August 6, 2007</strong>  
-MidnightBSD 0.1-RELEASE is now available.  It includes several software packages
-such as ksh, sudo, OpenNTPD, gcc 3.4.4, BIND 9.3.4 (plus patch) and others in
-the base system.  Disc 1 ISO includes the entire Operating System and X11 (xorg 6.9)
-packages.  Disc 2 ISO includes a selection of additional packages such as 
-GNUstep, bash 3, zsh, and cups-base.  There are additional packages on our FTP
-server.  More will be added in a few days.  Only disc 1 is required for installation. 
-This release is intended for enthusiests, developers and people interested in
-new operating systems that can handle bugs.  The core OS is stable, but many
-elements such as ports are in flux.  
-</p>
-
-<p>Get 0.1:  <a href="http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.1/ ">Mirror 1</a>
-<a href="ftp://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.1">Mirror 2</a>
-<a href="http://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/0.1/">Official
-site (slow)</a></p>
-
-<h4>0.1-RELEASE Errata</h4>
-<pre>
-Installation issues 
-
-projectcenter.app package is missing dependancies on disc2. 
-mutt package is missing urlview dependancy on disc2. 
-
-GNUstep package includes gdnc which is missing libgcc_s.so.1. 
-
-bash 3 and gmake missing libintl.so.6. This can be fixed by uninstalling gettext 
-and building it from the port. A new package was placed on the FTP server.
-
-System issues 
-
-CVSUP example for updating src fetches CURRENT instead of RELENG_0_1
-
-The new mports system was not included in the RELEASE.  Many ports work in
-mports that do not work in the old system.  It is suggested that you update
-your source using RELENG_0_1 and download the latest mports using CVS or CVSup.
-
-Using Virtual PC for Windows: 
-If you install MidnightBSD in VPC, you will need to set hint.acpi.0.disabled="1" 
-in /boot/device.hints This will help with the "calcru: negative runtime of" issue.
-
-August 11, 2007: 
-The pkg_install tools found in src/usr.sbin/pkg_install were not updated for
-mports.  This has been corrected.  You should be able to cvs update that directory
-and run make install and get the new versions of pkg_add, pkg_delete, and so on.  
-</pre>
+<p>We've released two versions of MidnightBSD:  <a href="docs/releases/0.1/">0.1</a> and 
+<a href="docs/releases/0.1.1/">0.1.1</a>.  <a href="docs/releases/0.2/">0.2</a> is under development.</p>
 
 <table>
 <caption><span style="color: #333; text-decoration: underline;">MidnightBSD in action</span></caption>
