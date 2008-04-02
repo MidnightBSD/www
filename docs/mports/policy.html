@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>MidnightBSD :: Documentation :: mports</title>
 <link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.11 2007/12/30 21:50:33 ctriv Exp $ -->
+<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.12 2008/03/09 07:12:26 laffer1 Exp $ -->
 </head>
 
 <body>
@@ -41,6 +41,30 @@
 <p>If you are working on mports, you should define the MPORT_MAINTAINER_MODE variable in your make.conf.</p>
 
 <p>The following are guidelines for the behavior and layout of a port.  <em>Any time</em> a port is updated or created, it should be checked for compliance with these guidelines.  Note that this is a living document that should be checked from time to time for changes.</p>
+
+<h2>PKGNAME</h2>
+
+<p>(Note that PKGNAME currently includes the version, which is unfortunate and an artifact from our FreeBSD roots.  In time PKGNAME will be renamed, and PKGSUBNAME will renamed to PKGNAME.)</p>
+
+<p>Every PKGSUBNAME must be unique.  This is not currently the case in the tree, but work has begun on this front.</p>
+
+<h2>PORTREVISION</h2>
+
+<p>The PORTREVISION variable should only be incremented when there changes that will affect:</p>
+	<ul>
+		<li>Behaviors. (used to provide the foo widget, changed this to the bar widget).
+		<li>File locations (moved configuration file to $PREFIX/etc/ instead of $PREFIX/$PKGSUBNAME/etc)</li>
+		<li>Dependencies up or down the chain. (some depend bumped a shared lib version, bump so that people will get the new version and link correctly).
+		<li>Other issuse at the port maintainer's discretion.</li>
+	</ul>
+<p>The following are <em>not</em> cause for incrementing the PORTREVISION:</p>
+	<ul>
+		<li>Fixing a broken port.  Version numbers are for tracking packages, not ports.</li>
+		<li>Setting the LICENSE variable</li>
+		<li>Stylistic changes</p>
+	</ul>
+
+<p>PORTREVISION used to be bumped in more cases, due to the way that our cluster software used to work.  The cluster now checks each port for each run.</p>		
 
 <h2>LICENSE</h2>
 
