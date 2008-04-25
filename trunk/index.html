@@ -11,7 +11,7 @@ content="MidnightBSD, BSD, UNIX, Desktop, OS, Support, Ports, Release, Applicati
 <link rel="stylesheet" type="text/css" media="all" href="css/base.css" />
 <link rel="alternate" type="application/rss+xml" href="http://cia.vc/stats/project/MidnightBSD/.rss" title="CVS Commit Log"/>
 <link rel="alternate" type="application/rss+xml" href="http://www.justjournal.com/users/mbsd/rss" title="Developer Blog"/>
-<!-- $MidnightBSD: www/index.html,v 1.33 2008/03/09 07:12:25 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/index.html,v 1.34 2008/03/18 01:56:12 laffer1 Exp $ -->
 <script type="text/javascript">
 <!--
 function MM_swapImgRestore() { //v3.0
@@ -147,6 +147,31 @@ MidnightBSD
 </table>
 
 <h3>Security</h3>
+
+
+<p>April 17, 2008<br />
+OpenSSH was updated to 5.0p1 in CURRENT to correct an issue with X11 forwarding.  A patch for
+this issue was committed to RELENG_0_1 as well as a fix for a config file issue.
+</p>
+
+<p>
+A <a href="http://secunia.com/advisories/29803/">security issue</a> was found in mksh. This
+only affected CURRENT users.  The software was updated to r33d</p>
+
+<p>April 6, 2008<br />
+bzip2 was updated to 1.05 in CURRENT to correct a security issue.
+</p>
+
+<p>April 3, 2008<br />
+A security issue was found with strfmon in libc.  
+<a href="http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1391">CVE-2008-1391</a> Integer Overflow.
+This was fixed in CURRENT.</p>
+
+<p>February 15, 2008<br />
+CURRENT now has a patch to correct a potential security issue with sendfile. Files were not checked prior to serving which would allow a file that was write only to be served. While this scenario is rare, we decided to fix it anyway. 
+<br />
+sendfile is used by many daemons including Apache httpd.
+</p>
 
 <p>August 1, 2007<br />
 BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues.  BIND is now equivalent to 9.3.4p1.
