@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MidnightBSD Documentation</title>
+		<link rel="shortcut icon" href="/favicon.ico">
+		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
+		<script type="text/javascript" src="../shadowbox/src/adapter/shadowbox-base.js"></script>
+		<script type="text/javascript" src="../shadowbox/src/shadowbox.js"></script>
+		<script type="text/javascript">
+			Shadowbox.loadSkin('classic', '../shadowbox/src/skin');
+			Shadowbox.loadLanguage('en', '../shadowbox/src/lang');
+			Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt'], '../shadowbox/src/player');
+			window.onload = function(){
+			Shadowbox.init();
+			};
+		</script>
+		<style type="text/css" media="all">
+		<!--
+			@import url("../css/essence.css");
+		-->
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<div class="menu">
+						<ul>
+							<li><a href="../">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../news/">&nbsp;news</a></li>
+									<li><a href="../featured/">&nbsp;featured ports</a></li>
+									<li><a href="../security/">&nbsp;security</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../about/">about<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../about/#history">&nbsp;history</a></li>
+								</ul>
+	<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+							<li><a href="../download/">download<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../notes/">&nbsp;release notes</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../screenshots/">screenshots<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../screenshots/#screencasts">&nbsp;screencasts</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../community/">community<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../mailman/listinfo/">&nbsp;mailing lists</a></li>
+									<li><a href="../wiki/">&nbsp;wiki</a></li>
+									<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
+									<li><a href="../art/">&nbsp;art project</a></li>
+									<li><a href="../donate/">&nbsp;donations</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../developers/">developers<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../support/">support<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../documentation/">&nbsp;documentation</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+					</div> <!-- close "menu" div -->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/doc32.png"> Documentation</h2>
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#1a"><strong>Installation</strong></a></li>
+						<ul>
+							<li><a href="#1b">Introduction</a></li>
+							<li><a href="#1c">Preparing For Installtion</a></li>
+							<li><a href="#1d">Installing MidnightBSD</a></li>
+							<li><a href="#1e">Example Hardware Configurations</a></li>
+						</ul>
+						<li><a href="#2a"><strong>mports</strong></a></li>
+						<ul>
+							<li><a href="#2b">Introduction</a></li>
+							<li><a href="#2c">Using Ports</a></li>
+							<li><a href="#2d">History</a></li>
+							<li><a href="#2e">FreeBSD's ports vs. mports</a></li>
+							<li><a href="#2f">Future Directions</a></li>
+						</ul>
+					</ul>
+				</div>
+				<h3 id="1a">Installation</h3>
+				<h4 id="1b">Introduction</h4>
+				<p>While MidnightBSD plans to target moderate and novice users, currently installation is too difficult for beginners to *NIX like operating systems. Experience with BSD, Linux, or another *NIX like system is very helpful. FreeBSD users familiar with sysinstall should have no problem with this procedure. You may also consult the FreeBSD Handbook for additional information not found on this page.
+				</p>
+				<h4 id="1c">Preparing For Installation</h4>
+				<p>You may download MidnightBSD from our FTP server or any mirrors. You will need disk 1 of a release or snapshot in order to install MidnightBSD.
+				</p>
+				<p>You will need free space on your hard drive. While the system runs very well on a few gigabytes of disk space, we recommend at least 15GB of space for use with mports on a desktop. An Intel Pentium class computer or equivalent is required. We have removed 486 support from the default install, although it can be compiled in. At least 48MB of RAM is required for installation.
+				</p>
+				<p>Depending on your needs, various graphics cards are supported at different levels. Many network cards are supported as well as a few wireless network cards. We will document them at a later time. Many onboard audio controllers are supported as well as other cards like the Creative Labs Sound Blaster Audigy and Audigy 2 families.
+				</p>
+				<p>MidnightBSD can co-exist with Microsoft Windows or Linux on the same disk. It is recommended that you use GRUB from Linux if you wish to dual boot MidnightBSD with Linux. For Windows, the included boot loader is sufficient. (Windows XP was tested). Third party boot managers such as System Commander 8.20 are supported as well. I currently dual boot Windows XP SP2 and MidnightBSD with System Commander on my primary desktop.
+				<p>You may also install MidnightBSD using a virtualization product such as qemu, Microsoft Virtual PC, or VMware. Parallels has not been tested to my knowledge.
+				</p>
+				<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your favorite CD burning software. If you need to download burning software, <a href="http://www.maconnect.ch/index.php?page=liquidcd&lang=en">LiquidCD</a> for Mac OS X, and <a href="http://infrarecorder.sourceforge.net/">InfraRecorder</a> for Windows XP are both free and easy to use.
+				</p>
+				<h4 id="1d">Installing MidnightBSD</h4>
+				<p>Insert the MidnightBSD CD into your CD-ROM drive and start up your PC. On some systems, you may need to enter the BIOS to enable booting from the CD-ROM drive first. On some systems, there is a button you can push to select the CD-ROM drive. For instance, on some Dell systems you can press F12 and then pick the CD-ROM drive.
+				</p>
+				<p>You should see a red and blue screen come up after a few moments preceded by a lot of white and black text. If several minutes pass with no activity and you do not see this screen, please report it. There maybe a bug or an incompatibility with your system we can work to fix.
+				</p>
+				<p>From this point, you may follow the steps in sysinstall to complete installation. On snapshots and possibly the first release, X11 (XORG) and packages are not present. Do not attempt to install these items or you will receive errors. We hope to resolve this by 0.2 release.
+				</p>
+				<h4 id="1e">Example Hardware Configurations</h4>
+				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
+				<div class="hardware">
+					<table>
+					<caption>Hardware Tested with MidnightBSD</caption>
+						<tr>
+							<th>Hardware</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+						<tr>
+							<td>Dell Precision 650</td>
+							<td>Works</td>
+							<td>Dual 2.0Ghz Xeon 1GB ECC RAM SCSI and IDE. Onboard sound, NIC work.</td>
+						</tr>
+						<tr>
+							<td>Custom Pentium PC</td>
+							<td>Works</td>
+							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. Onboard sound untested, network card works, IDE channels do not work (CD-ROM, etc). Sata controller works in recent snapshots. Sound Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected.</td>
+						</tr>
+						<tr>
+							<td>Custom PC</td>
+							<td>Works</td>
+							<td>Custom Built Nvidia nForce 2 w/ sata raid (MSI motherboard) 512mb PC2700 DDR, 2 sata disks in gmirror raid 1 configuration, 1 ide disk for boot partition, onboard sound, Geforce 5200 AGP 8x. Onboard NIC (nvidia maclan) did not work correctly, but an OEM Intel em worked as expected. Some disk corruption occured on the sata raid setup, but determined to be a faulty drive.</td>
+						</tr>
+						<tr>
+							<td>Compaq Cyrix based 366Mhz</td>
+							<td>Works</td>
+							<td>X11 was not tested, but all devices including an included 3com 905 NIC worked as expected.</td>
+						</tr>
+						<tr>
+							<td>Dell PowerEdge 5300</td>
+							<td>Works</td>
+							<td>Xeon 550Mhz PIII 512MB RAM, all scsi system. Works as expected including integrated ATI graphics.</td>
+						</tr>
+						<tr>
+							<td>Virtual PC</td>
+							<td>Works</td>
+							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works except the CDROM drive is "lost" during install. If you can get it installed using ftp install, it will work fine.</td>
+						</tr>
+						<tr>
+							<td>VMware</td>
+							<td>Works</td>
+							<td>VMware player works under Windows Vista. VMware Fusion on Mac OS X runs MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
+						</tr>
+						<tr>
+							<td>Sun Ultra 10 3D creator</td>
+							<td>Works</td>
+							<td>Early releases were tested on a Sun Ultra 10 3D creator. The system died however.</td>
+						</tr>
+						<tr>
+							<td>Qemu</td>
+							<td>Works</td>
+							<td>One of our developers uses qemu often with the system. It is included in mports. I believe he's also run MidnightBSD virtualized inside of OpenBSD.</td>
+					</table>
+				</div>
+				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.</p>
+				<h3 id="2a">mports</h3>
+				<h4 id="2b">Introduction</h4>
+				<p>mports is the MidnightBSD ports collection. It contains hundreds of ported software applications ready to use on MidnightBSD. mports simplifies installing software packages on your desktop system.</p>
+				<p>In the future, mports will also include precompiled packages to speed up the installation process. An automated software update system is planned. There are a few precompiled software packages on the MidnightBSD FTP server.</p>
+				<h4 id="2c">Using mports</h4>
+				<p>You can install mports during the installation of MidnightBSD. If you forgot to do so, you may download the latest mports by using <code>csup</code> or <code>cvs</code>. Execute the command:</p>
+				<pre>
+mkdir /usr/mportscd /usrcvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports
+				</pre>
+				<p>Updating mports periodically is recommended. New versions of software and additional software are added all the time. Keeping up to date will help you maintain best security practices and possibly give you new features and functionality or bug fixes.</p>
+				<p>To install an mport, simply do the following:</p>
+				<pre>cd /usr/mports</pre>
+				<p>Pick a category from the file system list or use make search key=term where term is what you want to search for. Once you have the mport, you can type make install clean to install it and clean up the compiling mess.</p>
+				<p>It is recommended that you install mports/sysutils/portupgrade at your convenience. It will allow you to upgrade mports and install mports much easier. You can simply type portinstall portname to install a port called portname. It can speed up the process considerably.</p>
+				<p>To uninstall a port, simply goto the directory of the mport and type <code>make deinstall</code>.</p>
+				<p>There are also utilities like <code>pkg_add</code>, <code>pkg_delete</code> and so forth included in the base system. <code>pkg_add -r <em>portname</em></code> can fetch a precompiled package from the MidnightBSD server and install it for you. You can also install your own packages. There are many possibilities.</p>
+				<h4 id="2d">History</h4>
+				<p>MidnightBSD uses the FreeBSD ports collection. Over time it has begun to diverge. Several projects have been influential in the design of the mports system, notably OpenBSD.</p>
+				<p>The initial import of mports was done by our security officer, archite. mports maintainership was transfered to wintellect after some initial work by laffer1. Currently, all commiters have access to add and modify mports. You may contact any commiter about mports problems or additions. For infrastructure questions or concerns, direct them to wintellect. (use the alias at midnightbsd.org)</p>
+				<h4 id="2e">FreeBSD's ports vs. mports</h4>
+				<p>FreeBSD's ports install directly into the system at install time, mports however uses a process called "fake" to make a package and then installs that package. This simplifies the logic of the ports system. Code does not need to be duplicated for installation from the port and installation from the package. The change is very recent, and at this time we are still testing the port tree to insure that all ports function properly under the "fake" system.</p>
+				<p>For information on common reasons for "fake" errors, see the <a href="#">fake transition page</a>.</p>
+				<p>Mport is endeavoring to be more standardized than the FreeBSD ports tree. See the policy page for information on current port standards.</p>
+				<h4 id="2f">Future Directions</h4>
+				<div class="hardware">
+					<ul>
+						<li>A new package scheme is early planning. It would be based on FreeBSD's package system, but have several new features such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, and a radically improved package database.</li>
+						<li>A package distribution system along the lines of apt-get or CPAN.</li>
+						<li>The MidnightBSD Project hopes to add a graphical mports management application in future versions with automatic software update functionality as well as base system software updating.</li>
+						<li>As time goes by we are trying to simplify the mports system. FreeBSD's ports have years of backwards compatibly code and many features that we simply don't need.</li>
+					</ul>
+				</div>
+				<p>This document is incomplete. It will be more complete in the future.</p>
+			</div>
+			<div class="horiz"><blockquote><hr></blockquote></div>
+			<div class="clear"></div>
+			<div id="footer">
+				<blockquote>
+					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/"></a></span></p>
+				</blockquote>
+			</div>
+		</div>
+	</body>
+</html>

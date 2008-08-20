@@ -1,0 +1,9 @@
+#kde a { background-image: url("../images/ports/kde.png"); }
+#gnustep a { background-image: url("../images/ports/gnustep.png"); }
+#seamonkey a { background-image: url("../images/ports/seamonkey.png"); }
+#pidgin a { background-image: url("../images/ports/pidgin.png"); }
+#gnome a { background-image: url("../images/ports/gnome.png"); }
+#etoile a { background-image: url("../images/ports/etoile.png"); }
+#gimp a { background-image: url("../images/ports/gimp.png"); }
+#abiword a { background-image: url("../images/ports/abiword.png"); }
+#xine a { background-image: url("../images/ports/xine.png"); }
