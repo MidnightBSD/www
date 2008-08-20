@@ -1,205 +1,160 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>MidnightBSD Project</title>
-<meta name="description" content="The MidnightBSD Project" />
-<meta name="keywords"
-content="MidnightBSD, BSD, UNIX, Desktop, OS, Support, Ports, Release, Application, Software, CVS, CVSup, News, homepage, Unix, Laptop" />
-<link rel="icon" href="./favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" type="text/css" media="all" href="css/base.css" />
-<link rel="alternate" type="application/rss+xml" href="http://cia.vc/stats/project/MidnightBSD/.rss" title="CVS Commit Log"/>
-<link rel="alternate" type="application/rss+xml" href="http://www.justjournal.com/users/mbsd/rss" title="Developer Blog"/>
-<!-- $MidnightBSD: www/index.html,v 1.44 2008/07/02 02:45:02 laffer1 Exp $ -->
-<script type="text/javascript">
-<!--
-function MM_swapImgRestore() { //v3.0
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
-
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_swapImage() { //v3.0
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-//-->
-</script>
-</head>
-
-<body>
-
-<!--#include virtual="/header.html" -->
-
-<div id="content">
-
-<div id="rnav">
-        <ul>
-            <li><a href="/index.html" title="Home">Home</a></li>
-            <li><a href="/about/index.html" title="About">About</a></li>
-            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
-            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
-            <li><a href="/community/index.html" title="Community">Community</a></li>
-            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
-            <li><a href="/support/index.html" title="Support">Support</a></li>
-            <li><a href="/wiki" title="MidnightBSD Wiki">Wiki</a></li>
-        </ul>
-
-	<p>
-	    <a href="/de/index.html" title="German">DE</a> 
-	    <a href="/index.html" title="English">EN</a> 
-            <a href="/ru/index.html" title="Russian">RU</a>
-        </p>
-
-	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="images/feed.gif" alt="RSS Feed" /> 
-	<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
-
-	<p>
-	<a href="http://bugreport.midnightbsd.org/">Bug Reports</a><br />
-        <a href="http://forums.midnightbsd.org/">Forums</a><br />
-        <a href="/mailman/listinfo">Mailing Lists</a><br />
-	<a href="http://www.cafepress.com/midnightbsd" title="Purchase MidnightBSD Merchandise">Purchase</a>
-        </p>
-
-        <p>
-        <strong>Getting Source</strong><br />
-        <a href="cgi-bin/cvsweb.cgi" title="View the CVS Repository on the web">CVSWeb</a><br />
-        <a href="developer/cvsup.html" title="Download source or mports">CVSup</a><br />
-        </p>
-
-        <p><strong>mports</strong><br />
-        <a href="mports/README.html">Port Descriptions</a> 
-        </p>
-</div>
-
-<h2>Introduction</h2>
-
-<p style="text-indent: 3em; line-height: 1.5; margin-bottom: 20px;">MidnightBSD 
-is a desktop operating system for x86 compatible (including Pentium&reg; and Athlon&#8482;), 
-and soon amd64 compatible (including Opteron&#8482;, Athlon&#8482;64, and EM64T) 
-architectures. It was originally based on <a href="http://www.freebsd.org/">FreeBSD</a> 
-6.1 Beta.  The goal of the project is to create a BSD with ease of use and simplicity in mind.</p>
-
-<p>We've released two versions of MidnightBSD:  <a href="docs/releases/0.1/">0.1</a> and 
-<a href="docs/releases/0.1.1/">0.1.1</a>.<br />  <a href="docs/releases/0.2/">0.2</a> is under development.</p>
-
-<table>
-<caption><span style="color: #333; text-decoration: underline;">MidnightBSD in action</span></caption>
-<tbody>
-<tr>
-<td colspan="3" style="width: 400px;"><img src="images/screen_login.jpg" alt="screen shot: using MidnightBSD" id="screen" /></td>
-</tr>
-<tr>
-<td style="width: 33%"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_login.jpg',0)"><img width="100" height="75" src="images/screen_login.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
-<td style="width: 33%" align="center"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_wm.jpg',0)"><img width="100" height="75" src="images/screen_wm.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
-<td style="width: 34%" align="right"><a href="#" onmouseover="MM_swapImage('screen','','images/screen_boot.jpg',0)"><img width="100" height="75" src="images/screen_boot.jpg" alt="screen shot: using MidnightBSD"  /></a></td>
-</tr>
-</tbody>
-</table>
-
-<p><a href="http://cs.emich.edu/mbsd/videos/demo1.mov">Watch</a> demo movie in QuickTime format.</p>
-
-<p>Installing MidnightBSD videos: 
-<a href="http://video.google.com/videoplay?docid=-3504097528804636404">Video 1</a>
-<a href="http://video.google.com/videoplay?docid=-1327567970434212474">Video 2</a>
-or
-<a href="http://video.google.com/videoplay?docid=-1215820984218210282&q=MidnightBSD&pr=goog-sl">part 1</a> 
-<a href="http://video.google.com/videoplay?docid=-6978382486264269794&pr=goog-sl">part 2</a> 
-<a href="http://video.google.com/videoplay?docid=6990322451567856326&pr=goog-sl">part 3</a> 
-<a href="http://video.google.com/videoplay?docid=-1079107845259123061&pr=goog-sl">part 4</a>
-<br /> All of the install videos are on Google Video and the various MidnightBSD FTP mirrors.
-</p>
-
-<h3>Security</h3>
-
-<p>April 17, 2008<br />
-OpenSSH was updated to 5.0p1 in CURRENT to correct an issue with X11 forwarding.  A patch for
-this issue was committed to RELENG_0_1 as well as a fix for a config file issue.
-</p>
-
-<p>
-A <a href="http://secunia.com/advisories/29803/">security issue</a> was found in mksh. This
-only affected CURRENT users.  The software was updated to r33d</p>
-
-<p>April 6, 2008<br />
-bzip2 was updated to 1.05 in CURRENT to correct a security issue.
-</p>
-
-<p>April 3, 2008<br />
-A security issue was found with strfmon in libc.  
-<a href="http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1391">CVE-2008-1391</a> Integer Overflow.
-This was fixed in CURRENT.</p>
-
-<p>February 15, 2008<br />
-CURRENT now has a patch to correct a potential security issue with sendfile. Files were not checked prior to serving which would allow a file that was write only to be served. While this scenario is rare, we decided to fix it anyway. 
-<br />
-sendfile is used by many daemons including Apache httpd.
-</p>
-
-<p>August 1, 2007<br />
-BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues.  BIND is now equivalent to 9.3.4p1.
-</p>
-
-<p>May 2, 2007<br />
-CURRENT and STABLE both have the patch for ipv6 type 0 routing headers.  The problem is that ipv6 routing headers could be run over the same link multiple times. 
-</p>
-<p>March 10, 2007<br />
-While many of the DST changes were imported last year, we decided to cover all cases and import
-the latest tzdata2007c.  Users concerned about DST changes should update their sources
-and rebuild.  The java ports may not have DST changes in place.  We will review that issue.
-</p>
-<p>Jaunary 23, 2007<br />
-A &quot;symlink&quot; exploit was found in the MidnightBSD jail system. A fix was made available.  Please 
-update your /etc/rc.d/jail file from cvs.  Patches will not be created until our first release.
-</p>
-
-<h3>Recent CVS Activity</h3>
-<p><a href="http://cia.vc/stats/project/midnightbsd">cia.vc</a></p>
-<!--#include virtual="cvslist.inc" -->
-
-<h3>Developer Journal</h3>
-<p><a href="http://www.justjournal.com/users/mbsd">
-blog</a></p>
-<!--#include virtual="mbsdblog.inc" -->
-
-<p style="padding-top: 10px;">
-<script type="text/javascript"><!--
-google_ad_client = "pub-1321195614665440";
-google_ad_width = 468;
-google_ad_height = 60;
-google_ad_format = "468x60_as";
-google_ad_type = "text_image";
-google_ad_channel ="";
-google_color_border = "6699CC";
-google_color_bg = "003366";
-google_color_link = "FFFFFF";
-google_color_text = "AECCEB";
-google_color_url = "AECCEB";
-//--></script>
-<script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</p>
- 
-<p><script type="text/javascript" src="http://www.ohloh.net/projects/5078;badge_js"><!-- ie7 --></script></p>
-
-<p><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=71850604307c13d83f12711447cc2d8917f840381318884700136030"></script></p>
-</div>
-
-<!--#include virtual="/footer.html" -->
-
-</body>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MidnightBSD</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="css/ihateie5.css"><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="css/ihateie6.css"><![endif]-->
+		<style type="text/css" media="all">
+		<!--
+			@import url("css/essence.css");
+		-->
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="./" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<div class="menu">
+						<ul>
+							<li><a href="./">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="news/">&nbsp;news</a></li>
+									<li><a href="featured/">&nbsp;featured ports</a></li>
+									<li><a href="security/">&nbsp;security</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="about/">about<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="about/#history">&nbsp;history</a></li>
+								</ul>
+	<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+							<li><a href="download/">download<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="notes/">&nbsp;release notes</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="screenshots/">screenshots<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="screenshots/#screencasts">&nbsp;screencasts</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="community/">community<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="mailman/listinfo/">&nbsp;mailing lists</a></li>
+									<li><a href="wiki/">&nbsp;wiki</a></li>
+									<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
+									<li><a href="art/">&nbsp;art project</a></li>
+									<li><a href="donate/">&nbsp;donations</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="developers/">developers<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="support/">support<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="documentation/">&nbsp;documentation</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+					</div> <!-- close "menu" div -->
+					<div class="clear"></div>
+			<div id="welcomebox">
+				<div id="lang">
+					<h5 id="english" title="English"><a href="./">English</a></h5>
+					<h5 id="german" title="German"><a href="de/">German</a></h5>
+					<h5 id="russian" title="Russian"><a href="ru/">Russian</a></h5>
+				</div>
+				<div class="clear"></div>
+				<div id="welcome">
+					<h2>Welcome to MidnightBSD</h2>
+					<blockquote>
+						<p>MidnightBSD is a new BSD-derived operating system developed with desktop users in mind. It includes all the software you'd expect for your daily tasks &#8212; email, web browsing, word processing, gaming, and much more.</p>
+						<p>With a small community of dedicated developers, MidnightBSD strives to create an easy-to-use operating system everyone can use, freely. Available for x86, AMD64, SPARC, and as Virtual Machines.</p>
+					</blockquote>
+				</div>
+				<div id="getbox">
+					<div id="gettext">
+						<h2><a href="download/">Get MidnightBSD</a></h2>
+						<h3>Latest Release - 0.1.1</h3>
+						<div id="getcd"><a href="download/" title="Get MidnightBSD"></a></div>
+						<div class="clear"></div>
+						<h4><a href="../notes/">Release Notes</a></h4>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div id="gravity">
+				<div id="news">
+					<h2><a href="news/">News &#187;</a></h2>
+					<blockquote>
+						<p class="date">January 4, 2008</p>
+						<p class="update">I've been quite lazy about maintaining this developer blog. I'd like to catch people up on happenings in the project.</p>
+						<p class="more"><a href="news/#20080104a">Read more...</a></p>
+					</blockquote>
+					<blockquote>
+						<p class="date">January 4, 2008</p>
+						<p class="update">I've been upgrading our server "stargazer" which hosts the website, cvs and other services for MidnightBSD.</p>
+						<p class="more"><a href="news/#20080104b">Read more...</a></p>
+					</blockquote>
+				</div>
+				<div id="ports">
+					<h2><a href="featured/">Featured Ports &#187;</a></h2>
+					<ul>
+						<li id="kde" title="KDE"><a href="featured/#009">KDE</a></li>
+						<li id="gnustep" title="GNUstep"><a href="featured/#008">GNUstep</a></li>
+						<li id="seamonkey" title="SeaMonkey"><a href="featured/#007">SeaMonkey</a></li>
+						<li id="pidgin" title="Pidgin"><a href="featured/#006">Pidgin</a></li>
+						<li id="gnome" title="GNOME"><a href="featured/#005">Gnome</a></li>
+						<li id="etoile" title="Etoile"><a href="featured/#004">Etoile</a></li>
+						<li id="gimp" title="GIMP"><a href="featured/#003">Gimp</a></li>
+						<li id="abiword" title="AbiWord"><a href="featured/#002">AbiWord</a></li>
+						<li id="xine" title="Xine"><a href="featured/#001">Xine</a></li>
+					</ul>
+				</div>
+				<div id="security">
+					<h2><a href="security/">Security &#187;</a></h2>
+					<blockquote>
+						<p class="date">August 7, 2007</p>
+						<p class="update">BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues. BIND is now...</p>
+						<p class="more"><a href="security/#20070801">Read more...</a></p>
+					</blockquote>
+					<blockquote>
+						<p class="date">October 5, 2007</p>
+						<p class="update">CURRENT and STABLE both have the patch for ipv6 type 0 routing headers. The problem is...</p>
+						<p class="more"><a href="security/#20070502">Read more...</a></p>
+					</blockquote>
+				</div>
+			</div>
+			<div class="horiz"><blockquote><hr></blockquote></div>
+			<div class="clear"></div>
+			<div id="footer">
+				<blockquote>
+					<p><a href="legal/">Legal Notices</a> &#8226; <a href="sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd" target="_blank">Store</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/" target="_blank">common creature</a></span></p>
+				</blockquote>
+			</div>
+		</div>
+	</body>
 </html>
