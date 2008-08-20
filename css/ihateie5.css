@@ -1,0 +1,13 @@
+body { text-align: center; }
+#ports ul { margin-left: 20px !important; }
+#news, #ports, #security { width: 290px !important; }
+#welcomebox { text-align: left !important; }
+#gravity { text-align: left !important; }
+#ports li a { color: white !important; }
+#lang { margin-left: 135px !important; padding-top: 13px !important; padding-bottom: -20px !important; }
+#lang h5 { display: inline !important; margin-bottom: -15px !important; }
+#lang h5 a { color: white !important; }
+#welcome { margin-left: -25px !important; }
+#welcome h2 { margin-top: 0 !important; }
+#getbox { margin-top: -25px !important; margin-right: 15px !important; }
+#getcd a { margin: 0px 90px 5px 90px !important; }

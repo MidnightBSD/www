@@ -1,0 +1,64 @@
+/* ========= NEWS ========== */
+.newsblockquote { margin-bottom: 75px; padding: 25px; background: #f2fbff; border: 2px solid #dff2fb; }
+.news h3 { text-align: center; font-size: 0.9em; }
+.news h3 { color: #15a9ed; }
+.news h4 { color: #8cc4dd; }
+.reference { font-size: 85%; text-align: center; }
+
+/* ========= DEVS ========== */
+#text ul li { font-size: 11pt; margin-bottom: 5px; }
+.devnote { font-size: 80%; color: #aaa; padding: 15px; margin-top: 15px; }
+.devupdate h4 { color: #15a9ed; text-align: center; padding-top: 0.4em; margin-bottom: 0; display: block; }
+.devupdate { background: #f2fbff; border: 2px solid #dff2fb; font-size: 80%; width: 40%; margin-right: 2.4em; color: #555; }
+.devasterisk { color: #1373ce; }
+#list ul { margin-left: 2em; padding-left: 1em; list-style-position: inside; }
+#devresources { background: #fff; width: 55%; font-size: 80% }
+.code { font-family: monospace; background: #f4f4f4; color: #444; border: 1px solid #aaa; padding: .0em; margin: .4em 0; }
+code { font-family: monospace; background: #f4f4f4; color: #444; border: 1px solid #aaa; padding: .0em; margin: .4em 0; }
+.highlight { background: #f8f484; }
+
+/* ========= BLOG STUFF ========= */
+.bluebox { background: #f2fbff; border: 2px solid #dff2fb; padding: .8em; }
+
+
+/* ========= DOWNLOAD ========= */
+.center { text-align: center; }
+.download table img { border: none; }
+.down a:link, .down a:visited { color: #555; text-decoration: none; border-bottom: 1px dotted #555; }
+.down a:hover, .down a:active { color: #777; border-bottom: 1px dotted #777; }
+.download th { padding: 10px; font-weight: bold; text-align: center; }
+.download td { padding: 10px; border-width: 0; text-align: center; }
+table.download { margin: 0 auto; border: 1px solid #ccc; border-collapse: collapse; }
+.download caption { color: #c00; font-size: large; font-weight: bold; margin: 0 auto 10px auto; }
+.downone { background: #f2fbff; }
+.downtwo { background: #e9f8ff; }
+.plus { color: #aaa; }
+.downsmall { font-size: 75%; }
+
+/* ========= ABOUT ========= */
+.midnightpic { float: left; margin: 0 10px 0 0; border: 1px solid #ccc; padding: .2em; text-align: center; font-size: 8pt; }
+#text ul li { font-size: 14px; }
+#text img { border: none; }
+
+/* ========= ART Project ========= */
+table.art { margin: 0 auto; border-collapse: collapse; margin-top: 2em; }
+.art td { border: 1px solid #ccc; padding: 5px; text-align: center; }
+.art th { background: #f2fbff; border: 1px solid #dff2fb; padding: 5px; text-align: center; }
+.art caption { font-weight: bold; margin-bottom: .4em; }
+
+/* ========= COMMUNITY ========= */
+ul.community { margin: 0; padding: 0; }
+ul.community li { list-style: none; margin-bottom: 20px; }
+ul.community li img { vertical-align: bottom; }
+ul.community li img { border: none; margin-bottom: 5px; }
+ul.community strong { margin: 0; padding: 0; }
+
+/* ========= DOCUMENTATION ========= */
+pre { font-size: 12pt; color: #4A8797; padding: 0 40px; }
+#toc { background: #f2fbff; border: 2px solid #dff2fb; width: 20em; padding: 1em; }
+
+/* ========= SITEMAP ========= */
+#sitemap-col1 ul li, #sitemap-col1 li, #sitemap-col2 ul li, #sitemap-col2 li { list-style: none; margin-bottom: .8em; }
+#sitemap-col1 img, #sitemap-col2 img { vertical-align: bottom; }
+#sitemap-col1 { margin-left: 3em; border-right: 1px solid #ccc; margin-right: 5em; padding-right: 5em; }
+#sitemap-col1 ul, #sitemap-col2 ul { margin-left: 1.5em; padding: 0; }
