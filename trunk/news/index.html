@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>MidnightBSD News</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
+		<style type="text/css" media="all">
+		<!--
+			@import url("../css/essence.css");
+		-->
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<div class="menu">
+						<ul>
+							<li><a href="../">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../news/">&nbsp;news</a></li>
+									<li><a href="../featured/">&nbsp;featured ports</a></li>
+									<li><a href="../security/">&nbsp;security</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../about/">about<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../about/#history">&nbsp;history</a></li>
+								</ul>
+	<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+							<li><a href="../download/">download<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../notes/">&nbsp;release notes</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../screenshots/">screenshots<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../screenshots/#screencasts">&nbsp;screencasts</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../community/">community<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../mailman/listinfo/">&nbsp;mailing lists</a></li>
+									<li><a href="../wiki/">&nbsp;wiki</a></li>
+									<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
+									<li><a href="../art/">&nbsp;art project</a></li>
+									<li><a href="../donate/">&nbsp;donations</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../developers/">developers<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+						<ul>
+							<li><a href="../support/">support<!--[if gt IE 6]><!-->
+								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+								<ul>
+									<li><a href="../documentation/">&nbsp;documentation</a></li>
+								</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							</li>
+						</ul>
+					</div> <!-- close "menu" div -->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/news32.png" alt="" /> MidnightBSD News</h2>
+				<h3 class="reference">From the <a href="http://justjournal.com/users/mbsd">MidnightBSD developer blog</a></h3>
+				
+				
+				
+				
+				
+				<blockquote class="bluebox" id="20080125a">
+					<h3>January 25, 2008</h3>
+					<h4>Current fixed</h4>
+					<p>There was a minor build problem with sendmail in current. It has been fixed as of a few hours ago. Current has built successfully on an i386 box.</p>
+					<p>We're also testing a new threading fix for libpthread in relation to fork() calls.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20080125b">
+					<h3>January 25, 2008</h3>
+					<h4>Round Robin DNS for FTP</h4>
+					<p>ftp.midnightbsd.org now uses round robin to speed up downloading packages with pkg_add -r, etc.</p>
+					<p>If you need to get to our main site, use ftp1.midnightbsd.org</p>
+					<p>ftp2 and ftp3 are aliases for our mirrors.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20080117a">
+					<h3>January 17, 2008</h3>
+					<h4>Magus build cluster</h4>
+					<p>During December, we had to shutdown the build cluster for the holidays. In the mean time, many new computers were purchased and shuffled around at EMU. Systems were moved and disconnected. Today, I've restored access to 3 cluster nodes. Each node currently has 0.1.1 (snap) on it which was basically 0.1.1 release. I'm upgrading the nodes to 0.2. These nodes are labeled build1, build2 and build3. We also have a 0.1.1 node and the build master working.</p>
+					<p>At the same time, Chris has been working on rewriting parts of our cluster software to work better with multiple architectures as well as support multiple releases concurrently. When the cluster is back online, we'll have 9-10 nodes running on p4 chips with either 0.1.1 release or 0.2 current. The cluster build time will be slower, but we can test both branches. A full build took less than a day with all the nodes. Usually it was done in 10 hours. Based on the increase in ports and less nodes, I suspect it will take a day or so to do a run.</p>
+					<p>In addition to this work, I'm also planning on setting up two machines to do amd64 builds, and one or two machines for sparc64. Chris already had a sparc on current for this purpose.</p>
+					<p>The Eastern Michigan University computer science department has been quite generous giving us access to so many machines.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20080104a">
+					<h3>January 4, 2008</h3>
+					<h4>Work in progress</h4>
+					<p>I've been quite lazy about maintaining this developer blog. I'd like to catch people up on happenings in the project.</p>
+					<p>First, smultron has been working on a new website design for us. It includes a new logo design similar to the logo we're using on the blog and cia.vc. MidnightBSD was named after my cat and this new logo includes a cat as well as the obvious other usage of Midnight. I'm very impressed with his progress on the site. It will be published when it's complete. Originally, we had hoped to publish a new site with the 0.1.1 Release, but well things happen. The new design improves navigation quite a bit.</p>
+					<p>Chris (ctriv@) is working on libmport. This is the library that will be used with the command line and GUI replacements for pkg_add and friends. He has made great progress with most of the new code in his local subversion repository. He's promised a checkin of that code soon. raven@ has been looking at the libmport code in preperations for the new GUI tools to manage ports. I believe she is planning on using GNUstep. Chris will write the mport command line tool.</p>
+					<p>I've been working on several things. The build cluster found many ports that are broken and we've been trying to get many ports current or at least patched for critical security holes. KDE was updated over the weekend to 3.5.8. We're behind on many other ports including php, seamonkey (well this one isn't really done anyway), gnome related ports, etc. I committed an update for php5 today, but many of the "extras" are not updated yet. With the build cluster down, I can't test many ports at the moment. Please submit bug reports or email us if you find bad ports. (math/R is known to be broken as well as devel/ncurses)</p>
+					<p>The build cluster has not been run since mid December. We had to shut it down for the holidays at EMU and ctriv@ has been working on a new version of the software to allow us to test multiple OS versions and architectures. However, his work was stalled on that so that he could finish up libmport during the holidays. I suspect we'll have the build cluster hardware setup by next week and some of the machines upgraded to CURRENT. Our new plan is to run 5 machines on CURRENT and 5 on 0.1.1 for i386. We also want to test CURRENT on amd64 and sparc64. ctriv has a sparc machine for that and I'm hoping to get my netra working as well.</p>
+					<p>I have been working on the Live CD and installer as well. I'll post an update on that next week.</p>
+					<p>archite created a wifi network script that looks interesting. He's posted it for the OpenBSD community on undeadly as well. He's also been doing some scripting for things on stargazer.</p>
+					<p>We did an interview for the NetBSD pkgsrc 10 years celebration, however it hasn't been posted yet. It was a fun interview.</p>
+					<h4 id="20080104b">Unexpected headaches</h4>
+					<p>I've been upgrading our server "stargazer" which hosts the website, cvs and other services for MidnightBSD. I recently purchased two seagate drives for a RAID 1 on /home where I store the CVS repository and other files. The motherboard has an onboard intel raid controller (ATA).</p>
+					<p>That process was fairly painless.</p>
+					<p>The other issue is the failing video card. The fan on the current card is wobbling and occasionally stopping which has caused problems. I'm not in a position to run headless with the system, so I purchased a new evga nvidia 6100 LE AGP fanless video card from NewEgg. However, the package was stolen at my front door (or never delivered). After spending half my morning on the phone with Fedex and contacting NewEgg, I have a replacement coming in 5-7 days. Both companies have provided courteous customer service, but I'm left wondering what happened to my video card. Was it stolen on my doorstep? Did a driver forget it on the truck? Including shipping, the card was only $43 dollars. I guess at this rate, I could have gone to a local store and bought a card. Of course, then it wouldn't be fanless.</p>
+					<p>I'm left with a whining video card for another week. In case anyone is curious about the server specs, I'll list them now.</p>
+					<ul>
+						<li>Dell Precision 650 Workstation</li>
+						<li>Dual Xeon 2.0Ghz</li>
+						<li>1.5GB PC2700 ECC RAM</li>
+						<li>1 Seagate 80GB IDE disk (2MB cache 7200RPM) (primary boot disk)</li>
+						<li>2 Seagate 160GB IDE 8MB Cache 7200RPM</li>
+						<li>1 IDE CD burner</li>
+						<li>integrated intel gigabit nic</li>
+						<li>ATI AIW 9600 XT (soon to be replaced?)</li>
+						<li>integrated LSI scsi controller (used to have a backup volume (72GB) until the raid...)</li>
+					</ul>
+					<p>Originally, the system was my desktop which explains the ATI AIW card. I used to dual boot BSD and Windows XP on the system. I'm in the process of setting up a backup "server" for data which should be live in the next week. I'm waiting for a new heatsync/fan for the CPU.</p>
+					<p>The CVS repository is backed up weekly to a system offsite.</p>
+					<h4 id="20080104c">New mports</h4>
+					<ul>
+						<li>devel/cvsps</li>
+						<li>devel/cvsps-devel</li>
+						<li>x11/fast-user-switch-applet</li>
+						<li>x11-themes/gnome-backgrounds</li>
+						<li>textproc/rarian</li>
+						<li>misc/getopt</li>
+						<li>accessibility/at-poke</li>
+					</ul>
+				</blockquote>
+				<blockquote class="bluebox" id="20080101a">
+					<h3>January 1, 2008</h3>
+					<h4>Theo vs Richard</h4>
+					<p>Normally, I reserve this blog for MidnightBSD status updates and information about the project. Today, someone gave me this link in IRC to a conversation regarding comments about "free" software in the OpenBSD ports system.</p>
+					<p>Richard Stallman claims the ports tree in OpenBSD contains non-free software. Ports are just a collection of makefiles and patches. There are a few special ports in FreeBSD and MIdnightBSD which contain BSD licensed code, but that is very rare. In general, the ports system allows you to fetch software and build it yourself. All the BSDs also provide binary packages built from the ports tree, but these comments focused on the ports tree.</p>
+					<p>I'd also like to point out many linux distros have their own repositories and package distribution systems including gentoo (most iike bsd ports) and sometimes third party repositories for extra packages such as Debian and Fedora users have setup.</p>
+					<p>It is also important to consider the definition of free each side is using in the conversation. Free software has a different meaning to a BSD user.</p>
+					<p><a href="http://marc.info/?l=openbsd-misc&m=119750352332512&w=2">http://marc.info/?l=openbsd-misc&m=119750352332512&w=2</a></p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071115a">
+					<h3>November 15, 2007</h3>
+					<h4>GNUstep/Etoile</h4>
+					<p>While I haven't been updating on all of our ports activity, I thought I'd share recent progress with GNUstep and Etoile ports.  A change in current to bring in pcc has caused a problem with any objective-c port.  Specifically the inclusion of libgcc_s in the base is conflicting with the port versions.  This only happens on current systems and only during the last few months.  (say september or so).  The changes *should* be backed out, however you may have a libgcc_s in /usr/lib causing problems.  If you update to the latest snap and then remove that file, things should work as expected.</p>
+					<p>Last night I updated gnustep-make to 2.0.2 and gnustep base.  I was able to build gorm and ProjectCenter successfully on these new versions.  Today I'm working on fixing several Etoile ports that have not weathered the recent change in naming of shared libraries as well as improvements to bsd.gnustep.mk and bsd.mport.mk.  In short, I'm making the ports work again.</p>
+					<p>For variety sake, I've recently imported a good share of gnome into the system.  We're not switching from our goal, but wanted to diversify the ports system.  A few problems with GNUstep + the gcc changes + updating x.org has caused us headaches and some developers and users wanted a backup.</p>
+					<p>GNUstep has been working on 0.1-RELEASE (plus mports update) for some time.  We are currently building gcc 4.1 as a dependancy as it seems to be the most recent, reliable compiler for GNUstep on MidnightBSD.</p>
+					<p>Etoile-iconkit was fixed just moments ago.</p>
+					<p>The current recommended configuration for working with GNUstep on MidnightBSD is:</p>
+					<ul>
+						<li>0.1.1-RELEASE</li>
+						<li>gcc 4.1 (default port)</li>
+						<li>gnustep (as of last night)</li>
+						<li>Etoile (if you want to play with it)</li>
+						<li>Gorm + project center or project manager</li>
+						<li>whatever apps you like.</li>
+					</ul>
+				</blockquote>
+				<blockquote class="bluebox" id="20071113a">
+					<h3>November 13, 2007</h3>
+					<h4>Magus</h4>
+					<p>We're still running the AMD64 build.  With one machine it is not as fast as it could be.  The real issue is that magus does not have support for 2 core systems. We can't manually exec a second instance as they will clash.  We're looking into ways to allow for concurrency on powerful systems . This was not a design consideration since we were working with old intel boxes and thinking about old single cpu suns.</p>
+					<p>We've had a few bugs with this run.  Specifically the ssh tunnel is dying once in a while.  I modified the script to start the tunnel to sleep 5 seconds and then try to open a fresh tunnel.  If it happens at the right time, we're fine.  Since making that change, it's only occured once where the tunnel dropped.</p>
+					<p>We may have to move the master elsewhere to avoid this in the future.</p>
+					<p>One port (pear) has continuously failed and should be fixed.  It attempts to ask for a file to patch :)</p>
+					<p>Overall, considering magus is still "alpha" software I'd say it's working quite well.  We've been able to fix a large number of ports we didnt' know where broken or unfetchable.  I'll admit that it's been distracting though.  We haven't done much outside of ports in the last month or so.</p>
+					<h4 id="20071113b">x.org drivers</h4>
+					<p>The drivers for ati, nvidia, and intel graphics adapters have been updated to the newest available versions.  I've also updated the joystick driver to 1.3.0.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071111a">
+					<h3>November 11, 2007</h3>
+					<h4>Power Outage</h4>
+					<p>There was a power outage that lasted more than 4 hours taking down the MidnightBSD website, CVS, etc.  Service has been restored.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071110a">
+					<h3>November 10, 2007</h3>
+					<h4>Magus build cluster + amd64</h4>
+					<p>For the first time, we're running a second architecture on the build cluster. I'm testing CURRENT on amd64 against the most recent mports snap used by the i386 run. This setup is a bit odd as the only machine is at home.</p>
+					<p>The current build cluster is housed at Eastern Michigan University in one of the Computer Science department labs. Since the master is also there for performance reasons, and behind a firewall, I've setup a ssh tunnel to proxy the mysql connections to the master. (it's actually 2 tunnels) I'm a bit concerned about one of the tunnels dropping, but it's still an interesting experiment. The packages are getting stored locally instead of going to the master as usual.</p>
+					<p>We did manage to get through most of archivers so far. Even though this machine is the only node building, it's also a Pentium D 805 with 2.5GB of RAM and SATA instead of a P4 1.4Gzh with 512MB and IDE.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071109a">
+					<h3>November 9, 2007</h3>
+					<h4>MidnightBSD 0.1.1-RELEASE</h4>
+					<p>We're happy to announce the release of MidnightBSD 0.1.1. The software is available on our FTP server and will be on the mirrors shortly.</p>
+					<p>The packages for 0.1.1 are on the FTP server, but the Latest and category symlinks have not been put in place on the FTP server yet. You can manually download packages to use with pkg_add or give it an exact url to the file with pkg_add -r We're planning on fixing this in a few days. These packages were generated on our new mports build cluster called magus. There were near 1000 packages generated for this release on i386.</p>
+					<p>I'm planning on making an amd64 release, but have not started that build yet. It will probably be another week before that is done as I have to build packages too.</p>
+					<p>What's new:</p>
+					<ul>
+						<li>Updated to bzip2 1.04</li>
+						<li>mports collection is included with the release. This greatly simplifies getting additional software for MidnightBSD.</li>
+						<li>OpenSSL security issue corrected.</li>
+						<li>libpthread output intended as an error is written to stderr instead of stdout.</li>
+						<li>find has new "birth" time options.</li>
+						<li>pkg_install tools like pkg_add know about mports.</li>
+					</ul>
+					<p>Late breaking information:</p>
+					<p>This release includes x.org 6.9. It will be the last release with x.org 6.9. Users who want to use x.org 7.3 should update their mports tree and uninstall all ports depending on X11. It is recommended that you delete /usr/X11R6 and create a symlink to /usr/local for /usr/X11R6. This will allow all the ports to work. The updated ports tree has many new software packages including most of Gnome 2.18.3. Since this mports tree was created (0.1.1's), over 300 ports were added to MidnightBSD. 1500 ports are building correctly on our build cluster.
+					<p>Special Thanks:</p>
+					<p>Eastern Michigan University's Computer Science Department donated the computing resources for the magus build cluster. This allowed us to build packages in 10 hours for this release.</p>
+					<p>The next release:</p>
+					<p>0.2 will be the next release barring any need for a later 0.1.x release. It will include replacements for pkg_add and a new installer option. Expect it in 2008.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071027a">
+					<h3>October 27, 2007</h3>
+					<h4>rc.d</h4>
+					<p>I've made several changes to rc.d. Sendmail no longer regenerates aliases. A new pivot point was created, FILESYSTEMS. This follows a similar change in FreeBSD. We don't need it as we're not preparing for ZFS, but it makes sense, and it's much easier to follow. We also added the graceful stop when an error occurs from NetBSD. Testing on my desktop has been rather successful.</p>
+					<h4>Magnus build cluster</h4>
+					<p>Instead of writing additional text, I'll post a message I sent to the mailing list:
+					<p>Chris has written software in perl to run a build cluster for mports. Our first run was done this week. We built 1112 ports successfully with 137 failures and the remaining ports untested (depends that failed prevented the build). This run was done on the tagged mports for 0.1.1 release. We'll be using many of the packages on the FTP server and in the release.</p>
+					<p>Eastern Michigan University's computer science department donated 10 Dell Optiplex GX 240 systems for use with the cluster. They also donated network resources. The results of the cluster activities can be seen at <a href="http://cs.emich.edu/magus/">http://cs.emich.edu/magus/</a></p>
+					<p>The first run started with three nodes and one master at 12:30 in the afternoon and completed the next day before noon. We added systems during the run as we brought them up. Eight nodes were online by the end.</p>
+					<p>The next run will be done on the current ports tree which has grown by 300 ports or so. We've updated to x.org 7.3 and added many gnome ports in the last few weeks. 20-30 of the failures have been fixed in the current tree.</p>
+					<p>The build cluster uses perl and MySQL 5.0. It builds each port in a chroot environment which has allowed us to catch several subtle issues with some ports. Each node has 512MB of RAM, an ATA 100 disk and an early Intel P4 chip.</p>
+					<p>You can direct questions about the cluster to the list or email the portmgr@midnightbsd.org.</p>
+					<p>Special thanks to EMU's CS department for helping us and ctriv@ for writing the software.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071023a">
+					<h3>October 23, 2007</h3>
+					<h4>KDE port working with x.org 7.3, work in CURRENT</h4>
+					<p>The KDE port is now working with x.org 7.3. koffice does not have PDF support at the moment.</p>
+					<p>Most of the dependancies are in for a minimal gnome install. We're still stuck on a few things.</p>
+					<p>CURRENT has been broken during the work on PCC. We've decided to back out some of the changes to get the system building and continue to wrk on it locally.</p>
+					<p>netcat and mksh were updated today in CURRENT. (OpenBSD 4.1 netcat and R31d of mksh)</p>
+					<p>I can't seem to get an answer from the GNUstep folks on our current issue with x.org 7.3 and GNUstep.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071021a">
+					<h3>October 21, 2007</h3>
+					<h4>MidnightBSD status on 10/21</h4>
+					<p>X.org testing has been going fairly well. We still have the issue with GNUstep not working properly. See previous posts for an explanation.</p>
+					<p>I'm testing KDE currently. I'm about half way through the build. A problem has been fixed with koffice and teTex-base.</p>
+					<p>poppler was updated to .6 and gstreamer has been updated. The firefox port now builds and runs, although we need to do a lot with it yet. It is the most recent 2.0.0.8 release.</p>
+					<p>GDM has been working well for me on my desktop.</p>
+					<p>Some ports that have been added recently:</p>
+					<ul>
+						<li>gconf-editor</li>
+						<li>gnome-themes</li>
+						<li>poppler-data</li>
+						<li>doomlegacy</li>
+						<li>doom-data</li>
+						<li>anjuta</li>
+						<li>libgnomekbd</li>
+						<li>(updates to opera and linux-opera)</li>
+						<li>devhelp</li>
+						<li>gnome-build was updated to .2</li>
+						<li>yelp</li>
+						<li>gnome-terminal</li>
+						<li>epiphany</li>
+						<li>linux-seamonkey updated</li>
+						<li>openmpi</li>
+						<li>gnome-panel</li>
+						<li>gstreamer-plugins-bad</li>
+						<li>update to pidgin</li>
+						<li>mksh update (ports)</li>
+						<li>postgres 8.2</li>
+						<li>libGLU</li>
+					</ul>
+				</blockquote>
+				<blockquote class="bluebox" id="20071018a">
+					<h3>October 18, 2007</h3>
+					<h4>Testing Etoile</h4>
+					<p>Here's a blog entry detailing some steps to test Etoile. It also describes how to start Etoile properly.</p>
+					<p><a href="http://www.etoile-project.org/etoile/blog/2007/08/toil-02-troubleshoot.html">http://www.etoile-project.org/etoile/blog/2007/08/toil-02-troubleshoot.html</a></p>
+					<h4>GNUstep + etoile situation</h4>
+					<p>Further testing has revealed a real problem. GNUstep seems to have two issues. First, at 16 bit color depth it has blank menus. Someone else reported this issue on ubuntu and closed the ticket:</p>
+					<p><a href="http://www.nabble.com/-bug--18128--Art-backend-does-not-draw-properly-on-Ubuntu-6.10-t2518416.html">http://www.nabble.com/-bug--18128--Art-backend-does-not-draw-properly-on-Ubuntu-6.10-t2518416.html</a></p>
+					<p>I've experienced this on X.org 7.3 with the latest stable versions of GNUstep.</p>
+					<p>At 24 bit depth, the menus draw about a menu's length from the top. So instead of say a menu getting put at the top there is an offset. In the console there are errors about negative values and bad values. I first noticed this with Etoile, but realized it was GNUstep causing the problem. This totally ruins the Etoile experience. When I get more time, I need to investigate a fix for this.</p>
+					<h4 id="20071018b">0.1.1 status</h4>
+					<p>I've been having trouble getting time to build packages on our 0.1.1 systems. ctriv and I setup three new machines with 0.1.1 at EMU. We're going to build the packages on those machines. The downside is that it's taking longer, but we'll have a larger variety of packages than the 0.1 release had.</p>
+					<h4>xorg status update</h4>
+					<p>I've got x.org 7.3 running on an amd64 host and a i386 box (pentium 4) at home and work respectively. GNUstep, qt, gdm, gedit and all their depends are working.</p>
+					<p>We are using a symlink for /usr/X11R6 -> /usr/local</p>
+					<p>I still need to test KDE and many other small apps. Please report any bugs to us using the forums, bugreport.midnightbsd.org, irc, email, or whatever.</p>
+					<p>I'm test building Etoile 0.2 right now.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071013a">
+					<h3>October 13, 2007</h3>
+					<h4>php 5.2.4</h4>
+					<p>I've been working on bringing 5.2.4 into the mports system. While our project focuses on the desktop, we also realize that open source users often dabble with writing web apps and doing various other things on their systems. PHP is handy for testing apps. We also use MidnightBSD on our own servers.</p>
+					<p>mports/lang/php5 has been updated. The extensions are still getting worked on. A subset of them already work. A few, such as gd have not been tested due to the X.org upgrade.</p>
+					<h4 id="20071013b">X.org 7.3 update, 0.1.1 release coming</h4>
+					<p>Chris has added the vast majority of X.org 7.3 ports into the mports system. We're just beginning testing to find bugs in the ports. It is recommended that you stay on 6.9 for now.</p>
+					<p>The 0.1.1 release will ship with 6.9. We've started building packages for that release.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071003a">
+					<h3>October 3, 2007</h3>
+					<h4>OpenSSL security, build cluster</h4>
+					<p>First, a security update is avaiable in RELENG_0_1 and CURRENT for OpenSSL. It is recommended that everyone upgrade to this new version.</p>
+					<p>Second, Eastern Michigan University's Computer Science Department has offered us a build cluster for ports. ctriv@ is writing the software for the build cluster. We'll post more information when it is available. (x86)</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20071002a">
+					<h3>October 2, 2007</h3>
+					<h4>xorg7 Integration Started</h4>
+					<p>Work has started to integrate xorg 7.3 into mports. This will destabilize mports while the switchover is in progress, but the tree was tagged for the 0.1.1 release just before work began. If you need a stable mports tree, use the MPORTS_0_1_1_RELEASE tag.</p>
+					<p>The work should take about 2 weeks, after which xorg should be build-able from ports again. It will take additional time to make sure that the toolkits and window managers all work properly under xorg7.</p> 
+					<p>This transition is inconvenient, but it is important to get MidnightBSD onto the 7 series. Future updates will be much simpler, and we gain a great number of new features with this update alone.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="20070930a">
+					<h3>September 30, 2007</h3>
+					<h4>xorg7 Integration Started</h4>
+					<p>ctriv@ imported a newer version of libarchive and bsdtar into CURRENT.  He's started a port freeze for 0.1.1 release with tagging soon.</p>
+				</blockquote>
+			</div>
+			<div class="horiz"><blockquote><hr></blockquote></div>
+			<div class="clear"></div>
+			<div id="footer">
+				<blockquote>
+					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd" target="_blank">Store</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/" target="_blank">common creature</a></span></p>
+				</blockquote>
+			</div>
+		</div>
+	</body>
+</html>
