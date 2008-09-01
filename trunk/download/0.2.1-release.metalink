@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metalink version="3.0" origin="http://www.midnightbsd.org/download/0.2.1-release.metalink" xmlns="http://www.metalinker.org/">
+  <publisher>
+    <name>MidnightBSD Project</name>
+    <url>http://www.midnightbsd.org/</url>
+  </publisher>
+  <copyright>2008 Lucas Holt</copyright>
+  <description>MidnightBSD 0.2.1-RELEASE x86</description>
+  <files>
+    <file name="0.2.1-RELEASE-i386-disc1.iso">
+      <version>0.2.1</version>
+      <os>MidnightBSD</os>
+      <size>536625152</size>
+      <verification>
+        <hash type="md5">7c093d1cd6acd8bae5dc18c54fbdd743</hash>
+      </verification>
+      <resources>
+        <url type="http" preference="4">http://www.midnightbsd.org/ftp/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
+        <url type="http" preference="3">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
+        <url type="http" preference="2">http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
+        <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
+      </resources>
+    </file>
+    <file name="0.2.1-RELEASE-i386-disc2.iso">
+      <version>0.2.1</version>
+      <os>MidnightBSD</os>
+      <size>543205376</size>
+      <verification>
+        <hash type="md5">088bc8a40c3f2468978143c96f210764</hash>
+      </verification>
+      <resources>
+        <url type="http" preference="4">http://www.midnightbsd.org/ftp/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
+        <url type="http" preference="3">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
+        <url type="http" preference="2">http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.2.1/0.2.11-RELEASE-i386-disc2.iso</url>
+        <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
+      </resources>
+    </file>
+    <file name="0.2.1-RELEASE-i386-disc3.iso">
+      <version>0.2.1</version>
+      <os>MidnightBSD</os>
+      <size>379807744</size>
+      <verification>
+        <hash type="md5">8e38fb5946ea8d3debfe9f1c9c1612cb</hash>
+      </verification>
+      <resources>
+        <url type="http" preference="3">http://www.midnightbsd.org/ftp/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
+        <url type="http" preference="2">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
+        <url type="http" preference="2">http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.2.1/0.2.11-RELEASE-i386-disc3.iso</url>
+        <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
+      </resources>
+    </file>
+  </files>
+</metalink>
