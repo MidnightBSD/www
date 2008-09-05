@@ -6,6 +6,7 @@
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
+		<link rel="stylesheet" type="text/css" href="doc/css/style.css">
 		<script type="text/javascript" src="../shadowbox/src/adapter/shadowbox-base.js"></script>
 		<script type="text/javascript" src="../shadowbox/src/shadowbox.js"></script>
 		<script type="text/javascript">
@@ -14,8 +15,8 @@
 		Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt'], '../shadowbox/src/player');
 		
 		window.onload = function(){
-		
-	    Shadowbox.init();
+
+		Shadowbox.init();
 	
 		};
 		</script>
@@ -31,76 +32,71 @@
 			dl a:hover img,dl a:active img,dl a:focus img { background: #dff2fb; }
 		-->
 		</style>
+
 	</head>
 	<body>
 		<div id="globe">
 			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
 			<div class="menu">
+				<ul>
+					<li><a href="../">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../news/">&nbsp;news</a></li>
-									<li><a href="../featured/">&nbsp;featured ports</a></li>
-									<li><a href="../security/">&nbsp;security</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
+							<li><a href="../news/">&nbsp;news</a></li>
+							<li><a href="../featured/">&nbsp;featured ports</a></li>
+							<li><a href="../security/">&nbsp;security</a></li>
 						</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+				<ul>
+					<li><a href="../about/">about<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../about/">about<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../about/#history">&nbsp;history</a></li>
-								</ul>
+							<li><a href="../about/#history">&nbsp;history</a></li>
+						</ul>
 	<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-							<li><a href="../download/">download<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../notes/">&nbsp;release notes</a></li>
-									<li><a href="../mirmon/">&nbsp;mirror status</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
+					</li>
+					<li><a href="../download/">download<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../screenshots/">screenshots<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../screenshots/#screencasts">&nbsp;screencasts</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
+							<li><a href="../notes/">&nbsp;release notes</a></li>
+							<li><a href="../mirmon/">&nbsp;mirror status</a></li>
 						</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+				<ul>
+					<li><a href="../screenshots/">screenshots<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../community/">community<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../mailman/listinfo/">&nbsp;mailing lists</a></li>
-									<li><a href="../wiki/">&nbsp;wiki</a></li>
-									<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
-									<li><a href="../art/">&nbsp;art project</a></li>
-									<li><a href="../donate/">&nbsp;donations</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
+							<li><a href="../screenshots/#screencasts">&nbsp;screencasts</a></li>
 						</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+				<ul>
+					<li><a href="../community/">community<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../developers/">developers<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
+							<li><a href="../mailman/listinfo/">&nbsp;mailing lists</a></li>
+							<li><a href="../wiki/">&nbsp;wiki</a></li>
+							<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
+							<li><a href="../art/">&nbsp;art project</a></li>
+							<li><a href="../donate/">&nbsp;donations</a></li>
 						</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+				<ul>
+					<li><a href="../developers/">developers<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+				<ul>
+					<li><a href="../support/">support<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 						<ul>
-							<li><a href="../support/">support<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../documentation/">&nbsp;documentation</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
+							<li><a href="../documentation/">&nbsp;documentation</a></li>
 						</ul>
-					</div> <!-- close "menu" div -->
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+			</div><!-- close "menu" div -->
 					<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/screenshot32.png"> Screenshots</h2>
