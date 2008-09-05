@@ -62,3 +62,15 @@ pre { font-size: 12pt; color: #4A8797; padding: 0 40px; }
 #sitemap-col1 img, #sitemap-col2 img { vertical-align: bottom; }
 #sitemap-col1 { margin-left: 3em; border-right: 1px solid #ccc; margin-right: 5em; padding-right: 5em; }
 #sitemap-col1 ul, #sitemap-col2 ul { margin-left: 1.5em; padding: 0; }
+
+/* ========= FEATURED ========= */
+.featured img { float: left; padding: 0 10px 0px 0; border: none; }
+.featured { margin: 0; padding: 0; }
+.featured h3 { margin: 40px 0 0 74px; padding: 0; }
+.featured-date { color: #666; margin: 3px 0 0 0; text-align: left; }
+.featured-install { color: #DF8713; margin: 0 0 .8em 0; padding: 0; }
+
+/* ========= LEGAL ========= */
+.legal li { margin-bottom: 20px; list-style: none; }
+.legal li { list-style: none; margin-bottom: 10px; }
+.legal { margin: .8em 0; padding: 0; }
