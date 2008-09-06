@@ -66,7 +66,7 @@ sub print_html {
     foreach my $item (@{$rss->{'items'}}[0 .. 15]) {
   	next unless defined($item->{'title'}) && defined($item->{'link'});
         $title = $item->{'title'};
-  	$desc = substr($hs->parse($item->{'description'}),0, 100);
+  	$desc = $hs->parse($item->{'description'});
   	
   	# Wed, 03 Sep 2008 06:58
         my $date = DateTime::Format::Mail->parse_datetime($item->{pubDate})->strftime('%a, %d %b %Y %R');
@@ -74,7 +74,7 @@ sub print_html {
         print $fh "<blockquote class=\"bluebox\">\n";
         print $fh qq[<h3>$date</h3>\n];
 	print $fh qq[<h4>$title</h4>\n];
-        print $fh qq{<p class="update">$desc</p>\n};
+        print $fh qq{<p>$desc</p>\n};
         print $fh "</blockquote>\n";
     }
 
