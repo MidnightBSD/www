@@ -25,72 +25,7 @@
 	<body>
 		<div id="globe">
 			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
-			<div class="menu">
-						<ul>
-							<li><a href="../">home<!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../news/">&nbsp;news</a></li>
-									<li><a href="../featured/">&nbsp;featured ports</a></li>
-									<li><a href="../security/">&nbsp;security</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-						<ul>
-							<li><a href="../about/">about<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../about/#history">&nbsp;history</a></li>
-								</ul>
-	<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-							<li><a href="../download/">download<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../notes/">&nbsp;release notes</a></li>
-									<li><a href="../mirmon/">&nbsp;mirror status</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-						<ul>
-							<li><a href="../screenshots/">screenshots<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../screenshots/#screencasts">&nbsp;screencasts</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-						<ul>
-							<li><a href="../community/">community<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../mailman/listinfo/">&nbsp;mailing lists</a></li>
-									<li><a href="../wiki/">&nbsp;wiki</a></li>
-									<li><a href="http://forums.midnightbsd.org/">&nbsp;forums</a></li>
-									<li><a href="../art/">&nbsp;art project</a></li>
-									<li><a href="../donate/">&nbsp;donations</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-						<ul>
-							<li><a href="../developers/">developers<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-						<ul>
-							<li><a href="../support/">support<!--[if gt IE 6]><!-->
-								</a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-								<ul>
-									<li><a href="../documentation/">&nbsp;documentation</a></li>
-								</ul>
-		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							</li>
-						</ul>
-					</div> <!-- close "menu" div -->
+			<!--#include virtual="/menu.html"-->
 					<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/doc32.png"> Documentation</h2>
@@ -201,7 +136,11 @@
 				<h4 id="2c">Using mports</h4>
 				<p>You can install mports during the installation of MidnightBSD. If you forgot to do so, you may download the latest mports by using <code>csup</code> or <code>cvs</code>. Execute the command:</p>
 				<pre>
-mkdir /usr/mportscd /usrcvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports
+mkdir /usr/mports
+cd /usr
+cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports
+
+
 				</pre>
 				<p>Updating mports periodically is recommended. New versions of software and additional software are added all the time. Keeping up to date will help you maintain best security practices and possibly give you new features and functionality or bug fixes.</p>
 				<p>To install an mport, simply do the following:</p>
