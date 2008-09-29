@@ -7,9 +7,7 @@
 		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
 		<style type="text/css" media="all">
-		<!--
 			@import url("../css/essence.css");
-		-->
 		</style>
 	</head>
 	<body>
@@ -19,6 +17,59 @@
 					<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt=""> Security Updates</h2>
+				<blockquote class="bluebox" id="a20080929">
+					<h3>September 29, 2008</h3>
+					<p>A vulnerability in ftpd could allow unauthorized access.  This is network exploitable and affects all versions of MidnightBSD.
+				 	<br>CVE-2008-4247<br>
+					Update your system using cvs to RELENG_0_2 or apply the patch on the ftp server in pub/MidnightBSD/patches/0.2.1/patch-ftpd and
+					rebuild ftpd.
+					</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080610">
+					<h3>July 11, 2008</h3>
+					<p>Update to bind 9.4.1 p1 to fix the recently reported vulnerability in most dns software. Users
+					   of BIND are recommended to update to the latest version in src on RELENG_0_2 or CURRENT, or
+					   to obtain a newer version from mports.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080516">
+					<h3>May 16, 2008</h3>
+					<p>The Debian project made a patch to openssl causing a defect in the generation of ssh keys.  A new
+					utility was added to midnightbsd to detect these keys and deny them.  This was applied to RELENG_0_2 and
+					CURRENT. The utility was obtained from Ubuntu.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080417a">
+	 				<h3>April 17, 2008</h3>
+					<p>
+ 	 				OpenSSH was updated to 5.0p1 in CURRENT to correct an issue with X11 forwarding.  A patch for
+ 	 				this issue was committed to RELENG_0_1 as well as a fix for a config file issue.
+ 	 				</p>
+				</blockquote>
+ 				<blockquote class="bluebox" id="a20080417">
+					<h3>April 17, 2008</h3>
+ 	 				<p>
+ 	 				A <a href="http://secunia.com/advisories/29803/">security issue</a> was found in mksh. This
+ 	 				only affected CURRENT users.  The software was updated to r33d</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080406"> 
+					<h3>April 6, 2008</h3>
+ 	 				<p>
+ 	 				bzip2 was updated to 1.05 in CURRENT to correct a security issue.
+ 	 				</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080403"> 
+ 	 				<h3>April 3, 2008</h3>
+					<p>A security issue was found with strfmon in libc.  
+				 	 <a href="http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1391">CVE-2008-1391</a> Integer Overflow.
+				 	 This was fixed in CURRENT.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20080215"> 
+			 		<h3>February 15, 2008</h3>
+					<p>
+				 	CURRENT now has a patch to correct a potential security issue with sendfile. Files were not checked prior to serving which would allow a file that was write only to be served. While this scenario is rare, we decided to fix it anyway. 
+				 	<br />
+				 	sendfile is used by many daemons including Apache httpd.
+ 	 				</p>
+				</blockquote>
 				<blockquote class="bluebox" id="a20070801">
 					<h3>August 1, 2007</h3>
 					<p>BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues. BIND is now equivalent to 9.3.4p1.</p>
