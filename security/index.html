@@ -14,13 +14,19 @@
 		<div id="globe">
 			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
 			<!--#include virtual="/menu.html"-->
-					<div class="clear"></div>
+			<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt=""> Security Updates</h2>
+				<blockquote class="bluebox" id=a20090110">
+					<h3>January 10, 2009</h3>
+					<p>Fix two issues with MidnightBSD 0.2.1 and 0.3-CURRENT.  The first is in OpenSSL and would allow applications that use OpenSSL to interpret an
+					invalid certificate as valid. The second is in lukemftpd(8)
+					that could allow long commands to be split into multiple commands.</p>
+				</blockquote>
 				<blockquote class="bluebox" id=a20081231">
-                                        <h3>December 31, 2008</h3>
-                                        <p>Correct a problem where bluetooth and netgraph sockets were not initialized properly.  This is available in RELENG_0_2, RELENG_0_1, and current.</p>
-                                </blockquote>
+					<h3>December 31, 2008</h3>
+					<p>Correct a problem where bluetooth and netgraph sockets were not initialized properly.  This is available in RELENG_0_2, RELENG_0_1, and current.</p>
+				</blockquote>
 				<blockquote class="bluebox" id="a20081124">
 					<h3>November 24, 2008</h3>
 					<p>Correct a problem in arc4random which causes the device not to get enough entropy for system services.  Geom classes initialized at startup will still have problems.  Update your system to
@@ -114,42 +120,6 @@
 					<p>A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available. Please update your /etc/rc.d/jail file from cvs. Patches will not be created until our first release.</p>
 				</blockquote>
 			</div>
-			<div class="horiz"><blockquote><hr></blockquote></div>
-			<div class="clear"></div>
-			<div id="footer">
-				<blockquote>
-					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd">Store</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/">common creature</a></span></p>
-				</blockquote>
-			</div>
-		</div>
-		<!-- START GOOGLE -->
-		<div id="googlead" class="center">
-		<script type="text/javascript"><!--
-		google_ad_client = "pub-1321195614665440";
-		google_ad_width = 468;
-		google_ad_height = 60;
-		google_ad_format = "468x60_as";
-		google_ad_type = "text_image";
-		google_ad_channel ="";
-		google_color_border = "1651b5";
-		google_color_bg = "edf7f7";
-		google_color_link = "1651b5";
-		google_color_text = "1651b5";
-		google_color_url = "1651b5";
-		//--></script>
-		<script type="text/javascript"
-  		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
-		</div>
-		<script type="text/javascript">
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-		<script type="text/javascript">
-		var pageTracker = _gat._getTracker("UA-560995-2");
-		pageTracker._initData();
-		pageTracker._trackPageview();
-		</script>
-		<!-- END GOOGLE -->
+<!--#include virtual="/footer.html"-->
 	</body>
 </html>
