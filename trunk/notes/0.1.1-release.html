@@ -28,57 +28,31 @@
 				<div class="devupdate fleft">
 					<h4>Late breaking information:</h4>
 					<blockquote>
-					<p>Several security advisories have been issued for 0.2.1-RELEASE.  After installing, please
-						download and build updated kernel and userland software.  0.2.1-RELEASE-p7 is the
-						latest update at the time of writing (April 2009)  There is no ISO version of these
-						updates.</p>
+						<p>This release includes x.org 6.9. It will be the last release with x.org 6.9. Users who want to use x.org 7.3 should update their mports tree and uninstall all ports depending on X11. It is recommended that you delete /usr/X11R6 and create a symlink to /usr/local for /usr/X11R6. This will allow all the ports to work. The updated ports tree has many new software packages including most of Gnome 2.18.3. Since this mports tree was created (0.1.1's), over 300 ports were added to MidnightBSD. 1500 ports are building correctly on our build cluster.</p>
 					</blockquote>
-					<h4>Previous Release Notes</h4>
-					<ul>
-						<li><a href="0.1.1-release.html">0.1.1-RELEASE</a></li>
-					</ul>
 				</div>
-				<h3>(09/01/08) MidnightBSD 0.2.1-RELEASE</h3>
-<pre>
-MidnightBSD 0.2.1 has been released. This version focused on adding  
-hardware for newer devices including ati, nvidia and intel sata  
-controllers, and wireless support standard. A great deal of work was  
-put into creating packages with over 2000 packages available on our  
-FTP. The new release includes 2 CDs of packages plus X11 on disc1.
-
-Other software updated: gcc 3.4.6, bind 9.4.2-p1, sendmail, bzip2,  
-openssh 5.0p1, pcc compiler added (i386), removal of gnu cpio for bsd  
-licensed version, cpdup added, ipv6 fixes, mksh added
-
-The files are available on ftp1.midnightbsd.org and some users have  
-reported success with mirrors.isc.org.  The other mirrors should rsync  
-within the next 24 hours.
-
-Special thanks to ctriv@, smultron@, crash@, archite@, seirei@ and  
-raven@ for help with this release.
-
-A full change log is available with the release, or via cvsweb 
-http://cvsweb.midnightbsd.org/src/UPDATING
-
-Users who install kde from the ISOs will be able to enable graphical  
-login on bootup.  A script now runs on the first boot asking to enable  
-bsdstats and "graphical desktop environment".  If the script finds  
-kdm, it will enable it automatically.  If you select yes without KDE,  
-it will install and enable slim login manager.  I would greatly  
-appreciate users installing bsdstats so that we can get a better idea  
-on usage.
-
-If you need to rerun the firstboot script, just rm /etc/fbreciept and  
-then sh /etc/rc.d/firstboot start
-</pre>
+				<h3>(11/07/07) MidnightBSD 0.1.1-RELEASE</h3>
+				<p>We're happy to announce the release of MidnightBSD 0.1.1. The software is available on our FTP server and will be on the mirrors shortly.</p>
+				<p>The packages for 0.1.1 are on the <a href="#">FTP server</a>, but the Latest and category symlinks have not been put in place on the FTP server yet. You can manually download packages to use with <code>pkg_add</code> or give it an exact url to the file with <code>pkg_add -r</code> We're planning on fixing this in a few days. These packages were generated on our new mports build cluster called magus. There were near 1000 packages generated for this release on i386.</p>
+				<p>I'm planning on making an amd64 release, but have not started that build yet. It will probably be another week before that is done as I have to build packages too.</p>
+				<h4>What's new:</h4>
+				<ul>
+					<li>Updated to bzip2 1.04</li>
+					<li>mports collection is included with the release. This greatly simplifies getting additional software for MidnightBSD.</li>
+					<li>OpenSSL security issue corrected.</li>
+					<li>libpthread output intended as an error is written to stderr instead of stdout.</li>
+					<li>find has new "birth" time options.</li>
+					<li>pkg_install tools like pkg_add know about mports.</li>
+				</ul>
+				<h5>Special Thanks: Eastern Michigan University's Computer Science Department donated the computing resources for the magus build cluster. This allowed us to build packages in 10 hours for this release.</h5>
 				<h4>The next release:</h4>
-				<p>0.3 will be the next release barring any need for a later 0.2.x release. It will include replacements for <code>pkg_add</code> and a new installer option. Expect it in late 2009.</p>
+				<p>0.2 will be the next release barring any need for a later 0.1.x release. It will include replacements for <code>pkg_add</code> and a new installer option. Expect it in 2008.</p>
 			</div>
 			<div class="horiz"><blockquote><hr></blockquote></div>
 			<div class="clear"></div>
 			<div id="footer">
 				<blockquote>
-					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd">Store</a> &#8226; MidnightBSD &copy; 2005-2009 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/">common creature</a></span></p>
+					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd">Store</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/">common creature</a></span></p>
 				</blockquote>
 			</div>
 		</div>
