@@ -4,7 +4,7 @@
 <head>
 <title>Using bsd.port.mk</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $MidnightBSD: www/documentation/mports/bsd.port.mk.html,v 1.1 2009/05/25 17:21:13 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/documentation/mports/bsd.port.mk.html,v 1.2 2009/05/25 18:23:20 laffer1 Exp $ -->
 <!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
 	<style type="text/css" media="all">
@@ -44,16 +44,13 @@ are included in <tt>bsd.port.pre.mk</tt>.</p>
 <tbody>
 <tr>
 <td><tt>ARCH</tt></td>
-
-<td>The architecture as returned by <tt>uname -m</tt> (e.g., <tt
->i386</tt>)</td>
+<td>The architecture as returned by <tt>uname -m</tt> (e.g., <tt>i386</tt>)</td>
 </tr>
 
 <tr>
 <td><tt>OPSYS</tt></td>
 <td>The operating system type, as returned by <tt class="COMMAND">uname -s</tt> (e.g.,
 <tt>MidnightBSD</tt>)</td>
-
 </tr>
 
 <tr>
@@ -64,7 +61,6 @@ are included in <tt>bsd.port.pre.mk</tt>.</p>
 
 <tr>
 <td><tt>OSVERSION</tt></td>
-
 <td>The numeric version of the operating system; the same as 
 <tt>__FreeBSD_version</tt>. In the future, __MidnightBSD_version
 will be used.  Do not rely on this value.</td>
@@ -72,9 +68,7 @@ will be used.  Do not rely on this value.</td>
 
 <tr>
 <td><tt>PORTOBJFORMAT</tt></td>
-<td>The object format of the system (<tt>elf</tt> or <tt
->aout</tt>; note that <tt
->aout</tt> is deprecated.)</td>
+<td>The object format of the system (<tt>elf</tt> or <tt>aout</tt>; note that <tt>aout</tt> is deprecated.)</td>
 </tr>
 
 <tr>
@@ -94,7 +88,6 @@ will be used.  Do not rely on this value.</td>
 </tr>
 </tbody>
 </table>
-</div>
 
 <blockquote>
 <p><b>Note:</b> If you have to define the variables <tt>USE_IMAKE</tt>,
@@ -102,8 +95,7 @@ will be used.  Do not rely on this value.</td>
 before including <tt>bsd.port.pre.mk</tt>.</p>
 </blockquote>
 
-<p>Here are some examples of things you can do with <tt
->bsd.port.pre.mk</tt>:</p>
+<p>Here are some examples of things you can do with <tt>bsd.port.pre.mk</tt>:</p>
 
 <pre>
 # no need to compile lang/perl5 if perl5 is already in system
@@ -132,7 +124,6 @@ BROKEN= man page does not install on 0.1-RELEASE
 
 <p>Use tab instead of spaces after <tt>BROKEN=</tt>
 and <tt>TCL_LIB_FILE=</tt>.</p>
-</div>
 
 <p>Portions of this document are derived from the FreeBSD Porters Handbook.
 http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/porting-versions.html</p>
