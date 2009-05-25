@@ -1,9 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>MidnightBSD Developers</title>
-		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="shortcut icon" href="/favicon.ico" />
 		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
 		<script type="text/javascript" src="../shadowbox/src/adapter/shadowbox-base.js"></script>
@@ -19,15 +20,16 @@
 		<style type="text/css" media="all">
 			@import url("../css/essence.css");
 		</style>
-		<link rel="alternate" type="application/atom+xml" title="MidnightBSD CVS Log"  href="http://feedproxy.google.com/MidnightbsdCvsLog">
+		<link rel="alternate" type="application/atom+xml" title="MidnightBSD CVS Log"  href="http://feedproxy.google.com/MidnightbsdCvsLog" />
 	</head>
+	
 	<body>
 		<div id="globe">
 			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
 		<!--#include virtual="/menu.html"-->
 			<div class="clear"></div>
 			<div id="text">
-				<h2 class="icon"><img src="../images/oxygen/developer32.png" alt=""> Welcome to MidnightBSD Development</h2>
+				<h2 class="icon"><img src="../images/oxygen/developer32.png" alt="" /> Welcome to MidnightBSD Development</h2>
 				<div class="devupdate fleft">
 					<h4>Update: (October 2007)</h4>
 					<blockquote>
@@ -48,21 +50,21 @@
 					<h3>Developer Resources</h3>
 					<p>The CVS server for MidnightBSD is <span class="highlight">stargazer.midnightbsd.org</span>. This is where you can do your checkouts, commits, etc. To checkout anonymously, use <span class="highlight">anoncvs</span> (with password <span class="highlight">anoncvs</span>):</p>
 						<p class="code">
-							cvs -z3 -d <span class="highlight">anoncvs</span>@stargazer.midnightbsd.org:/home/cvs co src<br>
+							cvs -z7 -d <span class="highlight">anoncvs</span>@stargazer.midnightbsd.org:/home/cvs co src<br>
 							anoncvs@stargazer.midnightbsd.org's password:<br>
-							cvs checkout: Updating src<br>
-							U src/COPYRIGHT<br>
-							U src/MAINTAINERS<br>
-							...<br>
+							cvs checkout: Updating src<br />
+							U src/COPYRIGHT<br />
+							U src/MAINTAINERS<br />
+							...<br />
 						</p>
-						Or to checkout as a MidnightBSD developer with your username and password:<br>
+						Or to checkout as a MidnightBSD developer with your username and password:<br />
 						<p class="code">
-							cvs -z3 -d <span class="highlight">username</span>@stargazer.midnightbsd.org:/home/cvs co src<br>
-							<span class="highlight">username</span>@stargazer.midnightbsd.org's password:<br>
-							cvs checkout: Updating src<br>
-							U src/COPYRIGHT<br>
-							U src/MAINTAINERS<br>
-							...<br>
+							cvs -z7 -d <span class="highlight">username</span>@stargazer.midnightbsd.org:/home/cvs co src<br />
+							<span class="highlight">username</span>@stargazer.midnightbsd.org's password:<br />
+							cvs checkout: Updating src<br />
+							U src/COPYRIGHT<br />
+							U src/MAINTAINERS<br />
+							...<br />
 						</p>
 				</div>
 				<div class="clear"></div>
@@ -84,42 +86,6 @@
 				<p>To clarify, this is a fork of FreeBSD. I'm not creating a distro<span class="ast">*</span> like DesktopBSD or PC-BSD.</p>
 				<p class="devnote"><span class="devasterisk">*</span> distro is often used in the Linux community. Some BSD folks hate that term applied to other projects. My working definition is a system with core componets (kernel, large parts of userland) that are not developed by the entity releasing the operating environment. It is a collection of software grouped together possibly with an installer. This can be applied to Live CD projects, BSD firewall projects, PC-BSD, DesktopBSD, and non BSD projects like Fedora, Gentoo, and so on.</p>
 			</div>
-			<div class="horiz"><blockquote><hr></blockquote></div>
-			<div class="clear"></div>
-			<div id="footer">
-				<blockquote>
-					<p><a href="../legal/">Legal Notices</a> &#8226; <a href="../sitemap/">Sitemap</a> &#8226; <a href="http://www.cafepress.com/midnightbsd">Store</a> &#8226; MidnightBSD &copy; 2005-2008 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/">common creature</a></span></p>
-				</blockquote>
-			</div>
-		</div>
-		<!-- START GOOGLE -->
-		<div id="googlead" class="center">
-		<script type="text/javascript"><!--
-		google_ad_client = "pub-1321195614665440";
-		google_ad_width = 468;
-		google_ad_height = 60;
-		google_ad_format = "468x60_as";
-		google_ad_type = "text_image";
-		google_ad_channel ="";
-		google_color_border = "1651b5";
-		google_color_bg = "edf7f7";
-		google_color_link = "1651b5";
-		google_color_text = "1651b5";
-		google_color_url = "1651b5";
-		//--></script>
-		<script type="text/javascript"
-  		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
-		</div>
-		<script type="text/javascript">
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-		<script type="text/javascript">
-		var pageTracker = _gat._getTracker("UA-560995-2");
-		pageTracker._initData();
-		pageTracker._trackPageview();
-		</script>
-		<!-- END GOOGLE -->
+<!--#include virtual="/footer.html"-->
 	</body>
-</html>
+</html>	
