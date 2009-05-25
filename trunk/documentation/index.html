@@ -61,13 +61,83 @@
 				</p>
 				<p>You should see a red and blue screen come up after a few moments preceded by a lot of white and black text. If several minutes pass with no activity and you do not see this screen, please report it. There maybe a bug or an incompatibility with your system we can work to fix.
 				</p>
-				<p>From this point, you may follow the steps in sysinstall to complete installation. On snapshots and possibly the first release, X11 (XORG) and packages are not present. Do not attempt to install these items or you will receive errors. We hope to resolve this by 0.2 release.
+				<p>From this point, you may follow the steps in sysinstall to complete installation. On snapshots, X11 (XORG) and packages are not present. Do not attempt to install these items or you will receive errors. We hope to resolve this by 0.2 release.
 				</p>
 				<h4 id="1e">Example Hardware Configurations</h4>
 				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
 				<div class="hardware">
+				  <table>
+					<caption>Hardware Tested with MidnightBSD 0.2.x</caption>
+						<tr>
+							<th>Hardware</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+						<tr>
+							<td>Dell Precision 650</td>
+							<td>Works</td>
+							<td>Dual 2.0Ghz Xeon 3GB ECC RAM IDE. Onboard sound, NIC work. Hyperthreading works</td>
+						</tr>
+						<tr>
+							<td>Custom Pentium PC</td>
+							<td>Works</td>
+							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. Onboard sound untested, network card works, 
+							IDE channels work (CD-ROM, etc). Sata controller works. Sound Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected. System was
+							upgraded to an ATI X1900 GT PCIe, that works with X11 using radeonhd (2D only)</td>
+						</tr>
+			        	<tr>
+							<td>Virtual PC</td>
+							<td>Works</td>
+							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works except the CDROM drive is "lost" during install. If you can get it installed using ftp install, 
+							it will work fine. Note, you must install 0.1.1 from FTP and then upgrade to 0.2 as sysinstall FTP installation is broken in 0.2.1</td>
+						</tr>
+						<tr>
+							<td>VMware</td>
+							<td>Works</td>
+							<td>VMware player works under Windows Vista or XP. VMware Fusion on Mac OS X runs MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
+						</tr>
+						<tr>
+							<td>Sun Netra T1</td>
+							<td>Works</td>
+							<td>You must use the 0.1 snap and then update to 0.2.1 release.  We want to support these again come 0.3. One is a T1 105. Systems have 512MB and 768MB RAM,
+							SCSI disks, one has an IDE cdrom drive.  Onboard NICs work.</td>
+						</tr>
+						<tr>
+							<td>Qemu</td>
+							<td>Works</td>
+							<td>One of our developers uses qemu with the system. It is included in mports.</td>
+						</tr>
+						<tr>
+						    <td>Parallels</td>
+						    <td>Works</td>
+						    <td>Parallels 3 or 4 work with MidnightBSD.  Releases were tested on Parallels first actually.  0.4's SMP support works.  Mac or PC versions.</td>
+						</tr>
+						<tr>
+						    <td>IBM Thinkpad T30</td>
+						    <td>Works</td>
+						    <td>Sound, video, NIC, DVD all work.  System won't sleep and LCD won't turn off.  This model has the &quot;pointer stick&quot; and does not have built in
+						    wifi.  Using ndis with a broadcom wireless NIC works.</td>
+						</tr>
+						<tr>
+						    <td>Asus M4A78 Plus Motherboard + AMD Phenom 9600</td>
+						    <td>Does not work</td>
+						    <td>USB controller causes panics, freezes.  Must disable USB 2 in bios to boot.  Onboard NIC not supported and must be disabled.  System supported otherwise.</td>
+						</tr>
+						<tr>
+						    <td>iMac 2.0Ghz Core 2 Duo with 3GB RAM.  (silver/black model)  Feb 2008</td>
+						    <td>Mostly works</td>
+						    <td>Wifi is not supported, although may work with NDIS drivers from bootcamp.  Will boot off live cd without problem.  Onboard NIC supported in 0.2.1-RELEASE or
+						    CURRENT.  wifi might work in current with SMP disabled using bwi(4). Sound untested.</td>
+						</tr>
+						<tr>
+						    <td>Mac Pro 2.0Ghz Quad Core (2 x 2)</td>
+						    <td>Does not work</td>
+						    <td>No video and freezes on bootup.  Hates the sata dvd drive.</td>
+						</tr>
+					</table>
+					
 					<table>
-					<caption>Hardware Tested with MidnightBSD</caption>
+					<caption>Hardware Tested with MidnightBSD 0.1.x</caption>
 						<tr>
 							<th>Hardware</th>
 							<th>Status</th>
