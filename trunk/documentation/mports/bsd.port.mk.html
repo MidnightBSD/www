@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Using bsd.port.mk</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- $MidnightBSD: www/docs/mports/bsd.port.mk.html,v 1.3 2007/08/22 00:56:25 laffer1 Exp $ -->
+</head>
+
+<body lang="en-US">
+
+<!--#include virtual="/header.html" -->
+
+<h1>
+Using <tt>bsd.port.mk</tt></h1>
+
+<p><tt>.include &lt;bsd.port.mk&gt;</tt> or a variant is included in all ports 
+makefiles. Under no circumstances should you write anything below the definition.
+Instead, use <tt>bsd.port.pre.mk</tt> before your changes and <tt>bsd.port.post.mk</tt>
+at the end. Choose either <tt>bsd.port.mk</tt> or the pre/post combination, but do not
+mix the two approaches.</p> 
+
+<p>Here is a list of important variables that can aid in developing ports. These
+are included in <tt>bsd.port.pre.mk</tt>.</p>
+
+<table border="0" frame="void" width="100%">
+<col />
+<col />
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt>ARCH</tt></td>
+
+<td>The architecture as returned by <tt>uname -m</tt> (e.g., <tt
+>i386</tt>)</td>
+</tr>
+
+<tr>
+<td><tt>OPSYS</tt></td>
+<td>The operating system type, as returned by <tt class="COMMAND">uname -s</tt> (e.g.,
+<tt>MidnightBSD</tt>)</td>
+
+</tr>
+
+<tr>
+<td><tt>OSREL</tt></td>
+<td>The release version of the operating system (e.g., <tt>0.1</tt> or
+<tt>0.2</tt>)</td>
+</tr>
+
+<tr>
+<td><tt>OSVERSION</tt></td>
+
+<td>The numeric version of the operating system; the same as 
+<tt>__FreeBSD_version</tt>. In the future, __MidnightBSD_version
+will be used.  Do not rely on this value.</td>
+</tr>
+
+<tr>
+<td><tt>PORTOBJFORMAT</tt></td>
+<td>The object format of the system (<tt>elf</tt> or <tt
+>aout</tt>; note that <tt
+>aout</tt> is deprecated.)</td>
+</tr>
+
+<tr>
+<td><tt>LOCALBASE</tt></td>
+<td>The base of the ``local'' tree (e.g., <tt>/usr/local/</tt>)</td>
+</tr>
+
+<tr>
+<td><tt>X11BASE</tt></td>
+<td>The base of the ``X11'' tree (e.g., <tt>/usr/X11R6</tt>)</td>
+</tr>
+
+<tr>
+<td><tt>PREFIX</tt></td>
+<td>Where the port installs itself
+.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<blockquote>
+<p><b>Note:</b> If you have to define the variables <tt>USE_IMAKE</tt>,
+<tt>USE_X_PREFIX</tt>, or <tt>MASTERDIR</tt>, do so
+before including <tt>bsd.port.pre.mk</tt>.</p>
+</blockquote>
+
+<p>Here are some examples of things you can do with <tt
+>bsd.port.pre.mk</tt>:</p>
+
+<pre>
+# no need to compile lang/perl5 if perl5 is already in system
+.if ${OSVERSION} &gt; 300003
+BROKEN= perl is in system
+.endif
+
+# only one shlib version number for ELF
+.if ${PORTOBJFORMAT} == "elf"
+TCL_LIB_FILE=  ${TCL_LIB}.${SHLIB_MAJOR}
+.else
+TCL_LIB_FILE=  ${TCL_LIB}.${SHLIB_MAJOR}.${SHLIB_MINOR}
+.endif
+
+# software already makes link for ELF, but not for a.out
+post-install:
+.if ${PORTOBJFORMAT} == "aout"
+       ${LN} -sf liblinpack.so.1.0 ${PREFIX}/lib/liblinpack.so
+.endif
+
+# Detect MidightBSD version
+.if ${OSREL} == "0.1"
+BROKEN= man page does not install on 0.1-RELEASE
+.endif
+</pre>
+
+<p>Use tab instead of spaces after <tt>BROKEN=</tt>
+and <tt>TCL_LIB_FILE=</tt>.</p>
+</div>
+
+<p>Portions of this document are derived from the FreeBSD Porters Handbook.
+http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/porting-versions.html</p>
+
+<!--#include virtual="/footer.html" -->
+
+</body>
+</html>
