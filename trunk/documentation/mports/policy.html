@@ -2,53 +2,54 @@
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>MidnightBSD :: Documentation :: mports</title>
-<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/docs/mports/policy.html,v 1.13 2008/04/02 18:21:25 ctriv Exp $ -->
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>mports' Policies :: Documentation :: MidnightBSD</title>
+	<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
+	<!-- $MidnightBSD: www/documentation/mports/policy.html,v 1.1 2009/05/25 17:21:13 laffer1 Exp $ -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
+	<style type="text/css" media="all">
+		@import url("../../css/essence.css");
+	</style>
 </head>
 
 <body>
+<div id="globe">
+		<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+		<!--#include virtual="/menu.html"-->
+		<div class="clear"></div>
+		<div id="text">
+			<h2><img src="../../images/oxygen/doc32.png" alt="Text Document Icon" /> mports' Policies</h2>			
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1a"><strong>Introduction</strong></a></li>
+						<li><a href="#s2a"><strong>PKGNAME</strong></a></li>
+						<li><a href="#s3a"><strong>PORTREVISION</strong></a></li>
+						<li><a href="#s4a"><strong>LICENSE</strong></a></li>
+						<li><a href="#s5a"><strong>INSTALLS_SHLIB</strong></a></li>
+						<li><a href="#s6a"><strong>MASTER_SITES</strong></a></li>
+						<li><a href="#s7a"><strong>OSVERSION</strong></a></li>
+						<li><a href="#s17a"><strong>pkg-req</strong></a></li>
+					</ul>
+				</div>
 
-<!--#include virtual="/header.html" -->
-
-<div id="content">
-
-<div id="rnav">
-        <ul>
-            <li><a href="/index.html" title="Home">Home</a></li>
-            <li><a href="/about/index.html" title="About">About</a></li>
-            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
-            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
-            <li><a href="/community/index.html" title="Community">Community</a></li>
-            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
-            <li><a href="/support/index.html" title="Support">Support</a></li>
-            <li><a href="/wiki" title="MidnightBSD Wiki">Wiki</a></li>
-        </ul>
-
-	<p>
-	    <a href="/de/index.html" title="German">DE</a> 
-	    <a href="/index.html" title="English">EN</a> 
-        <a href="/ru/index.html" title="Russian">RU</a>
-    </p>
-
-	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="/images/feed.gif" alt="RSS Feed" /> 
-	<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
-</div>
-
-<h1>Mports Policies</h1>
+<h3 id="s1a">Introduction</h3>
 
 <p>If you are working on mports, you should define the MPORT_MAINTAINER_MODE variable in your make.conf.</p>
 
-<p>The following are guidelines for the behavior and layout of a port.  <em>Any time</em> a port is updated or created, it should be checked for compliance with these guidelines.  Note that this is a living document that should be checked from time to time for changes.</p>
+<p>The following are guidelines for the behavior and layout of a port.  
+<em>Any time</em> a port is updated or created, it should be checked for compliance with these guidelines.  
+Note that this is a living document that should be checked from time to time for changes.</p>
 
-<h2>PKGNAME</h2>
+<h3 id="s2a">PKGNAME</h3>
 
 <p>(Note that PKGNAME currently includes the version, which is unfortunate and an artifact from our FreeBSD roots.  In time PKGNAME will be renamed, and PKGSUBNAME will renamed to PKGNAME.)</p>
 
 <p>Every PKGSUBNAME must be unique.  This is not currently the case in the tree, but work has begun on this front.</p>
 
-<h2>PORTREVISION</h2>
+<h3 id="s3a">PORTREVISION</h3>
 
 <p>The PORTREVISION variable should only be incremented when there changes that will affect:</p>
 	<ul>
@@ -66,47 +67,47 @@
 
 <p>PORTREVISION used to be bumped in more cases, due to the way that our cluster software used to work.  The cluster now checks each port for each run.</p>		
 
-<h2>LICENSE</h2>
+<h3 id="s4a">LICENSE</h3>
 
 <p>Every port should define a LICENSE variable with a valid license. A list of valid licenses is printed by the <code>license-list</code> target.  The LICENSE variable should immediately follow the COMMENT variable.</p>
 
-<h2>INSTALLS_SHLIB</h2>
+<h3 id="s5a">INSTALLS_SHLIB</h3>
 
 <p>No port should use the INSTALLS_SHLIB variable.  Use USE_LDCONFIG instead.</p>
 
-<h2>MASTER_SITES</h2>
+<h3 id="s6a">MASTER_SITES</h3>
 
 <p>Every port should define at least 2 master sites.</p>
 
-<h2>OSVERSION</h2>
+<h3 id="s7a">OSVERSION</h3>
 
 <p>No port should use OSVERSION.  Currently this refers to the FreeBSD version that MBSD branched from.  This will not always be the case.  Eventually this will refer to the MidnightBSD version.  To facilitate this change, the old uses of OSVERSION must be removed.</p>
 
-<h2>Sub Files</h2>
+<h3 id="s8a">Sub Files</h3>
 
 <p>If a file like pkg-message or pkg-install requires varible substitution, the SUB_FILES framework must be used.  Do not hand roll your own.</p>
 
-<h2>Fake Cleanups</h2>
+<h3 id="s9a">Fake Cleanups</h3>
 
 <p>No port should run a pkg-install script, or display a package message.  This should be left to pkg_add.</p>
 
-<h2>pkg-message format</h2>
+<h3 id="s10a">pkg-message format</h3>
 
 <p>The pkg-message file should be as simple in layout as possible.  There should be no ascii art or lines.  Eventually this message may be displayed in the GUI, do not assume that it merely needs to look good on the command line.</p>
 
-<h2>OPTIONS</h2>
+<h3 id="s11a">OPTIONS</h3>
 
 <p>Use OPTIONS if there are knobs, even if there is only one knob.  The mport package system is going to be options aware, but it can't use the options if they aren't defined.</p>
 
-<h2>Man Pages</h2>
+<h3 id="s12a">Man Pages</h3>
 
 <p>Very old FreeBSD ports do not use the MANX variables for man pages.  Any such port should be changed to use the MANX variables.  This is important so that package deletion will correctly remove the man pages.</p>
 
-<h2>pre-su-install</h2>
+<h3 id="s13a">pre-su-install</h3>
 
 <p>Now that su is not used in the fake process, the pre-su-install target is deprecated.  Usually it can be moved to the pre-install target, but if it is doing anything with the plist the maintainer will need to use their judgement to determine the correct fix.</p>
 
-<h2>Old Variables</h2>
+<h3 id="s14a">Old Variables</h3>
 
 <p>The following variables are no longer used (they are either totally deprecated, or needed by older FreeBSD versions):</p>
 
@@ -117,11 +118,11 @@
 
 <p>No port should use these variables</p>
 
-<h2>Interactive Scripts</h2>
+<h3 id="s15a">Interactive Scripts</h3>
 
 <p>No pkg-install or pkg-deinstall script should expect to run in an interactive envirement.  They should not prompt the user or expect input from the user.</p>
 
-<h2>Plist and Echo</h2>
+<h3 id="s16a">Plist and Echo</h3>
 
 <p>Don't expect to be able to echo things to the user from the plist during
 a <code>@exec</code> or <code>@unexec</code> directive.  It will work fine
@@ -129,14 +130,11 @@ with the old FreeBSD pkg_* tools, but the behavior is undefined under
 libmport.  The user might see what you have to say, it might not. If in
 doubt use a pkg-install script or a pkg-message file.</p>
 
-<h2>pkg-req</h2>
+<h3 id="s17a">pkg-req</h3>
 
 <p>Package requirement scripts are deprecated.  There is only one such script at the moment and its function will be reimplemented under the mport package system.</p>
 
 </div>
-<!-- END CONTENT -->
-
-<!--#include virtual="/footer.html" -->
-
+		<!--#include virtual="/footer.html"-->
 </body>
 </html>
