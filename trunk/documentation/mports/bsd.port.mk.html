@@ -1,20 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
 <title>Using bsd.port.mk</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $MidnightBSD: www/docs/mports/bsd.port.mk.html,v 1.3 2007/08/22 00:56:25 laffer1 Exp $ -->
+<!-- $MidnightBSD: www/documentation/mports/bsd.port.mk.html,v 1.1 2009/05/25 17:21:13 laffer1 Exp $ -->
+<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
+	<style type="text/css" media="all">
+		@import url("../../css/essence.css");
+	</style>
 </head>
 
 <body lang="en-US">
 
-<!--#include virtual="/header.html" -->
-
-<h1>
-Using <tt>bsd.port.mk</tt></h1>
-
+	<div id="globe">
+		<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+		<!--#include virtual="/menu.html"-->
+		<div class="clear"></div>
+		
+		<div id="text">
+			<h2><img src="../../images/oxygen/doc32.png" alt="Text Document Icon" /> Using bsd.port.mk</h2>			
+		
 <p><tt>.include &lt;bsd.port.mk&gt;</tt> or a variant is included in all ports 
 makefiles. Under no circumstances should you write anything below the definition.
 Instead, use <tt>bsd.port.pre.mk</tt> before your changes and <tt>bsd.port.post.mk</tt>
@@ -130,7 +137,8 @@ and <tt>TCL_LIB_FILE=</tt>.</p>
 <p>Portions of this document are derived from the FreeBSD Porters Handbook.
 http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/porting-versions.html</p>
 
-<!--#include virtual="/footer.html" -->
-
+</div>
+		<!--#include virtual="/footer.html"-->
 </body>
 </html>
+
