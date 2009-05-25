@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<title>MidnightBSD mports Documentation</title>
-		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.1 2009/05/25 17:21:13 laffer1 Exp $ -->
+		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.2 2009/05/25 18:04:04 laffer1 Exp $ -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 <!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
@@ -29,9 +29,25 @@
 		<!--#include virtual="/menu.html"-->
 		<div class="clear"></div>
 		<div id="text">
-			<h2><img src="../../images/oxygen/doc32.png"> mports Documentation</h2>
+			<h2><img src="../../images/oxygen/doc32.png"> mports Documentation</h2>			
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#1a"><strong>Introduction</strong></a></li>
+						<li><a href="#2a"><strong>Using mports</strong></a></li>
+						<li><a href="#3a"><strong>History</strong></a></li>
+						<li><a href="#4a"><strong>Future directions</strong></a></li>
+						<li>Further Reading
+						<ul>
+						    <li><a href="bsd.port.mk.html"><strong>bsd.port.mk</strong></a></li>
+							<li><a href="fake.html"><strong>Fake</strong></a></li>
+							<li><a href="policy.html"><strong>Policy</strong></a></li>
+						</ul>
+						</li>
+					</ul>
+				</div>
 	
- <h3>Introduction</h3>
+ <h3 id="1a">Introduction</h3>
  
  <p>mports is the MidnightBSD ports collection.  It contains hundreds of ported software applications
  ready to use on MidnightBSD.  mports simplifies installing software packages on your desktop system.</p>
@@ -40,7 +56,7 @@
  automated software update system is planned.  There are a few precompiled software packages on the
  MidnightBSD FTP server.</p>
  
- <h3>Using mports</h3>
+ <h3 id="2a">Using mports</h3>
  
  <p>You can install mports during the installation of MidnightBSD.  If you forgot to do so, you may download
  the latest mports by using <em>csup</em> or <em>cvs</em>.  Execute the command <br />csup /usr/share/examples/cvsup/mports-supfile<br />
@@ -64,7 +80,7 @@
  
  <p>There are also utilities like pkg_add, pkg_delete and so forth included in the base system.  pkg_add -r portname can fetch a precompiled package from the MidnightBSD server and install it for you.  You can also install your own packages.  There are many possibilities.</p>
  
- <h3>History</h3>
+ <h3 id="3a">History</h3>
  
  <p>MidnightBSD uses the FreeBSD ports collection.  Over time it has begun to diverge.  Several projects have been influential in the design of the mports system, notably OpenBSD.</p>
  
@@ -80,7 +96,7 @@
  
  <p>Mport is endeavoring to be more standardized than the FreeBSD ports tree.  See the <a href="policy.html">policy page</a> for information on current port standards.</p>
  
- <h3>Future Directions</h3>
+ <h3 id="4a">Future Directions</h3>
  
  <ul>
  <li>A new package scheme is early planning.  It would be based on FreeBSD's package system, but have several new features such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, and a radically improved package database.</li>
@@ -91,8 +107,6 @@
  
  <li>As time goes by we are trying to simplify the mports system.  FreeBSD's ports have years of backwards compatibly code and many features that we simply don't need.</li>
  </ul>
- 
- <p>This document is incomplete.  It will be more complete in the future.</p>
 
 </div>
 		<!--#include virtual="/footer.html"-->
