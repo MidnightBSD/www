@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<title>MidnightBSD mports Documentation</title>
-		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.4 2009/05/25 18:15:41 laffer1 Exp $ -->
+		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.5 2009/05/25 18:17:05 laffer1 Exp $ -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 <!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
@@ -55,47 +55,71 @@
  cd /usr<br />
  cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports</p>
  
- <p>Updating mports periodically is recommended.  New versions of software and additional software are added all the time.  Keeping up to date will help you maintain best security practices and possibly give you new features
+ <p>Updating mports periodically is recommended.  New versions of software and additional software are added all the time.  
+ Keeping up to date will help you maintain best security practices and possibly give you new features
  and functionality or bug fixes. </p>
  
  <p>To install an mport, simply do the following:
  <br />cd /usr/mports
- <br />Pick a category from the file system list or use make search key=term where term is what you want to search for.  Once you have the mport, you can type make install clean to install it and clean up the compiling mess.  
+ <br />Pick a category from the file system list or use make search key=term where term is what you want to search for.  Once you 
+ have the mport, you can type make install clean to install it and clean up the compiling mess.  
  </p>
  
  <p>It is recommended that you install mports/sysutils/portupgrade at your convenience.  It will allow you to
- upgrade mports and install mports much easier.  You can simply type portinstall portname to install a port called portname.  It can speed up the process considerably.</p>
+ upgrade mports and install mports much easier.  You can simply type portinstall portname to install a port called portname.  It 
+ can speed up the process considerably.</p>
  
  <p>To uninstall a port, simply goto the directory of the mport and type make deinstall</p>
  
- <p>There are also utilities like pkg_add, pkg_delete and so forth included in the base system.  pkg_add -r portname can fetch a precompiled package from the MidnightBSD server and install it for you.  You can also install your own packages.  There are many possibilities.</p>
+ <p>There are also utilities like pkg_add, pkg_delete and so forth included in the base system.  pkg_add -r portname can fetch a 
+ precompiled package from the MidnightBSD server and install it for you.  You can also install your own packages.  There are many 
+ possibilities.</p>
  
  <h3 id="s3a">History</h3>
  
- <p>MidnightBSD uses the FreeBSD ports collection.  Over time it has begun to diverge.  Several projects have been influential in the design of the mports system, notably OpenBSD.</p>
+ <p>MidnightBSD uses the FreeBSD ports collection.  Over time it has begun to diverge.  Several projects have been influential 
+ in the design of the mports system, notably OpenBSD.</p>
  
  <p>The initial import of mports was done by our security officer, archite.  mports maintainership was transfered
- to wintellect after some initial work by laffer1.  Currently, all commiters have access to add and modify mports. You may contact any commiter about mports problems or additions.  For infrastructure questions or concerns, direct them to wintellect.  (use the alias at midnightbsd.org)</p>
+ to wintellect after some initial work by laffer1.  A massive restructuring of the mports system was done
+ by Chris Reinhardt (ctriv).  Now the entire system creates ports in a staging directory called the fake dir.  A
+ port is built in the working directory work/ inside the ports directory.  Then during the faking stage (before install occurs)
+ it is &quot;installed&quot; into the fake dir which is a combination of the word fake the target arch and a few other nits.  It is
+ the job of the mports maintainer to fix any bugs with this faking procedure.  It is more work up front, but it means that all
+ ports are installed from packages and therefore all packages must work.  This is quite innovative compared to the FreeBSD maybe it works
+ as a package approach, but other projects like OpenBSD have been doing something similar for quite some time.</p>
+ 
+ <p>Currently, all commiters have access to add and modify mports. 
+ You may contact any commiter about mports problems or additions.  For infrastructure questions or concerns, 
+ direct them to ctriv.  (use the alias at midnightbsd.org)</p>
  
  <h3>Differences Between FreeBSD's ports and mports</h3>
  
- <p>FreeBSD's ports install directly into the system at install time, mports however uses a process called &quot;fake&quot; to make a package and then installs that package.  This simplifies the logic of the ports system.  Code does not need to be duplicated for installation from the port and installation from the package.  The change is very recent, and at this time we are still testing the port tree to insure that all ports function properly under the &quot;fake&quot; system.</p>
+ <p>FreeBSD's ports install directly into the system at install time, mports however uses a process 
+ called &quot;fake&quot; to make a package and then installs that package.  This simplifies the logic of the ports system. 
+ Code does not need to be duplicated for installation from the port and installation from the package.  The change is very recent, 
+ and at this time we are still testing the port tree to insure that all ports function properly under the &quot;fake&quot; system.</p>
  
  <p>For information on common reasons for &quot;fake&quot; errors, see the 
  <a href="fake.html">fake transition page</a>.</p>
  
- <p>Mport is endeavoring to be more standardized than the FreeBSD ports tree.  See the <a href="policy.html">policy page</a> for information on current port standards.</p>
+ <p>Mport is endeavoring to be more standardized than the FreeBSD ports tree.  
+ See the <a href="policy.html">policy page</a> for information on current port standards.</p>
  
  <h3 id="s4a">Future Directions</h3>
  
  <ul>
- <li>A new package scheme is early planning.  It would be based on FreeBSD's package system, but have several new features such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, and a radically improved package database.</li>
+ <li>A new package scheme is early planning.  It would be based on FreeBSD's package system, but have several new features 
+ such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, 
+ and a radically improved package database using sqlite3 as a backend. (libmport)</li>
  
  <li>A package distribution system along the lines of apt-get or CPAN.</li>
  
- <li>The MidnightBSD Project hopes to add a graphical mports management application in future versions with automatic software update functionality as well as base system software updating.</li>
+ <li>The MidnightBSD Project will add a graphical mports management application in future versions with 
+ automatic software update functionality as well as base system software updating.</li>
  
- <li>As time goes by we are trying to simplify the mports system.  FreeBSD's ports have years of backwards compatibly code and many features that we simply don't need.</li>
+ <li>As time goes by we are trying to simplify the mports system.  FreeBSD's ports have years of backwards compatibly code and 
+ many features that we simply don't need.</li>
  </ul>
 
 </div>
