@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>MidnightBSD Documentation</title>
+		<title>MidnightBSD :: Documentation</title>
 		<link rel="shortcut icon" href="/favicon.ico">
 		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
@@ -37,14 +37,7 @@
 							<li><a href="#1d">Installing MidnightBSD</a></li>
 							<li><a href="#1e">Example Hardware Configurations</a></li>
 						</ul>
-						<li><a href="#2a"><strong>mports</strong></a></li>
-						<ul>
-							<li><a href="#2b">Introduction</a></li>
-							<li><a href="#2c">Using Ports</a></li>
-							<li><a href="#2d">History</a></li>
-							<li><a href="#2e">FreeBSD's ports vs. mports</a></li>
-							<li><a href="#2f">Future Directions</a></li>
-						</ul>
+						<li><a href="mports/index.html"><strong>mports</strong></a></li>
 					</ul>
 				</div>
 				<h3 id="1a">Installation</h3>
@@ -125,46 +118,7 @@
 							<td>One of our developers uses qemu often with the system. It is included in mports. I believe he's also run MidnightBSD virtualized inside of OpenBSD.</td>
 					</table>
 				</div>
-				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.</p>
-				
-				
-				<h3 id="2a">mports</h3>
-				<h4 id="2b">Introduction</h4>
-				<p>mports is the MidnightBSD ports collection. It contains hundreds of ported software applications ready to use on MidnightBSD. mports simplifies installing software packages on your desktop system.</p>
-				<p>In the future, mports will also include precompiled packages to speed up the installation process. An automated software update system is planned. There are a few precompiled software packages on the MidnightBSD FTP server.</p>
-				<h4 id="2c">Using mports</h4>
-				<p>You can install mports during the installation of MidnightBSD. If you forgot to do so, you may download the latest mports by using <code>csup</code> or <code>cvs</code>. Execute the command:</p>
-				<pre>
-mkdir /usr/mports
-cd /usr
-cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports
-
-
-				</pre>
-				<p>Updating mports periodically is recommended. New versions of software and additional software are added all the time. Keeping up to date will help you maintain best security practices and possibly give you new features and functionality or bug fixes.</p>
-				<p>To install an mport, simply do the following:</p>
-				<pre>cd /usr/mports</pre>
-				<p>Pick a category from the file system list or use make search key=term where term is what you want to search for. Once you have the mport, you can type make install clean to install it and clean up the compiling mess.</p>
-				<p>It is recommended that you install mports/sysutils/portupgrade at your convenience. It will allow you to upgrade mports and install mports much easier. You can simply type portinstall portname to install a port called portname. It can speed up the process considerably.</p>
-				<p>To uninstall a port, simply goto the directory of the mport and type <code>make deinstall</code>.</p>
-				<p>There are also utilities like <code>pkg_add</code>, <code>pkg_delete</code> and so forth included in the base system. <code>pkg_add -r <em>portname</em></code> can fetch a precompiled package from the MidnightBSD server and install it for you. You can also install your own packages. There are many possibilities.</p>
-				<h4 id="2d">History</h4>
-				<p>MidnightBSD uses the FreeBSD ports collection. Over time it has begun to diverge. Several projects have been influential in the design of the mports system, notably OpenBSD.</p>
-				<p>The initial import of mports was done by our security officer, archite. mports maintainership was transfered to wintellect after some initial work by laffer1. Currently, all commiters have access to add and modify mports. You may contact any commiter about mports problems or additions. For infrastructure questions or concerns, direct them to wintellect. (use the alias at midnightbsd.org)</p>
-				<h4 id="2e">FreeBSD's ports vs. mports</h4>
-				<p>FreeBSD's ports install directly into the system at install time, mports however uses a process called "fake" to make a package and then installs that package. This simplifies the logic of the ports system. Code does not need to be duplicated for installation from the port and installation from the package. The change is very recent, and at this time we are still testing the port tree to insure that all ports function properly under the "fake" system.</p>
-				<p>For information on common reasons for "fake" errors, see the <a href="mports/fake.html">fake transition page</a>.</p>
-				<p>Mport is endeavoring to be more standardized than the FreeBSD ports tree. See the <a href="policy.html">policy page</a> for information on current port standards.</p>
-				<h4 id="2f">Future Directions</h4>
-				<div class="hardware">
-					<ul>
-						<li>A new package scheme is early planning. It would be based on FreeBSD's package system, but have several new features such as support for bundled packages (several packages in one package), cryptographically signed packages, native option support, and a radically improved package database.</li>
-						<li>A package distribution system along the lines of apt-get or CPAN.</li>
-						<li>The MidnightBSD Project hopes to add a graphical mports management application in future versions with automatic software update functionality as well as base system software updating.</li>
-						<li>As time goes by we are trying to simplify the mports system. FreeBSD's ports have years of backwards compatibly code and many features that we simply don't need.</li>
-					</ul>
-				</div>
-				<p>This document is incomplete. It will be more complete in the future.</p>
+				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.</p>	
 			</div>
 		<!--#include virtual="/footer.html"-->
 	</body>
