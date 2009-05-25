@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<title>MidnightBSD mports Documentation</title>
-		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.5 2009/05/25 18:17:05 laffer1 Exp $ -->
+		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.6 2009/05/25 18:39:20 laffer1 Exp $ -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 <!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
@@ -49,11 +49,11 @@
  <h3 id="s2a">Using mports</h3>
  
  <p>You can install mports during the installation of MidnightBSD.  If you forgot to do so, you may download
- the latest mports by using <em>csup</em> or <em>cvs</em>.  Execute the command <br />csup /usr/share/examples/cvsup/mports-supfile<br />
+ the latest mports by using <em>cvsup</em> or <em>cvs</em>.  Execute the command <br />cvsup /usr/share/examples/cvsup/mports-supfile<br />
  to download the mports.  Alternatively, you can use <br />
  mkdir /usr/mports<br />
  cd /usr<br />
- cvs -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports</p>
+ cvs -z 7 -d anoncvs@stargazer.midnightbsd.org:/home/cvs co mports</p>
  
  <p>Updating mports periodically is recommended.  New versions of software and additional software are added all the time.  
  Keeping up to date will help you maintain best security practices and possibly give you new features
