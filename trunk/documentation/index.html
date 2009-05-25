@@ -72,14 +72,27 @@
 				or a third party boot manager such as gag.  The included one with not work with Vista (overwrites it)</p>
 				<p>You may also install MidnightBSD using a virtualization product such as qemu, Microsoft Virtual PC, or VMware. Parallels has not been tested to my knowledge.
 				</p>
-				<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your favorite CD burning software. If you need to download burning software, <a href="http://www.maconnect.ch/index.php?page=liquidcd&lang=en">LiquidCD</a> for Mac OS X, and <a href="http://infrarecorder.sourceforge.net/">InfraRecorder</a> for Windows XP are both free and easy to use.
+				<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your 
+				favorite CD burning software. If you need to download burning software, 
+				<a href="http://www.maconnect.ch/index.php?page=liquidcd&amp;lang=en">LiquidCD</a> for Mac OS X, and 
+				<a href="http://infrarecorder.sourceforge.net/">InfraRecorder</a> for Windows XP are both free and easy to use.
+				Also, on OS X, you can burn with Disk Utility.  For FreeBSD or MidnightBSD, you can
+				use burncd (part of os).  
 				</p>
 				<h4 id="s1d">Installing MidnightBSD</h4>
-				<p>Insert the MidnightBSD CD into your CD-ROM drive and start up your PC. On some systems, you may need to enter the BIOS to enable booting from the CD-ROM drive first. On some systems, there is a button you can push to select the CD-ROM drive. For instance, on some Dell systems you can press F12 and then pick the CD-ROM drive.
+				<p>Insert the MidnightBSD CD into your CD-ROM drive and start up your PC. On some 
+				systems, you may need to enter the BIOS to enable booting from the CD-ROM drive first. 
+				On some systems, there is a button you can push to select the CD-ROM drive. For instance, 
+				on some Dell systems you can press F12 and then pick the CD-ROM drive.
 				</p>
-				<p>You should see a red and blue screen come up after a few moments preceded by a lot of white and black text. If several minutes pass with no activity and you do not see this screen, please report it. There maybe a bug or an incompatibility with your system we can work to fix.
+				<p>You should see a red and blue screen come up after a few moments preceded by a lot
+				of white and black text. If several minutes pass with no activity and you do not see 
+				this screen, please report it. There maybe a bug or an incompatibility with your 
+				system we can work to fix.
 				</p>
-				<p>From this point, you may follow the steps in sysinstall to complete installation. On snapshots, X11 (XORG) and packages are not present. Do not attempt to install these items or you will receive errors. We hope to resolve this by 0.2 release.
+				<p>From this point, you may follow the steps in sysinstall to complete installation. 
+				On snapshots, X11 (XORG) and packages are not present. Do not attempt to install 
+				these items or you will receive errors. We hope to resolve this by 0.2 release.
 				</p>
 				<h4 id="s1e">Example Hardware Configurations</h4>
 				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
@@ -99,25 +112,31 @@
 						<tr>
 							<td>Custom Pentium PC</td>
 							<td>Works</td>
-							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. Onboard sound untested, network card works, 
-							IDE channels work (CD-ROM, etc). Sata controller works. Sound Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected. System was
+							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT 
+							motherboard. Onboard sound untested, network card works, 
+							IDE channels work (CD-ROM, etc). Sata controller works. Sound Blaster 
+							Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected. System was
 							upgraded to an ATI X1900 GT PCIe, that works with X11 using radeonhd (2D only)</td>
 						</tr>
 			        	<tr>
 							<td>Virtual PC</td>
 							<td>Works</td>
-							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works except the CDROM drive is "lost" during install. If you can get it installed using ftp install, 
-							it will work fine. Note, you must install 0.1.1 from FTP and then upgrade to 0.2 as sysinstall FTP installation is broken in 0.2.1</td>
+							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X 
+							works except the CDROM drive is "lost" during install. If you can get it installed using ftp install, 
+							it will work fine. Note, you must install 0.1.1 from FTP and then 
+							upgrade to 0.2 as sysinstall FTP installation is broken in 0.2.1</td>
 						</tr>
 						<tr>
 							<td>VMware</td>
 							<td>Works</td>
-							<td>VMware player works under Windows Vista or XP. VMware Fusion on Mac OS X runs MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
+							<td>VMware player works under Windows Vista or XP. VMware Fusion on Mac OS X 
+							runs MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
 						</tr>
 						<tr>
 							<td>Sun Netra T1</td>
 							<td>Works</td>
-							<td>You must use the 0.1 snap and then update to 0.2.1 release.  We want to support these again come 0.3. One is a T1 105. Systems have 512MB and 768MB RAM,
+							<td>You must use the 0.1 snap and then update to 0.2.1 release.  We want 
+							to support these again come 0.3. One is a T1 105. Systems have 512MB and 768MB RAM,
 							SCSI disks, one has an IDE cdrom drive.  Onboard NICs work.</td>
 						</tr>
 						<tr>
@@ -128,23 +147,27 @@
 						<tr>
 						    <td>Parallels</td>
 						    <td>Works</td>
-						    <td>Parallels 3 or 4 work with MidnightBSD.  Releases were tested on Parallels first actually.  0.4's SMP support works.  Mac or PC versions.</td>
+						    <td>Parallels 3 or 4 work with MidnightBSD.  Releases were tested on Parallels 
+						    first actually.  0.4's SMP support works.  Mac or PC versions.</td>
 						</tr>
 						<tr>
 						    <td>IBM Thinkpad T30</td>
 						    <td>Works</td>
-						    <td>Sound, video, NIC, DVD all work.  System won't sleep and LCD won't turn off.  This model has the &quot;pointer stick&quot; and does not have built in
+						    <td>Sound, video, NIC, DVD all work.  System won't sleep and LCD won't
+						    turn off.  This model has the &quot;pointer stick&quot; and does not have built in
 						    wifi.  Using ndis with a broadcom wireless NIC works.</td>
 						</tr>
 						<tr>
 						    <td>Asus M4A78 Plus Motherboard + AMD Phenom 9600</td>
 						    <td>Does not work</td>
-						    <td>USB controller causes panics, freezes.  Must disable USB 2 in bios to boot.  Onboard NIC not supported and must be disabled.  System supported otherwise.</td>
+						    <td>USB controller causes panics, freezes.  Must disable USB 2 in bios to boot.  
+						    Onboard NIC not supported and must be disabled.  System supported otherwise.</td>
 						</tr>
 						<tr>
 						    <td>iMac 2.0Ghz Core 2 Duo with 3GB RAM.  (silver/black model)  Feb 2008</td>
 						    <td>Mostly works</td>
-						    <td>Wifi is not supported, although may work with NDIS drivers from bootcamp.  Will boot off live cd without problem.  Onboard NIC supported in 0.2.1-RELEASE or
+						    <td>Wifi is not supported, although may work with NDIS drivers from bootcamp.  
+						    Will boot off live cd without problem.  Onboard NIC supported in 0.2.1-RELEASE or
 						    CURRENT.  wifi might work in current with SMP disabled using bwi(4). Sound untested.</td>
 						</tr>
 						<tr>
@@ -169,12 +192,19 @@
 						<tr>
 							<td>Custom Pentium PC</td>
 							<td>Works</td>
-							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. Onboard sound untested, network card works, IDE channels do not work (CD-ROM, etc). Sata controller works in recent snapshots. Sound Blaster Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected.</td>
+							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. 
+							Onboard sound untested, network card works, IDE channels do not work (CD-ROM, etc). 
+							Sata controller works in recent snapshots. Sound Blaster Audigy Gamer and 
+							Nvidia GeForce PCIe 7300 work as expected.</td>
 						</tr>
 						<tr>
 							<td>Custom PC</td>
 							<td>Works</td>
-							<td>Custom Built Nvidia nForce 2 w/ sata raid (MSI motherboard) 512mb PC2700 DDR, 2 sata disks in gmirror raid 1 configuration, 1 ide disk for boot partition, onboard sound, Geforce 5200 AGP 8x. Onboard NIC (nvidia maclan) did not work correctly, but an OEM Intel em worked as expected. Some disk corruption occured on the sata raid setup, but determined to be a faulty drive.</td>
+							<td>Custom Built Nvidia nForce 2 w/ sata raid (MSI motherboard) 512mb 
+							PC2700 DDR, 2 sata disks in gmirror raid 1 configuration, 1 ide disk for
+							boot partition, onboard sound, Geforce 5200 AGP 8x. Onboard NIC (nvidia maclan) 
+							did not work correctly, but an OEM Intel em worked as expected. Some disk 
+							corruption occured on the sata raid setup, but determined to be a faulty drive.</td>
 						</tr>
 						<tr>
 							<td>Compaq Cyrix based 366Mhz</td>
@@ -189,12 +219,15 @@
 						<tr>
 							<td>Virtual PC</td>
 							<td>Works</td>
-							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works except the CDROM drive is "lost" during install. If you can get it installed using ftp install, it will work fine.</td>
+							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works 
+							except the CDROM drive is "lost" during install. If you can get it installed 
+							using ftp install, it will work fine.</td>
 						</tr>
 						<tr>
 							<td>VMware</td>
 							<td>Works</td>
-							<td>VMware player works under Windows Vista. VMware Fusion on Mac OS X runs MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
+							<td>VMware player works under Windows Vista. VMware Fusion on Mac OS X runs 
+							MidnightBSD as expected. Unable to install the vmware-tools for better performance.</td>
 						</tr>
 						<tr>
 							<td>Sun Ultra 10 3D creator</td>
@@ -204,11 +237,14 @@
 						<tr>
 							<td>Qemu</td>
 							<td>Works</td>
-							<td>One of our developers uses qemu often with the system. It is included in mports. I believe he's also run MidnightBSD virtualized inside of OpenBSD.</td>
+							<td>One of our developers uses qemu often with the system. It is included in mports.
+							I believe he's also run MidnightBSD virtualized inside of OpenBSD.</td>
 						</tr>
 					</table>
 				</div>
-				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.</p>	
+				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. 
+				Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.  0.3-CURRENT
+				includes drivers from FreeBSD 7.0-RELEASE.</p>	
 			</div>
 		<!--#include virtual="/footer.html"-->
 	</body>
