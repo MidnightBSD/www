@@ -19,14 +19,38 @@
 			<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
-                                <blockquote class="bluebox" id="a20090326">
-                                        <h3>March 26, 2009</h3>
-                                        <p>Update for sudo that corrects several outstanding security advisories.  This was corrected in 0.2.1-RELEASE-p7 and 0.3-CURRENT.  0.1.x is no longer receiving security patches.  It
-                                        is recommended that you upgrade to 0.2.1-RELEASE-p7 when possible.</p>
-                                </blockquote>
+				<blockquote class="bluebox" id="a20090610">
+				<h3>June 10, 2009</h3>
+				<p>This should be applied to all systems running 0.2.1. Users on p9 simply should update their kernels. No world update is required.</p>
+        		<p>ipv6:<br />
+        		The SIOCSIFINFO_IN6 ioctl is missing a necessary permissions check.
+        		Don't let everyone on the planet (with local access) change the
+        		properties on the ipv6 interfaces.</p>
+
+        		<p>anonymous pipes:<br />
+        		Stop unprivileged processes from reading pages of memory belonging
+       			to other processes with anonymous pipes.</p>
+       			<p>0.3-Current users can verify they have the patch by checking sysctl kern.osreldate.  If the value is 3005 or better, you have the patch.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20090521">
+					<h3>May 21, 2009</h3>
+					<p>This fix is only in configuration files for ssh and sshd.  Users on p8 should simply add
+					<pre>Ciphers aes128-ctr,aes256-ctr,arcfour256,arcfour,aes128-cbc,aes256-cbc</pre>
+					to their configuration files for sshd_config and ssh_config in etc/ssh</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20090422">
+					<h3>April 22, 2009</h3>
+					<p> The function ASN1_STRING_print_ex does not properly validate the lengths of BMPString or UniversalString objects before attempting to print them.
+						MidnightBSD 0.2.1-RELEASE-p8 and 0.3-CURRENT include this fix.</p>
+				</blockquote>
+				<blockquote class="bluebox" id="a20090326">
+					<h3>March 26, 2009</h3>
+						<p>Update for sudo that corrects several outstanding security advisories.  This was corrected in 0.2.1-RELEASE-p7 and 0.3-CURRENT.  
+                        0.1.x is no longer receiving security patches.  It is recommended that you upgrade to 0.2.1-RELEASE-p7 when possible.</p>
+				</blockquote>
 				<blockquote class="bluebox" id="a20090115">
-                                        <h3>January 15, 2009</h3>
-                                        <p>Prevent a DNSSEC attack with BIND.  This was corrected in 0.2.1 and 0.3-CURRENT.  0.1.x is no longer receiving security patches.  It
+					<h3>January 15, 2009</h3>
+					<p>Prevent a DNSSEC attack with BIND.  This was corrected in 0.2.1 and 0.3-CURRENT.  0.1.x is no longer receiving security patches.  It
 					is recommended that you upgrade to 0.2.1-RELEASE when possible.</p>
                                 </blockquote>
 				<blockquote class="bluebox" id="a20090110">
@@ -41,9 +65,8 @@
 				</blockquote>
 				<blockquote class="bluebox" id="a20081124">
 					<h3>November 24, 2008</h3>
-					<p>Correct a problem in arc4random which causes the device not to get enough entropy for system services.  Geom classes initialized at startup will still have problems.  Update your system to
-					RELENG_0_2 (MidnightBSD 0.2.1-p3)
-					</p>
+					<p>Correct a problem in arc4random which causes the device not to get enough entropy for system services.  Geom classes initialized at startup will still 
+					have problems.  Update your system to RELENG_0_2 (MidnightBSD 0.2.1-p3)</p>
 				</blockquote>
 				<blockquote class="bluebox" id="a20080929">
 					<h3>September 29, 2008</h3>
