@@ -17,7 +17,7 @@
       <resources>
         <url type="http" preference="4">http://www.midnightbsd.org/ftp/MidnightBSD/ISO-IMAGES-i386/0.1.1/0.1.1-RELEASE-i386-disc1.iso</url>
         <url type="http" preference="3">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc1.iso</url>
-        <url type="http" preference="2">http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc1.iso</url>
+        <url type="http" preference="2">http://mirror.bsdprison.com/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc1.iso</url>
         <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc1.iso</url>
       </resources>
     </file>
@@ -31,7 +31,7 @@
       <resources>
         <url type="http" preference="4">http://www.midnightbsd.org/ftp/MidnightBSD/ISO-IMAGES-i386/0.1.1/0.1.1-RELEASE-i386-disc2.iso</url>
         <url type="http" preference="3">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc2.iso</url>
-        <url type="http" preference="2">http://cs.emich.edu/mbsd/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc2.iso</url>
+        <url type="http" preference="2">http://mirror.bsdprison.com/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc2.iso</url>
         <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.1.1/0.1.1-RELEASE-i386-disc2.iso</url>
       </resources>
     </file>
