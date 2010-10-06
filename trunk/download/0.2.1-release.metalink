@@ -19,7 +19,7 @@
         <url type="http" preference="2">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
         <url type="http" preference="2">http://mirror.bsdprison.com/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
 	<url type="ftp" preference="2">ftp://ftp.se.midnightbsd.org/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
-	<url type="ftp" preference="2">ftp://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
+	<url type="http" preference="2">http://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
         <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc1.iso</url>
         <url type="magnet" preference="100">magnet:?xt=urn:btih:RG3XKPN7RMZPFI4F4OBVJYAIKKFN3FCS</url>
       </resources>
@@ -36,7 +36,7 @@
         <url type="http" preference="3">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
         <url type="http" preference="2">http://mirror.bsdprison.com/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
 	<url type="ftp" preference="2">ftp://ftp.se.midnightbsd.org/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
-	<url type="ftp" preference="2">ftp://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
+	<url type="http" preference="2">http://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
         <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc2.iso</url>
       </resources>
     </file>
@@ -52,7 +52,7 @@
         <url type="http" preference="2">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
         <url type="http" preference="2">http://mirror.bsdprison.com/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
 	<url type="ftp" preference="2">ftp://ftp.se.midnightbsd.org/MidnightBSD/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
-	<url type="ftp" preference="2">ftp://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
+	<url type="http" preference="2">http://mirrors.secution.com/midnightbsd/ISO-IMAGES-i386/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
         <url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.2.1/0.2.1-RELEASE-i386-disc3.iso</url>
       </resources>
     </file>
