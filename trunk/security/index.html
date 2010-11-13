@@ -20,6 +20,16 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+                                <blockquote class="bluebox" id="a20101012">
+                                        <h3>October 12, 2010</h3>
+                                        <p>0.3-PRERELEASE and 0.4-CURRENT have an issue in all pseudofs based file systems including procfs and linprocfs
+					that either can be used to run code as the kernel or at best crash the system.  It's important to update the kernel
+					on systems affected.  If you can't do that, disable proc and linproc on your systems until a new kernel can be
+					built.  0.2.1 is not believed to be affected as the code is significantly different and the locking issue is not
+					present.
+                                        </p>
+                                </blockquote>
+
                                 <blockquote class="bluebox" id="a20100902">
                                         <h3>September 2, 2010</h3>
                                         <p>A minor vulnerability in libutil was reported.  It can cause uses of some services such as OpenSSH to bypass cpu
