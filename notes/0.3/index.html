@@ -1,55 +1,199 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>MidnightBSD :: Documentation :: 0.3-RELEASE</title>
-<link rel="stylesheet" type="text/css" media="all" href="/css/base.css" />
-<!-- $MidnightBSD: www/notes/0.2/index.html,v 1.1 2009/04/05 18:36:07 laffer1 Exp $ -->
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>MidnightBSD Release Notes</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
+		<style type="text/css" media="all">
+			@import url("../../css/essence.css");
+			#text ul li { font-size: 11pt; margin-bottom: 5px; }
+			.note { font-size: 80%; color: #aaa; padding: 15px; margin-top: 15px; }
+			.update h4 { color: #15a9ed; text-align: center; padding-top: 0.4em; margin-bottom: 0; display: block; }
+			.update { background: #f2fbff; border: 2px solid #dff2fb; font-size: 80%; width: 40%; float: left; margin-right: 2.4em; color: #555; }
+			.ast { color: #1373ce; }
+			#list ul { margin-left: 2em; padding-left: 1em; list-style-position: inside; }
+		</style>
+	</head>
+	
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+		<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="" /> MidnightBSD Release Notes</h2>
+				<div class="devupdate fleft">
+					<h4>Late breaking information:</h4>
+					<blockquote>
+					<p>Update for sqlite3 .pc file in RELENG_0_3 branch fixes problems building some apps that depend on sqlite3.</p>
+					</blockquote>
+					<h4>Previous Release Notes</h4>
+					<ul>
+						<li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+						<li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+						<li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+					</ul>
+				</div>
+				<h3>(01/29/2010) MidnightBSD 0.3-RELEASE</h3>
+<p>
+MidnightBSD is a new BSD-derived operating system developed with desktop users in mind. It includes all the software you'd expect for your daily tasks — email, web browsing, word processing, gaming, and much more.
+</p>
+<p>
+With a small community of dedicated developers, MidnightBSD strives to create an easy-to-use operating system everyone can use, freely. Available for x86, AMD64, SPARC, and as Virtual Machines.</p>
 
-<body>
+<h4>What's New</h4>
 
-<!--#include virtual="/header.html" -->
+<p>0.3 includes exciting new features such as support for ZFS, mDNSResponder for multicast DNS, libdispatch (no blocks support yet), brainfuck(1), AMD CPU temperature monitoring, updates to the linux emulation layer (2.6.16 compatibility) and the OpenBSD sensors framework.
+</p><p>
+This release includes a large merge from FreeBSD 7.0-RELEASE.  Developers voted on the decision to merge many aspects of FreeBSD 7 into MidnightBSD in November 2008.  This merge took some time and delayed the 0.3-RELEASE.  It is not planned to do anything of this nature again.  This release is thus based on FreeBSD 7.0 instead of 6.1. 
+</p><p>
+Several new scripts have been added to make it easier to manage the system. One of these is netwait in rc.d.  It allows you to wait for a network interface to come up while booting to ensure network activity is ready for touchy software.
+</p>
 
-<div id="content">
+<h4>Updated Software</h4>
 
-<div id="rnav">
-        <ul>
-            <li><a href="/index.html" title="Home">Home</a></li>
-            <li><a href="/about/index.html" title="About">About</a></li>
-            <li><a href="/download/index.html" title="Get MidnightBSD">Get MidnightBSD</a></li>
-            <li><a href="/docs/index.html" title="Documentation">Documentation</a></li>
-            <li><a href="/community/index.html" title="Community">Community</a></li>
-            <li><a href="/developer/index.html" title="Developers">Developers</a></li>
-            <li><a href="/support/index.html" title="Support">Support</a></li>
-            <li><a href="/wiki" title="MidnightBSD Wiki">Wiki</a></li>
-        </ul>
+<p>The following software packages were updated for this release:</p>
 
-	<p>
-	    <a href="/de/index.html" title="German">DE</a> 
-	    <a href="/index.html" title="English">EN</a> 
-        <a href="/ru/index.html" title="Russian">RU</a>
-    </p>
-
-	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="/images/feed.gif" alt="RSS Feed" /> 
-	<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
-</div>
-
-<h2>0.3-RELEASE</h2>
-
-<p>This will be the forth release of MidnightBSD. It will include many improvements over 
-   the previous releases. Release date TBD</p>
- 
 <ul>
-    <li><a href="notes.html">Release Notes</a></li>
-    <li><a href="errata.html">Errata</a></li>
+<li>batt(1) rewritten in C
+<li>BIND 9.6.1-P2
+<li>bzip2 1.0.6
+<li>cpudup (DragonFly)
+<li>diffutils 2.8.7
+<li>em(4)
+<li>GCC 4.2.1
+<li>libarchive (2.5.5) with bsdcpio
+<li>libreadline 5.2 (GNU)
+<li>mksh R39c
+<li>nve(4)
+<li>OpenNTPD 4.4
+<li>OpenSSH 5.3p1
+<li>OpenSSL .98e
+<li>pnpinfo
+<li>Sendmail 8.14.4
+<li>sudo 1.7.2p6
+<li>sqlite 3.6.23
+<li>tcpdump 3.9.8
+<li>tzdata 2010e
+<li>unzip (BSD)
+<li>zlib 1.2.5
 </ul>
- 
+
+<h5>New software:</h5>
+
+<ul>
+<li>ale(4)
+<li>amdtemp(4)
+<li>audit (OpenBSM)
+<li>brainfuck (MirBSD)
+<li>firmware(9) from FreeBSD
+<li>jemalloc (FreeBSD)
+<li>libdispatch
+<li>libffi 3.0.9
+<li>makefs (NetBSD)
+<li>mDNSResponder
+<li>mport tools (optional new package system)
+<li>netpgp (NetBSD)
+<li>nfe(4)
+<li>Sensors framework (OpenBSD) including sensorsd(8)
+<li>ZFS (v6)
+</ul>
+
+<h5>Removed software:</h5>
+
+<ul>
+<li>Alpha & PC98 utilities from usr/sbin
+<li>pcc
+<li>pcvt(4)
+<li>HPFS support
+</ul>
+
+<p>This is not a complete list.</p>
+
+<h4>mport Tools</h4>
+
+<p>mport tools are the new package management tools for MidnightBSD.  This release uses the old package format with the pkg_tools (pkg_add and friends).  However, if you wish to build from mports, you can try out the new package tools instead.  It is important that you do not have any existing packages installed when switching.  
+</p><p>
+Add USE_MPORT_TOOLS="YES" to /etc/make.conf to enable the alternate tools.
+</p><p>
+mport tools use a sqlite3 database to store meta data about installed packages.  This can be loaded with the sqlite command line client to view package information.  It’s located at /var/db/mport/master.db.  There are also some frontend tools available. A command called mport will allow you to install, delete or list packages.  Further, there are several specific commands available in /usr/libexec with mport.* names.  Some of these allow you to do SQL queries and other things to the system to extract information conveniently.  
+</p><p>
+Remote package fetching and some issues with upgrades prevented use for this release.  If you choose to use this tool, remember there are no packages available and there are a few bugs with it’s regular expressions causing problems with some ports. 
+</p>
+
+<h4>Known Issues</h4>
+
+<p>
+The cvsup example files were not updated for the release.  You will need to change the release tag before using them to fetch 0.3 source to RELENG_0_3_0_RELEASE.  If you wish to track security patches, use RELENG_0_3.
+</p><p>
+The firstboot script was modified to include xfce 4 as an option.  Fetching packages from this script is somewhat unreliable.  Further, be sure to add a regular user in sysinstall installation prior to booting up so that you can login.  KDM doesn’t like to login as root.  Finally, if kdm starts and you can’t type anything  press alt + control + f1 to switch back to a console and reboot.  hald and dbus should start and allow keyboard input at that point.  You may also check /etc/rc.conf for dbus and hald entries. 
+</p><p>
+If you experience problems fetching packages with pkg_add, try disabling the ipfw firewall using: 
+<br />sudo ipfw disable firewall
+</p><p>
+mDNSResponder, netwait and powerd are disabled by default.  If you wish to use this functionality, entries must be added to rc.conf.  See /etc/defaults/rc.conf for examples.
+</p><p>
+Installing on newer advanced format hard drives or solid state drives requires aligning the offset on the drive to 1MB.  If this is not done, performance will suffer.  With SSD, it could also wear out your drive sooner if it’s aligned improperly.  As MidnightBSD does not support GPT (booting) yet, this will need to be done manually using a live CD or livefs. This has been tested on WD EARS drives.
+</p>
+
+<h4>Supported Hardware</h4>
+
+<p>MidnightBSD 0.3-RELEASE will run on 32bit Intel (or compatible) CPUs (i386) from the 686 on up or AMD64/EMT64 with the amd64 release. 
+</p><p>
+It is recommended that one has at least 256MB RAM and 10GB of hard drive space. 
+</p><p>
+Hardware acceleration on AMD/ATI graphics cards is unreliable.  It is possible to use them without acceleration but be prepared to edit X.org configuration.  Intel and NVIDIA graphics adapters are known to work.  DRM/DRI code in the kernel must be updated to work with newer X.org drivers and AMD graphics adapters.  This is not a fault of AMD. 
+</p><p>
+WIFI support is spotty and USB based devices will not work.  This is a known issue and will be resolved in a future release.  Some adapters will work with ndis wrappers provided they’re PCMCIA/PCCARD/PCI.
+</p><p>
+SPARC64 support does not work with this release.  We hope to restore it in a future release. 0.1.1 can be installed from snapshot and updated to 0.2.1 via source on that architecture.
+</p>
+
+<h4>Package Availability</h4>
+
+<p>
+This release focused on overhauling the base operating system.  We had to let a few mports go for a time.  We still shipped over 2400 packages (more than any previous release), but there are several large omissions. 
+</p><p>
+Gnome 2.30 was not complete at the time of release.  It’s about 80% done. 
+</p><p>
+OpenJDK port is possible to build on a system but not from magus.  We don’t have a package available for it yet.
+</p><p>
+browser35 broke on the update to nss so we were unable to ship a recent mozilla based browser, although browser3 is included. 
+</p><p>
+KDE lite 3.5.10 is available as well as older versions of GNUstep, WIndowMaker, XFCE 3 & 4, and many other X environments. 
+</p><p>
+QT4 is available, but KDE4 is not working at this time.  We’d like to get this for the next release.
+</p><p>
+We’re looking for maintainers for Firefox, LibreOffice, and Gnome.
+</p>
+
+<h4>Contributors</h4>
+
+<p>I'd like to thank several contributors that made this release possible.
+</p>
+
+<pre>
+Christian Reinhardt (ctriv@) (major help, mport/magus/src)
+Caryn Holt (raven@)
+smultron@ (mports, website, hardware donation)
+crash@ (mports, testing)
+Adam Karim (archite@) (src, suggestions, etc)
+Stevan Tiefert (stevan@) mports
+Vamsidhar Ganji (vganji@) mports and src (mDNSResponder)
+
+Daniel Seuffert (FOSDEM cds)
+Thorsten Glaser (MKSH assistance, etc)
+Kirk P Nagel & EMU CS Department (mirror, build cluster) - Eastern Michigan University
+BSD Magazine - helping us get the word out
+
+Midnight the Cat for mascot assistance :) 
+</pre>
+
 </div>
-<!-- END CONTENT -->
-
-<!--#include virtual="/footer.html" -->
-
-</body>
+<!--#include virtual="/footer.html"-->
+	</body>
 </html>
+
