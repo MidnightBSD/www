@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<title>MidnightBSD mports Documentation</title>
-		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.8 2009/05/25 18:42:58 laffer1 Exp $ -->
+		<!-- $MidnightBSD: www/documentation/mports/index.html,v 1.9 2009/05/25 21:44:25 laffer1 Exp $ -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 <!--[if IE 5]><link rel="stylesheet" type="text/css" href="../../css/ihateie5.css" /><![endif]-->
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="../../css/ihateie6.css" /><![endif]-->
@@ -105,7 +105,12 @@
  
  <p>Mport is endeavoring to be more standardized than the FreeBSD ports tree.  
  See the <a href="policy.html">policy page</a> for information on current port standards.</p>
- 
+
+ <p>MidnightBSD introduced the LICENSE variable years before FreeBSD's new LICENSE framework for ports.  We got the idea from
+some of the other BSD projects.  Our system does not handle multiple license types as yet (we have an agg type), and ours is
+indexed into the build cluster software so that our mport tools can later display licensing information with 
+<code>mport info <i>pkgname</i></code>.
+</p>
  
  <h3 id="s4a">Future Directions</h3>
  
@@ -123,7 +128,10 @@
  many features that we simply don't need.</li>
  </ul>
 
-<p>The libmport and mport tools are now available for early testing in 0.3-CURRENT.</p>
+<p>The libmport and mport tools were imported into 0.3-CURRENT for testing.  As of 0.4-CURRENT (os version 4004), mport tools support
+fetching packages, updating, upgrade of all system packages, deleting packages, listing packages needing to be updated, search, and info on
+a package. The new system will allow us to update packages after a release.  Discussion on generating new packages or branching the mports
+tree to only provide security updates has yet to occur.</p>
 
 </div>
 		<!--#include virtual="/footer.html"-->
