@@ -31,12 +31,27 @@
 			<div id="text">
 				<h2 class="icon"><img src="../images/oxygen/developer32.png" alt="" /> Welcome to MidnightBSD Development</h2>
 				<div class="devupdate fleft">
-                                    <h4>Update: (March 2011)</h4>
+				    <h4>Update: (September 2011)</h4>
 				    <blockquote>
-                                    <p>MidnightBSD 0.3-RELEASE was shipped a little over a month ago. Since then, we've focused on getting contributed 
-                                       software up-to-date as well as work on mport tools.  0.4 will be the first release with mport tools as default.
+				        <p>ctriv@ started the libmport project several years ago.  Today, we have a functioning replacement for pkg_tools
+				           on MidnightBSD.  We're in the bug fixing phase for the next release.</p>
+				           <p>Perl has been updated to 5.14 in CURRENT. We've got most of Gnome 2.32 working, KDE 3.5.10, X.org 7.4 (plus some updates),
+				              and I'm in the process of updating GNUstep to the latest version.  Several Etoile ports are now on 0.4.1.  Opera 11.51,
+				              Linux versions of Firefox 6 and Thunderbird 6 work on current with some minor problems, Flash 10, Chrome 5 (needs updating badly),
+				              and openjdk 6.</p>
+				           <p>MidnightBSD gained a new search tool called msearch.  This uses sqlite3 to index files on the system.  It contains
+				              a list of files that can be searched with sql queries using sqlite3 or on the command line and a full text
+				              index of files on the system.  The indexer runs out of periodic as nobody so really sensitive files can be hidden
+				              as necessary by changing the permissions. While gzip compression is used with the full text index and some
+				              logic with libmagic helps us avoid indexing some files, the database sizes can be rather large on some systems. It's
+				              recommended that one only use this if they have a large /var partition over 5GB.</p>
+				    </blockquote>
+                    <h4>Update: (March 2011)</h4>
+				    <blockquote>
+                        <p>MidnightBSD 0.3-RELEASE was shipped a little over a month ago. Since then, we've focused on getting contributed 
+                           software up-to-date as well as work on mport tools.  0.4 will be the first release with mport tools as default.
 			            </p> 
-                                    </blockquote>
+                    </blockquote>
 				    <h4>Update: (May 2009)</h4>
 				    <blockquote>
 				    <p>ctriv@ has been testing libmport and the mport tools for the 0.3 release.  We're currently working on
