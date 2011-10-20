@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>MidnightBSD GPT Documentation</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
+		<style type="text/css" media="all">
+			@import url("../css/essence.css");
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/doc32.png" alt="" /> GPT Documentation</h2>
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1b">Introduction</a></li>
+						<li><a href="#s1c">Preparing</a></li>
+						<li><a href="#s1d">Creating GUID Partitions</a></li>
+						<li><a href="index.html"><strong>Documentation</strong></a></li>
+						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
+					</ul>
+				</div>
+				<h3 id="s1a">GUID Partition Table</h3>
+				<h4 id="s1b">Introduction</h4>
+				<p>GUID Partition Table or GPT is a replacement for the traditional MBR partition table scheme used
+				on PCs.  Traditional MBR partition schemes only support 4 partitions on a disk whereas GPT supports
+				up to 128.  As a workaround for the limited partition size, BSD systems have the concept of labels 					to break up a large partition into several smaller chunks.  Similarly, Microsoft Windows systems
+				have the concept of primary and extended partitions to allow additional logical separation on disks.				On a GPT setup, you no longer need labels or extended partitions.  SImply create a partition for
+				each mount point you wish to use.</p>
+
+				<p>GPT has an additional benefit.  It supports large hard drives greater than 2TB.  It is recommended
+				for systems with large hard drives, especially if one wishes to boot of the disk.</p>
+
+				<p>GPT also has some limitations.  Some PC BIOS manufacturers do not properly support booting off
+				GPT disks or require workarounds to do so.  GPT was developed for UEFI, the replacement for historic
+				BIOS on the PC.  Most operating systems create a very small boot partition that is around 64k with
+				a MBR in it to allow these systems to operate.  That partition must be marked active or the BIOS
+				will fail to boot the OS.  This is know to be an issue with Intel motherboards using Award BIOS for
+				instance.</p>
+				
+				<h4 id="s1c">Prepairing</h4>
+				<p>You will need a MidnightBSD LiveCD or USB Flash drive in order to partition the disk. sysinstall
+				does not support this configuration at this time. All existing data on the disk should be wiped
+				and you should not use this approach on systems that will be dual booting another operating system
+				such as Microsoft Windows or Linux. This requires 0.4-CURRENT from October 19, 2011 or higher. You
+				will need copies of /boot/pmbr and /boot/gptboot which should be available on the recent Live CD.
+				</p>
+
+				<h4 id="s1d">Creating GUID Partitions</h4>
+				<p>This assumes your disk is /dev/ad0</p>
+				<p>Clear the existing partition table and create a new GPT table:
+					<br /><code>gpt create -f ad0</code>
+				This will automatically create the 64k boot partition (not to be confused with /boot)
+				</p>
+				<p>Create root partition (512MB):
+					<br /><code>gpt add -t ufs -s 1048576 ad0</code><br />
+				Verify your work with <br /><code>gpt show ad0</code><br />
+				Note that -s is the size in sectors.  Choose the size that makes the sense for your setup. I'd
+				recommend at least 512MB.
+				</p>
+				<p>Create /var and /tmp (512MB):<br />
+					<code>gpt add -t ufs -s 1048576 ad0</code><br />
+					<code>gpt add -t ufs -s 1048576 ad0</code>
+				</p>
+				<p>Create swap (4GB):<br />
+				<code>gpt add -t swap -s 10485760 ad0</code>
+				</p>
+
+				<p>Use the remaining free space for /usr:<br />
+				<code>gpt add -t ufs ad0</code>
+				</p>
+				<p>Please note that we're specifying the type of filesystem with the -t flag.  There are
+				several other file systems available.  For instance, you can use ZFS for /usr, etc. Remember
+				that / must be on UFS2 because we don't support ZFS booting of MidnightBSD at this time.
+				</p>
+				<p>Finally, format the partitions: <br />
+				<code>newfs -nL root /dev/ad0p2</code><br />
+				<code>newfs -nUL var /dev/ad0p3</code><br />
+				<code>newfs -nUL tmp /dev/ad0p4</code><br />
+				<code>newfs -nUL usr /dev/ad0p6</code><br />
+				using glabels. These will be available as /dev/ufs/root, /dev/ufs/var, etc.</p>
+				<p>You're fstab will have entries like this:<br />
+				<code>/dev/ufs/root     /      ufs      rw    1 1</code>
+				</p>
+			</div>
+		<!--#include virtual="/footer.html"-->
+	</body>
+</html>
