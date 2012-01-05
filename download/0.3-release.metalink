@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalink version="3.0"
+  xmlns="http://www.metalinker.org/"
+  generator="http://metalinks.sourceforge.net/"
+  origin="http://www.midnightbsd.org/download/0.3-release.metalink"
+  >
+<publisher>
+    <name>MidnightBSD Project</name>
+    <url>http://www.midnightbsd.org/</url>
+  </publisher>
+  <copyright>2011 Lucas Holt</copyright>
+  <description>MidnightBSD 0.3-RELEASE x86</description>
+<files>
+	<file name="0.3-RELEASE-i386-disc1.iso">
+		<verification>
+			<hash type="md5">43f187327b6585497da9a6c25031f92b</hash>
+		</verification>
+		<resources>
+			<url type="http">http://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc1.iso</url>
+			<url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc1.iso</url>
+		</resources>
+	</file>
+	<file name="0.3-RELEASE-i386-disc2.iso">
+		<verification>
+			<hash type="md5">89d8ac3cff3ef55d7199138addd374e2</hash>
+		</verification>
+		<resources>
+			<url type="http">http://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc2.iso</url>
+			<url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc2.iso</url>
+		</resources>
+	</file>
+	<file name="0.3-RELEASE-i386-disc3.iso">
+		<verification>
+			<hash type="md5">b41913bd9dc2369d0fd286a41f4f642a</hash>
+		</verification>
+		<resources>
+			<url type="http">http://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc3.iso</url>
+			<url type="http" preference="1">http://mirrors.isc.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/0.3/0.3-RELEASE-i386-disc3.iso</url>
+		</resources>
+	</file>
+</files>
+</metalink>
