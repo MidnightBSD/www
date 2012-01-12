@@ -4,8 +4,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>MidnightBSD Security Updates</title>
 		<link rel="shortcut icon" href="/favicon.ico" />
-		<!--[if IE 5]><link rel="stylesheet" type="text/css" href="../css/ihateie5.css" /><![endif]-->
-		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="../css/ihateie6.css" /><![endif]-->
 		<style type="text/css" media="all">
 			@import url("../css/essence.css");
 		</style>
@@ -18,6 +16,41 @@
 			<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
+
+				<blockquote class="bluebox" id="a20111223">
+					<h3>December 23, 2011</h3>
+					<p>Multiple security vulnerabilities impacting 0.3-RELEASE and 0.4-CURRENT have been patched in
+					MidnightBSD.</p>
+
+					<ul>
+					<li>telnetd: fix a root exploit from a fixed buffer that was not checked</li>
+					<li>pam: don't allow escape from policy path.  Exploitable in KDE, etc.</li>
+					<li>Fix pam_ssh module: If the pam_ssh module is enabled, attackers may be able to gain access
+						to user accounts which have unencrypted SSH private keys.</li>
+					<li>Fix security issue with chroot and ftpd.</li>
+					<li>nsdispatch(3) doesn't know it's working in a chroot and some
+						operations can cause files to get reloaded causing a security
+						hole in things like ftpd.</li>
+					</ul>
+					<p>Users should update via CVS and buildworld / installworld. This corresponds to 
+					0.3-RELEASE-p5.</p>
+				</blockquote>
+
+				<blockquote class="bluebox" id="a20111104">
+					<h3>November 4, 2011</h3>
+					<p>MidnightBSD 0.3-RELEASE-p4</p>
+
+					<p>Fix a problem with unix socket handling caused by the recent
+					patch to unix socket path handling. This allows network
+					apps to work under the linuxolator again.</p>
+				</blockquote>
+
+				<blockquote class="bluebox" id="a20110928">
+					<h3>September 28, 2011</h3>
+					<p>MidnightBSD 0.3-RELEASE-p3</p>
+					<p>Security hole in compress and gzip with malformed .Z files can cause an infinite loop in these utilities.</p>
+					<p>Validate paths for unix domain sockets.</p>
+				</blockquote>
 
 				<blockquote class="bluebox" id="a20110530">
                                         <h3>May 30, 2011</h3>
