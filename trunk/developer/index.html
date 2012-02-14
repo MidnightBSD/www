@@ -28,6 +28,29 @@
 			<div id="text">
 				<h2 class="icon"><img src="../images/oxygen/developer32.png" alt="" /> Welcome to MidnightBSD Development</h2>
 				<div class="devupdate fleft">
+                                    <h4>Update: (February 2012)</h4>
+                                    <blockquote>
+                                        <p>Our current big project is replacing sysinstall with a modified version of bsdinstall from FreeBSD 9.0-RELEASE. As part
+                                           of this project, several major changes have been made to GEOM in the kernel.  MidnightBSD now supports it's own
+                                           GPT partition schemes, and understands GPT types from several other operating systems including Microsoft Windows,
+                                           Apple Mac OS X (and Apple TV), Linux, FreeBSD and NetBSD.</p>
+
+                                        <p>mport has had several improvements.  An article on mport tools appeared in the February 2012 issue of BSD Magazine.</p>
+
+                                        <p>The OpenBSD sensors framework code was updated to use fine grain locking along with many sysctl's in 0.4-CURRENT.  This
+                                           should improve performance.</p>
+
+                                        <p>Apple's mDNSResponder 330.10 was recently imported.</p>
+
+                                        <p>Several stability problems have been corrected in the 0.4-CURRENT kernel introduced in November.  CURRENT kernels now
+                                           have WITNESS and INVARIANTS enabled by default.  This slows down performance, but allows us to catch a lot of subtle problems.
+                                           Historically, this was disabled after a buggy patch was introduced to the TCP network stack years ago.  This code was replaced
+                                           during development of 0.3.</p> 
+
+                                        <p>The release building architecture is undergoing significant changes to work with the new installer.  Current documentation on
+                                           this process is out of date and one should look at the src/Makefile, src/Makefile.inc1 and release/* for the current procoess.
+                                        </p> 
+                                    </blockquote>
 				    <h4>Update: (September 2011)</h4>
 				    <blockquote>
 				        <p>ctriv@ started the libmport project several years ago.  Today, we have a functioning replacement for pkg_tools
