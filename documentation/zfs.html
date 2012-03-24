@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>MidnightBSD ZFS Documentation</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<style type="text/css" media="all">
+			@import url("../css/essence.css");
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/doc32.png" alt="" /> ZFS Documentation</h2>
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1b">Introduction</a></li>
+						<li><a href="#s1c">Preparing</a></li>
+						<li><a href="#s1d">Examples</a></li>
+						<li><a href="index.html"><strong>Documentation</strong></a></li>
+						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
+					</ul>
+				</div>
+				<h3 id="s1a">ZFS</h3>
+				<h4 id="s1b">Introduction</h4>
+				<p>ZFS is a file system developed for Oracle Solaris.  It was released as open source under the CDDL
+				with OpenSolaris.  FreeBSD created a port of the file system for FreeBSD 7.0-CURRENT.  It was imported
+				into MidnightBSD with 0.3-CURRENT.</p>
+
+				<p>ZFS is considered an alternative file system to UFS2 in MidnightBSD.  It has independant RAID features
+				that are not tied to GEOM classes.  It does not make use of the VFS cache and has some issues with
+				NFS.  Advantages include support for very large file systems and large pools of disks.  it supports
+				checksum data integrety checking and can repair bad data when raidz is used.</p>
+
+				<p>MidnightBSD includes ZFS file system and storage pool version 6. You may access pools created
+				on other operating systems at or below this version.  If you upgrade to version 6, you will no
+				longer be able to read them on older versions.</p>
+
+				<h4 id="s1c">Prepairing</h4>
+				<p>ZFS can be used in two ways.  You may either dedicate entire disks to ZFS (recommended) or use
+				GPT partitions (mnbsd-zfs in 0.4-CURRENT) to add to a pool.  ZFS shines when used with RAID features.
+				</p>
+
+				<p>If you're going to use RAID, determine how many disks you want to use.  It's best to group them
+				in identical sizes.  If possible, use the same brand and model of drives when using mirroring.
+				If you have two drives, use mirror.  If you have more than two drives, consider using raidz.  You
+				may add multiple mirror sets (2 at a time) to the pool.</p>
+
+				<p>ZFS also supports adding spare drives to the pool. They will be used automatically when a drive fails.</p>
+
+				<p>It is strongly recommended to use ZFS only with amd64 MidnightBSD and only on systems with more
+				than 1GB of RAM. It will require tuning sysctl's to get the right balance of memory usage.  Particularly,
+				you need to watch the ARC size as it can grow very large</p>
+
+				<p>MidnightBSD does not support booting from ZFS at this time.  It may be added in a future release.  You need
+				a UFS/UFS2 partition for / including /boot, but /var, /tmp, /usr and /home can be on ZFS.</p>
+
+				<h4 id="s1d">Examples</h4>
+
+				<p>In these examples, mpool and tank are used as pool names.  You can pick any name for the pool, but tank is very
+				common.  After creating a pool named tank, you'll see /tank</p>
+
+				<p>You will most likely want to add zfs_enable="YES" into /etc/rc.conf so that ZFS is loaded on system startup</p>
+
+				<p>Create a mirror</p>
+				<code>zpool create mpool mirror /dev/ad0 /dev/ad1</code>
+
+				<p>Add a spare drive</p>
+				<code> zpool add mpool spare /dev/ad3</code>
+
+				<p>Check status</p>
+				<code>zpool status</code>
+
+				<p>Listing information about pools</p>
+				<code>zpool list</code>
+				<code>zfs list</code>
+				
+				<p>Create file systems</p>
+				<code>zfs create mpool/data</code>
+
+				<p>Use raidz instead (raid 5 like mode)</p>
+				<code>zpool add tank raidz /dev/ad0 /dev/ad1 /dev/ad2</code>
+
+				<p>Scrub data (check for errors)</p>
+				<code>zpool scrub tank</code>
+				
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'midnightbsd'; 
+    
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+		</div>
+		<!--#include virtual="/footer.html"-->
+	</body>
+</html>
