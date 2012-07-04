@@ -21,6 +21,7 @@
 						<li><a href="#s1b">Introduction</a></li>
 						<li><a href="#s1c">Preparing</a></li>
 						<li><a href="#s1d">Examples</a></li>
+						<li><a href="#s1e">Recovery</a></li>
 						<li><a href="index.html"><strong>Documentation</strong></a></li>
 						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
 					</ul>
@@ -87,7 +88,24 @@
 
 				<p>Scrub data (check for errors)</p>
 				<code>zpool scrub tank</code>
-				
+
+				 <h4 id="s1e">Recovery</h4>
+			
+				<p>During a hardware upgrade such as moving to a new motherboard or controller,
+				one might find their zpool damaged.  Usually the cause is that the device name has
+				changed.  For instance, a recent upgrade moved ad6 to ad12.</p> 
+				<p>To fix this problem,
+				several steps are required. 
+				<ul><li><code>rm /boot/zfs/zpool.cache & shutdown -r now</code></li>
+				<li>
+				<code>zpool list</code>.  This should not show the pool.
+				</li>
+				<li><code>zpool import</code>.  It should show you possible pools to recover.</li>
+				<li>
+				Finally, try <code>zpool import <em>name of pool</em></code>.
+				</li>
+				</ul>
+				To verify it worked, run <code>zpool list</code>	
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'midnightbsd'; 
