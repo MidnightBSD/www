@@ -1,12 +1,3 @@
-/************************************
-	Run Through CSS Compressor
-	- Super Compact
-	- Strip Comments >= 4
-	
-	http://www.cssdrive.com/index.php/main/csscompressor/
-	
-************************************/
-
 @import url("menu.css");
 @import url("home.css");
 @import url("xtra.css");
