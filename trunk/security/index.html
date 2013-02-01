@@ -17,6 +17,50 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+				<blockquote class="bluebox" id="a20120530a">
+					<h3>May 30, 2012</h3>
+					<p>MidnightBSD 0.3-RELEASE-p8</p>
+					<p>Fix a problem with cyrpt's DES implementation when used with non 7-bit ascii
+					passwords.</p>
+				</blockquote>
+
+				<blockquote class="bluebox" id="a20120530">
+                                        <h3>May 30, 2012</h3>
+                                        <p>MidnightBSD 0.3-RELEASE-p7</p>
+					<p>An additional problem in OpenSSL was identified related to the previous (p6) patch.  
+					</p>
+					<p>add SGC and BUF_MEM_grow_clean(3) bug fixes.</p>
+                                </blockquote>
+
+				<blockquote class="bluebox" id="a20120503">
+                                        <h3>May 3, 2012</h3>
+                                        <p>MidnightBSD 0.3-RELEASE-p6</p>
+					<p>OpenSSL failes to clear the bytes used as block cipher padding in SSL 3.0
+					records when operating as a client or a server that accept SSL 3.0
+					handshakes.  As a result, in each record, up to 15 bytes of uninitialized
+					memory may be sent, encrypted, to the SSL peer.  This could include
+					sensitive contents of previously freed memory. [CVE-2011-4576]
+					</p>
+					<p>OpenSSL support for handshake restarts for server gated cryptograpy (SGC)
+					can be used in a denial-of-service attack. [CVE-2011-4619]</p>
+
+					<p>If an application uses OpenSSL's certificate policy checking when
+					verifying X509 certificates, by enabling the X509_V_FLAG_POLICY_CHECK
+					flag, a policy check failure can lead to a double-free. [CVE-2011-4109]
+					</p>
+
+					<p>A weakness in the OpenSSL PKCS #7 code can be exploited using
+					Bleichenbacher's attack on PKCS #1 v1.5 RSA padding also known as the
+					million message attack (MMA). [CVE-2012-0884]</p>
+
+					<p>The asn1_d2i_read_bio() function, used by the d2i_*_bio and d2i_*_fp
+					functions, in OpenSSL contains multiple integer errors that can cause
+					memory corruption when parsing encoded ASN.1 data.  This error can occur
+					on systems that parse untrusted ASN.1 data, such as X.509 certificates
+					or RSA public keys. [CVE-2012-2110]
+					</p>
+                                </blockquote>
+
 				<blockquote class="bluebox" id="a20111223">
 					<h3>December 23, 2011</h3>
 					<p>Multiple security vulnerabilities impacting 0.3-RELEASE and 0.4-CURRENT have been patched in
