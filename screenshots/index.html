@@ -4,19 +4,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>MidnightBSD Screenshots</title>
 		<link rel="shortcut icon" href="/favicon.ico" />
-		<script type="text/javascript" src="../shadowbox/src/adapter/shadowbox-base.js"></script>
-		<script type="text/javascript" src="../shadowbox/src/shadowbox.js"></script>
-		<script type="text/javascript">
-		Shadowbox.loadSkin('classic', '../shadowbox/src/skin');
-		Shadowbox.loadLanguage('en', '../shadowbox/src/lang');
-		Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt'], '../shadowbox/src/player');
-		
-		window.onload = function(){
-			Shadowbox.init();
-		};
-		</script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="../html5lightbox/html5lightbox.js"></script>
+		<link rel="stylesheet" type="text/css" src="../css/essence.css">
 		<style type="text/css" media="all">
-			@import url("../css/essence.css");
 			.gallery { text-align: center; font-size: .95em; margin: 20px auto; }
 			dt,dd { width: 300px; float: left; }
 			dt { margin-bottom: 3em;}
@@ -36,20 +27,20 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/screenshot32.png" alt="" /> Screenshots</h2>
 				<dl class="gallery">
-					<dt><a href="mbsd1b.png" rel="shadowbox"><img src="mbsd1a.png" width="300" alt="MidnightBSD Screenshot 1" /></a></dt>
+					<dt><a href="mbsd1b.png" class="html5lightbox"><img src="mbsd1a.png" width="300" alt="MidnightBSD Screenshot 1" /></a></dt>
 						<dd><em>MidnightBSD 0.1</em></dd>
-					<dt><a href="mbsd2b.png" rel="shadowbox"><img src="mbsd2a.png" width="300" alt="MidnightBSD Screenshot 2" /></a></dt>
+					<dt><a href="mbsd2b.png" class="html5lightbox"><img src="mbsd2a.png" width="300" alt="MidnightBSD Screenshot 2" /></a></dt>
 						<dd><em>MidnightBSD 0.1.1</em></dd>
 				</dl>
 				<div class="clear"></div>
 				<h2 id="screencasts"><img src="../images/oxygen/screencast32.png" alt="" /> Screencasts</h2>
 				<dl class="gallery">
-					<dt><a rel="shadowbox;width=480;height=260" class="option" 
+					<dt><a data-width="480" data-height="260" class="html5lightbox"
 					title="Installing MidnightBSD" href="MidnightBSD-Install.flv"><img src="InstallingMidnightBSD.png" 
 					width="300" alt="Installing MidnightBSD Video" /></a></dt>
 						<dd><em>Installing MidnightBSD</em></dd>
 						
-					<dt><a rel="shadowbox;width=480;height=260" href="MidnightBSD-Setup.flv"><img src="SettingUpMidnightBSD.png" 
+					<dt><a data-width="480" data-height="260" class="html5lightbox" href="MidnightBSD-Setup.flv"><img src="SettingUpMidnightBSD.png" 
 					width="300" alt="Setting Up MidnightBSD Video" /></a></dt>
 						<dd><em>Setting Up MidnightBSD</em></dd>
 				</dl>
