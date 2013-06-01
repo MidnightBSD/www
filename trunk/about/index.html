@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>About MidnightBSD :: MidnightBSD</title>
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<script type="text/javascript" src="../shadowbox/src/adapter/shadowbox-base.js"></script>
-		<script type="text/javascript" src="../shadowbox/src/shadowbox.js"></script>
-		<script type="text/javascript">
-		Shadowbox.loadSkin('classic', '../shadowbox/src/skin');
-		Shadowbox.loadLanguage('en', '../shadowbox/src/lang');
-		Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt'], '../shadowbox/src/player');
-		
-		window.onload = function(){
-			Shadowbox.init();
-		};
-		</script>
-		<style type="text/css" media="all">
-			@import url("../css/essence.css");
-		</style>
+		<link rel="shortcut icon" href="/favicon.ico">
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="../html5lightbox/html5lightbox.js"></script>
+		<link rel="stylesheet" type="text/css" src="../css/essence.css">
 	</head>
 	
 	<body>
@@ -29,8 +18,8 @@
 				<h2><img src="../images/oxygen/about32.png" alt="About Icon" /> About MidnightBSD</h2>
 				<blockquote>
 					<div class="icon">
-						<p class="midnightpic fleft"><a rel="shadowbox" href="../images/midnight_large.jpg"><img src="../images/midnight.jpg"
-							width="150" height="150" alt="Midnight the cat" /></a><br />The "Midnight" in MidnightBSD</p>
+						<p class="midnightpic fleft"><a class="html5lightbox" href="../images/midnight_large.jpg" title="Midnight"><img src="../images/midnight.jpg"
+							width="150" height="150" alt="Midnight the cat" /></a><br>The "Midnight" in MidnightBSD</p>
 					</div>
 
 					<p>MidnightBSD is a FreeBSD derived Operating System. A critical goal of 
