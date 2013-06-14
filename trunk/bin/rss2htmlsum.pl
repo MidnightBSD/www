@@ -62,7 +62,7 @@ sub print_html {
     my $hs = HTML::Strip->new();
 
     # print the channel items
-    foreach my $item (@{$rss->{'items'}}[0 .. 2]) {
+    foreach my $item (@{$rss->{'items'}}[0 .. 1]) {
   	next unless defined($item->{'title'}) && defined($item->{'link'});
   	$desc = substr($hs->parse($item->{'description'}),0, 100);
   	
