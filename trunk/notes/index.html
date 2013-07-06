@@ -35,39 +35,39 @@
 					</ul>
 				</div>
 				<h3>(07/04/2013) MidnightBSD 0.4-RELEASE</h3>
-<pre>
+<p>
 MidnightBSD 0.4 has been released on July 5, 2013. It includes many new features, but
 of particular interest is the new package management tool, mport.  
-
+<p>
 This release is a bit different from previous releases in that we plan to update
 packages during the support period for 0.4. Rather than upload packages and
 sit on them for the life of the release, you will be able to download updated
 packages for i386 and amd64 periodically. 
-
+<p>
 Due to this new feature, our initial package offering is smaller than we've done
 for previous releases as many things had to get migrated and updated. We plan
 to expand the packages available in the coming weeks. 
-
+<p>
 In addition to mport, we've imported a large number of features from FreeBSD 9.1
 including ZFS with ZPOOL 28/dedup support, LLVM + CLANG in base, migration to GPT
 as the default in the installer, bsdinstall, BSD licensed sort and grep,
 cpucontrol(8), and UFS2 + SUJ (journaling). We've also imported the newer FreeBSD
 USB stack, NFSv4 client, syscons, and CAM based ATA. 
-
+<p>
 Support for newer hardware includes Intel Sandybridge and Ivy Bridge graphics,
 various wifi chipsets, updates to Intel and Realtek ethernet adapters, and acpi.
-
+<p>
 The default system compiler is still GCC 4.2, but it has been updated to a newer release.
 We also removed libobjc from base as it was GCC specific and we want to migrate to
 libobjc2.  We offer libobjc2 in mports and it will work with GCC and LLVM. 
-
+<p>
 MidnightBSD now has it's own GPT partition types and offers a new search command,
 msearch.
-
+<p>
 libc gains strnlen(3), memrchr(3), stpncpy(3).
-
+<p>
 We've also imported and updated many third party libraries:
-
+<p>
 bzip2 version 1.0.6
 Diffutils 3.2
 FILE 5.05
@@ -88,11 +88,11 @@ openresolv
 sendmail 8.14.5
 sudo 1.7.4-p6
 tzdata_2012j
-
+<p>
 This release is a bit disruptive due to the number of changes, but it was decided
 to move forward with it due to the age of 0.3-RELEASE.  The next release is planned
 as a stability release and meant to work on desktop related functionality.
-</pre>
+</p>
 
 <h4>Contributors</h4>
 
