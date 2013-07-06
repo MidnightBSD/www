@@ -25,147 +25,74 @@
 				<div class="devupdate fleft">
 					<h4>Late breaking information:</h4>
 					<blockquote>
-					<p>Update for sqlite3 .pc file in RELENG_0_3 branch fixes problems building some apps that depend on sqlite3.</p>
 					</blockquote>
 					<h4>Previous Release Notes</h4>
 					<ul>
 						<li><a href="0.1/index.html">0.1-RELEASE</a></li>
 						<li><a href="0.1.1/index.html">0.1.1-RELEASE</a></li>
 						<li><a href="0.2/index.html">0.2.1-RELEASE</a></li>
+						<li><a href="0.3/index.html">0.3-RELEASE</a></li>
 					</ul>
 				</div>
-				<h3>(01/29/2010) MidnightBSD 0.3-RELEASE</h3>
-<p>
-MidnightBSD is a new BSD-derived operating system developed with desktop users in mind. It includes all the software you'd expect for your daily tasks — email, web browsing, word processing, gaming, and much more.
-</p>
-<p>
-With a small community of dedicated developers, MidnightBSD strives to create an easy-to-use operating system everyone can use, freely. Available for x86, AMD64, SPARC, and as Virtual Machines.</p>
+				<h3>(07/04/2013) MidnightBSD 0.4-RELEASE</h3>
+<pre>
+MidnightBSD 0.4 has been released on July 5, 2013. It includes many new features, but
+of particular interest is the new package management tool, mport.  
 
-<h4>What's New</h4>
+This release is a bit different from previous releases in that we plan to update
+packages during the support period for 0.4. Rather than upload packages and
+sit on them for the life of the release, you will be able to download updated
+packages for i386 and amd64 periodically. 
 
-<p>0.3 includes exciting new features such as support for ZFS, mDNSResponder for multicast DNS, libdispatch (no blocks support yet), brainfuck(1), AMD CPU temperature monitoring, updates to the linux emulation layer (2.6.16 compatibility) and the OpenBSD sensors framework.
-</p><p>
-This release includes a large merge from FreeBSD 7.0-RELEASE.  Developers voted on the decision to merge many aspects of FreeBSD 7 into MidnightBSD in November 2008.  This merge took some time and delayed the 0.3-RELEASE.  It is not planned to do anything of this nature again.  This release is thus based on FreeBSD 7.0 instead of 6.1. 
-</p><p>
-Several new scripts have been added to make it easier to manage the system. One of these is netwait in rc.d.  It allows you to wait for a network interface to come up while booting to ensure network activity is ready for touchy software.
-</p>
+Due to this new feature, our initial package offering is smaller than we've done
+for previous releases as many things had to get migrated and updated. We plan
+to expand the packages available in the coming weeks. 
 
-<h4>Updated Software</h4>
+In addition to mport, we've imported a large number of features from FreeBSD 9.1
+including ZFS with ZPOOL 28/dedup support, LLVM + CLANG in base, migration to GPT
+as the default in the installer, bsdinstall, BSD licensed sort and grep,
+cpucontrol(8), and UFS2 + SUJ (journaling). We've also imported the newer FreeBSD
+USB stack, NFSv4 client, syscons, and CAM based ATA. 
 
-<p>The following software packages were updated for this release:</p>
+Support for newer hardware includes Intel Sandybridge and Ivy Bridge graphics,
+various wifi chipsets, updates to Intel and Realtek ethernet adapters, and acpi.
 
-<ul>
-<li>batt(1) rewritten in C
-<li>BIND 9.6.1-P2
-<li>bzip2 1.0.6
-<li>cpudup (DragonFly)
-<li>diffutils 2.8.7
-<li>em(4)
-<li>GCC 4.2.1
-<li>libarchive (2.5.5) with bsdcpio
-<li>libreadline 5.2 (GNU)
-<li>mksh R39c
-<li>nve(4)
-<li>OpenNTPD 4.4
-<li>OpenSSH 5.3p1
-<li>OpenSSL .98e
-<li>pnpinfo
-<li>Sendmail 8.14.4
-<li>sudo 1.7.2p6
-<li>sqlite 3.6.23
-<li>tcpdump 3.9.8
-<li>tzdata 2010e
-<li>unzip (BSD)
-<li>zlib 1.2.5
-</ul>
+The default system compiler is still GCC 4.2, but it has been updated to a newer release.
+We also removed libobjc from base as it was GCC specific and we want to migrate to
+libobjc2.  We offer libobjc2 in mports and it will work with GCC and LLVM. 
 
-<h5>New software:</h5>
+MidnightBSD now has it's own GPT partition types and offers a new search command,
+msearch.
 
-<ul>
-<li>ale(4)
-<li>amdtemp(4)
-<li>audit (OpenBSM)
-<li>brainfuck (MirBSD)
-<li>firmware(9) from FreeBSD
-<li>jemalloc (FreeBSD)
-<li>libdispatch
-<li>libffi 3.0.9
-<li>makefs (NetBSD)
-<li>mDNSResponder
-<li>mport tools (optional new package system)
-<li>netpgp (NetBSD)
-<li>nfe(4)
-<li>Sensors framework (OpenBSD) including sensorsd(8)
-<li>ZFS (v6)
-</ul>
+libc gains strnlen(3), memrchr(3), stpncpy(3).
 
-<h5>Removed software:</h5>
+We've also imported and updated many third party libraries:
 
-<ul>
-<li>Alpha & PC98 utilities from usr/sbin
-<li>pcc
-<li>pcvt(4)
-<li>HPFS support
-</ul>
+bzip2 version 1.0.6
+Diffutils 3.2
+FILE 5.05
+OpenSSH 5.8p2
+SQLite 3.7.15.2
+MKSH R44
+NetBSD's iconv
+BIND 9.8
+tcsh 6.18.01
+Perl 5.14.2
+mDNSResponder 333.10
+less v436
+libarchive 3.0.3
+libdialog (lgpl version)
+libffi 3.0.10
+wide-dhcpv6
+openresolv
+sendmail 8.14.5
+sudo 1.7.4-p6
+tzdata_2012j
 
-<p>This is not a complete list.</p>
-
-<h4>mport Tools</h4>
-
-<p>mport tools are the new package management tools for MidnightBSD.  This release uses the old package format with the pkg_tools (pkg_add and friends).  However, if you wish to build from mports, you can try out the new package tools instead.  It is important that you do not have any existing packages installed when switching.  
-</p><p>
-Add USE_MPORT_TOOLS="YES" to /etc/make.conf to enable the alternate tools.
-</p><p>
-mport tools use a sqlite3 database to store meta data about installed packages.  This can be loaded with the sqlite command line client to view package information.  It’s located at /var/db/mport/master.db.  There are also some frontend tools available. A command called mport will allow you to install, delete or list packages.  Further, there are several specific commands available in /usr/libexec with mport.* names.  Some of these allow you to do SQL queries and other things to the system to extract information conveniently.  
-</p><p>
-Remote package fetching and some issues with upgrades prevented use for this release.  If you choose to use this tool, remember there are no packages available and there are a few bugs with it’s regular expressions causing problems with some ports. 
-</p>
-
-<h4>Known Issues</h4>
-
-<p>
-The cvsup example files were not updated for the release.  You will need to change the release tag before using them to fetch 0.3 source to RELENG_0_3_0_RELEASE.  If you wish to track security patches, use RELENG_0_3.
-</p><p>
-The firstboot script was modified to include xfce 4 as an option.  Fetching packages from this script is somewhat unreliable.  Further, be sure to add a regular user in sysinstall installation prior to booting up so that you can login.  KDM doesn’t like to login as root.  Finally, if kdm starts and you can’t type anything  press alt + control + f1 to switch back to a console and reboot.  hald and dbus should start and allow keyboard input at that point.  You may also check /etc/rc.conf for dbus and hald entries. 
-</p><p>
-If you experience problems fetching packages with pkg_add, try disabling the ipfw firewall using: 
-<br />sudo ipfw disable firewall
-</p><p>
-mDNSResponder, netwait and powerd are disabled by default.  If you wish to use this functionality, entries must be added to rc.conf.  See /etc/defaults/rc.conf for examples.
-</p><p>
-Installing on newer advanced format hard drives or solid state drives requires aligning the offset on the drive to 1MB.  If this is not done, performance will suffer.  With SSD, it could also wear out your drive sooner if it’s aligned improperly.  As MidnightBSD does not support GPT (booting) yet, this will need to be done manually using a live CD or livefs. This has been tested on WD EARS drives.
-</p>
-
-<h4>Supported Hardware</h4>
-
-<p>MidnightBSD 0.3-RELEASE will run on 32bit Intel (or compatible) CPUs (i386) from the 686 on up or AMD64/EMT64 with the amd64 release. 
-</p><p>
-It is recommended that one has at least 256MB RAM and 10GB of hard drive space. 
-</p><p>
-Hardware acceleration on AMD/ATI graphics cards is unreliable.  It is possible to use them without acceleration but be prepared to edit X.org configuration.  Intel and NVIDIA graphics adapters are known to work.  DRM/DRI code in the kernel must be updated to work with newer X.org drivers and AMD graphics adapters.  This is not a fault of AMD. 
-</p><p>
-WIFI support is spotty and USB based devices will not work.  This is a known issue and will be resolved in a future release.  Some adapters will work with ndis wrappers provided they’re PCMCIA/PCCARD/PCI.
-</p><p>
-SPARC64 support does not work with this release.  We hope to restore it in a future release. 0.1.1 can be installed from snapshot and updated to 0.2.1 via source on that architecture.
-</p>
-
-<h4>Package Availability</h4>
-
-<p>
-This release focused on overhauling the base operating system.  We had to let a few mports go for a time.  We still shipped over 2400 packages (more than any previous release), but there are several large omissions. 
-</p><p>
-Gnome 2.30 was not complete at the time of release.  It’s about 80% done. 
-</p><p>
-OpenJDK port is possible to build on a system but not from magus.  We don’t have a package available for it yet.
-</p><p>
-browser35 broke on the update to nss so we were unable to ship a recent mozilla based browser, although browser3 is included. 
-</p><p>
-KDE lite 3.5.10 is available as well as older versions of GNUstep, WIndowMaker, XFCE 3 & 4, and many other X environments. 
-</p><p>
-QT4 is available, but KDE4 is not working at this time.  We’d like to get this for the next release.
-</p><p>
-We’re looking for maintainers for Firefox, LibreOffice, and Gnome.
-</p>
+This release is a bit disruptive due to the number of changes, but it was decided
+to move forward with it due to the age of 0.3-RELEASE.  The next release is planned
+as a stability release and meant to work on desktop related functionality.
+</pre>
 
 <h4>Contributors</h4>
 
@@ -173,17 +100,12 @@ We’re looking for maintainers for Firefox, LibreOffice, and Gnome.
 </p>
 
 <pre>
-Christian Reinhardt (ctriv@) (major help, mport/magus/src)
+Christian Reinhardt (ctriv@) (mport/magus)
 Caryn Holt (raven@)
 smultron@ (mports, website, hardware donation)
-crash@ (mports, testing)
-Adam Karim (archite@) (src, suggestions, etc)
-Stevan Tiefert (stevan@) mports
-Vamsidhar Ganji (vganji@) mports and src (mDNSResponder)
+crash@ (mports)
 
-Daniel Seuffert (FOSDEM cds)
 Thorsten Glaser (MKSH assistance, etc)
-Kirk P Nagel & EMU CS Department (mirror, build cluster) - Eastern Michigan University
 BSD Magazine - helping us get the word out
 
 Midnight the Cat for mascot assistance :) 
