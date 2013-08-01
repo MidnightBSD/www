@@ -17,6 +17,19 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+				<blockquote class="bluebox" id="a20130728">
+                                        <h3>July 28, 2013</h3>
+                                        <p>MidnightBSD 0.4-RELEASE-p1</p>
+					<p>Vulnerabilities were reported in BIND and NFS Server.  BIND has a defect
+					resulting in a possible denial of service attack with malformed rdata in a query. This
+					affects only systems running named and not DNS clients.</p>
+					<p>For NFS, the kernel incorrectly uses client supplied credentials instead of the one
+					configured in exports(5) when filling out the anonymous credential for a
+					NFS export, when -network or -host restrictions are used at the same time. This
+					patch was obtained from FreeBSD.
+					</p>
+                                </blockquote>
+
 				<blockquote class="bluebox" id="a20120612">
                                         <h3>June 6, 2012</h3>
                                         <p>MidnightBSD 0.3-RELEASE-p9</p>
