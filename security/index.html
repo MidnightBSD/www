@@ -17,6 +17,18 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+				<blockquote class="bluebox" id="a20130822">
+					<h3>August 22, 2013</h3>
+
+					<p>MidnightBSD 0.4-RELEASE-p2</p>
+					<p>Fix an integer overflow in IP_MSFILTER (IP MULTICAST). This could be exploited to read memory by a user process.</p>
+
+					<p>When initializing the SCTP state cookie being sent in INIT-ACK chunks,
+a buffer allocated from the kernel stack is not completely initialized.</p>
+
+					<p>Patches obtained from FreeBSD</p>
+				</blockquote>
+
 				<blockquote class="bluebox" id="a20130728">
                                         <h3>July 28, 2013</h3>
                                         <p>MidnightBSD 0.4-RELEASE-p1</p>
