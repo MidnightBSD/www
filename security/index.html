@@ -16,22 +16,55 @@
 			<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
+				
+				<blockquote class="bluebox" id="a20130910">
+					<h3>September 10, 2013</h3>
+
+					<p>MidnightBSD 0.4-RELEASE-p4</p>
+				
+					<p>nullfs(5)</p>
+
+        			<p>The nullfs(5) implementation of the VOP_LINK(9) VFS operation does not
+        			check whether the source and target of the link are both in the same
+        			nullfs instance.  It is therefore possible to create a hardlink from a
+       				location in one nullfs instance to a file in another, as long as the
+       				underlying (source) filesystem is the same.</p>
+
+        			<p>ifioctl</p>
+
+        			<p>As is commonly the case, the IPv6 and ATM network layer ioctl request
+        			handlers are written in such a way that an unrecognized request is
+        			passed on unmodified to the link layer, which will either handle it or
+        			return an error code.</p>
+
+        			<p>
+        			Network interface drivers, however, assume that the SIOCSIFADDR,
+        			SIOCSIFBRDADDR, SIOCSIFDSTADDR and SIOCSIFNETMASK requests have been
+        			handled at the network layer, and therefore do not perform input
+        			validation or verify the caller's credentials.  Typical link-layer
+        			actions for these requests may include marking the interface as "up"
+        			and resetting the underlying hardware.
+					</p>
+
+					<p>Patches obtained from FreeBSD</p>
+				</blockquote>
 
 				<blockquote class="bluebox" id="a20130822">
 					<h3>August 22, 2013</h3>
 
 					<p>MidnightBSD 0.4-RELEASE-p2</p>
-					<p>Fix an integer overflow in IP_MSFILTER (IP MULTICAST). This could be exploited to read memory by a user process.</p>
+					<p>Fix an integer overflow in IP_MSFILTER (IP MULTICAST). This could be exploited
+					to read memory by a user process.</p>
 
 					<p>When initializing the SCTP state cookie being sent in INIT-ACK chunks,
-a buffer allocated from the kernel stack is not completely initialized.</p>
+					a buffer allocated from the kernel stack is not completely initialized.</p>
 
 					<p>Patches obtained from FreeBSD</p>
 				</blockquote>
 
-				<blockquote class="bluebox" id="a20130728">
-                                        <h3>July 28, 2013</h3>
-                                        <p>MidnightBSD 0.4-RELEASE-p1</p>
+				<blockquote class="bluebox" id="a20130728"
+					<h3>July 28, 2013</h3>
+                    <p>MidnightBSD 0.4-RELEASE-p1</p>
 					<p>Vulnerabilities were reported in BIND and NFS Server.  BIND has a defect
 					resulting in a possible denial of service attack with malformed rdata in a query. This
 					affects only systems running named and not DNS clients.</p>
@@ -40,16 +73,16 @@ a buffer allocated from the kernel stack is not completely initialized.</p>
 					NFS export, when -network or -host restrictions are used at the same time. This
 					patch was obtained from FreeBSD.
 					</p>
-                                </blockquote>
+				</blockquote>
 
 				<blockquote class="bluebox" id="a20120612">
-                                        <h3>June 6, 2012</h3>
-                                        <p>MidnightBSD 0.3-RELEASE-p9</p>
+					<h3>June 6, 2012</h3>                    
+                    <p>MidnightBSD 0.3-RELEASE-p9</p>
 					<p>A vulnerability exists in bind related to resource records.  A zero length
 					request can cause bind to crash resulting in a denial of service or
 					disclosure of information.</p>
 					<p>CVE-2012-1667</p>
-                                </blockquote>
+				</blockquote>
 
 				<blockquote class="bluebox" id="a20120530a">
 					<h3>May 30, 2012</h3>
