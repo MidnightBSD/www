@@ -25,7 +25,7 @@ a:active, a:hover {
 	width: 1002px;				/* Fits most 1024x768 in fullscreen */
 	margin: 0 auto;
 	padding: 0;
-	background: url(http://d2ibasrwfd3o7m.cloudfront.net/images/shadow.png) repeat-y;
+	background: url(//d2ibasrwfd3o7m.cloudfront.net/images/shadow.png) repeat-y;
 }
 
 #header h1 {
@@ -35,7 +35,7 @@ a:active, a:hover {
 	font-size: 10px;
 }
 #header a {						/* CSS Text-to-Image replacement */
-	background-image: url("http://d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
+	background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
 	background-repeat: no-repeat;
 	width: 928px; 
 	height: 0px !important;
@@ -106,4 +106,4 @@ td { padding: 10px; border-width: 0; }
 
 /* SHAMELESS PLUG */
 #cc { display: inline-block; margin: 0; vertical-align: top; }
-#cc a { padding: 16px 0 0 0; overflow: hidden; background-repeat: no-repeat; float: left; width: 16px; height: 0px !important; height: /**/:16px; background-image: url("http://d2ibasrwfd3o7m.cloudfront.net/images/creature.png"); }
+#cc a { padding: 16px 0 0 0; overflow: hidden; background-repeat: no-repeat; float: left; width: 16px; height: 0px !important; height: /**/:16px; background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/creature.png"); }
