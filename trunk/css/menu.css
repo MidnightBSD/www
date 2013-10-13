@@ -33,9 +33,8 @@ table { text-align: left; }
 }
 
 .menu ul li table {
-	margin: -1px 0;              /* IE5 needs -1px top and bottom table margins */
-	m\argin: 0;               /* re-zero the table margins for everyone but IE5 */
-	border-collapse: collapse;      /* IE5 needs this for the sub-menus to work */
+	margin: 0;
+	border-collapse: collapse;
 	font-size: 15pt;        /* this sets the base font size for our entire menu */
 }
 
