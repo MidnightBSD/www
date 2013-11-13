@@ -15,6 +15,21 @@
 			<div id="text">
 				<h2 class="icon"><img src="../images/oxygen/developer32.png" alt="Developer"> Welcome to MidnightBSD Development</h2>
 				<div class="devupdate fleft">
+				    <h4>Update: (November 2013)</h3>
+				    <blockquote>
+					<p>Post 0.4-RELEASE, several issues were detected with mport tools. We're working on several improvements to these for
+					0.5.  We're also working on some changes to mports to facilitate easier installation of desktop environments.  This is the most common
+					feature request we've received in relation to 0.4.
+					</p>
+
+					<p>We've moved mports and our website into subversion recently. The src module will move by the end of the year.
+					</p>
+				
+					<p>Users running 0.4-RELEASE should pull changes from CVS on the RELENG_0_4 branch and rebuild.  This fixes bugs with mport
+					and also includes security patches.
+					</p>
+				    </blockquote>
+	
                                     <h4>Update: (February 2012)</h4>
                                     <blockquote>
                                         <p>Our current big project is replacing sysinstall with a modified version of bsdinstall from FreeBSD 9.0-RELEASE. As part
@@ -115,6 +130,18 @@
 							U src/MAINTAINERS<br />
 							...<br />
 						</p>
+
+					<p>mports and www are now located in SVN. Regular users may check these out over HTTP.  Developers will need to use svn+ssh. Replace mports with www in the examples below to checkout the website instead.</p>
+
+					Users:
+					<p class="code">
+						svn co http://svn.midnightbsd.org/svn/mports/trunk mports
+					</p>
+
+					Developers:
+					<p class="code">
+						svn co svn+ssh://username@stargazer.midnightbsd.org/home/svn/repos/mports/trunk mports
+					</p>	
 
                                         <p>Source code and mports can also be viewed using <a href="/cgi-bin/viewvc.cgi/midnightbsd/">ViewVC</a>, <a href="http://cvsweb.midnightbsd.org/">CVSWeb</a>, and <a href="/opengrok/">OpenGrok</a>.</p>
 				</div>
