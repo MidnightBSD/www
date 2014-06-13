@@ -7,6 +7,3 @@ Disallow: /assets/
 Crawl-delay: 5
 Sitemap: http://www.midnightbsd.org/sitemap.xml.gz
 Host: www.midnightbsd.org
-
-User-agent: BLEXBot
-Crawl-delay: 10
