@@ -4,3 +4,6 @@ Disallow: /shadowbox/
 Disallow: /css/
 Disallow: /js/
 Disallow: /assets/
+
+User-agent: BLEXBot
+Crawl-delay: 10
