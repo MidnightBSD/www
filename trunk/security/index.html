@@ -17,6 +17,38 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+				<blockquote class="bluebox" id="a20140916">
+					<h3>September 16, 2014</h3>
+       		 			<p>0.4-RELEASE-p15</p>
+
+       					 <p>Fix a security issue with TCP SYN.
+
+				        <p>When a segment with the SYN flag for an already existing connection arrives,
+				        the TCP stack tears down the connection, bypassing a check that the
+				        sequence number in the segment is in the expected window.
+				</blockquote>
+
+				<blockquote class="bluebox" id="a20140909">
+					<h3>September 9, 2014</h3>
+
+	        			<p>0.4-RELEASE-p14</p>
+
+        <p>OpenSSL security patch:
+
+       <p> The receipt of a specifically crafted DTLS handshake message may cause OpenSSL
+        to consume large amounts of memory. [CVE-2014-3506]
+
+        <p>The receipt of a specifically crafted DTLS packet could cause OpenSSL to leak
+        memory. [CVE-2014-3507]
+
+        <p>A flaw in OBJ_obj2txt may cause pretty printing functions such as
+        X509_name_oneline, X509_name_print_ex et al. to leak some information from
+        the stack. [CVE-2014-3508]
+
+        <p>OpenSSL DTLS clients enabling anonymous (EC)DH ciphersuites are subject to
+        a denial of service attack. [CVE-2014-3510]
+				</blockquote>
+
 				<blockquote class="bluebox" id="a20140710">	
 					<h3>July 10, 2014</h3>
 					<p>0.4-RELEASE-p13</p>
