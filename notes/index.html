@@ -32,67 +32,71 @@
 						<li><a href="0.1.1/index.html">0.1.1-RELEASE</a></li>
 						<li><a href="0.2/index.html">0.2.1-RELEASE</a></li>
 						<li><a href="0.3/index.html">0.3-RELEASE</a></li>
+						<li><a href="0.4/index.html">0.4-RELEASE</a></li>
 					</ul>
 				</div>
-				<h3>(07/04/2013) MidnightBSD 0.4-RELEASE</h3>
+				<h3>(09/22/2014) MidnightBSD 0.5-RELEASE</h3>
 <p>
-MidnightBSD 0.4 has been released on July 5, 2013. It includes many new features, but
-of particular interest is the new package management tool, mport.  
-<p>
-This release is a bit different from previous releases in that we plan to update
-packages during the support period for 0.4. Rather than upload packages and
-sit on them for the life of the release, you will be able to download updated
-packages for i386 and amd64 periodically. 
-<p>
-Due to this new feature, our initial package offering is smaller than we've done
-for previous releases as many things had to get migrated and updated. We plan
-to expand the packages available in the coming weeks. 
-<p>
-In addition to mport, we've imported a large number of features from FreeBSD 9.1
-including ZFS with ZPOOL 28/dedup support, LLVM + CLANG in base, migration to GPT
-as the default in the installer, bsdinstall, BSD licensed sort and grep,
-cpucontrol(8), and UFS2 + SUJ (journaling). We've also imported the newer FreeBSD
-USB stack, NFSv4 client, syscons, and CAM based ATA. 
-<p>
-Support for newer hardware includes Intel Sandybridge and Ivy Bridge graphics,
-various wifi chipsets, updates to Intel and Realtek ethernet adapters, and acpi.
-<p>
-The default system compiler is still GCC 4.2, but it has been updated to a newer release.
-We also removed libobjc from base as it was GCC specific and we want to migrate to
-libobjc2.  We offer libobjc2 in mports and it will work with GCC and LLVM. 
-<p>
-MidnightBSD now has it's own GPT partition types and offers a new search command,
-msearch.
-<p>
-libc gains strnlen(3), memrchr(3), stpncpy(3).
-<p>
-We've also imported and updated many third party libraries:
-<p>
-bzip2 version 1.0.6
-Diffutils 3.2
-FILE 5.05
-OpenSSH 5.8p2
-SQLite 3.7.15.2
-MKSH R44
-NetBSD's iconv
-BIND 9.8
-tcsh 6.18.01
-Perl 5.14.2
-mDNSResponder 333.10
-less v436
-libarchive 3.0.3
-libdialog (lgpl version)
-libffi 3.0.10
-wide-dhcpv6
-openresolv
-sendmail 8.14.5
-sudo 1.7.4-p6
-tzdata_2012j
-<p>
-This release is a bit disruptive due to the number of changes, but it was decided
-to move forward with it due to the age of 0.3-RELEASE.  The next release is planned
-as a stability release and meant to work on desktop related functionality.
+MidnightBSD 0.5 has been released on September 22, 2014.
 </p>
+
+<h4>Security</h4>
+
+<ul>
+<li>Fixed a security issue with TCP SYN packet processing that could result in a denial of service attack.
+<li>Fixed a bug with clearenv(3) that could result in a segfault
+<li>Several OpenSSL security issues were addressed in this release including [CVE-2014-3506], [CVE-2014-3507], [CVE-2014-3508] and [CVE-2014-3510]
+<li>Fix a vulnerability in the control message API. A buffer is not properly cleared before sharing with userland.
+<li>Sendmail failed to properly set close-on-exec for open file descriptors.
+<li>ktrace page fault kernel trace entries were set to an incorrect size which resulted in a leak of information.
+<li>Fix a TCP reassembly bug that could result in a DOS attack
+<li>bsnmpd contains a stack overflow when sent certain queries.
+</ul>
+
+<h4>Enhancements</h4>
+
+<ul>
+<li>Jails now run shutdown scripts.
+<li>Support for username with length 32. Previous limit was 16
+<li>Imported FreeBSD 9.2 usb stack (plus z87 patches from stable)
+<li>Updated em(4), igb(4) and ixgbe(4)
+<li>MidnightBSD now works with Z87 Intel chipsets.
+<li>rarpd supports vlan(4) and has a pid flag. (from FreeBSD)
+<li>Support for 65,536 routing tables was added.  (up from 16)
+<li>Added subversion to base (as svnlite)
+<li>virtio(4) imported from FreeBSD 9-stable. SCSI support not included
+</ul>
+
+<h4>Removed Features</h4>
+
+<ul>
+<li>Sparc64 platform support
+<li>Remove (BIND) named from base. We still include the client utilities for now until replacements are found.
+</ul>
+
+<h4>New Software Versions</h4>
+
+<ul>
+<li>File 5.19
+<li>MKSH R50
+<li>less v458
+<li>Perl 5.18.2
+<li>Sendmail 8.14.7 (plus AAAA record patch)
+<li>Subversion 1.8.1
+<li>zlib 1.2.7
+</ul>
+
+<h4>mports &amp; package tools</h4>
+
+<p>libmport was modified to support the concept of “upgrade” to migrate from one OS release to another. Packages now contain OS version they were built with. mport list now displays the OS version of the package to help with updating and mport list updates was changed to suggest upgrading to the current version.
+
+<p>Several bug fixes around checksum handling were resolved.
+
+<p>Package builds for the release are not yet complete.
+
+<p>KDE was removed from mports due to lack of a maintainer for our ports. KDE 3.x was too insecure and 4.x has not worked correctly for some time on MidnightBSD.
+
+<p>Currently, we’re recommending xfce 4.x as a desktop environment.
 
 <h4>Contributors</h4>
 
@@ -102,8 +106,6 @@ as a stability release and meant to work on desktop related functionality.
 <pre>
 Christian Reinhardt (ctriv@) (mport/magus)
 Caryn Holt (raven@)
-smultron@ (mports, website, hardware donation)
-crash@ (mports)
 
 Thorsten Glaser (MKSH assistance, etc)
 BSD Magazine - helping us get the word out
