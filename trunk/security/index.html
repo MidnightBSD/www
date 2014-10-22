@@ -17,6 +17,33 @@
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
 
+				<blockquote class="bluebox" id="a20141021">
+					<h3>October 21, 2014</h3>
+					<p>0.5.3-RELEASE</p>
+
+					<p>MidnightBSD 0.5.3-RELEASE is now available via subversion. 
+
+<p>Fix several security vulnerabilities in OpenSSL, routed, rtsold,
+and namei with respect to Capsicum sandboxes looking up
+nonexistent path names and leaking memory.
+
+<p>OpenSSL update adds some workarounds for the recent
+poodle vulnerability reported by Google.
+
+<p>The input path in routed(8) will accept queries from any source and
+attempt to answer them.  However, the output path assumes that the
+destination address for the response is on a directly connected
+network.
+
+<p>Due to a missing length check in the code that handles DNS parameters,
+a malformed router advertisement message can result in a stack buffer
+overflow in rtsold(8).
+
+<p>In addition, we've released 0.5.2-RELEASE ISOs on the FTP server for both amd64 and i386. 
+We plan to do rollup security releases periodically.
+					</p>
+				</blockquote>
+
 				<blockquote class="bluebox" id="a20141011">
                                         <h3>October 11, 2014</h3>
                                         <p>0.5.2-RELEASE</p>
