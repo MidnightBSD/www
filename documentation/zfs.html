@@ -20,6 +20,8 @@
 						<li><a href="#s1c">Preparing</a></li>
 						<li><a href="#s1d">Examples</a></li>
 						<li><a href="#s1e">Recovery</a></li>
+						<li><a href="#s1f">Snapshots</a></li>
+						<li><a href="#s1g">Send/Receive</a></li>
 						<li><a href="index.html"><strong>Documentation</strong></a></li>
 						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
 					</ul>
@@ -103,7 +105,8 @@
 				Finally, try <code>zpool import <em>name of pool</em></code>.
 				</li>
 				</ul>
-				To verify it worked, run <code>zpool list</code>	
+				
+				<p>To verify it worked, run <code>zpool list</code></p>	
 				
 				<h4 id="s1f">Snapshots</h4>
 				
@@ -134,8 +137,8 @@
 				 <p>Finally, you can list snapshots</p>
 				 <code>zfs list -t snapshot</code>
 				 
-				 <p>You can also make zfs list show snapshots by default by changing this setting</p>
-				 <code>zpool set listsnapshots=on tank</p>
+				 <p>You can also make zfs list show snapshots by default by changing this setting
+				 <code>zpool set listsnapshots=on tank</code></p>
 				 				 				
 				<h4 id="s1g">Using Send and Receive</h4>
 				<p>You can use zfs to send a snapshot to the same or another pool with the
@@ -146,6 +149,7 @@
 				<code>
 				zfs send tank/test@1 | zfs receive tank/testback
 				</code>
+				</p>
 				
 <div id="disqus_thread"></div>
 <script type="text/javascript">
