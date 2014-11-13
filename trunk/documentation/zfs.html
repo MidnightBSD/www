@@ -104,6 +104,49 @@
 				</li>
 				</ul>
 				To verify it worked, run <code>zpool list</code>	
+				
+				<h4 id="s1f">Snapshots</h4>
+				
+				<p>A ZFS snapshot, is a point in time copy or bookmark of your data. You can use
+				it to compare changes made to a file system or to backup a file system. This allows
+				 you to get your data back after trying an upgrade, etc. It can be a handy trick
+				 to make copies of jails easily. 
+				 </p>
+				 
+				 <p>You can create a snapshot named 1 using the following:</p>
+				 <code>zfs snapshot tank/test@1</code>
+				 
+				 <p>You can also apply a snapshot recursively to all file systems in a pool
+				 with the r flag</p>
+				 
+				 <code>zfs snapshot -r tank/home@now</code>
+				 
+				 <p>As more changes occur to a file system, the amount of disk space a snapshot
+				 takes increases. You will want to purge old snapshots to free up disk space
+				 when they are no longer needed.</p>
+				 
+				 <code>zfs destroy tank/home@now</code>
+				 
+				 <p>You can use the rename command to rename a snapshot, the hold command to 
+				 prevent removal of a snapshot, and many more options. Consult the 
+				 relevant man pages for more information.</p>
+				 
+				 <p>Finally, you can list snapshots</p>
+				 <code>zfs list -t snapshot</code>
+				 
+				 <p>You can also make zfs list show snapshots by default by changing this setting</p>
+				 <code>zpool set listsnapshots=on tank</p>
+				 				 				
+				<h4 id="s1g">Using Send and Receive</h4>
+				<p>You can use zfs to send a snapshot to the same or another pool with the
+				zfs send and receive commands. This can be used to backup ZFS file systems
+				to another location such as an external disk.</p>
+				
+				<p>To backup the snapshot named 1 from file system test:
+				<code>
+				zfs send tank/test@1 | zfs receive tank/testback
+				</code>
+				
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'midnightbsd'; 
