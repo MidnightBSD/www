@@ -123,32 +123,36 @@ mports.</p>
 </thead>
 <tbody>
 <tr>  
-<td><p><tt>LICENSES_ACCEPTED</tt> </p></td>
-  <td><p > Accepted licenses </p></td>
+<td><tt>LICENSES_ACCEPTED</tt></td>
+  <td>Accepted licenses</td>
 </tr>
 <tr>  
-<td><p > <tt >LICENSES_GROUPS_ACCEPTED</tt> </p></td>
-  <td><p > Accepted groups </p></td>
+<td><tt>LICENSES_GROUPS_ACCEPTED</tt></td>
+  <td>Accepted groups</td>
 </tr>
 <tr>  
-<td><p > <tt >LICENSES_REJECTED</tt> </p></td>
-  <td><p > Rejected licenses </p></td>
+<td><tt>LICENSES_REJECTED</tt></td>
+  <td>Rejected licenses</td>
 </tr>
 <tr>  
-<td><p > <tt >LICENSES_GROUPS_REJECTED</tt> </p></td>
-  <td><p > Rejected groups </p></td>
+<td><tt>LICENSES_GROUPS_REJECTED</tt></td>
+  <td>Rejected groups</td>
 </tr>
 <tr>  
-<td><p > <tt >LICENSES_ASK</tt> </p></td>
-  <td><p > Require explicit user agreement for licenses accepted by default, for example most common licenses in <tt >bsd.licenses.db.mk</tt> </p></td>
+<td><tt>LICENSES_ASK</tt></td>
+  <td>Require explicit user agreement for licenses accepted by default, for example most common licenses in 
+<tt>mports/components/licenses.db.mk</tt></td>
 </tr>
-<tr>  <td><p > <tt >NO_LICENSES_DIALOGS</tt> </p></td>
-  <td><p > Disable dialog menus (GUI), and use the text interface </p></td>
+<tr>
+ <td><tt>NO_LICENSES_DIALOGS</tt></td>
+  <td>Disable dialog menus (GUI), and use the text interface</td>
 </tr>
-<tr>  <td><p > <tt >NO_LICENSES_INSTALL</tt> </p></td>
-  <td><p > Disable installation of (all) license files. These will possibly be required for future features (specially scripts or tools outside the ports systems). </p></td>
+<tr> 
+<td><tt>NO_LICENSES_INSTALL</tt></td>
+  <td>Disable installation of (all) license files. These will possibly be required for future features (specially scripts or tools outside the ports systems).</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <table>
 <thead>
@@ -159,28 +163,36 @@ mports.</p>
 	</tr>
 </thead>
 <tbody>
-<tr>  <td><p > <tt >LICENSE</tt> </p></td>
-  <td><p > Code of license (short name; only letters, numbers and underscore) </p></td>
+<tr>
+<td><tt>LICENSE</tt></td>
+  <td>Code of license (short name; only letters, numbers and underscore)</td>
 </tr>
-<tr>  <td><p > <tt >LICENSE_PERMS</tt> </p></td>
-  <td><p > Permissions (see below) </p></td>
+<tr>
+<td><tt>LICENSE_PERMS</tt></td>
+  <td> Permissions (see below)</td>
 </tr>
-<tr>  <td><p > <tt >LICENSE_GROUPS</tt> </p></td>
-  <td><p > Groups the license belongs to </p></td>
+<tr>
+  <td><tt >LICENSE_GROUPS</tt></td>
+  <td>Groups the license belongs to</td>
 </tr>
-<tr>  <td><p > <tt >LICENSE_NAME</tt> </p></td>
-  <td><p > Full license name (for the reports) </p></td>
+<tr>
+<td><tt>LICENSE_NAME</tt> </p></td>
+  <td>Full license name (for the reports)</td>
 </tr>
-<tr>  <td>p > <tt >LICENSE_FILE</tt> </p></td>
-  <td><p > Full path to license (or use <tt >LICENSE_TEXT</tt>) </p></td>
+<tr> 
+ <td><tt>LICENSE_FILE</tt></td>
+  <td>Full path to license (or use <tt>LICENSE_TEXT</tt>)</td>
 </tr>
-<tr>  <td><p > <tt >LICENSE_TEXT</tt> </p></td>
-  <td><p > Text to use as a license, for referencing when not available </p></td>
+<tr>
+<td><tt>LICENSE_TEXT</tt></td>
+  <td>Text to use as a license, for referencing when not available</td>
 </tr>
-<tr>  <td><p > <tt >LICENSE_DISTFILES</tt> </p></td>
-  <td><p > Name of licensed files (defaults to <tt >${_DISTFILES}</tt>) </p></td>
+<tr>
+  <td><tt>LICENSE_DISTFILES</tt></td>
+  <td>Name of licensed files (defaults to <tt>${_DISTFILES}</tt>)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
  <table>
  <thead>
@@ -190,25 +202,29 @@ mports.</p>
 		<th>Description</th>
 	</tr>
 </thead>
- <tbody><tr>  <td><p > <strong>Variable</strong> </p></td>
-  <td><p > <strong>Description</strong> </p></td>
+ <tbody>
 </tr>
-<tr>  <td><p > <tt >dist-mirror</tt> </p></td>
-  <td><p > Free redistribution of distfile (like FTP mirroring; opposite of <tt >RESTRICTED</tt>) </p></td>
+<tr>  <td><tt>dist-mirror</tt></td>
+  <td>Free redistribution of distfile (like FTP mirroring; opposite of <tt>RESTRICTED</tt>)</td>
 </tr>
-<tr>  <td><p > <tt >dist-sell</tt> </p></td>
+<tr>
+  <td><p > <tt >dist-sell</tt> </p></td>
   <td><p > Selling of distfile (like in CD-ROM; opposite of <tt >NO_CDROM</tt>) </p></td>
 </tr>
-<tr>  <td><p > <tt >pkg-mirror</tt> </p></td>
-  <td><p > Free redistribution of package (like FTP upload; opposite of <tt >NO_PACKAGE</tt>) </p></td>
+<tr>
+  <td><tt >pkg-mirror</tt></td>
+  <td>Free redistribution of package (like FTP upload; opposite of <tt >NO_PACKAGE</tt>)</td>
 </tr>
-<tr>  <td><p > <tt >pkg-sell</tt> </p></td>
-  <td><p > Selling of package (like in CD-ROM; opposite of <tt >NO_CDROM</tt>) </p></td>
+<tr>
+  <td><tt >pkg-sell</tt></td>
+  <td>Selling of package (like in CD-ROM; opposite of <tt>NO_CDROM</tt>)</td>
 </tr>
-<tr>  <td><p > <tt >auto-accept</tt> </p></td>
-  <td><p > If present the license is accepted by default, without agreement (at least <tt >LICENSES_ASK</tt> is defined by the user) </p></td>
+<tr>
+  <td><tt >auto-accept</tt></td>
+  <td>If present the license is accepted by default, without agreement (at least <tt>LICENSES_ASK</tt> is defined by the user) </td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
  
  <p>Note that permissions can be denied by prefixing no-, for example no-dist-sell.</p>
  
