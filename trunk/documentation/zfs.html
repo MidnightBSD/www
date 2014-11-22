@@ -151,6 +151,39 @@
 				</code>
 				</p>
 				
+				<h4 id="s1h">Advanced format hard drives (4k sector)</h4>
+				
+				<p>Many 4k sector drives do not report their size properly in a bad attempt
+					at backward compatibility.  ZFS works fine with drives that report
+					properly, but for the rest of them the following workaround is 
+					recommended.
+				</p>
+				<p>
+				<code>
+gpart create -s gpt ada0
+
+# create partitions
+gpart add -a 1m -t mnbsd-zfs -l drive0 ada0
+gpart add -a 1m -t mnbsd-zfs -l drive1 ada1
+ 
+# use gnop to make 4k friendly devices
+gnop create -S 4k gpt/drive0
+gnop create -S 4k gpt/drive1
+
+# make a mirror
+zpool create mpool mirror /dev/gpt/drive0.nop /dev/gpt/drive1.nop
+ 
+# export pool and remove virtual devices
+zpool export mpool
+gnop destroy gpt/drive0.nop
+gnop destroy gpt/drive1.nop
+
+# import and keep labels (via -d flag)
+zpool import -d /dev/gpt mpool
+				</code>
+				</p>
+				
+				
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'midnightbsd'; 
