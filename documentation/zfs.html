@@ -160,26 +160,26 @@
 				</p>
 				<p>
 				<code>
-gpart create -s gpt ada0
+gpart create -s gpt ada0<br>
 
-# create partitions
-gpart add -a 1m -t mnbsd-zfs -l drive0 ada0
-gpart add -a 1m -t mnbsd-zfs -l drive1 ada1
+# create partitions<br>
+gpart add -a 1m -t mnbsd-zfs -l drive0 ada0<br>
+gpart add -a 1m -t mnbsd-zfs -l drive1 ada1<br>
  
-# use gnop to make 4k friendly devices
-gnop create -S 4k gpt/drive0
-gnop create -S 4k gpt/drive1
+# use gnop to make 4k friendly devices <br>
+gnop create -S 4k gpt/drive0<br>
+gnop create -S 4k gpt/drive1<br>
 
-# make a mirror
-zpool create mpool mirror /dev/gpt/drive0.nop /dev/gpt/drive1.nop
+# make a mirror<br>
+zpool create mpool mirror /dev/gpt/drive0.nop /dev/gpt/drive1.nop<br>
  
-# export pool and remove virtual devices
-zpool export mpool
-gnop destroy gpt/drive0.nop
-gnop destroy gpt/drive1.nop
+# export pool and remove virtual devices<br>
+zpool export mpool<br>
+gnop destroy gpt/drive0.nop<br>
+gnop destroy gpt/drive1.nop<br>
 
-# import and keep labels (via -d flag)
-zpool import -d /dev/gpt mpool
+# import and keep labels (via -d flag)<br>
+zpool import -d /dev/gpt mpool<br>
 				</code>
 				</p>
 				
