@@ -48,22 +48,42 @@
 				</div>
 				<div id="security">
 					<h2><a href="security/">Security &#187;</a></h2>
-
+					
 					<blockquote>
-						<p class="date">October 21, 2014</p>
+						<p class="date">March 19, 2015</p>
 
-						<p class="update">0.5.3-RELEASE
-						<br>Fix several security vulnerabilities in OpenSSL, routed, rtsold,
-and namei with respect to Capsicum sandboxes looking up
-nonexistent path names and leaking memory.</p>
-						<p class="more"><a href="security/#a20141021">Read more ...</a></p>
+						<p class="update">0.5.10 RELEASE
+						<br>         OpenSSL Security update
+                                <br>
+                                        A malformed elliptic curve private key file could cause a use-after-free condition in the d2i_ECPrivateKey function. [CVE-2015-0209]
+                                <br>
+                                        An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp function to crash with an invalid read. [CVE-2015-0286]
+                                <br>
+                                        Reusing a structure in ASN.1 parsing may allow an attacker to cause memory corruption via an invalid write. [CVE-2015-0287]
+                               <br>
+                                        The function X509_to_X509_REQ will crash with a NULL pointer dereference if the certificate key is invalid. [CVE-2015-0288]
+                                <br>
+                                        The PKCS#7 parsing code does not handle missing outer ContentInfo correctly. [CVE-2015-0289]
+                              <br>
+                                        A malicious client can trigger an OPENSSL_assert in servers that both support SSLv2 and enable export cipher suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293]
+                  		</p>
+						<p class="more"><a href="security/#a20150319">Read more ...</a></p>
 					</blockquote>
 
 					 <blockquote>
-                                         	<p class="date">October 11, 2014</p>
-                                        	<p class="update">0.5.2-RELEASE
-						<br>Fixed a regression with mksh R50c</p>
-						<p class="more"><a href="security/#a20141011">Read more ...</a><p>
+                        <p class="date">February 25, 2015</p>
+                        <p class="update">0.5.9 RELEASE
+						<br>  
+                                        Fix two security vulnerabilities.
+                                <br>
+                                        1. BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable.
+                               <br>
+                                        CVE-2015-1349
+                                <br>
+                                        2. An integer overflow in computing the size of IGMPv3 data buffer can result in a buffer which is too small for the requested operation.
+                             <br>
+                                        This can result in a DOS attack.</p>
+						<p class="more"><a href="security/#aa20150225">Read more ...</a><p>
                                         </blockquote>
 				</div>
 				<div id="tweets">
