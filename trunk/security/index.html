@@ -16,6 +16,130 @@
 			<div class="clear"></div>
 			<div id="text">
 				<h2><img src="../images/oxygen/security32.png" alt="" /> Security Updates</h2>
+<blockquote class="bluebox" id="a20150319">
+<h3>March 19, 2015</h3>
+	<p>0.5.10 RELEASE
+
+	<p>OpenSSL Security update
+
+	<p>A malformed elliptic curve private key file could cause a use-after-free
+	condition in the d2i_ECPrivateKey function.  [CVE-2015-0209]
+
+	<p>An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp
+	function to crash with an invalid read.  [CVE-2015-0286]
+
+	<p>Reusing a structure in ASN.1 parsing may allow an attacker to cause memory
+	corruption via an invalid write. [CVE-2015-0287]
+
+	<p>The function X509_to_X509_REQ will crash with a NULL pointer dereference if
+	the certificate key is invalid.  [CVE-2015-0288]
+
+	<p>The PKCS#7 parsing code does not handle missing outer ContentInfo correctly.
+	[CVE-2015-0289]
+
+	<p>A malicious client can trigger an OPENSSL_assert in servers that both support
+	SSLv2 and enable export cipher suites by sending a specially crafted SSLv2
+	CLIENT-MASTER-KEY message.  [CVE-2015-0293]
+		</blockquote>
+<blockquote class="bluebox" id="a20150225">
+<h3>February 25, 2015</h3>
+	<p>0.5.9 RELEASE
+
+	<p>Fix two security vulnerabilities. 
+
+	<p>1. BIND servers which are configured to perform DNSSEC validation and which
+	are using managed keys (which occurs implicitly when using
+	"dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit
+	unpredictable behavior due to the use of an improperly initialized
+	variable.
+
+	<p>CVE-2015-1349
+
+	<p>2. An integer overflow in computing the size of IGMPv3 data buffer can result
+	in a buffer which is too small for the requested operation.
+
+	<p>This can result in a DOS attack.
+		</blockquote>
+
+	<blockquote class="bluebox" id="a20150114">	
+	<h3>January 14, 2015</h3>
+	<p>0.5.8 RELEASE
+
+	<p>Fix several security issues with OpenSSL.
+
+	<p>A carefully crafted DTLS message can cause a segmentation fault in OpenSSL
+	due to a NULL pointer dereference. [CVE-2014-3571]
+
+	<p>A memory leak can occur in the dtls1_buffer_record function under certain
+	conditions. [CVE-2015-0206]
+
+	<p>When OpenSSL is built with the no-ssl3 option and a SSL v3 ClientHello is
+	received the ssl method would be set to NULL which could later result in
+	a NULL pointer dereference.  [CVE-2014-3569]
+
+	<p>An OpenSSL client will accept a handshake using an ephemeral ECDH
+	ciphersuite using an ECDSA certificate if the server key exchange message
+	is omitted. [CVE-2014-3572]
+
+	<p>An OpenSSL client will accept the use of an RSA temporary key in a non-export
+	RSA key exchange ciphersuite. [CVE-2015-0204]
+
+	<p>An OpenSSL server will accept a DH certificate for client authentication
+	without the certificate verify message. [CVE-2015-0205]
+
+	<p>OpenSSL accepts several non-DER-variations of certificate signature
+	algorithm and signature encodings.  OpenSSL also does not enforce a
+	match between the signature algorithm between the signed and unsigned
+	portions of the certificate. [CVE-2014-8275]
+
+	<p>Bignum squaring (BN_sqr) may produce incorrect results on some
+	platforms, including x86_64. [CVE-2014-3570]
+		</blockquote>
+<blockquote class="bluebox" id="a20141211">
+
+<h3>December 11, 2014</h3>
+	<p>0.5.7 RELEASE
+
+	<p>Fix a security issue with file and libmagic that can allow
+	an attacker to create a denial of service attack on any
+	program that uses libmagic.
+
+<p>20141109:
+	<p>Fix building perl during buildworld when the GDBM port is installed.
+
+	</blockquote>
+	<blockquote class="bluebox" id="a20141106">
+<h3>November 6, 2014</h3>
+	<p>0.5.6 RELEASE
+
+	<p>Update timezone data tzdata 2014i
+
+	<p>(plus previous security fixes)
+
+	<p>Fix two security issues:
+
+	<p>1. sshd may link libpthread in the wrong order, shadowing libc
+	   functions and causing a possible DOS attack for connecting clients.
+	<p>2. getlogin may leak kernel memory via a buffer that is 
+	   copied without clearing.
+	   	</blockquote>
+
+<blockquote class="bluebox" id="a20141031">
+
+	<h3>October 31, 2014</h3>
+	<p>0.5.5 RELEASE
+
+	<p>tnftp 20141031 fixes a security vulnerability with tnftp,
+        CVE-2014-8517.
+        </blockquote>
+
+		<blockquote class="bluebox" id="a20141027">
+		<h3>October 27, 2014</h3>
+
+	<p>0.5.4 RELEASE
+
+	<p>libmport fix for packages
+		</blockquote>
 
 				<blockquote class="bluebox" id="a20141021">
 					<h3>October 21, 2014</h3>
