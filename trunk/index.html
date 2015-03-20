@@ -1,97 +1,117 @@
 <!DOCTYPE html>
 <html lang="en-us">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="description" content="MidnightBSD is a desktop operating system for x86 and x86-64 based PCs.">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>MidnightBSD</title>
-		<link rel="shortcut icon" href="favicon.ico">
-		<link href="https://plus.google.com/112694070346575096682/" rel="publisher">
-		<link  rel="alternate" type="application/rss+xml" title="MidnightBSD Developer Blog" href="http://feedproxy.google.com/mnbsd">
-		<link rel="stylesheet" type="text/css" href="css/essence.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+		<meta name="description" content="MidnightBSD is a desktop operating system for x86 and x86-64 based PCs."> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>
+			MidnightBSD
+		</title>
+		<link rel="shortcut icon" href="favicon.ico"> <link href="https://plus.google.com/112694070346575096682/" rel="publisher"> <link rel="alternate" type="application/rss+xml" title="MidnightBSD Developer Blog" href="http://feedproxy.google.com/mnbsd"> <link rel="stylesheet" type="text/css" href="css/essence.css"> 
 	</head>
 	<body>
 		<div id="globe">
-			<div id="header"><h1 title="MidnightBSD Home"><a href="./" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
-		    <!--#include virtual="/menu.html"-->
-			<div class="clear"></div>
-			<div id="welcomebox">
-				<div class="clear"></div>
-				<div id="welcome">
-					<h2>Welcome to MidnightBSD</h2>
-					<blockquote>
-						<p>MidnightBSD is a new BSD-derived operating system developed with desktop 
-						users in mind. It includes all the software you'd expect for your daily tasks 
-						&#8212; email, web browsing, 
-						word processing, gaming, 
-						and much more.</p>
-						<p>With a small community of dedicated developers, MidnightBSD strives to 
-						create an easy-to-use operating system everyone can use, freely. Available 
-						for x86, AMD64 and as Virtual Machines.</p>
-					</blockquote>
-				</div>
-				<div id="getbox">
-					<div id="gettext">
-						<h2><a href="download/">Get MidnightBSD</a></h2>
-						<h3>Latest Release - 0.5.2</h3>
-						<div id="getcd"><a href="download/" title="Get MidnightBSD"></a></div>
-						<div class="clear"></div>
-						<h4><a href="notes/">Release Notes</a></h4>
-					</div>
-				</div>
+			<div id="header">
+				<h1 title="MidnightBSD Home">
+				<a href="./" title="MidnightBSD Home">
+					MidnightBSD: The BSD For Everyone
+				</a>
+			</h1>
+		</div>
+<!--#include virtual="/menu.html"-->
+		<div class="clear">
+		</div>
+		<div id="welcomebox">
+			<div class="clear">
 			</div>
-			<div class="clear"></div>
-			<div id="gravity" style="padding-top: 10px;">
-				<div id="news">
-					<h2><a href="news/">News &#187;</a></h2>
-				<!--#include file="mbsdblogsum.inc"-->
-				</div>
-				<div id="security">
-					<h2><a href="security/">Security &#187;</a></h2>
-					
-					<blockquote>
-						<p class="date">March 19, 2015</p>
-
-						<p class="update">0.5.10 RELEASE
-						<br>         OpenSSL Security update
-                                <br>
-                                        A malformed elliptic curve private key file could cause a use-after-free condition in the d2i_ECPrivateKey function. [CVE-2015-0209]
-                                <br>
-                                        An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp function to crash with an invalid read. [CVE-2015-0286]
-                                <br>
-                                        Reusing a structure in ASN.1 parsing may allow an attacker to cause memory corruption via an invalid write. [CVE-2015-0287]
-                               <br>
-                                        The function X509_to_X509_REQ will crash with a NULL pointer dereference if the certificate key is invalid. [CVE-2015-0288]
-                                <br>
-                                        The PKCS#7 parsing code does not handle missing outer ContentInfo correctly. [CVE-2015-0289]
-                              <br>
-                                        A malicious client can trigger an OPENSSL_assert in servers that both support SSLv2 and enable export cipher suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293]
-                  		</p>
-						<p class="more"><a href="security/#a20150319">Read more ...</a></p>
-					</blockquote>
-
-					 <blockquote>
-                        <p class="date">February 25, 2015</p>
-                        <p class="update">0.5.9 RELEASE
-						<br>  
-                                        Fix two security vulnerabilities.
-                                <br>
-                                        1. BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable.
-                               <br>
-                                        CVE-2015-1349
-                                <br>
-                                        2. An integer overflow in computing the size of IGMPv3 data buffer can result in a buffer which is too small for the requested operation.
-                             <br>
-                                        This can result in a DOS attack.</p>
-						<p class="more"><a href="security/#aa20150225">Read more ...</a><p>
-                                        </blockquote>
-				</div>
-				<div id="tweets">
-<a class="twitter-timeline" href="https://twitter.com/midnightbsd" data-widget-id="340874433373806593">Tweets by @midnightbsd</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                                </div>
+			<div id="welcome">
+				<h2>
+					Welcome to MidnightBSD
+				</h2>
+				<blockquote>
+					<p>
+						MidnightBSD is a new BSD-derived operating system developed with desktop users in mind. It includes all the software you'd expect for your daily tasks &#8212; email, web browsing, word processing, gaming, and much more.
+					</p>
+					<p>
+						With a small community of dedicated developers, MidnightBSD strives to create an easy-to-use operating system everyone can use, freely. Available for x86, AMD64 and as Virtual Machines.
+					</p>
+				</blockquote>
 			</div>
+			<div id="getbox">
+				<div id="gettext">
+					<h2>
+					<a href="download/">
+						Get MidnightBSD
+					</a>
+				</h2>
+				<h3>
+					Latest Release - 0.5.2
+				</h3>
+				<div id="getcd">
+					<a href="download/" title="Get MidnightBSD">
+					</a>
+				</div>
+				<div class="clear">
+				</div>
+				<h4>
+				<a href="notes/">
+					Release Notes
+				</a>
+			</h4>
+		</div>
+	</div>
+</div>
+<div class="clear">
+</div>
+<div id="gravity" style="padding-top: 10px;">
+	<div id="news">
+		<h2>
+		<a href="news/">
+			News &#187;
+		</a>
+	</h2>
+<!--#include file="mbsdblogsum.inc"-->
+</div>
+<div id="security">
+	<h2>
+	<a href="security/">
+		Security &#187;
+	</a>
+</h2>
+<blockquote>
+	<p class="date">
+		March 19, 2015
+	</p>
+	<p class="update">
+		0.5.10 RELEASE <br> OpenSSL Security update <br> A malformed elliptic curve private key file could cause a use-after-free condition in the d2i_ECPrivateKey function. [CVE-2015-0209] <br> An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp function to crash with an invalid read. [CVE-2015-0286] <br> Reusing a structure in ASN.1 parsing may allow an attacker to cause memory corruption via an invalid write. [CVE-2015-0287] <br> The function X509_to_X509_REQ will crash with a NULL pointer dereference if the certificate key is invalid. [CVE-2015-0288] <br> The PKCS#7 parsing code does not handle missing outer ContentInfo correctly. [CVE-2015-0289] <br> A malicious client can trigger an OPENSSL_assert in servers that both support SSLv2 and enable export cipher suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293] 
+	</p>
+	<p class="more">
+	<a href="security/#a20150319">
+		Read more ...
+	</a>
+	</p>
+</blockquote>
+<blockquote>
+	<p class="date">
+		February 25, 2015
+	</p>
+	<p class="update">
+		0.5.9 RELEASE <br> Fix two security vulnerabilities. <br> 1. BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable. <br> CVE-2015-1349 <br> 2. An integer overflow in computing the size of IGMPv3 data buffer can result in a buffer which is too small for the requested operation. <br> This can result in a DOS attack.
+	</p>
+	<p class="more">
+	<a href="security/#aa20150225">
+		Read more ...
+	</a>
+	<p>
+</blockquote>
+</div>
+<div id="tweets">
+	<a class="twitter-timeline" href="https://twitter.com/midnightbsd" data-widget-id="340874433373806593">
+		Tweets by @midnightbsd
+	</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> 
+</div>
+</div>
 <!--#include virtual="/footer.html"-->
-	</body>
+</body>
 </html>
