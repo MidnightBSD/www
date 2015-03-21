@@ -4,6 +4,7 @@ Disallow: /shadowbox/
 Disallow: /css/
 Disallow: /js/
 Disallow: /assets/
+Disallow: /magus/auth/
 Crawl-delay: 5
 Sitemap: http://www.midnightbsd.org/sitemap.xml.gz
 Host: www.midnightbsd.org
