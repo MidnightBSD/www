@@ -1,8 +1,6 @@
 User-agent: *
 Disallow: /cgi-bin/
 Disallow: /shadowbox/
-Disallow: /css/
-Disallow: /js/
 Disallow: /assets/
 Disallow: /magus/auth/
 Crawl-delay: 5
