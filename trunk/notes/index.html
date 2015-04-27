@@ -34,85 +34,99 @@
 						<li><a href="0.2/index.html">0.2.1-RELEASE</a></li>
 						<li><a href="0.3/index.html">0.3-RELEASE</a></li>
 						<li><a href="0.4/index.html">0.4-RELEASE</a></li>
+						<li><a href="0.5/index.html">0.5-RELEASE</a></li>
 					</ul>
 				</div>
-				<h3>(09/22/2014) MidnightBSD 0.5-RELEASE</h3>
-<p>
-MidnightBSD 0.5 has been released on September 22, 2014.
-</p>
+				<h3>(04/26/2015) MidnightBSD 0.6-RELEASE</h3>
+
+<p>This release is primarily a security fix and mport package tool release. 
 
 <h4>Security</h4>
 
-<ul>
-<li>Fixed a security issue with TCP SYN packet processing that could result in a denial of service attack.
-<li>Fixed a bug with clearenv(3) that could result in a segfault
-<li>Several OpenSSL security issues were addressed in this release including [CVE-2014-3506], [CVE-2014-3507], [CVE-2014-3508] and [CVE-2014-3510]
-<li>Fix a vulnerability in the control message API. A buffer is not properly cleared before sharing with userland.
-<li>Sendmail failed to properly set close-on-exec for open file descriptors.
-<li>ktrace page fault kernel trace entries were set to an incorrect size which resulted in a leak of information.
-<li>Fix a TCP reassembly bug that could result in a DOS attack
-<li>bsnmpd contains a stack overflow when sent certain queries.
-</ul>
+<p>OpenSSL: 
+The receipt of a specifically crafted DTLS handshake message may cause OpenSSL
+to consume large amounts of memory. [CVE-2014-3506]
+
+<p>The receipt of a specifically crafted DTLS packet could cause OpenSSL to leak
+memory. [CVE-2014-3507]
+
+<p>A flaw in OBJ_obj2txt may cause pretty printing functions such as
+X509_name_oneline, X509_name_print_ex et al. to leak some information from
+the stack. [CVE-2014-3508]
+
+<p>OpenSSL DTLS clients enabling anonymous (EC)DH ciphersuites are subject to
+a denial of service attack. [CVE-2014-3510]
+
+<p>TCP SYN:
+When a segment with the SYN flag for an already existing connection arrives,
+the TCP stack tears down the connection, bypassing a check that the
+sequence number in the segment is in the expected window.
+
+<p>Fix several security vulnerabilities in routed, rtsold, and namei with respect to Capsicum sandboxes looking up nonexistent path names and leaking memory.
+
+<p>The input path in routed(8) will accept queries from any source and attempt to answer them.  However, the output path assumes that the destination address for the response is on a directly connected network.
+
+<p>Due to a missing length check in the code that handles DNS parameters, a malformed router advertisement message can result in a stack buffer overflow in rtsold(8).
+
+<p>tnftp 20141031 fixes a security vulnerability with tnftp, CVE-2014-8517.
+
+<p>Fix a security issue with file and libmagic that can allow an attacker to create a denial of service attack on any program that uses libmagic.
+
+<p>BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable.
+
+<p>CVE-2015-1349 An integer overflow in computing the size of IGMPv3 data buffer can result  in a buffer which is too small for the requested operation. This can result in a DOS attack.
+
+<p>IPv6: The Neighbor Discover Protocol allows a local router to advertise a suggested Current Hop Limit value of a link, which will replace Current Hop Limit on an interface connected to the link on the MidnightBSD system.
+
+<p>sqlite 3.8.9 - Fix a potential 32-bit integer overflow problem in the sqlite3_blob_read() and sqlite3_blob_write() interfaces.
 
 <h4>Enhancements</h4>
 
-<ul>
-<li>Jails now run shutdown scripts.
-<li>Support for username with length 32. Previous limit was 16
-<li>Imported FreeBSD 9.2 usb stack (plus z87 patches from stable)
-<li>Updated em(4), igb(4) and ixgbe(4)
-<li>MidnightBSD now works with Z87 Intel chipsets.
-<li>rarpd supports vlan(4) and has a pid flag. (from FreeBSD)
-<li>Support for 65,536 routing tables was added.  (up from 16)
-<li>Added subversion to base (as svnlite)
-<li>virtio(4) imported from FreeBSD 9-stable. SCSI support not included
-</ul>
+<p>Fix building perl during buildworld when the GDBM port is installed.
+
+<p>Fixed a bug with our clearenv(3) implementation that caused segfaults with some programs including Dovecot.
+
+<p>Update USB quirks to support K70 Corsair keyboard, and several other devices.
 
 <h4>Removed Features</h4>
 
-<ul>
-<li>Sparc64 platform support
-<li>Remove (BIND) named from base. We still include the client utilities for now until replacements are found.
-</ul>
+<p>none
 
 <h4>New Software Versions</h4>
 
 <ul>
-<li>File 5.19
-<li>MKSH R50
-<li>less v458
-<li>Perl 5.18.2
-<li>Sendmail 8.14.7 (plus AAAA record patch)
-<li>Subversion 1.8.1
-<li>zlib 1.2.7
+<li>Apple mDNSResponder 561.1.1
+<li>mksh R50e
+<li>OpenSSH 6.6p1
+<li>OpenSSL 0.9.8.zf
+<li>serf 1.3.8
+<li>sudo 1.7.8
+<li>sqlite 3.8.9 
+<li>tnftp 20141031
+<li>tzdata 2014i
+<li>xz 5.0.7
 </ul>
 
-<h4>mports &amp; package tools</h4>
+<h4>mports & package tools</h4>
 
-<p>libmport was modified to support the concept of “upgrade” to migrate from one OS release to another. Packages now contain OS version they were built with. mport list now displays the OS version of the package to help with updating and mport list updates was changed to suggest upgrading to the current version.
+<p>libmport now supports plist commands @dir, @owner, @group, @mode and @sample. This allows pkg-plist files to set permissions and handle creation and removal of directories. Previously, @dirrm only allowed the removal of directory on uninstall. This required some plists to contain mkdir commands built in. The new process is cleaner and faster.
 
-<p>Several bug fixes around checksum handling were resolved.
+<p>This also means that ports that have been updated are not compatible with MidnightBSD 0.5 and lower mport tools any longer. 
 
-<p>Package builds for the release are not yet complete.
+<p>libmport attempts to detect an interactive tty is in use and will silence certain status messages when run in a non-interactive session.
 
-<p>KDE was removed from mports due to lack of a maintainer for our ports. KDE 3.x was too insecure and 4.x has not worked correctly for some time on MidnightBSD.
+<p>There are several new asset types in plists including ASSET_DIR and ASSET_SAMPLE. Clients consuming libmport may need changes if they were altering behavior with handling plist files.
 
-<p>Currently, we’re recommending xfce 4.x as a desktop environment.
+<p>The database version for mport packages was updated (package version) and new columns for CPE were added to the database. This information is also exposed via the mport info command and many mports now provide this information.  You can use mport cpe to list a summary for installed packages.
 
-<h4>Contributors</h4>
+<p>Regarding packages, the current selection is not great. There are currently 1500 packages for i386 and 1400 for amd64. This is due to major refactoring to the mports system in progress. Available package count has doubled since January and we expect more to be available soon.  Some items will need to be built manually using mports rather than binary package. This is unfortunately true for xorg-server currently. We are working on getting X11 packages available for binary installation as a top priority.  
 
-<p>I'd like to thank several contributors that made this release possible.
-</p>
+<p>If you are updating an existing system, after installing 0.6, you can use mport upgrade to update packages with 0.6 versions. It is recommended that you delete /usr/mports/Packages and run mport clean to remove old package remnants.
 
-<pre>
-Christian Reinhardt (ctriv@) (mport/magus)
-Caryn Holt (raven@)
+<p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the svn package.   
 
-Thorsten Glaser (MKSH assistance, etc)
-BSD Magazine - helping us get the word out
-
-Midnight the Cat for mascot assistance :) 
-</pre>
+<p>e.g. 
+<br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports 
 
 </div>
 <!--#include virtual="/footer.html"-->
