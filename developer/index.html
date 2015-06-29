@@ -147,6 +147,10 @@
                                         </p>  
 
                                         <p>Source code and mports can also be viewed using <a href="/cgi-bin/viewvc.cgi/midnightbsd/">ViewVC</a>, and <a href="/opengrok/">OpenGrok</a>.</p>
+
+					<h4>Building MidnightBSD</h4>
+					<p>To build MidnightBSD, checkout the source code as stated above and cd into the directory. e.g. cd /usr/src
+					<p>Run make buildworld, make buildkernel, mergemaster -p, make installkernel, reboot, go into single user mode, make installworld, and finally mergemaster. If the kernel fails to boot, you can go back to the old kernel by booting it up from the loader  and replacing kernel with kernel.old in the /boot directory. </p>
 				</div>
 				<div class="clear"></div>
 				<h3>Background</h3>
