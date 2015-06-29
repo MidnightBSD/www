@@ -24,6 +24,7 @@
 							<li><a href="#s1c">Preparing For Installtion</a></li>
 							<li><a href="#s1d">Installing MidnightBSD</a></li>
 							<li><a href="#s1e">Example Hardware Configurations</a></li>
+							<li><a href="#s1f">Updating the Operating System</a></li>
 						</ul></li>
 						<li><a href="dump.html"><strong>Dump &amp; Restore</strong></a></li>
 						<li><a href="flashdriveboot.html"><strong>Flash Drive (live)</strong></a></li>
@@ -246,6 +247,14 @@
 				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. 
 				Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.  0.3-CURRENT
 				includes drivers from FreeBSD 7.0-RELEASE. We've also added support for several other systems such as network cards found in Intel based iMacs, newer AMD, Intel and NVIDIA SATA chipsets, and fixes for Apple mice.</p>	
+
+				<h4 id="s1f">Updating the Operating System</h4>
+                                <p>Currently, the only method to update the OS core libraries is through use of the subversion tool.  MidnightBSD 0.6 and higher include
+				the svnlite command as part of the base system. You may checkout the updated source code from the stable branch of the release and build it.
+				Detailed instructions are available in the <a href="../developer/">developer section</a> of the website.</p>
+				<p>We plan to add binary update capability to the mport tools. This work has not yet started.</p>
+				<p>Packages may be updated with the mport update or mport upgrade commands. The latter will update all installed packages whereas the former can be
+				used to update individual packages.</p>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
