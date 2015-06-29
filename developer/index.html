@@ -109,45 +109,42 @@
 				</p>
 				<div id="devresources" class="fright">
 					<h3>Developer Resources</h3>
-					<p>The CVS server
-					for MidnightBSD is <span class="highlight">stargazer.midnightbsd.org</span>. 
-					This is where you can do your checkouts, commits, etc. To checkout anonymously, use 
-					<span class="highlight">anoncvs</span> (with password <span class="highlight">anoncvs</span>):</p>
-						<p class="code">
-							cvs -z7 -d <span class="highlight">anoncvs</span>@stargazer.midnightbsd.org:/home/cvs co src<br />
-							anoncvs@stargazer.midnightbsd.org's password:<br />
-							cvs checkout: Updating src<br />
-							U src/COPYRIGHT<br />
-							U src/MAINTAINERS<br />
-							...<br />
-						</p>
-						Or to checkout as a MidnightBSD developer with your username and password:<br />
-						<p class="code">
-							cvs -z7 -d <span class="highlight">username</span>@stargazer.midnightbsd.org:/home/cvs co src<br />
-							<span class="highlight">username</span>@stargazer.midnightbsd.org's password:<br />
-							cvs checkout: Updating src<br />
-							U src/COPYRIGHT<br />
-							U src/MAINTAINERS<br />
-							...<br />
-						</p>
+					<p>The operating system source code "src", mports and www are now located in SVN. Regular users may check these out over HTTP.  Developers will need to use svn+ssh.</p>
 
-					<p>mports and www are now located in SVN. Regular users may check these out over HTTP.  Developers will need to use svn+ssh. Replace mports with www in the examples below to checkout the website instead.</p>
+					Users (src):
+                                        <p class="code">
+						#0.6
+						svn co http://svn.midnightbsd.org/svn/src/stable/0.6 src
+	
+						# Current
+                                                svn co http://svn.midnightbsd.org/svn/src/trunk src
+                                        </p>
 
-					Users:
+                                        Developers (src):
+                                        <p class="code">
+                                                svn co svn+ssh://username@stargazer.midnightbsd.org/home/svn/repos/src/trunk src
+                                        </p>
+
+					Users (mports):
 					<p class="code">
 						svn co http://svn.midnightbsd.org/svn/mports/trunk mports
 					</p>
 
-					Developers:
+					Developers (mports):
 					<p class="code">
 						svn co svn+ssh://username@stargazer.midnightbsd.org/home/svn/repos/mports/trunk mports
 					</p>	
 
-                                        <p>Source code and mports can also be viewed using <a href="/cgi-bin/viewvc.cgi/midnightbsd/">ViewVC</a>, <a href="http://cvsweb.midnightbsd.org/">CVSWeb</a>, and <a href="/opengrok/">OpenGrok</a>.</p>
+					Developers (www):
+                                        <p class="code">
+                                                svn co svn+ssh://username@stargazer.midnightbsd.org/home/svn/repos/www/trunk www
+                                        </p>  
+
+                                        <p>Source code and mports can also be viewed using <a href="/cgi-bin/viewvc.cgi/midnightbsd/">ViewVC</a>, and <a href="/opengrok/">OpenGrok</a>.</p>
 				</div>
 				<div class="clear"></div>
 				<h3>Background</h3>
-				<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is to create a BSD with ease of use and simplicity in mind.</p>
+				<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is to create a BSD with ease of use and simplicity in mind. 0.3 RELEASE brought in enhancements from FreeBSD 7.0 and 0.4 included an infusion of FreeBSD 9.1 sources. We are not planning on syncing with FreeBSD again.</p>
 				<h3>Goals</h3>
 				<div id="list">
 					<ul>
