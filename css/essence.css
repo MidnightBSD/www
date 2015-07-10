@@ -103,3 +103,12 @@ td { padding: 10px; border-width: 0; }
 .fright { float: right; }
 
 #googlead { width: 470px; height: 60px; margin: 0 auto; }
+
+@media screen and (max-width: 800px){
+  html{
+  overflow-x:auto !important;
+  }
+  body{
+  overflow-x:auto !important;
+  }
+}
