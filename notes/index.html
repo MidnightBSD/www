@@ -26,8 +26,6 @@
 				<div class="devupdate fleft">
 					<h4>Late breaking information:</h4>
 					<blockquote>
-					0.6 changed the output of uname.  Historically, we followed the FreeBSD approach of 0.5-RELEASE, 0.6-CURRENT, etc.
-					Now, we only use version numbers. Most scripts don't know how to parse 0.6-RELEASE properly from uname.
 					</blockquote>
 					<h4>Previous Release Notes</h4>
 					<ul>
@@ -37,98 +35,165 @@
 						<li><a href="0.3/index.html">0.3-RELEASE</a></li>
 						<li><a href="0.4/index.html">0.4-RELEASE</a></li>
 						<li><a href="0.5/index.html">0.5-RELEASE</a></li>
+						<li><a href="0.6/index.html">0.6-RELEASE</a></li>
 					</ul>
 				</div>
-				<h3>(04/26/2015) MidnightBSD 0.6-RELEASE</h3>
+				<h3>(09/19/2015) MidnightBSD 0.7-RELEASE</h3>
 
-<p>This release is primarily a security fix and mport package tool release. 
+				<p>This release is primarily for stabilization, ZFS and mport package tool enhancements.
 
-<h4>Security</h4>
+				<p>Upgrading from source:
+					When upgrading from 0.6, you will need to install
+					src/kerberos5/lib/libroken before building world.
 
-<p>OpenSSL: 
-The receipt of a specifically crafted DTLS handshake message may cause OpenSSL
-to consume large amounts of memory. [CVE-2014-3506]
+				<p><em>This release is dedicated to Midnight the cat. He passed away this year after a battle with cancer. </em>
 
-<p>The receipt of a specifically crafted DTLS packet could cause OpenSSL to leak
-memory. [CVE-2014-3507]
+				<h4>Security</h4>
 
-<p>A flaw in OBJ_obj2txt may cause pretty printing functions such as
-X509_name_oneline, X509_name_print_ex et al. to leak some information from
-the stack. [CVE-2014-3508]
+				<p>expat
+				<br>Multiple integer overflows have been discovered in the XML_GetBuffer() function in the expat library.
 
-<p>OpenSSL DTLS clients enabling anonymous (EC)DH ciphersuites are subject to
-a denial of service attack. [CVE-2014-3510]
+				<p>kernel
+				<br>fix a security issue on amd64 where the GS segment CPU register can be changed via
+				userland value in kernel mode by using an IRET with #SS or #NP exceptions.
 
-<p>TCP SYN:
-When a segment with the SYN flag for an already existing connection arrives,
-the TCP stack tears down the connection, bypassing a check that the
-sequence number in the segment is in the expected window.
+				<p>TCP Reassembly resource exhaustion bug:
+				<br>There is a mistake with the introduction of VNET, which converted the
+				global limit on the number of segments that could belong to reassembly
+				queues into a per-VNET limit.  Because mbufs are allocated from a
+				global pool, in the presence of a sufficient number of VNETs, the
+				total number of mbufs attached to reassembly queues can grow to the
+				total number of mbufs in the system, at which point all network
+				traffic would cease.
 
-<p>Fix several security vulnerabilities in routed, rtsold, and namei with respect to Capsicum sandboxes looking up nonexistent path names and leaking memory.
+				<p>Fix a bug where TCP connections transitioning to LAST_ACK state can get stuck. This can result in a denial of service.
 
-<p>The input path in routed(8) will accept queries from any source and attempt to answer them.  However, the output path assumes that the destination address for the response is on a directly connected network.
+				<p>OpenSSH
+				<br>A programming error in the privileged monitor process of the sshd(8)
+				service may allow the username of an already-authenticated user to be
+				overwritten by the unprivileged child process.
 
-<p>Due to a missing length check in the code that handles DNS parameters, a malformed router advertisement message can result in a stack buffer overflow in rtsold(8).
+				<p>A use-after-free error in the privileged monitor process of he sshd(8)
+				service may be deterministically triggered by the actions of a
+				compromised unprivileged child process.
 
-<p>tnftp 20141031 fixes a security vulnerability with tnftp, CVE-2014-8517.
+				<p>A use-after-free error in the session multiplexing code in the sshd(8)
+				service may result in unintended termination of the connection.
 
-<p>Fix a security issue with file and libmagic that can allow an attacker to create a denial of service attack on any program that uses libmagic.
+				<p>OpenSSH clients does not correctly verify DNS SSHFP records when a server
+				offers a certificate. [CVE-2014-2653]
 
-<p>BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable.
+				<p>OpenSSH servers which are configured to allow password authentication
+				using PAM (default) would allow many password attempts. A bug allows
+				MaxAuthTries to be bypassed. [CVE-2015-5600]
 
-<p>CVE-2015-1349 An integer overflow in computing the size of IGMPv3 data buffer can result  in a buffer which is too small for the requested operation. This can result in a DOS attack.
+				<p>routed
+				<br>Fix a potential security issue where traffic from outside the network can disrupt routing.
 
-<p>IPv6: The Neighbor Discover Protocol allows a local router to advertise a suggested Current Hop Limit value of a link, which will replace Current Hop Limit on an interface connected to the link on the MidnightBSD system.
 
-<p>sqlite 3.8.9 - Fix a potential 32-bit integer overflow problem in the sqlite3_blob_read() and sqlite3_blob_write() interfaces.
+				<p>Sendmail
+				<br>With the recent changes to OpenSSL to block 512 bit certificates, sendmail can't connect with TLS to some servers.
 
-<h4>Enhancements</h4>
+				<p>Increase the default size to 1024 bit for client connections to match the server configuration.
 
-<p>Fix building perl during buildworld when the GDBM port is installed.
 
-<p>Fixed a bug with our clearenv(3) implementation that caused segfaults with some programs including Dovecot.
+				<h4>Enhancements</h4>
 
-<p>Update USB quirks to support K70 Corsair keyboard, and several other devices.
+				<p>libc changes:
+					setmode(3) now returns errno consistently on error.
+					libc will compile without error using clang
 
-<h4>Removed Features</h4>
+				<p>wait6 system call added.
 
-<p>none
+				<p>date(1) now handles non numeric numbers passed to -r like GNU coreutils for improved compatibility.
 
-<h4>New Software Versions</h4>
 
-<ul>
-<li>Apple mDNSResponder 561.1.1
-<li>mksh R50e
-<li>OpenSSH 6.6p1
-<li>OpenSSL 0.9.8.zf
-<li>serf 1.3.8
-<li>sudo 1.7.8
-<li>sqlite 3.8.9 
-<li>tnftp 20141031
-<li>tzdata 2014i
-<li>xz 5.0.7
-</ul>
+				<p>ata(4) AMD Hudson2 SATA controller support.
+				Intel lynxpoint SATA.
 
-<h4>mports & package tools</h4>
+				<p>Fix some const warnings when building several device drivers with llvm/clang.
 
-<p>libmport now supports plist commands @dir, @owner, @group, @mode and @sample. This allows pkg-plist files to set permissions and handle creation and removal of directories. Previously, @dirrm only allowed the removal of directory on uninstall. This required some plists to contain mkdir commands built in. The new process is cleaner and faster.
+				<p>Sync cas(4) with FreeBSD 9-stable.
 
-<p>This also means that ports that have been updated are not compatible with MidnightBSD 0.5 and lower mport tools any longer. 
+				<p>Fix some minor issues with ath(4).
 
-<p>libmport attempts to detect an interactive tty is in use and will silence certain status messages when run in a non-interactive session.
+				<p>Fix a potential bootstrapping issue when upgrading from 0.6 to 0.7. m4 and kerberos were updated and must be built in a certain sequence or else the build will fail.
 
-<p>There are several new asset types in plists including ASSET_DIR and ASSET_SAMPLE. Clients consuming libmport may need changes if they were altering behavior with handling plist files.
+				<p>cpucontrol(8) now supports VIA CPUs.
 
-<p>The database version for mport packages was updated (package version) and new columns for CPE were added to the database. This information is also exposed via the mport info command and many mports now provide this information.  You can use mport cpe to list a summary for installed packages.
+				<p>Switch to bsdpatch (from FreeBSD & OpenBSD);  fix a bug with ed(1) scripts allowing unsanitized input to run.
 
-<p>Regarding packages, the current selection is not great. There are currently 1500 packages for i386 and 1400 for amd64. This is due to major refactoring to the mports system in progress. Available package count has doubled since January and we expect more to be available soon.  Some items will need to be built manually using mports rather than binary package. This is unfortunately true for xorg-server currently. We are working on getting X11 packages available for binary installation as a top priority.  
 
-<p>If you are updating an existing system, after installing 0.6, you can use mport upgrade to update packages with 0.6 versions. It is recommended that you delete /usr/mports/Packages and run mport clean to remove old package remnants.
+				<p>Import reallocarray from OpenBSD's libc.
+				<br>The reallocarray() function is similar to realloc() except it operates on nmemb members of size size and checks for integer overflow in the calculation nmemb * size.
 
-<p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the svn package.   
 
-<p>e.g. 
-<br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports 
+				<p>ZFS
+				<br>Added ZFS TRIM support which is enabled by default. To disable ZFS TRIM support set vfs.zfs.trim.enabled=0 in loader.conf.
+
+				<br>Creating new ZFS pools and adding new devices to existing pools first performs a full device level TRIM which can take a significant amount of time. The sysctl vfs.zfs.vdev.trim_on_init can be set to 0 to disable this behaviour.
+
+				<br>ZFS TRIM requires the underlying device support BIO_DELETE which is currently provided by methods such as ATA TRIM and SCSI UNMAP via CAM, which are typically supported by SSD's.
+
+				<br>Stats for ZFS TRIM can be monitored by looking at the sysctl's under kstat.zfs.misc.zio_trim.
+
+				<p>ZFS in MidnightBSD now supports lz4 compression. You can enable it with zfs set compression=lz4 pool/path. Verify it's working with
+					<br>zfs get compressratio pool/path
+					<br>du -h -s *
+				<br>Note you must write new data when turning on compression to see changes. Existing files are not compressed.
+
+				<p>While we used the same basic implementation of lz4 that FreeBSD and OpenZFS uses, we did not yet implement features support and the zfs version still reports 28. This may come in a future update to ZFS.
+
+				<p>rc.d
+				<p>Reworked handling of cleanvar and FILESYSTEMS so that FILESYSTEMS
+					implies everything is mounted and ready to go.
+
+				<p>Changed how ip6addressctl maps IPv6 on startup.
+
+				<h4>Removed Features</h4>
+
+				<p>This may be the last release with i386 support. We’re considering dropping it and focusing on amd64 as most modern PCs are 64 bit capable.
+
+				<h4>New Software Versions    </h4>
+
+				<p>BSD Sort updated from FreeBSD
+				<p>flex 2.5.39
+				<p>Heimdal 1.5.2 (kerberos implementation)
+				<p>Jansson 2.7 library added. (libjansson is a JSON library in C)
+				<p>OpenSSL 1.0.1o  (previously on 0.9.8 branch)
+				<p>sqlite 3.8.10.2
+				<p>tzdata 2015d
+				<p>xz 5.0.8
+				<p>mports & package tools
+
+				<p>0.7 currently has approximately 2000 packages for this release.  A lot of work has been done on mports and the goal is to get a working desktop metaport by the end of the year. We currently have updated the following:
+
+				<br>CUPS
+				<br>Gimp
+				<br>Gnome 3 (in progress)
+				<br>GNUStep and related ports
+				<br>Gtk 3
+				<br>OpenJDK 6 & 7 are building from ports (no packages yet)
+				<br>Python 2 & 3
+				<br>Midori
+				<br>Qt 4
+				<br>Webkit
+				<br>X.org
+
+				<p>libmport now logs installation and removal of packages to syslog.
+
+				<p>libmport now supports @shell and @sample in plists. This means that a shell port can automatically add an entry to /etc/shells and remove it upon uninstallation. For sample files, a copy is made without the .sample extension if one does not exist and it is removed automatically only if the md5 hash of the two files is the same.
+
+				<p>libmport now automatically stops services when deleting packages. The package must have installed an rc.d script in /usr/local/etc for this to work. This is equivalent to running service <name> onestop
+
+
+				<p>If you are updating an existing system, after installing 0.7, you can use mport upgrade to update packages with 0.7 versions. It is recommended that you delete /usr/mports/Packages and run mport clean to remove old package remnants.
+
+				<p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the svn package.
+
+					<br>e.g.
+					<br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
+
 
 </div>
 <!--#include virtual="/footer.html"-->
