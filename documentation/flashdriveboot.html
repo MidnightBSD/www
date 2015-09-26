@@ -1,30 +1,41 @@
 <!DOCTYPE html>
-<html>	
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>MidnightBSD LiveCD Creation Documentation</title>
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="stylesheet" type="text/css" href="../css/essence.css">
-	</head>
-	<body>
-		<div id="globe">
-			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
-			<!--#include virtual="/menu.html"-->
-					<div class="clear"></div>
-			<div id="text">
-				<h2><img src="../images/oxygen/doc32.png" alt="" /> LiveCD Creation Documentation</h2>
-				<h3>MidnightBSD on USB Flash Drive</h3>
-				
-				<p>One of the most common requests to the MidnightBSD project is a method to create bootable flash media.  I've come up with an ad
-hoc process to do just that.</p>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD LiveCD Creation Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+    		<script type="text/javascript">
+    		    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-top"};
+    		</script>
+    		<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+    		<!-- End Cookie Consent plugin -->
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> LiveCD Creation Documentation</h2>
 
-				<h4>Prerequisites</h4>
-				<p>You must be familiar with the <a href="livecd.html">LiveCD</a> creation process, have a USB flash drive of at least 1GB, and patience.</p>
-	
-<h4>Implementation</h4>
+        <h3>MidnightBSD on USB Flash Drive</h3>
 
-<h5>Creating the image</h5>
+        <p>One of the most common requests to the MidnightBSD project is a method to create bootable flash media. I've
+            come up with an ad
+            hoc process to do just that.</p>
+
+        <h4>Prerequisites</h4>
+
+        <p>You must be familiar with the <a href="livecd.html">LiveCD</a> creation process, have a USB flash drive of at
+            least 1GB, and patience.</p>
+
+        <h4>Implementation</h4>
+
+        <h5>Creating the image</h5>
 <pre>	
  * Create a [[livecd|LiveCD]]. 
  * Look at the script: [[http://www.midnightbsd.org/cgi-bin/cvsweb.cgi/src/nrelease/install-iso2img.sh | install-iso2img.sh]]  T
@@ -48,44 +59,50 @@ se pax or cpdup too)
  * umount ${tmpdir}/img
  * mdconfig -d -u ${imgdev}
 </pre>
-<h5>Putting it on flash media</h5>
+        <h5>Putting it on flash media</h5>
 
-<p>
-(assumes flash is /dev/da0)
+        <p>
+            (assumes flash is /dev/da0)
 
-<p>* dd if=${imgoutfile} of=/dev/da0 bs=1m
+        <p>* dd if=${imgoutfile} of=/dev/da0 bs=1m
 
-<h4>Test Environment</h4>
+        <h4>Test Environment</h4>
 
-<p>This setup was tested on 0.3-CURRENT (Jan 4, 2009) i386 with an Intel DP965LT motherboard. It worked well.
+        <p>This setup was tested on 0.3-CURRENT (Jan 4, 2009) i386 with an Intel DP965LT motherboard. It worked well.
 
-<p>I also attempted to use it on a Mac Pro (Quad 2.0Ghz), and while holding option showed an EFI boot option, nothing would work with the flash.  
-I have not tried GPT yet. Suggestions welcome.
+        <p>I also attempted to use it on a Mac Pro (Quad 2.0Ghz), and while holding option showed an EFI boot option,
+            nothing would work with the flash.
+            I have not tried GPT yet. Suggestions welcome.
 
-<h4>Possible Uses</h4>
+        <h4>Possible Uses</h4>
 
-<p>Aside from using the Live CD image, one could copy the disc1 iso (install) and use that instead of CD-ROM media for installation
-.  In that case, you would need to pick a few different options in sysinstall.  This has not been tested to date; if you have su
-ccess, please update the wiki or send us an email.
+        <p>Aside from using the Live CD image, one could copy the disc1 iso (install) and use that instead of CD-ROM
+            media for installation
+            . In that case, you would need to pick a few different options in sysinstall. This has not been tested to
+            date; if you have su
+            ccess, please update the wiki or send us an email.
 
-<p>It would be nice to modify make release to create a flash boot image for install and live cd like use.
+        <p>It would be nice to modify make release to create a flash boot image for install and live cd like use.
 
-<h4>Related Topics</h4>
-<a href="livecd.html">Creating a Live CD</a>
+        <h4>Related Topics</h4>
+        <a href="livecd.html">Creating a Live CD</a>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'midnightbsd'; 
-    
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-		</div>
-		<!--#include virtual="/footer.html"-->
-	</body>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'midnightbsd';
+
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
 </html>
