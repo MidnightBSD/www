@@ -1,99 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Using bsd.port.mk :: Documentation :: MidnightBSD</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- $MidnightBSD: www/documentation/mports/bsd.port.mk.html,v 1.7 2012/01/05 19:42:34 laffer1 Exp $ -->
-	<style type="text/css" media="all">
-		@import url("../../css/essence.css");
-	</style>
+    <title>Using bsd.port.mk :: Documentation :: MidnightBSD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- $MidnightBSD: www/documentation/mports/bsd.port.mk.html,v 1.7 2012/01/05 19:42:34 laffer1 Exp $ -->
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+    </style>
+    <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+    <script type="text/javascript">
+        window.cookieconsent_options = {
+            "message": "This website uses cookies to ensure you get the best experience on our website",
+            "dismiss": "Got it!",
+            "learnMore": "More info",
+            "link": null,
+            "theme": "dark-top"
+        };
+    </script>
+    <script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+    <!-- End Cookie Consent plugin -->
 </head>
 
 <body lang="en-US">
 
-	<div id="globe">
-		<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
-		<!--#include virtual="/menu.html"-->
-		<div class="clear"></div>
-		
-		<div id="text">
-			<h2><img src="../../images/oxygen/doc32.png" alt="Text Document Icon" /> Using bsd.port.mk</h2>			
-		
-<p><tt>.include &lt;bsd.port.mk&gt;</tt> or a variant is included in all ports 
-makefiles. Under no circumstances should you write anything below the definition.
-Instead, use <tt>bsd.port.pre.mk</tt> before your changes and <tt>bsd.port.post.mk</tt>
-at the end. Choose either <tt>bsd.port.mk</tt> or the pre/post combination, but do not
-mix the two approaches.</p> 
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
 
-<p>Here is a list of important variables that can aid in developing ports. These
-are included in <tt>bsd.port.pre.mk</tt>.</p>
+    <div id="text">
+        <h2><img src="../../images/oxygen/doc32.png" alt="Text Document Icon"/> Using bsd.port.mk</h2>
 
-<table border="0" frame="void" width="100%">
-<col />
-<col />
-<thead>
-<tr>
-<th>Variable</th>
-<th>Description</th>
-</tr>
-</thead>
+        <p><tt>.include &lt;bsd.port.mk&gt;</tt> or a variant is included in all ports
+            makefiles. Under no circumstances should you write anything below the definition.
+            Instead, use <tt>bsd.port.pre.mk</tt> before your changes and <tt>bsd.port.post.mk</tt>
+            at the end. Choose either <tt>bsd.port.mk</tt> or the pre/post combination, but do not
+            mix the two approaches.</p>
 
-<tbody>
-<tr>
-<td><tt>ARCH</tt></td>
-<td>The architecture as returned by <tt>uname -m</tt> (e.g., <tt>i386</tt>)</td>
-</tr>
+        <p>Here is a list of important variables that can aid in developing ports. These
+            are included in <tt>bsd.port.pre.mk</tt>.</p>
 
-<tr>
-<td><tt>OPSYS</tt></td>
-<td>The operating system type, as returned by <tt class="COMMAND">uname -s</tt> (e.g.,
-<tt>MidnightBSD</tt>)</td>
-</tr>
+        <table border="0" frame="void" width="100%">
+            <col/>
+            <col/>
+            <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Description</th>
+            </tr>
+            </thead>
 
-<tr>
-<td><tt>OSREL</tt></td>
-<td>The release version of the operating system (e.g., <tt>0.1</tt> or
-<tt>0.2</tt>)</td>
-</tr>
+            <tbody>
+            <tr>
+                <td><tt>ARCH</tt></td>
+                <td>The architecture as returned by <tt>uname -m</tt> (e.g., <tt>i386</tt>)</td>
+            </tr>
 
-<tr>
-<td><tt>OSVERSION</tt></td>
-<td>The numeric version of the operating system; the same as 
-<tt>__FreeBSD_version</tt>. In the future, __MidnightBSD_version
-will be used.  Do not rely on this value.</td>
-</tr>
+            <tr>
+                <td><tt>OPSYS</tt></td>
+                <td>The operating system type, as returned by <tt class="COMMAND">uname -s</tt> (e.g.,
+                    <tt>MidnightBSD</tt>)
+                </td>
+            </tr>
 
-<tr>
-<td><tt>PORTOBJFORMAT</tt></td>
-<td>The object format of the system (<tt>elf</tt> or <tt>aout</tt>; note that <tt>aout</tt> is deprecated.)</td>
-</tr>
+            <tr>
+                <td><tt>OSREL</tt></td>
+                <td>The release version of the operating system (e.g., <tt>0.1</tt> or
+                    <tt>0.2</tt>)
+                </td>
+            </tr>
 
-<tr>
-<td><tt>LOCALBASE</tt></td>
-<td>The base of the ``local'' tree (e.g., <tt>/usr/local/</tt>)</td>
-</tr>
+            <tr>
+                <td><tt>OSVERSION</tt></td>
+                <td>The numeric version of the operating system; the same as
+                    <tt>__FreeBSD_version</tt>. In the future, __MidnightBSD_version
+                    will be used. Do not rely on this value.
+                </td>
+            </tr>
 
-<tr>
-<td><tt>X11BASE</tt></td>
-<td>The base of the ``X11'' tree (e.g., <tt>/usr/X11R6</tt>)</td>
-</tr>
+            <tr>
+                <td><tt>PORTOBJFORMAT</tt></td>
+                <td>The object format of the system (<tt>elf</tt> or <tt>aout</tt>; note that <tt>aout</tt> is
+                    deprecated.)
+                </td>
+            </tr>
 
-<tr>
-<td><tt>PREFIX</tt></td>
-<td>Where the port installs itself
-.</td>
-</tr>
-</tbody>
-</table>
+            <tr>
+                <td><tt>LOCALBASE</tt></td>
+                <td>The base of the ``local'' tree (e.g., <tt>/usr/local/</tt>)</td>
+            </tr>
 
-<blockquote>
-<p><b>Note:</b> If you have to define the variables <tt>USE_IMAKE</tt>,
-<tt>USE_X_PREFIX</tt>, or <tt>MASTERDIR</tt>, do so
-before including <tt>bsd.port.pre.mk</tt>.</p>
-</blockquote>
+            <tr>
+                <td><tt>X11BASE</tt></td>
+                <td>The base of the ``X11'' tree (e.g., <tt>/usr/X11R6</tt>)</td>
+            </tr>
 
-<p>Here are some examples of things you can do with <tt>bsd.port.pre.mk</tt>:</p>
+            <tr>
+                <td><tt>PREFIX</tt></td>
+                <td>Where the port installs itself
+                    .
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <blockquote>
+            <p><b>Note:</b> If you have to define the variables <tt>USE_IMAKE</tt>,
+                <tt>USE_X_PREFIX</tt>, or <tt>MASTERDIR</tt>, do so
+                before including <tt>bsd.port.pre.mk</tt>.</p>
+        </blockquote>
+
+        <p>Here are some examples of things you can do with <tt>bsd.port.pre.mk</tt>:</p>
 
 <pre>
 # no need to compile lang/perl5 if perl5 is already in system
@@ -120,27 +139,30 @@ BROKEN= man page does not install on 0.1-RELEASE
 .endif
 </pre>
 
-<p>Use tab instead of spaces after <tt>BROKEN=</tt>
-and <tt>TCL_LIB_FILE=</tt>.</p>
+        <p>Use tab instead of spaces after <tt>BROKEN=</tt>
+            and <tt>TCL_LIB_FILE=</tt>.</p>
 
-<p>Portions of this document are derived from the FreeBSD Porters Handbook.
-http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/porting-versions.html</p>
+        <p>Portions of this document are derived from the FreeBSD Porters Handbook.
+            http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/porting-versions.html</p>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'midnightbsd'; 
-    
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'midnightbsd';
 
-		</div>
-		<!--#include virtual="/footer.html"-->
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+    <!--#include virtual="/footer.html"-->
 </body>
 </html>
 
