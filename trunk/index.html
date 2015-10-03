@@ -84,9 +84,9 @@
 
 				<p class="update">0.7.1 RELEASE <br>
 					In rpcbind(8), netbuf structures are copied directly, which would result in
-										two netbuf structures that reference to one shared address buffer. When one
-										of the two netbuf structures is freed, access to the other netbuf structure
-										would result in an undefined result that may crash the rpcbind(8) daemon.
+					two netbuf structures that reference to one shared address buffer. When one
+					of the two netbuf structures is freed, access to the other netbuf structure
+					would result in an undefined result that may crash the rpcbind(8) daemon.
 				</p>
 
 				<p class="more">
@@ -97,21 +97,22 @@
 				<p class="date">August 25, 2015</p>
 
 				<p class="update">
-				kernel:
-									fix a security issue on amd64 where the GS segment CPU register can be changed via
-									userland value in kernel mode by using an IRET with #SS or #NP exceptions.
+					0.6.7 RELEASE <br>
+					kernel:
+					fix a security issue on amd64 where the GS segment CPU register can be changed via
+					userland value in kernel mode by using an IRET with #SS or #NP exceptions.
 					<br>
-							<br><b>openssh</b>:
-									A programming error in the privileged monitor process of the sshd(8)
-									service may allow the username of an already-authenticated user to be
-									overwritten by the unprivileged child process.
+					<br><b>openssh</b>:
+					A programming error in the privileged monitor process of the sshd(8)
+					service may allow the username of an already-authenticated user to be
+					overwritten by the unprivileged child process.
 					<br>
 					<br> A use-after-free error in the privileged monitor process of he sshd(8)
-									service may be deterministically triggered by the actions of a
-									compromised unprivileged child process.
+					service may be deterministically triggered by the actions of a
+					compromised unprivileged child process.
 					<br>
 					<br>A use-after-free error in the session multiplexing code in the sshd(8)
-									service may result in unintended termination of the connection.
+					service may result in unintended termination of the connection.
 				</p>
 
 				<p class="more"><a href="security/index.html#a20150825">Read more ...</a></p>
