@@ -80,34 +80,41 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
 			<blockquote>
-				<p class="date">June 12, 2015</p>
+				<p class="date">September 30, 2015</p>
 
-				<p class="update">0.6.1 RELEASE <br>
-					OpenSSL Security update - new version is OpenSSL 0.9.8zg
+				<p class="update">0.7.1 RELEASE <br>
+					In rpcbind(8), netbuf structures are copied directly, which would result in
+										two netbuf structures that reference to one shared address buffer. When one
+										of the two netbuf structures is freed, access to the other netbuf structure
+										would result in an undefined result that may crash the rpcbind(8) daemon.
 				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20150612">Read more ...</a>
+					<a href="security/index.html#a20150930">Read more ...</a>
 				</p>
 			</blockquote>
 			<blockquote>
-				<p class="date">March 19, 2015</p>
+				<p class="date">August 25, 2015</p>
 
 				<p class="update">
-					0.5.10 RELEASE <br> OpenSSL Security update <br> A malformed elliptic curve
-					private key file could cause a use-after-free condition in the d2i_ECPrivateKey
-					function. [CVE-2015-0209] <br> An attempt to compare ASN.1 boolean types will
-					cause the ASN1_TYPE_cmp function to crash with an invalid read. [CVE-2015-0286]
-					<br> Reusing a structure in ASN.1 parsing may allow an attacker to cause memory
-					corruption via an invalid write. [CVE-2015-0287] <br> The function X509_to_X509_REQ
-					will crash with a NULL pointer dereference if the certificate key is invalid.
-					[CVE-2015-0288] <br> The PKCS#7 parsing code does not handle missing outer
-					ContentInfo correctly. [CVE-2015-0289] <br> A malicious client can trigger an
-					OPENSSL_assert in servers that both support SSLv2 and enable export cipher
-					suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293]
+				kernel:
+									fix a security issue on amd64 where the GS segment CPU register can be changed via
+									userland value in kernel mode by using an IRET with #SS or #NP exceptions.
+					<br>
+							<br><b>openssh</b>:
+									A programming error in the privileged monitor process of the sshd(8)
+									service may allow the username of an already-authenticated user to be
+									overwritten by the unprivileged child process.
+					<br>
+					<br> A use-after-free error in the privileged monitor process of he sshd(8)
+									service may be deterministically triggered by the actions of a
+									compromised unprivileged child process.
+					<br>
+					<br>A use-after-free error in the session multiplexing code in the sshd(8)
+									service may result in unintended termination of the connection.
 				</p>
 
-				<p class="more"><a href="security/index.html#a20150319">Read more ...</a></p>
+				<p class="more"><a href="security/index.html#a20150825">Read more ...</a></p>
 			</blockquote>
 		</div>
 
