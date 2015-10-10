@@ -168,10 +168,6 @@ td {
         width: 80%;
     }
 
-    #header h1 , #header a {
-       display: none;
-    }
-
     #header h1 {
         width: 100%;
         margin: 0 auto;
