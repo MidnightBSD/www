@@ -180,4 +180,8 @@ td {
     #text {
         width: 80%;
     }
+
+    #googlead {
+        width: 100%;
+    }
 }
