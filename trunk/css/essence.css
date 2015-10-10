@@ -88,6 +88,11 @@ hr {
     line-height: 18px;
 }
 
+#socialshare {
+    border: none;
+    width: 600px;
+}
+
 #text {
     line-height: 135%;
 }
@@ -181,6 +186,12 @@ td {
         width: 80%;
     }
 
+}
+
+@media screen and (max-width: 600px) {
+    #socialshare {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 475px) {
