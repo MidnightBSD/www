@@ -76,10 +76,32 @@
                 command. <code>echo "exec /usr/local/bin/gnome-session" > ~/.xinitrc</code> one time to enable GNOME for X.</p>
                 <p>If you woudl rather use xdm, you can edit the xsession configuration file as so
                 <code>
-                    echo "#!/bin/sh" > ~/.xsession
-                    echo "exec /usr/local/bin/gnome-session" >> ~/.xsession
-                    chmod +x ~/.xsession
+                    echo "#!/bin/sh" > ~/.xsession<br>
+                    echo "exec /usr/local/bin/gnome-session" >> ~/.xsession<br>
+                    chmod +x ~/.xsession<br>
                 </code></p>
+
+                <h5>Xfce</h5>
+                <p>Install XFCE with <code>mport install xfce4</code> or build with
+                <code>cd /usr/mports/x11-wm/xfce4 && make install clean</code></p>
+                <p>Setup for manually starting xfce with startx by running
+                <code>echo "exec /usr/local/bin/startxfce4" > ~/.xinitrc</code></p>
+
+                <p>If using xdm, you can run this to set it up.
+                <code>
+                     echo "#!/bin/sh" > ~/.xsession<br>
+                     echo "exec /usr/local/bin/startxfce4" >> ~/.xsession<br>
+                     chmod +x ~/.xsession<br>
+                </code></p>
+
+                <h5>WindowMaker</h5>
+                <p>To install, run <code>mport install windowmaker</code>.</p>
+                <p>If you want to install wdm and several other apps, you can run
+                <code>mport install windowmaker-desktop</code> or via mports with
+                <code>cd /usr/mports/x11/windowmaker-desktop && make install clean</code></p>
+
+                <p>To add on GNUstep, you can install it via <code>mport install gnustep</code> and
+                also add apps with <code>mport install gnustep-app</code></p>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
