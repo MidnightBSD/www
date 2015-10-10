@@ -163,22 +163,15 @@ td {
         width: 80%;
     }
 
-    #header h1 {
-        width: 100%;
+    #header h1 , #header a {
+       display: none;
     }
-
-
-    #header a {
+    #header h1:before {
+        content: "MidnightBSD";
+        font-size: 2em;
         width: 100%;
-        background: none;
-        color: black;
-        padding: 0;
-        line-height: 1.5;
-        height: auto;
+        clear: both;
     }
-    #header a:after {
-           content: "MidnightBSD";
-       }
 
     #footer {
         width: 100%;
