@@ -181,7 +181,10 @@ td {
         width: 80%;
     }
 
+}
+
+@media screen and (max-width: 475px) {
     #googlead {
-        width: 100%;
+        display: none;
     }
 }
