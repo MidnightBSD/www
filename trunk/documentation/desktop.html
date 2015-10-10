@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>MidnightBSD Desktop Environemnt Documentation</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../css/essence.css">
+		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+		<script type="text/javascript">
+			window.cookieconsent_options = {
+				"message": "This website uses cookies to ensure you get the best experience on our website",
+				"dismiss": "Got it!",
+				"learnMore": "More info",
+				"link": null,
+				"theme": "dark-top"
+			};
+		</script>
+		<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+		<!-- End Cookie Consent plugin -->
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/doc32.png" alt="" /> Xorg and Desktop Environments</h2>
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1b">Introduction</a></li>
+						<li><a href="#s1c">Installing</a></li>
+						<li><a href="index.html"><strong>Documentation</strong></a></li>
+					</ul>
+				</div>
+				<h3 id="s1a">Dump &amp; Restore</h3>
+				<h4 id="s1b">Introduction</h4>
+				<p>MidnightBSD uses <a href="http://x.org/">Xorg</a> to display graphical applicatons. Users will
+                need to select an available desktop environment to use. Choices include Xfce, Gnome 3, WindowMaker + GNUStep
+                as well as a few lightweight options.</p>
+
+				<h4 id="s1c">Installation</h4>
+
+                <h5>Xorg</h5>
+                <p>
+                    To install the X-Windows environment from packages, simply run
+                    <code>mport install xorg</code>.
+                    If you wish to build the software manually, you may do so from mports
+                    <code>cd /usr/mports/x11/xorg; make install clean</code>
+                </p>
+                <p>You may then start Xorg by running <code>startx</code> from the console. If you are using tcsh, you may need
+                to first run <code>rehash</code> before startx will be picked up.</p>
+                <p>In order to exit Xorg, you can enable the control + alt + backspace keyboard sequence by running this in an
+                xterm window within Xorg.  <code>setxkbmap -option terminate:ctrl_alt_bksp</code></p>
+
+                <h5>Grapical login manager</h5>
+                <p>There are several graphical login managers that can be used instead of running startx manually. You can install
+                xdm from packages or mports with <code>mport install xdm</code> or <code>cd /usr/mports/x11/xdm && make install clean</code>
+                </p>
+                <p>To configure xdm, edit /etc/ttys and edit the line
+                <code>ttyv8   "/usr/local/bin/xdm -nodaemon"  xterm   off secure</code> to say on.</p>
+
+                <p>xdm configuration files are located in <b>/usr/local/lib/X11/xdm</b></p>
+                <p>Other options include slim, gdm (for GNOME) and wdm (for WindowMaker).</p>
+
+                <h5>GNOME</h5>
+                <p>You can install GNOME 3 by running <code>mport install gnome3</code> or manually building and installing from
+                mports with <code>cd /usr/mports/x11/gnome3 && make install clean</code>. There is also a gnome3-lite port
+                that contains only a subset of gnome for systems with less disk space.</p>
+                <p>You will need to edit /etc/fstab and add <code>proc           /proc       procfs  rw  0   0</code> to mount
+                the proc file system.</p>
+                <p>You should also edit /etc/rc.conf and add gdm_enable="YES" and gnome_enable="YES" to the file to startup
+                all the relevant services for the GNOME desktop environment. In particular, dbus is required for proper operation.</p>
+                <p>If you wish to try out gnome manually or use startx rather than gdm to run GNOME, you can instead run the following
+                command. <code>echo "exec /usr/local/bin/gnome-session" > ~/.xinitrc</code> one time to enable GNOME for X.</p>
+                <p>If you woudl rather use xdm, you can edit the xsession configuration file as so
+                <code>
+                    echo "#!/bin/sh" > ~/.xsession
+                    echo "exec /usr/local/bin/gnome-session" >> ~/.xsession
+                    chmod +x ~/.xsession
+                </code></p>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'midnightbsd';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+		<!--#include virtual="/footer.html"-->
+	</body>
+</html>
