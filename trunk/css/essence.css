@@ -169,6 +169,8 @@ td {
 
     #header a {
         width: 100%;
+        background: none;
+        content: "MidnightBSD"
     }
 
     #footer {
