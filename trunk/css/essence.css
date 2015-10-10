@@ -167,15 +167,18 @@ td {
         width: 100%;
     }
 
+
     #header a {
         width: 100%;
         background: none;
-        content: "MidnightBSD";
         color: black;
         padding: 0;
         line-height: 1.5;
         height: auto;
     }
+    #header a:after {
+           content: "MidnightBSD";
+       }
 
     #footer {
         width: 100%;
