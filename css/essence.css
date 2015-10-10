@@ -45,7 +45,7 @@ a:active, a:hover {
     background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
     background-repeat: no-repeat;
     width: 928px;
-    height: 0px !important;
+    height: 0 !important;
     height /**/: 189px; /* Exploit IE parsing error to give height */
     padding: 189px 0 0 0; /* Pushes the div down to reveal the image */
     margin: 0 auto;
@@ -172,6 +172,9 @@ td {
         background: none;
         content: "MidnightBSD";
         color: black;
+        padding: 0;
+        line-height: 1.5;
+        height: auto;
     }
 
     #footer {
