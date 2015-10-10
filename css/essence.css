@@ -150,7 +150,7 @@ td {
     margin: 0 auto;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
     html {
         overflow-x: auto !important;
     }
