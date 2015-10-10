@@ -1,6 +1,7 @@
 /*====== GLOBAL OVERRIDES FOR MAJOR ITEMS AND DIFFERING BROWSER DEFAULTS =====*/
 table { text-align: left; }
 
+@media screen and (min-width: 900px) {
 
  /*========================= TOP OF THE MENU CASCADE =========================*/
 
@@ -131,4 +132,6 @@ table { text-align: left; }
 .menu ul li:hover ul.skinny li a:hover,
 .menu ul li a:hover ul.skinny li a:hover {     /* 2nd level un+selected items */
 	width: 5em;
+}
+
 }
