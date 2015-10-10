@@ -2,113 +2,180 @@
 @import url("home.css");
 @import url("xtra.css");
 
-html, body {					/* Normalize browser defaults */
-	margin: 0;
-	padding: 0;
-	height: 100%;
+html, body {
+    /* Normalize browser defaults */
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
+
 body {
-	background-color: #fff;
-	color: #444;
-	font: 100% helvetica, sans-serif;
+    background-color: #fff;
+    color: #444;
+    font: 100% helvetica, sans-serif;
 }
 
-a:link, a:visited {				/* Hyperlink defintions */
-	color: #1373ce;
-	text-decoration: none;
+a:link, a:visited {
+    /* Hyperlink defintions */
+    color: #1373ce;
+    text-decoration: none;
 }
+
 a:active, a:hover {
-	color: #909090;
+    color: #909090;
 }
 
-#globe {						/* WRAPPER SURROUNDING ALL ELEMENTS */
-	width: 1002px;				/* Fits most 1024x768 in fullscreen */
-	margin: 0 auto;
-	padding: 0;
-	background: url(//d2ibasrwfd3o7m.cloudfront.net/images/shadow.png) repeat-y;
+#globe {
+    /* WRAPPER SURROUNDING ALL ELEMENTS */
+    width: 1002px; /* Fits most 1024x768 in fullscreen */
+    margin: 0 auto;
+    padding: 0;
+    background: url(//d2ibasrwfd3o7m.cloudfront.net/images/shadow.png) repeat-y;
 }
 
 #header h1 {
-	width: 928px;
-	margin: 0 auto;
-	z-index: 4;					/* So IE has "layout" */
-	font-size: 10px;
-}
-#header a {						/* CSS Text-to-Image replacement */
-	background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
-	background-repeat: no-repeat;
-	width: 928px; 
-	height: 0px !important;
-	height /**/:189px;			/* Exploit IE parsing error to give height */
-	padding: 189px 0 0 0;		/* Pushes the div down to reveal the image */
-	margin: 0 auto;
-	display: block;
-	overflow: hidden;			/* We don't want the text to show */
+    width: 928px;
+    margin: 0 auto;
+    z-index: 4; /* So IE has "layout" */
+    font-size: 10px;
 }
 
-.horiz {						/* Horizontal-rule rules */
-	width: 800px;
-	margin: auto;
+#header a {
+    /* CSS Text-to-Image replacement */
+    background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
+    background-repeat: no-repeat;
+    width: 928px;
+    height: 0px !important;
+    height /**/: 189px; /* Exploit IE parsing error to give height */
+    padding: 189px 0 0 0; /* Pushes the div down to reveal the image */
+    margin: 0 auto;
+    display: block;
+    overflow: hidden; /* We don't want the text to show */
 }
-.horiz blockquote {				/* Why so many wrappers? Examine. */
-	width: 800px;
-	float: left;
-	margin: 0 auto;
-	padding: 0;
+
+.horiz {
+    /* Horizontal-rule rules */
+    width: 800px;
+    margin: auto;
 }
+
+.horiz blockquote {
+    /* Why so many wrappers? Examine. */
+    width: 800px;
+    float: left;
+    margin: 0 auto;
+    padding: 0;
+}
+
 hr {
-	height: 1px;				/* Normalize look for Opera */
-	color: #999;
-	background: #999;
-	border: 0;
-	width: 100%;
-	margin: 15px auto 0 auto;
+    height: 1px; /* Normalize look for Opera */
+    color: #999;
+    background: #999;
+    border: 0;
+    width: 100%;
+    margin: 15px auto 0 auto;
 }
 
 #footer {
-	text-align: center;
-	width: 928px;
-	font-size: .9em;
-	margin: 10px auto;
-	border-bottom: 2px solid #ccc;
+    text-align: center;
+    width: 928px;
+    font-size: .9em;
+    margin: 10px auto;
+    border-bottom: 2px solid #ccc;
 }
+
 #footer p {
-	line-height: 18px;
+    line-height: 18px;
 }
 
 #text {
-	line-height: 135%;
+    line-height: 135%;
 }
+
 #text {
-	width: 850px;
-	margin: 0 auto;
+    width: 850px;
+    margin: 0 auto;
 }
+
 #text h2 {
-	text-align: center;
-	margin: 1em;
-	line-height: 1em;
-}
-#text h2 img {
-	vertical-align: middle;
-	padding-bottom: 4px;
+    text-align: center;
+    margin: 1em;
+    line-height: 1em;
 }
 
-table { margin: 0 auto; border: 1px solid #ccc; border-collapse: collapse; }
-th { padding: 10px; font-weight: bold; text-align: center; background: #f2fbff; }
-td { padding: 10px; border-width: 0; }
+#text h2 img {
+    vertical-align: middle;
+    padding-bottom: 4px;
+}
+
+table {
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+th {
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    background: #f2fbff;
+}
+
+td {
+    padding: 10px;
+    border-width: 0;
+}
 
 /* GLOBAL RE-USABLES */
-.clear { clear: both; }
-.fleft { float: left; }
-.fright { float: right; }
+.clear {
+    clear: both;
+}
 
-#googlead { width: 470px; height: 60px; margin: 0 auto; }
+.fleft {
+    float: left;
+}
 
-@media screen and (max-width: 800px){
-  html{
-  overflow-x:auto !important;
-  }
-  body{
-  overflow-x:auto !important;
-  }
+.fright {
+    float: right;
+}
+
+#googlead {
+    width: 470px;
+    height: 60px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 800px) {
+    html {
+        overflow-x: auto !important;
+    }
+
+    body {
+        overflow-x: auto !important;
+    }
+
+    #globe {
+        width: 100%;
+        background: none;
+    }
+
+    .horiz, .horiz blockquote {
+        width: 80%;
+    }
+
+    #header h1 {
+        width: 100%;
+    }
+
+    #header a {
+        width: 100%;
+    }
+
+    #footer {
+        width: 100%;
+    }
+
+    #text {
+        width: 80%;
+    }
 }

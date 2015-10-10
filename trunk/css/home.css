@@ -1,18 +1,4 @@
-#fp9 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/009.png"); }
-#fp8 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/008.png"); }
-#fp7 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/007.png"); }
-#fp6 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/006.png"); }
-#fp5 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/005.png"); }
-#fp4 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/004.png"); }
-#fp3 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/003.png"); }
-#fp2 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/002.png"); }
-#fp1 a { background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/ports/001.png"); }
-
 blockquote { line-height: 130%; }
-
-#lang { width: 100px; height: 16px; margin-bottom: 5px; margin-top: 0px; margin-left: 250px; }
-#lang h5 { list-style: none; display: inline-block; margin: 0; }
-#lang h5 a { padding: 11px 0 0 0; overflow: hidden; background-repeat: no-repeat; width: 16px; height: 0px !important; float: left; margin: 0 5px; }
 
 #welcomebox { width: 900px; margin-left: 30px}
 #welcome { width: 625px; height: auto; float: left; }
@@ -43,10 +29,7 @@ blockquote { line-height: 130%; }
 #gravity h2 a { color: #333; text-decoration: none; }
 #gravity h2 a:hover { color: #666; }
 
-#news, #tweets, #ports, #security { width: 300px; font-size: 90% }
-#ports li { list-style: none; display: inline; }
-#ports ul { margin-left: -20px; }
-#ports li a { padding: 64px 0 0 0; margin: 15px 10px; overflow: hidden; background-repeat: no-repeat; float: left; width: 64px; height: 0px !important; height: /**/:64px; }
+#news, #tweets, #security { width: 300px; font-size: 90% }
 
 .date { font-style: italic; color: #808080; text-align: center; }
 .update { height: 3.8em; overflow: hidden; }
@@ -54,3 +37,26 @@ blockquote { line-height: 130%; }
 #midnight { float: left; margin: 0 10px 0 0; border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 8pt; }
 #text ul li { font-size: 14px; }
 #text img { border: none; }
+
+@media screen and (max-width: 900px) {
+    #tweets, #getbox, #gettext, #getcd {
+        display: none;
+    }
+
+    #welcomebox {
+        width: 100%;
+    }
+
+    #welcome {
+        width: 100%;
+    }
+
+    #gravity {
+        width: 100%;
+    }
+
+    #news, #security {
+        width: 30%;
+    }
+
+}
