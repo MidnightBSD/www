@@ -171,6 +171,7 @@ td {
         width: 100%;
         background: none;
         content: "MidnightBSD"
+        font: black 2em;
     }
 
     #footer {
