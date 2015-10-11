@@ -1,9 +1,11 @@
 User-agent: *
 Disallow: /bin/
 Disallow: /cgi-bin/
-Disallow: /shadowbox/
+Disallow: /html5lightbox/index.html
 Disallow: /assets/
 Disallow: /magus/auth/
+Disallow: /ftp/MidnightBSD/distfiles/*.asc
+Disallow: /ftp/MidnightBSD/distfiles/*.sig
 Crawl-delay: 5
 Sitemap: http://www.midnightbsd.org/sitemap.xml.gz
 Host: www.midnightbsd.org
