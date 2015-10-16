@@ -30,7 +30,6 @@
 						<li><a href="#s1g">Send/Receive</a></li>
 						<li><a href="#s1h">Advanced format hard drives (4k sector)</a></li>
 						<li><a href="index.html"><strong>Documentation</strong></a></li>
-						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
 					</ul>
 				</div>
 				<h3 id="s1a">ZFS</h3>
@@ -166,28 +165,28 @@
 					recommended.
 				</p>
 				<p>
-				<code>
-gpart create -s gpt ada0<br>
+					<code>
+						gpart create -s gpt ada0<br>
 
-# create partitions<br>
-gpart add -a 1m -t mnbsd-zfs -l drive0 ada0<br>
-gpart add -a 1m -t mnbsd-zfs -l drive1 ada1<br>
- 
-# use gnop to make 4k friendly devices <br>
-gnop create -S 4k gpt/drive0<br>
-gnop create -S 4k gpt/drive1<br>
+						# create partitions<br>
+						gpart add -a 1m -t mnbsd-zfs -l drive0 ada0<br>
+						gpart add -a 1m -t mnbsd-zfs -l drive1 ada1<br>
 
-# make a mirror<br>
-zpool create mpool mirror /dev/gpt/drive0.nop /dev/gpt/drive1.nop<br>
- 
-# export pool and remove virtual devices<br>
-zpool export mpool<br>
-gnop destroy gpt/drive0.nop<br>
-gnop destroy gpt/drive1.nop<br>
+						# use gnop to make 4k friendly devices <br>
+						gnop create -S 4k gpt/drive0<br>
+						gnop create -S 4k gpt/drive1<br>
 
-# import and keep labels (via -d flag)<br>
-zpool import -d /dev/gpt mpool<br>
-				</code>
+						# make a mirror<br>
+						zpool create mpool mirror /dev/gpt/drive0.nop /dev/gpt/drive1.nop<br>
+
+						# export pool and remove virtual devices<br>
+						zpool export mpool<br>
+						gnop destroy gpt/drive0.nop<br>
+						gnop destroy gpt/drive1.nop<br>
+
+						# import and keep labels (via -d flag)<br>
+						zpool import -d /dev/gpt mpool<br>
+					</code>
 				</p>
 				
 				
