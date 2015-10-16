@@ -2,7 +2,6 @@
    CSS Document for MidnightBSD.org
    $MidnightBSD$ 
 */
-@import "/css/font-normal.css";
 
 body {
     color: black;
@@ -13,9 +12,46 @@ body {
     line-height: 1.3em;
 }
 
+h1 {
+    font-size: 1.8em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
 h3 {
+    font-size: 1.5em;
     color: #6dcff6;
     background-color: transparent;
+}
+
+h4 {
+    font-size: 1.4em;
+}
+
+h5 {
+    font-size: 1.3em;
+}
+
+h6 {
+    font-size: 1.2em;
+}
+
+p {
+    font-size: 1em;
+}
+
+table td {
+    font-size: 1em;
+}
+
+table tr {
+    font-size: 1.3em;
+}
+
+form {
+    font-size: 1em;
 }
 
 a:link {
