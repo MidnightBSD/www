@@ -1,7 +1,7 @@
 blockquote { line-height: 130%; }
 
 #welcomebox { width: 900px; margin-left: 30px}
-#welcome { width: 625px; height: auto; float: left; }
+#welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif }
 #welcome h2 { text-align: center; margin: 0 0 0 25px; }
 
 #getbox { background: url("//d2ibasrwfd3o7m.cloudfront.net/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center; color: #333; float: right; margin: -10px 0 0 0; }
