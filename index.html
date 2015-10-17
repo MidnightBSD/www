@@ -28,7 +28,6 @@
 	
 	<body>
 		<div class="container">
-			<header>
 			<div id="globe" class="row">
 				<div id="header" class="col-md-12">
 					<h1 title="MidnightBSD Home">
@@ -37,7 +36,6 @@
 				</div>
 <!--#include virtual="/menu.html"-->
 				<div class="clear"></div>
-			</header>
 		<div id="welcomebox" class="row">
 			<div class="clear"></div>
 			<div class="col-md-8">
@@ -129,9 +127,10 @@
 	</div>
 			<div>
 				<style>
-				#mportsshare { background: url("http://www.midnightbsd.org/images/ports-tree.png"); padding: 399px 0 0 0; width: 512px; max-width: 100%; height: 0; overflow: hidden; margin: auto; }
+				#mportsshare { background: url("http://www.midnightbsd.org/images/ports-tree.png"); width: 512px; max-width: 100%; height: 0; overflow: hidden; margin: auto; }
 				</style>
-				<p id="mportsshare">View available <a href="mports/">mports</a></p>
+				<div id="mportsshare"></div>
+				<p>View available <a href="mports/">mports</a></p>
 			</div>
 
 	<!--#include virtual="/footer.html"-->
