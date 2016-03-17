@@ -79,42 +79,35 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
 			<blockquote>
-				<p class="date">September 30, 2015</p>
+				<p class="date">March 10, 2016</p>
 
-				<p class="update">0.7.1 RELEASE <br>
-					In rpcbind(8), netbuf structures are copied directly, which would result in
-					two netbuf structures that reference to one shared address buffer. When one
-					of the two netbuf structures is freed, access to the other netbuf structure
-					would result in an undefined result that may crash the rpcbind(8) daemon.
+				<p class="update">0.7.5 RELEASE <br>
+				Security patch for OpenSSL to stop DROWN [CVE-2016-0800]
+				[CVE-2016-0705] [CVE-2016-0798]  [CVE-2016-0797]
+				[CVE-2016-0799] [CVE-2016-0702] [CVE-2016-0704]
+				<br><br>A programming error in the Linux compatibility layer could cause the
+					issetugid(2) system call to return incorrect information.
 				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20150930">Read more ...</a>
+					<a href="security/index.html#a20160310">Read more ...</a>
 				</p>
 			</blockquote>
 			<blockquote>
-				<p class="date">August 25, 2015</p>
+				<p class="date">January 30, 2016</p>
 
 				<p class="update">
-					0.6.7 RELEASE <br>
-					kernel:
-					fix a security issue on amd64 where the GS segment CPU register can be changed via
-					userland value in kernel mode by using an IRET with #SS or #NP exceptions.
-					<br>
-					<br><b>openssh</b>:
-					A programming error in the privileged monitor process of the sshd(8)
-					service may allow the username of an already-authenticated user to be
-					overwritten by the unprivileged child process.
-					<br>
-					<br> A use-after-free error in the privileged monitor process of he sshd(8)
-					service may be deterministically triggered by the actions of a
-					compromised unprivileged child process.
-					<br>
-					<br>A use-after-free error in the session multiplexing code in the sshd(8)
-					service may result in unintended termination of the connection.
+				MidnightBSD 0.7.4 RELEASE
+
+				<br>OpenSSL CVE-2015-3197
+
+				<br>A malicious client can negotiate SSLv2 ciphers that have been disabled on
+				the server and complete SSLv2 handshakes even if all SSLv2 ciphers have
+				been disabled, provided that the SSLv2 protocol was not also disabled via
+				SSL_OP_NO_SSLv2.
 				</p>
 
-				<p class="more"><a href="security/index.html#a20150825">Read more ...</a></p>
+				<p class="more"><a href="security/index.html#a20160130">Read more ...</a></p>
 			</blockquote>
 		</div>
 
