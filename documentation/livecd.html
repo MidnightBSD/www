@@ -79,9 +79,10 @@ ts in /usr/src/nrelease/root . These files will be copied using cpdup into the s
  4. (complete steps 1-3 above)  make buildiso
  5. mkdir /usr/release/root/usr/mports
  6. cd /usr/release/root/usr; mount_nullfs /usr/mports mports
- 7. cd .. ; pkg_add -C . /usr/mports/Packages/i386/All/yourpackagename.tbz   (if you built your own local package on this system
-) or pkg_add -C . -r kde3  (to install kde for instance from the ftp server).  Do additional pkg_add commands for other packages
- you are interested in. 
+ 7. cd .. ; pkg_add -C . /usr/mports/Packages/i386/All/yourpackagename.tbz   
+    if you built your own local package on this system or 
+    pkg_add -C . -r kde3  to install kde for instance from the ftp server. 
+    Do additional pkg_add commands for other packages you are interested in. 
  8. umount /usr/mports 
  9. cd /usr/src/nrelease; make buildiso2
  10. make mkiso
