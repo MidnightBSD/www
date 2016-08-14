@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>MidnightBSD Release Notes</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<style type="text/css" media="all">
+			@import url("../../css/essence.css");
+			#text ul li { font-size: 11pt; margin-bottom: 5px; }
+			.note { font-size: 80%; color: #aaa; padding: 15px; margin-top: 15px; }
+			.update h4 { color: #15a9ed; text-align: center; padding-top: 0.4em; margin-bottom: 0; display: block; }
+			.update { background: #f2fbff; border: 2px solid #dff2fb; font-size: 80%; width: 40%; float: left; margin-right: 2.4em; color: #555; }
+			.ast { color: #1373ce; }
+			#list ul { margin-left: 2em; padding-left: 1em; list-style-position: inside; }
+		</style>
+		<script type="text/javascript">
+			window.cookieconsent_options = {
+				"message": "This website uses cookies to ensure you get the best experience on our website",
+				"dismiss": "Got it!",
+				"learnMore": "More info",
+				"link": null,
+				"theme": "dark-top"
+			};
+		</script>
+		<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+		<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon" /> MidnightBSD Release Notes</h2>
+				<div class="devupdate fleft">
+					<h4>Late breaking information:</h4>
+					<blockquote>
+					</blockquote>
+					<h4>Previous Release Notes</h4>
+					<ul>
+						<li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+						<li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+						<li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+						<li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+						<li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+						<li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+						<li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+					</ul>
+				</div>
+				<h3>(09/19/2015) MidnightBSD 0.7-RELEASE</h3>
+
+				<p>This release is primarily for stabilization, ZFS and mport package tool enhancements.
+
+				<p>Upgrading from source:
+					When upgrading from 0.6, you will need to install
+					src/kerberos5/lib/libroken before building world.
+
+				<p><em>This release is dedicated to Midnight the cat. He passed away this year after a battle with cancer. </em>
+
+				<h4>Security</h4>
+
+				<p>expat
+				<br>Multiple integer overflows have been discovered in the XML_GetBuffer() function in the expat library.
+
+				<p>kernel
+				<br>fix a security issue on amd64 where the GS segment CPU register can be changed via
+				userland value in kernel mode by using an IRET with #SS or #NP exceptions.
+
+				<p>TCP Reassembly resource exhaustion bug:
+				<br>There is a mistake with the introduction of VNET, which converted the
+				global limit on the number of segments that could belong to reassembly
+				queues into a per-VNET limit.  Because mbufs are allocated from a
+				global pool, in the presence of a sufficient number of VNETs, the
+				total number of mbufs attached to reassembly queues can grow to the
+				total number of mbufs in the system, at which point all network
+				traffic would cease.
+
+				<p>Fix a bug where TCP connections transitioning to LAST_ACK state can get stuck. This can result in a denial of service.
+
+				<p>OpenSSH
+				<br>A programming error in the privileged monitor process of the sshd(8)
+				service may allow the username of an already-authenticated user to be
+				overwritten by the unprivileged child process.
+
+				<p>A use-after-free error in the privileged monitor process of he sshd(8)
+				service may be deterministically triggered by the actions of a
+				compromised unprivileged child process.
+
+				<p>A use-after-free error in the session multiplexing code in the sshd(8)
+				service may result in unintended termination of the connection.
+
+				<p>OpenSSH clients does not correctly verify DNS SSHFP records when a server
+				offers a certificate. [CVE-2014-2653]
+
+				<p>OpenSSH servers which are configured to allow password authentication
+				using PAM (default) would allow many password attempts. A bug allows
+				MaxAuthTries to be bypassed. [CVE-2015-5600]
+
+				<p>routed
+				<br>Fix a potential security issue where traffic from outside the network can disrupt routing.
+
+
+				<p>Sendmail
+				<br>With the recent changes to OpenSSL to block 512 bit certificates, sendmail can't connect with TLS to some servers.
+
+				<p>Increase the default size to 1024 bit for client connections to match the server configuration.
+
+
+				<h4>Enhancements</h4>
+
+				<p>libc changes:
+					setmode(3) now returns errno consistently on error.
+					libc will compile without error using clang
+
+				<p>wait6 system call added.
+
+				<p>date(1) now handles non numeric numbers passed to -r like GNU coreutils for improved compatibility.
+
+
+				<p>ata(4) AMD Hudson2 SATA controller support.
+				Intel lynxpoint SATA.
+
+				<p>Fix some const warnings when building several device drivers with llvm/clang.
+
+				<p>Sync cas(4) with FreeBSD 9-stable.
+
+				<p>Fix some minor issues with ath(4).
+
+				<p>Fix a potential bootstrapping issue when upgrading from 0.6 to 0.7. m4 and kerberos were updated and must be built in a certain sequence or else the build will fail.
+
+				<p>cpucontrol(8) now supports VIA CPUs.
+
+				<p>Switch to bsdpatch (from FreeBSD & OpenBSD);  fix a bug with ed(1) scripts allowing unsanitized input to run.
+
+
+				<p>Import reallocarray from OpenBSD's libc.
+				<br>The reallocarray() function is similar to realloc() except it operates on nmemb members of size size and checks for integer overflow in the calculation nmemb * size.
+
+
+				<p>ZFS
+				<br>Added ZFS TRIM support which is enabled by default. To disable ZFS TRIM support set vfs.zfs.trim.enabled=0 in loader.conf.
+
+				<br>Creating new ZFS pools and adding new devices to existing pools first performs a full device level TRIM which can take a significant amount of time. The sysctl vfs.zfs.vdev.trim_on_init can be set to 0 to disable this behaviour.
+
+				<br>ZFS TRIM requires the underlying device support BIO_DELETE which is currently provided by methods such as ATA TRIM and SCSI UNMAP via CAM, which are typically supported by SSD's.
+
+				<br>Stats for ZFS TRIM can be monitored by looking at the sysctl's under kstat.zfs.misc.zio_trim.
+
+				<p>ZFS in MidnightBSD now supports lz4 compression. You can enable it with zfs set compression=lz4 pool/path. Verify it's working with
+					<br>zfs get compressratio pool/path
+					<br>du -h -s *
+				<br>Note you must write new data when turning on compression to see changes. Existing files are not compressed.
+
+				<p>While we used the same basic implementation of lz4 that FreeBSD and OpenZFS uses, we did not yet implement features support and the zfs version still reports 28. This may come in a future update to ZFS.
+
+				<p>rc.d
+				<p>Reworked handling of cleanvar and FILESYSTEMS so that FILESYSTEMS
+					implies everything is mounted and ready to go.
+
+				<p>Changed how ip6addressctl maps IPv6 on startup.
+
+				<h4>Removed Features</h4>
+
+				<p>This may be the last release with i386 support. We’re considering dropping it and focusing on amd64 as most modern PCs are 64 bit capable.
+
+				<h4>New Software Versions    </h4>
+
+				<p>BSD Sort updated from FreeBSD
+				<p>flex 2.5.39
+				<p>Heimdal 1.5.2 (kerberos implementation)
+				<p>Jansson 2.7 library added. (libjansson is a JSON library in C)
+				<p>OpenSSL 1.0.1o  (previously on 0.9.8 branch)
+				<p>sqlite 3.8.10.2
+				<p>tzdata 2015d
+				<p>xz 5.0.8
+				<p>mports & package tools
+
+				<p>0.7 currently has approximately 2000 packages for this release.  A lot of work has been done on mports and the goal is to get a working desktop metaport by the end of the year. We currently have updated the following:
+
+				<br>CUPS
+				<br>Gimp
+				<br>Gnome 3 (in progress)
+				<br>GNUStep and related ports
+				<br>Gtk 3
+				<br>OpenJDK 6 & 7 are building from ports (no packages yet)
+				<br>Python 2 & 3
+				<br>Midori
+				<br>Qt 4
+				<br>Webkit
+				<br>X.org
+
+				<p>libmport now logs installation and removal of packages to syslog.
+
+				<p>libmport now supports @shell and @sample in plists. This means that a shell port can automatically add an entry to /etc/shells and remove it upon uninstallation. For sample files, a copy is made without the .sample extension if one does not exist and it is removed automatically only if the md5 hash of the two files is the same.
+
+				<p>libmport now automatically stops services when deleting packages. The package must have installed an rc.d script in /usr/local/etc for this to work. This is equivalent to running service <name> onestop
+
+
+				<p>If you are updating an existing system, after installing 0.7, you can use mport upgrade to update packages with 0.7 versions. It is recommended that you delete /usr/mports/Packages and run mport clean to remove old package remnants.
+
+				<p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the svn package.
+
+					<br>e.g.
+					<br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
+
+
+</div>
+<!--#include virtual="/footer.html"-->
+	</body>
+</html>
+

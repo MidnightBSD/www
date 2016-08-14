@@ -14,7 +14,6 @@
 			.ast { color: #1373ce; }
 			#list ul { margin-left: 2em; padding-left: 1em; list-style-position: inside; }
 		</style>
-		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 		<script type="text/javascript">
 			window.cookieconsent_options = {
 				"message": "This website uses cookies to ensure you get the best experience on our website",
@@ -25,7 +24,6 @@
 			};
 		</script>
 		<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
-		<!-- End Cookie Consent plugin -->
 	</head>
 	
 	<body>
@@ -48,158 +46,140 @@
 						<li><a href="0.4/index.html">0.4-RELEASE</a></li>
 						<li><a href="0.5/index.html">0.5-RELEASE</a></li>
 						<li><a href="0.6/index.html">0.6-RELEASE</a></li>
+						<li><a href="0.7/index.html">0.7-RELEASE</a></li>
 					</ul>
 				</div>
-				<h3>(09/19/2015) MidnightBSD 0.7-RELEASE</h3>
+				<h3>(08/14/2016) MidnightBSD 0.8-RELEASE</h3>
 
-				<p>This release is primarily for stabilization, ZFS and mport package tool enhancements.
+<p>MidnightBSD 0.8 includes several enhancements to the system.  We switched system compilers from GCC 4.2 to llvm/clang 3.3 with plans to update to newer versions.  We’re making use of libdispatch in our package manager. Several longstanding bugs with the mports framework have been fixed.
 
-				<p>Upgrading from source:
-					When upgrading from 0.6, you will need to install
-					src/kerberos5/lib/libroken before building world.
+<h4>Security</h4>
+<h5>Kernel</h5>
 
-				<p><em>This release is dedicated to Midnight the cat. He passed away this year after a battle with cancer. </em>
+<p>The implementation of TIOCGSERIAL ioctl(2) does not clear the output struct before sending to userland in the linux emulation layer.
 
-				<h4>Security</h4>
-
-				<p>expat
-				<br>Multiple integer overflows have been discovered in the XML_GetBuffer() function in the expat library.
-
-				<p>kernel
-				<br>fix a security issue on amd64 where the GS segment CPU register can be changed via
-				userland value in kernel mode by using an IRET with #SS or #NP exceptions.
-
-				<p>TCP Reassembly resource exhaustion bug:
-				<br>There is a mistake with the introduction of VNET, which converted the
-				global limit on the number of segments that could belong to reassembly
-				queues into a per-VNET limit.  Because mbufs are allocated from a
-				global pool, in the presence of a sufficient number of VNETs, the
-				total number of mbufs attached to reassembly queues can grow to the
-				total number of mbufs in the system, at which point all network
-				traffic would cease.
-
-				<p>Fix a bug where TCP connections transitioning to LAST_ACK state can get stuck. This can result in a denial of service.
-
-				<p>OpenSSH
-				<br>A programming error in the privileged monitor process of the sshd(8)
-				service may allow the username of an already-authenticated user to be
-				overwritten by the unprivileged child process.
-
-				<p>A use-after-free error in the privileged monitor process of he sshd(8)
-				service may be deterministically triggered by the actions of a
-				compromised unprivileged child process.
-
-				<p>A use-after-free error in the session multiplexing code in the sshd(8)
-				service may result in unintended termination of the connection.
-
-				<p>OpenSSH clients does not correctly verify DNS SSHFP records when a server
-				offers a certificate. [CVE-2014-2653]
-
-				<p>OpenSSH servers which are configured to allow password authentication
-				using PAM (default) would allow many password attempts. A bug allows
-				MaxAuthTries to be bypassed. [CVE-2015-5600]
-
-				<p>routed
-				<br>Fix a potential security issue where traffic from outside the network can disrupt routing.
+<p>The compat 43 stat(2) system call exposes kernel stack to userland.
 
 
-				<p>Sendmail
-				<br>With the recent changes to OpenSSL to block 512 bit certificates, sendmail can't connect with TLS to some servers.
+<p>atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
+	local user to overwrite a portion of the kernel memory.
 
-				<p>Increase the default size to 1024 bit for client connections to match the server configuration.
+<p>Incorrect argument handling in sendmsg(2)
+
+<p>Incorrect argument handling in the socket code allows malicious local user to overwrite large portion of the kernel memory.
+
+<p>A special combination of sysarch(2) arguments, specify a request to
+uninstall a set of descriptors from the LDT.  The start descriptor
+is cleared and the number of descriptors are provided.  Due to invalid
+use of a signed intermediate value in the bounds checking during argument
+validity verification, unbound zero'ing of the process LDT and adjacent
+memory can be initiated from usermode.
+
+<p>TCP MD5 signature denial of service
+
+<p>A programming error in processing a TCP connection with both TCP_MD5SIG and TCP_NOOPT socket options may lead to kernel crash.
+
+<p>SCTP
+
+<p>A lack of proper input checks in the ICMPv6 processing in the SCTP stack can lead to either a failed kernel assertion or to a NULL pointer dereference.  In either case, a kernel panic will follow.
+
+<p>libarchive 
+<p>CVE-2015-2304 and CVE-2013-0211 fix issues with cpio directory traversal and an integer signedness error in the archive write zip data routine.
+
+<p>OpenSSL
+<p>The padding check in AES-NI CBC MAC was rewritten to be in constant time
+by making sure that always the same bytes are read and compared against
+either the MAC or padding bytes. But it no longer checked that there was
+enough data to have both the MAC and padding bytes. [CVE-2016-2107]
+
+<p>An overflow can occur in the EVP_EncodeUpdate() function which is used for
+Base64 encoding of binary data. [CVE-2016-2105]
+
+<p>An overflow can occur in the EVP_EncryptUpdate() function, however it is believed that there can be no overflows in internal code due to this problem. [CVE-2016-2106]
+
+<p>When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio() a short invalid encoding can cause allocation of large amounts of memory potentially consuming excessive resources or exhausting memory.[CVE-2016-2109]
+
+<p>The signature verification routines will crash with a NULL pointer dereference if presented with an ASN.1 signature using the RSA PSS algorithm and absent mask generation function parameter. [CVE-2015-3194]
+
+<p>When presented with a malformed X509_ATTRIBUTE structure, OpenSSL will leak memory. [CVE-2015-3195]
+
+<p> If PSK identity hints are received by a multi-threaded client then the values  are incorrectly updated in the parent SSL_CTX structure.  [CVE-2015-3196]
+
+<p>OpenSSH
+<p>Fix a security issue with OpenSSH X11 forwarding that can allow an attacker run shell commands on the call to xauth.
+
+<p>bsnmpd
+<p>Fix security on bsnmpd configuration file during installation.
+
+<h4>Enhancements</h4>
+<p>top now displays information on ZFS arc cache.
+
+<p>llvm + clang 3.3 is now the default compiler in MidnightBSD.
+
+<p>Introduce pipe2 to linux emulation layer.
+
+<p>Increase kern.ipc.somaxconn default to 256.
+
+<p>In rpcbind(8), netbuf structures are copied directly, which would result in
+two netbuf structures that reference to one shared address buffer.  When one
+of the two netbuf structures is freed, access to the other netbuf structure
+would result in an undefined result that may crash the rpcbind(8) daemon.
+
+<p>Fix kqueue write events for files > 2GB
+
+<p>libdispatch is now configured to use the blocks runtime.
+Removed Features
+This may be the last release with i386 support. We’re considering dropping it and focusing on amd64 as most modern PCs are 64 bit capable.
+
+<p>P4tcc is now disabled by default. You can edit the device.hints file to turn this back on. This will result in no CPU frequency changing features on old devices, but it causes less confusion on modern CPUs.  If you notice that your CPU is not detecting frequency, turn this back on to allow powerd to scale. 
+
+<h4>New Software Versions</h4>
+
+<ul>
+<li>>SQLite 3.11.1
+<li>OpenPAM Micrampelis 
+</ul>
+
+<h4>mports & Package Tools</h4>
+
+<p>mport and libmport is now multithreaded and makes use of the libdispatch library and Blocks runtime. 
+
+<p>Add initial statistics api to libmport and a driver to print it in mport(1).
+
+<p>libmport now supports @preexec, @postexec, @preunexec and @postunexec to replace @exec and @unexec.  
+
+<p>pre exec runs afer pre-install scripts but before actual installation. post exec runs after install but before post install scripts and pkg message. pre unexec runs before pre uninstall scripts post unexec runs before de-install scripts and after file removal.
+
+<p>Several issues have been fixed with package installation including better error handling and reporting to failures, fixes to @sample and @(root,wheel,4555) permissions handling, and optimizations to upgrading databases, initialization and the configuration of the sqlite3 databases with respect to performance. Installs should be significantly quicker as a result. 
+
+<p>There is one known issue.  The @mode with no parameters is currently causing crashes.  While this only affects a small number of ports, it will be fixed in a future update to the stable branch some time after release. 
+Packages
+<p>A significant amount of work went into fixing bugs with the mports framework and the package manager in this release. We now have over 3,000 ports.  QT5 went in just after packages were built for the release.  
+
+<p>There are 2600 packages available for i386 and about 1800 for amd64 currently.  We’re planning on rolling new packages for amd64 soon.  An issue with the package manager delayed the release and caused failures during the amd64 build. This bug has been fixed, but there wasn’t time to update packages before the release went out.  This means desktop environments were not fully built for amd64 yet, but will be available in the next few days.
+
+<p>Notable mports to try:
+
+<ul>
+<li>mlogind is the new MidnightBSD login manager. It’s based on slim with some customizations and bug fixes. The code is on github. 
+
+<li>Mport manager - a graphical front end to MidnightBSD’s package manager
+
+<li>Lumina desktop environment (there is no package for this yet).  
+
+<li>Xfce 4.12
+<li>Gnome 3.16.2
+</ul>
+
+<p>Note: this release is a little weak on packages and that will be corrected over time.  
+Many ports actually work if you build from source such as ruby, gnome 3, node/npm, etc. 
+ We also made progress on the openjdk 6 port.  It’s not working with some software, most notably 
+ Tomcat but you can run some desktop applications on it. 
 
 
-				<h4>Enhancements</h4>
-
-				<p>libc changes:
-					setmode(3) now returns errno consistently on error.
-					libc will compile without error using clang
-
-				<p>wait6 system call added.
-
-				<p>date(1) now handles non numeric numbers passed to -r like GNU coreutils for improved compatibility.
-
-
-				<p>ata(4) AMD Hudson2 SATA controller support.
-				Intel lynxpoint SATA.
-
-				<p>Fix some const warnings when building several device drivers with llvm/clang.
-
-				<p>Sync cas(4) with FreeBSD 9-stable.
-
-				<p>Fix some minor issues with ath(4).
-
-				<p>Fix a potential bootstrapping issue when upgrading from 0.6 to 0.7. m4 and kerberos were updated and must be built in a certain sequence or else the build will fail.
-
-				<p>cpucontrol(8) now supports VIA CPUs.
-
-				<p>Switch to bsdpatch (from FreeBSD & OpenBSD);  fix a bug with ed(1) scripts allowing unsanitized input to run.
-
-
-				<p>Import reallocarray from OpenBSD's libc.
-				<br>The reallocarray() function is similar to realloc() except it operates on nmemb members of size size and checks for integer overflow in the calculation nmemb * size.
-
-
-				<p>ZFS
-				<br>Added ZFS TRIM support which is enabled by default. To disable ZFS TRIM support set vfs.zfs.trim.enabled=0 in loader.conf.
-
-				<br>Creating new ZFS pools and adding new devices to existing pools first performs a full device level TRIM which can take a significant amount of time. The sysctl vfs.zfs.vdev.trim_on_init can be set to 0 to disable this behaviour.
-
-				<br>ZFS TRIM requires the underlying device support BIO_DELETE which is currently provided by methods such as ATA TRIM and SCSI UNMAP via CAM, which are typically supported by SSD's.
-
-				<br>Stats for ZFS TRIM can be monitored by looking at the sysctl's under kstat.zfs.misc.zio_trim.
-
-				<p>ZFS in MidnightBSD now supports lz4 compression. You can enable it with zfs set compression=lz4 pool/path. Verify it's working with
-					<br>zfs get compressratio pool/path
-					<br>du -h -s *
-				<br>Note you must write new data when turning on compression to see changes. Existing files are not compressed.
-
-				<p>While we used the same basic implementation of lz4 that FreeBSD and OpenZFS uses, we did not yet implement features support and the zfs version still reports 28. This may come in a future update to ZFS.
-
-				<p>rc.d
-				<p>Reworked handling of cleanvar and FILESYSTEMS so that FILESYSTEMS
-					implies everything is mounted and ready to go.
-
-				<p>Changed how ip6addressctl maps IPv6 on startup.
-
-				<h4>Removed Features</h4>
-
-				<p>This may be the last release with i386 support. We’re considering dropping it and focusing on amd64 as most modern PCs are 64 bit capable.
-
-				<h4>New Software Versions    </h4>
-
-				<p>BSD Sort updated from FreeBSD
-				<p>flex 2.5.39
-				<p>Heimdal 1.5.2 (kerberos implementation)
-				<p>Jansson 2.7 library added. (libjansson is a JSON library in C)
-				<p>OpenSSL 1.0.1o  (previously on 0.9.8 branch)
-				<p>sqlite 3.8.10.2
-				<p>tzdata 2015d
-				<p>xz 5.0.8
-				<p>mports & package tools
-
-				<p>0.7 currently has approximately 2000 packages for this release.  A lot of work has been done on mports and the goal is to get a working desktop metaport by the end of the year. We currently have updated the following:
-
-				<br>CUPS
-				<br>Gimp
-				<br>Gnome 3 (in progress)
-				<br>GNUStep and related ports
-				<br>Gtk 3
-				<br>OpenJDK 6 & 7 are building from ports (no packages yet)
-				<br>Python 2 & 3
-				<br>Midori
-				<br>Qt 4
-				<br>Webkit
-				<br>X.org
-
-				<p>libmport now logs installation and removal of packages to syslog.
-
-				<p>libmport now supports @shell and @sample in plists. This means that a shell port can automatically add an entry to /etc/shells and remove it upon uninstallation. For sample files, a copy is made without the .sample extension if one does not exist and it is removed automatically only if the md5 hash of the two files is the same.
-
-				<p>libmport now automatically stops services when deleting packages. The package must have installed an rc.d script in /usr/local/etc for this to work. This is equivalent to running service <name> onestop
-
-
-				<p>If you are updating an existing system, after installing 0.7, you can use mport upgrade to update packages with 0.7 versions. It is recommended that you delete /usr/mports/Packages and run mport clean to remove old package remnants.
+				<p>If you are updating an existing system, after installing 0.8,
+				 you can use mport upgrade to update packages with 0.8 versions. It is recommended that you delete /usr/mports/Packages and
+				  run mport clean to remove old package remnants.
 
 				<p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the svn package.
 
