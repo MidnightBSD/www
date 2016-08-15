@@ -86,32 +86,40 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
 			<blockquote>
-				<p class="date">March 17, 2016</p>
+				<p class="date">May 31, 2016</p>
 
 				<p class="update">
-					0.7.6 RELEASE
+					0.7.9 RELEASE
 
-					<br>OpenSSH doesn't have the luck of the Irish.
+						<br><br>Fix four security issues with MidnightBSD.
 
-					<br><br>Fix a security issue with OpenSSH X11 forwarding that can allow an attacker
-					run shell commands on the call to xauth.
+			<br><br>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
+			struct before sending to userland in the linux emulation layer.
+
+			<br><br>The compat 43 stat(2) system call exposes kernel stack to userland.
+
+			<br><br>libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
+			cpio directory traversal and an integer signedness error in the archive
+			write zip data routine.
 				</p>
 
-				<p class="more"><a href="security/index.html#a20160317">Read more ...</a></p>
+				<p class="more"><a href="security/index.html#a20160531">Read more ...</a></p>
 			</blockquote>
 			<blockquote>
-				<p class="date">March 10, 2016</p>
+				<p class="date">May 19, 2016</p>
 
-				<p class="update">0.7.5 RELEASE <br>
-					Security patch for OpenSSL to stop DROWN [CVE-2016-0800]
-					[CVE-2016-0705] [CVE-2016-0798] [CVE-2016-0797]
-					[CVE-2016-0799] [CVE-2016-0702] [CVE-2016-0704]
-					<br><br>A programming error in the Linux compatibility layer could cause the
-					issetugid(2) system call to return incorrect information.
+				<p class="update">0.7.8 RELEASE <br>
+				atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
+        local user to overwrite a portion of the kernel memory.
+
+        	<br><br>Incorrect argument handling in sendmsg(2)
+
+       	<br><br>Incorrect argument handling in the socket code allows malicious local
+        user to overwrite large portion of the kernel memory.
 				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20160310">Read more ...</a>
+					<a href="security/index.html#a20160519">Read more ...</a>
 				</p>
 			</blockquote>
 		</div>
