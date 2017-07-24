@@ -199,8 +199,3 @@ td {
     }
 }
 
-@media screen and (max-width: 475px) {
-    #googlead {
-        display: none;
-    }
-}
