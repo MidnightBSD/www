@@ -1,99 +1,92 @@
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>MidnightBSD PostgreSQL Documentation</title>
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="stylesheet" type="text/css" href="../css/essence.css">
-		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-				<script type="text/javascript">
-				    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-top"};
-				</script>
-				<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
-				<!-- End Cookie Consent plugin -->
-	</head>
-	<body>
-		<div id="globe">
-			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
-			<!--#include virtual="/menu.html"-->
-					<div class="clear"></div>
-			<div id="text">
-				<h2><img src="../images/oxygen/doc32.png" alt="" /> PostgreSQL Documentation</h2>
-				<div id="toc">
-					<h3>Contents</h3>
-					<ul>
-						<li><a href="#s1b">Introduction</a></li>
-						<li><a href="#s1c">Install</a></li>
-						<li><a href="#s1d">Examples</a></li>
-						<li><a href="index.html"><strong>Documentation</strong></a></li>
-						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
-					</ul>
-				</div>
-				<h3 id="s1a">PostgreSQL</h3>
-				<h4 id="s1b">Introduction</h4>
-				<p>PostgreSQL is a full featured, modern database available in mports.</p>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD PostgreSQL Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> PostgreSQL Documentation</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Install</a></li>
+                <li><a href="#s1d">Examples</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+        <h3 id="s1a">PostgreSQL</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>PostgreSQL is a full featured, modern database available in mports.</p>
 
-				<p>Recently, the MidnightBSD project began migrating our package cluster software, Magus,
-				over to PostgreSQL. This is a starter guide on basic functions under PostgreSQL.
-				</p>
-				
-				
-				<h4 id="s1c">Install</h4>
-				
-				<p>Install the PostgreSQL server mport via package or mports.  To install by package,
-				you may use a command such as <code>mport install postgresql91-server</code>.
-				</p>
-				<p>For mports, <code>cd /usr/mports/databases/postgresql91-server; make install clean</code>
-				</p>
-				
-				<p>There are several versions of PostgreSQL available in mports and via package. You may wish
-				to check for the latest.</p>
-			
-				<p>A new user called pgsql will be created as part of the installation. You may become
-				root and then run <code>su - pgsql</code> to get access to this user. The command
-				line utilities will be available on the path.
-				</p>
-			
-				<h4 id="s1d">Examples</h4>
-				<p>These examples assume you're using the pgsql user account. May of these commands
-				can be done through direct connects to the server as well.</p>
-				
-				<h5>Create Database</h5>
-				<p>Via console: <code>createdb databasename</code>
-				<p>Via psql prompt</p>
-				<code>create database dbname ENCODING 'UTF-8' OWNER username;</code>
-				
-				<h5>Granting Permissions</h5>
-				<code> grant all on database dbname to username;</code>
-				<h5>List Tables</h5>
-				<p>psql then \d</p>
-				
-				<h5>List Databases</h5>
-				<p>psql then \l</p>
-				
-				<h5>Describe Table</h5>
-				<p>psql then \d+ table
-	
-				<h5>Create User</h5>
-				<code>$ psql 
-						> create user username password 'password'; 
-				</code>	
-	
-				
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'midnightbsd'; 
-    
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-		</div>
-		<!--#include virtual="/footer.html"-->
-	</body>
+        <p>Recently, the MidnightBSD project began migrating our package cluster software, Magus,
+            over to PostgreSQL. This is a starter guide on basic functions under PostgreSQL.
+        </p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+
+        <h4 id="s1c">Install</h4>
+
+        <p>Install the PostgreSQL server mport via package or mports. To install by package,
+            you may use a command such as <code>mport install postgresql91-server</code>.
+        </p>
+        <p>For mports, <code>cd /usr/mports/databases/postgresql94-server; make install clean</code>
+        </p>
+
+        <p>There are several versions of PostgreSQL available in mports and via package. You may wish
+            to check for the latest.</p>
+
+        <p>A new user called pgsql will be created as part of the installation. You may become
+            root and then run <code>su - pgsql</code> to get access to this user. The command
+            line utilities will be available on the path.
+        </p>
+
+        <h4 id="s1d">Examples</h4>
+        <p>These examples assume you're using the pgsql user account. May of these commands
+            can be done through direct connects to the server as well.</p>
+
+        <h5>Create Database</h5>
+        <p>Via console: <code>createdb databasename</code>
+        <p>Via psql prompt</p>
+        <code>create database dbname ENCODING 'UTF-8' OWNER username;</code>
+
+        <h5>Granting Permissions</h5>
+        <code> grant all on database dbname to username;</code>
+        <h5>List Tables</h5>
+        <p>psql then \d</p>
+
+        <h5>List Databases</h5>
+        <p>psql then \l</p>
+
+        <h5>Describe Table</h5>
+        <p>psql then \d+ table
+
+        <h5>Create User</h5>
+        <code>$ psql
+            > create user username password 'password';
+        </code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
 </html>

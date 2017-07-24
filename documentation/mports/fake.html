@@ -4,17 +4,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>mport's Fake System :: Documentation :: MidnightBSD</title>
-	<!-- $MidnightBSD: www/documentation/mports/fake.html,v 1.5 2012/01/05 19:42:34 laffer1 Exp $ -->
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<style type="text/css" media="all">
 		@import url("../../css/essence.css");
 	</style>
-	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-			<script type="text/javascript">
-			    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-top"};
-			</script>
-			<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
-			<!-- End Cookie Consent plugin -->
 </head>
 
 <body>
@@ -132,19 +125,9 @@
 <p>Most of the sub-systems (for example the linux-rpm or python sub-systems) have been updated to work properly with fake.  Some are not yet moved over however.  If you encounter such a sub-system consult with the ctriv@ before committing any fix.</p>
 
 <p>If your linux port is installing with the wrong permissions, make sure you have the most recent version of <code>cpio</code>.</p>
- 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'midnightbsd'; 
-    
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<!--#include virtual="/disqus.html"-->
+			
 	</div>
 		<!--#include virtual="/footer.html"-->
 </body>

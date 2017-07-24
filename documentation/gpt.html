@@ -6,12 +6,6 @@
 		<title>MidnightBSD GPT Documentation</title>
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="stylesheet" type="text/css" href="../css/essence.css">
-		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-				<script type="text/javascript">
-				    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-top"};
-				</script>
-				<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
-				<!-- End Cookie Consent plugin -->
 	</head>
 	<body>
 		<div id="globe">
@@ -27,16 +21,17 @@
 						<li><a href="#s1c">Preparing</a></li>
 						<li><a href="#s1d">Creating GUID Partitions</a></li>
 						<li><a href="index.html"><strong>Documentation</strong></a></li>
-						<li><a href="../wiki/"><strong>MidnightBSD Wiki (more)</strong></a></li>
 					</ul>
 				</div>
 				<h3 id="s1a">GUID Partition Table</h3>
 				<h4 id="s1b">Introduction</h4>
 				<p>GUID Partition Table or GPT is a replacement for the traditional MBR partition table scheme used
-				on PCs.  Traditional MBR partition schemes only support 4 partitions on a disk whereas GPT supports
-				up to 128.  As a workaround for the limited partition size, BSD systems have the concept of labels 					to break up a large partition into several smaller chunks.  Similarly, Microsoft Windows systems
-				have the concept of primary and extended partitions to allow additional logical separation on disks.				On a GPT setup, you no longer need labels or extended partitions.  SImply create a partition for
-				each mount point you wish to use.</p>
+					on PCs. Traditional MBR partition schemes only support 4 partitions on a disk whereas GPT supports
+					up to 128. As a workaround for the limited partition size, BSD systems have the concept of labels to
+					break up a large partition into several smaller chunks. Similarly, Microsoft Windows systems
+					have the concept of primary and extended partitions to allow additional logical separation on disks.
+					On a GPT setup, you no longer need labels or extended partitions. SImply create a partition for
+					each mount point you wish to use.</p>
 
 				<p>GPT has an additional benefit.  It supports large hard drives greater than 2TB.  It is recommended
 				for systems with large hard drives, especially if one wishes to boot of the disk.</p>
@@ -93,18 +88,7 @@
 				<code>/dev/ufs/root     /      ufs      rw    1 1</code>
 				</p>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'midnightbsd'; 
-    
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+				<!--#include virtual="/disqus.html"-->
 		</div>
 		<!--#include virtual="/footer.html"-->
 	</body>
