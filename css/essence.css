@@ -206,8 +206,13 @@ td {
     #logomobile {
         visibility: visible;
         display: inline;
-        max-width: 100%;
+        max-width: 569px;
         height: auto;
+    }
+
+    #mobilenoshow {
+        visibility: hidden;
+        display: none;
     }
 }
 
