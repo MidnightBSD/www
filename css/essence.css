@@ -148,6 +148,11 @@ td {
     margin: 0 auto;
 }
 
+#logomobile {
+    visibility: hidden;
+    display: none;
+}
+
 @media screen and (max-width: 900px) {
     html {
         overflow-x: auto !important;
@@ -191,11 +196,18 @@ td {
         width: 80%;
     }
 
-}
+    #logomobile {
+          visibility: visible;
+          display: inline;
+          max-width: 569px;
+          height: auto;
+      }
 
-#logomobile {
-    visibility: hidden;
-    display: none;
+      #mobilenoshow {
+          visibility: hidden;
+          display: none;
+      }
+
 }
 
 @media screen and (max-width: 600px) {
