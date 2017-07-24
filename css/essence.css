@@ -199,7 +199,7 @@ td {
     #logomobile {
           visibility: visible;
           display: inline;
-          max-width: 850px;
+          max-width: 80%;
           height: auto;
       }
 
@@ -218,7 +218,7 @@ td {
     #logomobile {
         visibility: visible;
         display: inline;
-        max-width: 569px;
+        max-width: 80%;
         height: auto;
     }
 
