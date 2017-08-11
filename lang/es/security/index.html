@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="es-ES">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 		<title>
-			MidnightBSD Security Updates
+			MidnightBSD Actualizaciones de Seguridad
 		</title>
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<style type="text/css" media="all">
-			@import url("../css/essence.css");
+			@import url("/css/essence.css");
 		</style>
 		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 		<script type="text/javascript">
@@ -25,39 +25,41 @@
 	<body>
 		<div id="globe">
 			<div id="header">
-				<h1 title="MidnightBSD Home">
-				<a href="../" title="MidnightBSD Home">
-					MidnightBSD: The BSD For Everyone
+				<h1 title="MidnightBSD Inicio">
+				<a href="/lang/es/" title="MidnightBSD Inicio">
+					MidnightBSD: El BSD Para Todos
 				</a>
 				</h1>
 			</div>
-<!--#include virtual="/menu.html"-->
+<!--#include virtual="/lang/es/menu.html"-->
 		<div class="clear">
 		</div>
 		<div id="text">
 			<h2>
-				<img src="../images/oxygen/security32.png" alt=" "/> Security Updates
+				<img src="/images/oxygen/security32.png" alt=" "/> Actualizaciones de Seguridad
 			</h2>
 			<blockquote class="bluebox" id="a20160531">
-				<h3>May 31, 2016</h3>
+				<h3>31 de Mayo de 2016</h3>
 
-				<p>MidnightBSD 0.7.9 RELEASE
+				<p>MidnightBSD LANZAMIENTO 0.7.9
 
-				<p>Fix four security issues with MidnightBSD.
+				<p>Resuelve cuatro asuntos de seguridad con MidnightBSD.
 
-			<p>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
-			struct before sending to userland in the linux emulation layer.
+			<p>La implementación de TIOCGSERIAL ioctl(2) no borra la salida
+			struct antes de enviar al espacio de usuario de usuario en la capa de emulación 
+			de Linux.
 
-			<p>The compat 43 stat(2) system call exposes kernel stack to userland.
+			<p>La llamada del sistema compat 43 stat(2) expone la pila del 
+			kernel al espacio de usuario.
 
-			<p>Libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
-			cpio directory traversal and an integer signedness error in the archive
-			write zip data routine.
+			<p>Libarchive - CVE-2015-2304 y CVE-2013-0211 corrigen problemas con
+			el directory traversal cpio y un error de entero signedness en el archivo
+			al escribir la rutina de datos zip.
 			</blockquote>
 	<blockquote class="bluebox" id="a20160519">
-		<h3>May 19, 2016</h3>
+		<h3>19 de Mayo de 2016</h3>
 
-		<p>MidnightBSD 0.7.8 RELEASE
+		<p>MidnightBSD LANZAMIENTO 0.7.8
 
        <p> Kernel Security updates
 

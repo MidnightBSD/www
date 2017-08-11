@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+		<meta name="description" content="MidnightBSD es un sistema operativo de escritorio para los ordenadores basados en x86 y x86-64."> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>MidnightBSD</title>
+		<link rel="shortcut icon" href="/favicon.ico"> 
+		<link href="https://plus.google.com/112694070346575096682/" rel="publisher"> 
+		<link rel="alternate" type="application/rss+xml" title="MidnightBSD Blog del Desarrollador" href="http://feedproxy.google.com/mnbsd">
+		<link href='https://fonts.googleapis.com/css?family=Slabo+27px|Oxygen:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/essence.css"> 
+		<meta property="og:image" content="http://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+		<meta property="og:site_name" content="MidnightBSD">
+		<meta property="og:url" content="https://www.midnightbsd.org/">
+		<meta property="og:title" content="MidnightBSD">
+		<meta property="og:description" content="MidnightBSD es un sistema operativo de escritorio para los ordenadores basados en x86 y x86-64.">
+		<meta name="google-site-verification" content="UXeYyeq09VC4mCiCHwnLjorG3nxUoyOTcdhR0frXXpw">
+		<meta name="alexaVerifyID" content="pP_-WGlPDrDVXvxAfGsMp0R52to">
+		<meta name="norton-safeweb-site-verification" content="x64m9skk6r62zazbxrrr16abm5i2xrk35q73q63fjbpkfuezh8lkdndy9hfplpxtllur8ryfprpp7cv6sl3cxgv1o1uy2t7e1ms36p5p0fte91e8wsiwx3783pehcbdx" />
+	</head>
+	
+	<body>
+		<div class="container">
+			<div id="globe" class="row">
+				<div id="header" class="col-md-12">
+					<h1 title="MidnightBSD Inicio">
+						<a href="/lang/es/" title="MidnightBSD Inicio" id="mobilenoshow">MidnightBSD: El BSD Para Todos</a>
+						<img src="/art/logo/MidnightBSDLogoText.svg" id="logomobile">
+					</h1>
+				</div>
+<!--#include virtual="/lang/es/menu.html"-->
+				<div class="clear"></div>
+		<div id="welcomebox" class="row">
+			<div class="clear"></div>
+			<div class="col-md-8">
+				<div id="welcome" class="jumbotron">
+					<h2>Bienvenido a MidnightBSD</h2>
+					<blockquote>
+						<p>
+							MidnightBSD es un nuevo sistema operativo BSD-derivado
+							desarrollado con los usuarios de escritorio en mente.
+							Incluye todo el software que esperarías para tus tareas diarias 
+							&#8212; correo electrónico, navegación web, procesamiento de 
+							textos, juegos, y mucho más.
+						</p>
+						<p>
+							Con una pequeña comunidad de desarrolladores dedicados, MidnightBSD 
+							se esfuerza en crear un sistema operativo fácil de usar para que
+							todos puedan disfrutar de él libremente
+							Disponible para x86, AMD64 y como Máquinas Virtuales.
+						</p>
+					</blockquote>
+				</div>
+			</div>
+			<div id="getbox" class="col-md-4">
+				<div id="gettext">
+					<h2><a href="/lang/es/download/">Obtener MidnightBSD</a></h2>
+					<h3>Último Lanzamiento - 0.8.5</h3>
+					<div id="getcd"><a href="/lang/es/download/" title="Obtener MidnightBSD"></a></div>
+					<div class="clear"></div>
+					<h4><a href="/lang/es/notes/">Notas de Lanzamiento</a></h4>
+				</div>
+			</div>
+		</div>
+		<div class="clear">
+	</div>
+
+	<div id="gravity" style="padding-top: 10px;" class="row">
+		<div id="news" class="col-md-4">
+			<h2><a href="/lang/es/news/">Noticias &#187;</a></h2>
+<!--#include file="/mbsdblogsum.inc"-->
+		</div>
+
+		<div id="security" class="col-md-4">
+			<h2><a href="/lang/es/security/">Seguridad &#187;</a></h2>
+			<blockquote>
+				<p class="date">31 de Mayo de 2016</p>
+
+				<p class="update">
+					LANZAMIENTO 0.7.9
+
+						<br><br>Resuelve cuatro asuntos de seguridad con MidnightBSD.
+
+			<br><br>La implementación de TIOCGSERIAL ioctl(2) no borra la salida
+			struct antes de enviar al espacio de usuario de usuario en la capa de emulación 
+			de Linux.
+
+			<br><br>La llamada del sistema compat 43 stat(2) expone la pila del 
+			kernel al espacio de usuario.
+
+			<br><br>Libarchive - CVE-2015-2304 y CVE-2013-0211 corrigen problemas con
+			el directory traversal cpio y un error de entero signedness en el archivo
+			al escribir la rutina de datos zip.
+				</p>
+
+				<p class="more"><a href="/lang/es/security/index.html#a20160531">Leer más...</a></p>
+			</blockquote>
+			<blockquote>
+				<p class="date">19 de Mayo de 2016</p>
+
+				<p class="update">LANZAMIENTO 0.7.8<br><br>
+				atkbd(4) - Comparación incorrecta signedness en el manipulador ioctl(2) permite a un usuario
+        			local malicioso sobreescribir una porción de la memoria del kernel.
+
+        	<br><br>Argumento incorrecto sostenido en sendmsg(2)
+
+       	<br><br>Argumento incorrecto sostenido en el código de socket permite a un usuario
+        local malicioso sobreescribir una larga porción de la memoria del kernel.
+				</p>
+
+				<p class="more">
+					<a href="/lang/es/security/index.html#a20160519">Leer más...</a>
+				</p>
+			</blockquote>
+		</div>
+
+		<div id="tweets" class="col-md-4">
+			<a class="twitter-timeline" href="https://twitter.com/midnightbsd" data-widget-id="340874433373806593">
+			Tweets de @midnightbsd
+			</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<p>Vista de <a href="/mports/">mports</a> disponible</p>
+		</div>
+
+	</div>
+
+	<!--#include virtual="/lang/es/footer.html"-->
+</div>
+
+</body>
+</html>
