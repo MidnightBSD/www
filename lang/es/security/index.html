@@ -12,9 +12,9 @@
 		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 		<script type="text/javascript">
 			window.cookieconsent_options = {
-				"message": "This website uses cookies to ensure you get the best experience on our website",
-				"dismiss": "Got it!",
-				"learnMore": "More info",
+				"message": "Esta web usa cookies para asegurarte la mejor experiencia",
+				"dismiss": "¡Consíguelo!",
+				"learnMore": "Más información",
 				"link": null,
 				"theme": "dark-top"
 			};
@@ -45,8 +45,8 @@
 
 				<p>Resuelve cuatro asuntos de seguridad con MidnightBSD.
 
-			<p>La implementaci�n de TIOCGSERIAL ioctl(2) no borra la salida
-			struct antes de enviar al espacio de usuario de usuario en la capa de emulaci�n 
+			<p>La implementación de TIOCGSERIAL ioctl(2) no borra la salida
+			struct antes de enviar al espacio de usuario de usuario en la capa de emulación 
 			de Linux.
 
 			<p>La llamada del sistema compat 43 stat(2) expone la pila del 
@@ -61,44 +61,44 @@
 
 		<p>MidnightBSD LANZAMIENTO 0.7.8
 
-       <p> Kernel Security updates
+       <p>Kernel Actualizaciones de seguridad
 
-        <p>atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
-        local user to overwrite a portion of the kernel memory.
+        <p>atkbd(4) - Comparación incorrecta signedness en el manipulador ioctl(2) permite a un usuario 
+	local malicioso sobreescribir una porción de la memoria del kernel.
 
-        <p>Incorrect argument handling in sendmsg(2)
+        <p>Argumento incorrecto sostenido en sendmsg(2)
 
-       <p>Incorrect argument handling in the socket code allows malicious local
-        user to overwrite large portion of the kernel memory.
+       <p>Argumento incorrecto sostenido en el código de socket permite a un usuario 
+	local malicioso sobreescribir una larga porción de la memoria del kernel.
     </blockquote>
 	<blockquote class="bluebox" id="a20160505">
-		<h3>May 5, 2016</h3>
+		<h3>5 de Mayo de 2016</h3>
 
-	<p>MidnightBSD 0.7.7 RELEASE
+	<p>MidnightBSD LANZAMIENTO 0.7.7
 
-	<p>OpenSSL security patch
+	<p>OpenSSL Parche de seguridad
 
-	<p>The padding check in AES-NI CBC MAC was rewritten to be in constant time
-	by making sure that always the same bytes are read and compared against
-	either the MAC or padding bytes. But it no longer checked that there was
-	enough data to have both the MAC and padding bytes. [CVE-2016-2107]
+	<p>La comprobación de relleno en AES-NI CBC MAC se reescribió para estar 
+	en tiempo constante, asegurándose de que siempre se leen los mismos bytes y se 
+	comparan con el MAC o con los bytes de relleno. Pero ya no comprobó que había 
+	suficientes datos para tener tanto el MAC como los bytes de relleno. [CVE - 2016 - 2107]
 
-	<p>An overflow can occur in the EVP_EncodeUpdate() function which is used for
-	Base64 encoding of binary data. [CVE-2016-2105]
+	<p>Puede ocurrir un desbordamiento en la función EVP_EncodeUpdate() que se utiliza 
+	para la codificación Base64 de datos binarios. [CVE - 2016 - 2105]
 
-	<p>An overflow can occur in the EVP_EncryptUpdate() function, however it is
-	believed that there can be no overflows in internal code due to this problem.
-	[CVE-2016-2106]
+	<p>Puede ocurrir un desbordamiento en la función EVP_EncryptUpdate (), sin embargo 
+	se cree que no puede haber ningúno en el código interno debido a este problema. 
+	[CVE - 2016 - 2106]
 
-	<p>When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio()
-	a short invalid encoding can casuse allocation of large amounts of memory
-	potentially consuming excessive resources or exhausting memory.
-	[CVE-2016-2109]
+	<p>Cuando los datos ASN.1 se leen desde una BIO utilizando funciones tales como 
+	d2i_CMS_bio (), una codificación corta no válida puede causar la asignación de 
+	grandes cantidades de memoria potencialmente consumiendo recursos excesivos o 
+	agotando la memoria. [CVE - 2016 - 2109]
 		</blockquote>
 			<blockquote class="bluebox" id="a20160317">
-				<h3>March 17, 2016</h3>
+				<h3>17 de Marzo de 2016</h3>
 
-				<p>MidnightBSD 0.7.6 RELEASE
+				<p>MidnightBSD LANZAMIENTO 0.7.6
 
 				<p>OpenSSH doesn't have the luck of the Irish.</p>
 
@@ -881,7 +881,7 @@
 					November 24, 2008
 				</h3>
 				<p>
-					Correct a problem in arc4random which causes the device not to get enough entropy for system services.  Geom classes initialized at startup will still have problems. Update your system to RELENG_0_2 (MidnightBSD 0.2.1-p3)
+					Correct a problem in arc4random which causes the device not to get enough entropy for system services. Â Geom classes initialized at startup will still have problems. Update your system to RELENG_0_2 (MidnightBSD 0.2.1-p3)
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20080929">
