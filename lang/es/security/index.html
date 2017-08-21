@@ -100,119 +100,129 @@
 
 				<p>MidnightBSD LANZAMIENTO 0.7.6
 
-				<p>OpenSSH doesn't have the luck of the Irish.</p>
+				<p>OpenSSH no tiene la suerte de los Irlandeses.</p>
 
-				<p>Fix a security issue with OpenSSH X11 forwarding that can allow an attacker
-					run shell commands on the call to xauth.</p>
+				<p>Solucionar un problema de seguridad con el reenvío OpenSSH X11 que 
+				puede permitir a un atacante ejecutar comandos shell en la llamada a xauth.</p>
 
-				<p>Incorrect argument validation in sysarch(2) </p>
 
-				<p>A special combination of sysarch(2) arguments, specify a request to
-					uninstall a set of descriptors from the LDT. The start descriptor
-					is cleared and the number of descriptors are provided. Due to invalid
-					use of a signed intermediate value in the bounds checking during argument
-					validity verification, unbound zero'ing of the process LDT and adjacent
-					memory can be initiated from usermode.
+				<p>Validación de argumento incorrecto en sysarch(2) </p>
 
-					<br> Patch obtained from FreeBSD.</p>
+				<p>Una combinación especial de argumentos sysarch(2), especifica una solicitud 
+				para desinstalar un conjunto de descriptores del LDT. El descriptor de inicio se 
+				borra y se proporciona el número de descriptores. Debido al uso no válido de un 
+				valor intermedio firmado en la comprobación de los límites durante la verificación 
+				de la validez del argumento, se puede iniciar desde el modo de usuario el cero no 
+				vinculante del proceso LDT y memoria adyacente.
+
+					<br> Parche obtenido de FreeBSD.</p>
 	
 
 			<blockquote class="bluebox" id="a20160310">
 
-				<h3>March 10, 2016</h3>
+				<h3>10 de Marzo de 2016</h3>
 
-				<p>MidnightBSD 0.7.5 RELEASE</p>
+				<p>MidnightBSD LANZAMIENTO 0.7.5</p>
 
-				<p>Security patch for OpenSSL to stop DROWN [CVE-2016-0800]
+				<p>Parche de seguridad para OpenSSL para detener DROWN [CVE-2016-0800]
 					[CVE-2016-0705] [CVE-2016-0798] [CVE-2016-0797]
 					[CVE-2016-0799] [CVE-2016-0702] [CVE-2016-0704]</p>
 
-				<p>A programming error in the Linux compatibility layer could cause the
-					issetugid(2) system call to return incorrect information.  </p>
+				<p>Un error de programación en la capa de compatibilidad de Linux podría hacer que 
+				la llamada al sistema issetugid(2) devuelva información incorrecta. </p>
+
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20160130">
-				<h3>January 30, 2016</h3>
+				<h3>30 de Enero de 2016</h3>
 
-				<p>MidnightBSD 0.7.4 RELEASE</p>
+				<p>MidnightBSD LANZAMIENTO 0.7.4</p>
 
 				<p>OpenSSL CVE-2015-3197 </p>
 
-				<p>A malicious client can negotiate SSLv2 ciphers that have been disabled on
-					the server and complete SSLv2 handshakes even if all SSLv2 ciphers have
-					been disabled, provided that the SSLv2 protocol was not also disabled via
-					SSL_OP_NO_SSLv2.</p>
+				<p>Un cliente malicioso puede negociar cifrados SSLv2 que han sido 
+				desactivados en el servidor y completar los apretones de manos SSLv2 incluso 
+				si todos los cifrados SSLv2 han sido deshabilitados, siempre que el protocolo 
+				SSLv2 no se haya deshabilitado también a través de SSL_OP_NO_SSLv2.</p>
+
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20160114">
-				<h3>January 14, 2016</h3>
+				<h3>14 de Enero de 2016</h3>
 
 				<p>OpenSSH </p>
 
-				<p>Disable roaming to mitigate a security issue with OpenSSH.</p>
+				<p>Desactivada la itinerancia para mitigar un problema de seguridad con OpenSSH.</p>
 
-				<p>0.7.3 RELEASE </p>
+				<p>LANZAMIENTO 0.7.3 </p>
 
 				<p>OpenSSL </p>
 
-				<p>The signature verification routines will crash with a NULL pointer dereference
-					if presented with an ASN.1 signature using the RSA PSS algorithm and absent
-					mask generation function parameter. [CVE-2015-3194] </p>
+				<p>Las rutinas de verificación de firmas se bloquearán con una desreferencia 
+				de puntero NULL si se presenta con una firma ASN.1 usando el parámetro RSA PSS 
+				algoritmo y la función de generación de máscara ausente. [CVE-2015-3194] </p>
 
-				<p>When presented with a malformed X509_ATTRIBUTE structure, OpenSSL will leak
-					memory. [CVE-2015-3195] </p>
 
-				<p>If PSK identity hints are received by a multi-threaded client then the values
-					are incorrectly updated in the parent SSL_CTX structure. [CVE-2015-3196] </p>
+				<p>Cuando se presenta con una estructura X509_ATTRIBUTE mal formada, OpenSSL 
+				generará pérdida de memoria. [CVE-2015-3195] </p>
+
+
+				<p>Si las sugerencias de identidad PSK son recibidas por un cliente multihilo, 
+				los valores se actualizan incorrectamente en la estructura SSL_CTX principal. 
+				[CVE-2015-3196] </p>
+
 
 				<p>linuxolator </p>
 
-				<p>A programming error in the Linux compatibility layer setgroups(2) system
-					call can lead to an unexpected results, such as overwriting random kernel
-					memory contents. </p>
+				<p>Un error de programación en la llamada de sistema de la capa de compatibilidad 
+				de Linux setgroups(2) puede dar lugar a resultados inesperados, como sobrescribir 
+				contenido de memoria aleatoria del núcleo. </p>
 
-				<p>A programming error in the handling of Linux futex robust lists may result
-					in incorrect memory locations being accessed. </p>
+				<p>Un error de programación en el manejo de las listas robustas de futex de Linux 
+				puede dar lugar a que se accedan a ubicaciones de memoria incorrectas. </p>
+
 			</blockquote>
 
 			<blockquote class="bluebox">
-				<p>0.7.2 RELEASE
+				<p>LANZAMIENTO 0.7.2
 
-				<p>Fix a security issue with bsnmpd configuration file installation.
+				<p>Solucionar un problema de seguridad con la instalación del archivo de 
+				configuración bsnmpd.
 
-				<p>TCP MD5 signature denial of service
+				<p>TCP MD5 firma denegación de servicio
 
-				<p>A programming error in processing a TCP connection with both TCP_MD5SIG
-					and TCP_NOOPT socket options may lead to kernel crash.
+				<p>Un error de programación al procesar una conexión TCP con las opciones de 
+				socket TCP_MD5SIG y TCP_NOOPT puede provocar un bloqueo del kernel.
 
 				<p>SCTP
 
-				<p>A lack of proper input checks in the ICMPv6 processing in the SCTP stack
-					can lead to either a failed kernel assertion or to a NULL pointer
-					dereference. In either case, a kernel panic will follow.
+				<p>La falta de comprobaciones de entrada apropiadas en el procesamiento ICMPv6 
+				en la pila SCTP puede llevar a una afirmación de kernel fallida oa una desreferencia 
+				de puntero NULL. En cualquier caso, un pánico del núcleo seguirá.
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150930">
 				<h3>
-					September 30, 2015
+					30 Septiembre de 2015
 				</h3>
 
 				<p>
-					0.7.1 RELEASE
+					LANZAMIENTO 0.7.1
 
-				<p> rpcbind(8) remote denial of service
+				<p> rpcbind(8) denegación remota de servicio
 
-				<p>In rpcbind(8), netbuf structures are copied directly, which would result in
-					two netbuf structures that reference to one shared address buffer. When one
-					of the two netbuf structures is freed, access to the other netbuf structure
-					would result in an undefined result that may crash the rpcbind(8) daemon.</p>
+				<p>En rpcbind(8), las estructuras de netbuf se copian directamente, lo que daría 
+				lugar a dos estructuras netbuf que hacen referencia a un búfer de direcciones 
+				compartidas. Cuando se libera una de las dos estructuras netbuf, el acceso a la 
+				otra estructura netbuf resultaría en un resultado indefinido que podría bloquear 
+				el daemon rpcbind (8).</p>
 
-				<p>10/2: Revised rpcbind(8) patch to fix issues with NIS</p>
+				<p>10/2: Corrección revisada de rpcbind(8) para resolver problemas con NIS</p>
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150825">
 				<h3>
-					August 25, 2015
+					25 de Agosto de 2015
 				</h3>
 
 				<p>0.6.7 RELEASE
