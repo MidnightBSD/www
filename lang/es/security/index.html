@@ -102,7 +102,7 @@
 
 				<p>OpenSSH no tiene la suerte de los Irlandeses.</p>
 
-				<p>Solucionar un problema de seguridad con el reenvío OpenSSH X11 que 
+				<p>Soluciona un problema de seguridad con el reenvío OpenSSH X11 que 
 				puede permitir a un atacante ejecutar comandos shell en la llamada a xauth.</p>
 
 
@@ -186,7 +186,7 @@
 			<blockquote class="bluebox">
 				<p>LANZAMIENTO 0.7.2
 
-				<p>Solucionar un problema de seguridad con la instalación del archivo de 
+				<p>Soluciona un problema de seguridad con la instalación del archivo de 
 				configuración bsnmpd.
 
 				<p>TCP MD5 firma denegación de servicio
@@ -225,104 +225,109 @@
 					25 de Agosto de 2015
 				</h3>
 
-				<p>0.6.7 RELEASE
+				<p>LANZAMIENTO 0.6.7
 
-				<p> kernel:
-					fix a security issue on amd64 where the GS segment CPU register can be changed via
-					userland value in kernel mode by using an IRET with #SS or #NP exceptions.
+				<p> Kernel:
+					Soluciona un problema de seguridad en amd64 donde el registro de la CPU 
+					del segmento GS se puede cambiar el valor userland en modo kernel usando 
+					un IRET con las excepciones #SS o #NP.
 
-				<p><b>openssh</b>:
-					A programming error in the privileged monitor process of the sshd(8)
-					service may allow the username of an already-authenticated user to be
-					overwritten by the unprivileged child process.
 
-				<p> A use-after-free error in the privileged monitor process of he sshd(8)
-					service may be deterministically triggered by the actions of a
-					compromised unprivileged child process.
+				<p><b>OpenSSH</b>:
+					Un error de programación en el proceso de supervisión privilegiada del servicio 
+					sshd(8) puede permitir que el nombre de usuario de un usuario ya autenticado 
+					sea sobrescrito por el proceso secundario no privilegiado.
 
-				<p> A use-after-free error in the session multiplexing code in the sshd(8)
-					service may result in unintended termination of the connection.
+				<p> Un error de uso posterior al error en el proceso de supervisión privilegiada del 
+				servicio sshd(8) puede ser desencadenado de forma determinista por las acciones de un 
+				proceso hijo comprometido no privilegiado.
+
+				<p> Un error de uso posterior al error en el código de multiplexación de sesión en el 
+				servicio sshd(8) puede provocar la finalización no deseada de la conexión.
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150818">
 				<h3>
-					August 18, 2015
+					18 de Agosto de 2015
 				</h3>
 
 				<p>
-					0.6.6 RELEASE
+					LANZAMIENTO 0.6.6
 
-				<p> Fix a security vulnerabiity in the expat XML parser.
+				<p> Solucionada una vulnerabilidad de seguridad en el analizador XML expat.
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150808">
 				<h3>
-					August 8, 2015
+					8 de Agosto de 2015
 				</h3>
 
 				<p>
-					0.6.5 RELEASE
+					LANZAMIENTO 0.6.5
 
-				<p> routed - fix a potential security issue where traffic from outside
-					the network can disrupt routing.
+				<p> Enrutado - Corregido un posible problema de seguridad donde el tráfico fuera 
+				de la red puede interrumpir el enrutamiento.
+
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150728">
 				<h3>
-					July 28, 2015
+					28 de Julio de 2015
 				</h3>
 
 				<p>
-					0.6.4 RELEASE
+					LANZAMIENTO 0.6.4
 
-				<p> TCP Resassemly resource exhaustion bug:
-					There is a mistake with the introduction of VNET, which converted the
-					global limit on the number of segments that could belong to reassembly
-					queues into a per-VNET limit. Because mbufs are allocated from a
-					global pool, in the presence of a sufficient number of VNETs, the
-					total number of mbufs attached to reassembly queues can grow to the
-					total number of mbufs in the system, at which point all network
-					traffic would cease.
-					<br>Obtained from: FreeBSD 8
+				<p> TCP Error de agotamiento de recursos de restructuración:
+					Hay un error con la introducción de VNET, que convirtió el límite global en el 
+					número de segmentos que podrían pertenecer a las colas de reensamblado en un límite 
+					por VNET. Debido a que los mbufs se asignan desde un grupo global, en presencia de 
+					un número suficiente de VNETs, el número total de mbufs conectados a las colas de 
+					reensamblado puede crecer hasta el número total de mbufs en el sistema, momento en 
+					el cual todo el tráfico de red cesará.
+					<br>Obtenido desde: FreeBSD 8
 
 				<p> OpenSSH
 
-				<p> Fix two security vulnerabilities:
-					OpenSSH clients does not correctly verify DNS SSHFP records when a server
-					offers a certificate. [CVE-2014-2653]
+				<p> Soluciona dos vulnerabilidades de seguridad:
+					Los clientes OpenSSH no verifican correctamente los registros DNS SSHFP cuando 
+					un servidor ofrece un certificado. [CVE-2014-2653]
+
 
 				</p>
 
-				<p> OpenSSH servers which are configured to allow password authentication
-					using PAM (default) would allow many password attempts. A bug allows
-					MaxAuthTries to be bypassed. [CVE-2015-5600]
+				<p> Los servidores OpenSSH que están configurados para permitir la autenticación 
+				de contraseña mediante PAM (predeterminado) permitirían muchos intentos de contraseña. 
+				Un error permite que se omita MaxAuthTries. [CVE-2015-5600]
+
 				</p>
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150722">
 				<h3>
-					July 22, 2015
+					22 de Julio de 2015
 				</h3>
 
 				<p>
-					0.6.3 RELEASE
+					LANZAMIENTO 0.6.3
 
 				<p>
 
-					Fix a bug where TCP connections transitioning to LAST_ACK
-					state can get stuck. This can result in a denial of service.
+				Corrige un error en el que las conexiones TCP que pasan al estado LAST_ACK 
+				pueden quedar atascadas. Esto puede resultar en una denegación de servicio.
+
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150612">
 				<h3>
-					June 12, 2015
+					12 de Julio de 2015
 				</h3>
 
 				<p>
-					0.6.1 RELEASE
+					LANZAMIENTO 0.6.1
 
 				<p>
-					OpenSSL Security update - new version is OpenSSL 0.9.8zg
+					OpenSSL Actualización de seguridad - la nueva versión es OpenSSL 0.9.8zg
 			</blockquote>
 			<blockquote class="bluebox" id="a20150319">
 				<h3>
