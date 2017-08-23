@@ -152,7 +152,7 @@
 
 				<p>OpenSSH </p>
 
-				<p>Desactivada la itinerancia para mitigar un problema de seguridad con OpenSSH.</p>
+				<p>Desactiva la itinerancia para mitigar un problema de seguridad con OpenSSH.</p>
 
 				<p>LANZAMIENTO 0.7.3 </p>
 
@@ -254,7 +254,7 @@
 				<p>
 					LANZAMIENTO 0.6.6
 
-				<p> Solucionada una vulnerabilidad de seguridad en el analizador XML expat.
+				<p> Soluciona una vulnerabilidad de seguridad en el analizador XML expat.
 			</blockquote>
 
 			<blockquote class="bluebox" id="a20150808">
@@ -331,171 +331,178 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20150319">
 				<h3>
-					March 19, 2015
+					19 de Marzo de 2015
 				</h3>
 
 				<p>
-					0.5.10 RELEASE
+					LANZAMIENTO 0.5.10
 
 				<p>
-					OpenSSL Security update
+					OpenSSL Actualización de seguridad
 
 				<p>
-					A malformed elliptic curve private key file could cause a use-after-free condition in the
-					d2i_ECPrivateKey function. [CVE-2015-0209]
+					Un archivo de clave privada de curva elíptica mal formada podría causar una condición de uso 
+					posterior a la condición en la función d2i_ECPrivateKey. [CVE-2015-0209]
+
 
 				<p>
-					An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp function to crash with an
-					invalid read. [CVE-2015-0286]
+					Un intento de comparar tipos booleanos ASN.1 hará que la función ASN1_TYPE_cmp se bloquee con 
+					una lectura no válida. [CVE-2015-0286]
+
 
 				<p>
-					Reusing a structure in ASN.1 parsing may allow an attacker to cause memory corruption via an invalid
-					write. [CVE-2015-0287]
+					La reutilización de una estructura en el analizador ASN.1 puede permitir a un atacante causar 
+					daños en la memoria a través de una escritura no válida. [CVE-2015-0287]
+
 
 				<p>
-					The function X509_to_X509_REQ will crash with a NULL pointer dereference if the certificate key is
-					invalid. [CVE-2015-0288]
+					La función X509_to_X509_REQ se bloqueará con una desreferencia de puntero NULL si la clave de 
+					certificado no es válida. [CVE-2015-0288]
+
 
 				<p>
-					The PKCS#7 parsing code does not handle missing outer ContentInfo correctly. [CVE-2015-0289]
+					El código de análisis PKCS # 7 no controla correctamente ContentInfo externo incorrecto. 
+					[CVE-2015-0289]
 
 				<p>
-					A malicious client can trigger an OPENSSL_assert in servers that both support SSLv2 and enable
-					export cipher suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293]
+					Un cliente malintencionado puede activar un OPENSSL_assert en servidores que soportan SSLv2 
+					y habilitan los conjuntos de cifrado de exportación enviando un mensaje CLIENTE-MASTER-KEY 
+					SSLv2 especialmente diseñado. [CVE-2015-0293]
+
 			</blockquote>
 			<blockquote class="bluebox" id="a20150225">
 				<h3>
-					February 25, 2015
+					25 de Febrero de 2015
 				</h3>
 				<p>
-					0.5.9 RELEASE 
+					LANZAMIENTO 0.5.9
 				<p>
-					Fix two security vulnerabilities. 
+					Resuelve dos vulnerabilidades de seguridad. 
 				<p>
-					1. BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable. 
+					1. Los servidores BIND que están configurados para realizar la validación DNSSEC y que utilizan claves gestionadas (que se producen implícitamente cuando se utiliza "dnssec-validation auto" o "dnssec-lookaside auto") pueden presentar un comportamiento impredecible debido al uso de una variable incorrectamente inicializada
 				<p>
 					CVE-2015-1349 
 				<p>
-					2. An integer overflow in computing the size of IGMPv3 data buffer can result in a buffer which is too small for the requested operation. 
+					2. Un desbordamiento de número entero en el cálculo del tamaño del búfer de datos IGMPv3 puede resultar en un búfer que es demasiado pequeño para la operación solicitada.
 				<p>
-					This can result in a DOS attack. 
+					Esto puede resultar en un ataque DOS. 
 			</blockquote>
 			<blockquote class="bluebox" id="a20150114">
 				<h3>
-					January 14, 2015
+					14 de Enero de 2015
 				</h3>
 				<p>
-					0.5.8 RELEASE 
+					LANZAMIENTO 0.5.8
 				<p>
-					Fix several security issues with OpenSSL. 
+					Soluciona varios problemas de seguridad con OpenSSL.
 				<p>
-					A carefully crafted DTLS message can cause a segmentation fault in OpenSSL due to a NULL pointer dereference. [CVE-2014-3571] 
+					Un mensaje DTLS cuidadosamente elaborado puede causar un error de segmentación en OpenSSL debido a una desreferencia de puntero NULL. [CVE-2014-3571] 
 				<p>
-					A memory leak can occur in the dtls1_buffer_record function under certain conditions. [CVE-2015-0206] 
+					Una pérdida de memoria puede ocurrir en la función dtls1_buffer_record bajo ciertas condiciones. [CVE-2015-0206] 
 				<p>
-					When OpenSSL is built with the no-ssl3 option and a SSL v3 ClientHello is received the ssl method would be set to NULL which could later result in a NULL pointer dereference. [CVE-2014-3569] 
+					Cuando OpenSSL se construye con la opción no-ssl3 y se recibe un ClientHello SSL v3, el método ssl se establecerá en NULL, lo que podría resultar en una desreferencia de puntero NULL. [CVE-2014-3569] 
 				<p>
-					An OpenSSL client will accept a handshake using an ephemeral ECDH ciphersuite using an ECDSA certificate if the server key exchange message is omitted. [CVE-2014-3572] 
+					Un cliente de OpenSSL aceptará un handshake utilizando un ciphersuite ECDH efímero usando un certificado ECDSA si se omite el mensaje de intercambio de clave de servidor. [CVE-2014-3572] 
 				<p>
-					An OpenSSL client will accept the use of an RSA temporary key in a non-export RSA key exchange ciphersuite. [CVE-2015-0204] 
+					Un cliente de OpenSSL aceptará el uso de una clave temporal RSA en un ciphersuite de intercambio de clave RSA que no sea de exportación. [CVE-2015-0204] 
 				<p>
-					An OpenSSL server will accept a DH certificate for client authentication without the certificate verify message. [CVE-2015-0205] 
+					Un servidor OpenSSL aceptará un certificado DH para autenticación de cliente sin el mensaje de verificación de certificado. [CVE-2015-0205] 
 				<p>
-					OpenSSL accepts several non-DER-variations of certificate signature algorithm and signature encodings. OpenSSL also does not enforce a match between the signature algorithm between the signed and unsigned portions of the certificate. [CVE-2014-8275] 
+					OpenSSL acepta varias variaciones no DER de algoritmos de firma de certificados y codificaciones de firmas. OpenSSL tampoco impone una coincidencia entre el algoritmo de firma entre las partes firmadas y no firmadas del certificado. [CVE-2014-8275] 
 				<p>
-					Bignum squaring (BN_sqr) may produce incorrect results on some platforms, including x86_64. [CVE-2014-3570] 
+					Bignum squaring (BN_sqr) puede producir resultados incorrectos en algunas plataformas, incluyendo x86_64. [CVE-2014-3570] 
 			</blockquote>
 			<blockquote class="bluebox" id="a20141211">
 				<h3>
-					December 11, 2014
+					11 de Diciembre de 2014
 				</h3>
 				<p>
-					0.5.7 RELEASE 
+					LANZAMIENTO 0.5.7
 				<p>
-					Fix a security issue with file and libmagic that can allow an attacker to create a denial of service attack on any program that uses libmagic. 
+					Soluciona un problema de seguridad con el archivo y libmagic que puede permitir a un atacante crear un ataque de denegación de servicio en cualquier programa que use libmagic.
 				<p>
 					20141109: 
 				<p>
-					Fix building perl during buildworld when the GDBM port is installed. 
+					Resuelve la construcción de perl durante buildworld cuando se instala el puerto GDBM.
 			</blockquote>
 			<blockquote class="bluebox" id="a20141106">
 				<h3>
-					November 6, 2014
+					6 de Noviembre de 2014
 				</h3>
 				<p>
-					0.5.6 RELEASE 
+					LANZAMIENTO 0.5.6
 				<p>
-					Update timezone data tzdata 2014i 
+					Actualiza los datos de zona horaria tzdata 2014i
 				<p>
-					(plus previous security fixes) 
+					(más arreglos de seguridad anteriores) 
 				<p>
-					Fix two security issues: 
+					Resuelve dos asuntos de seguridad: 
 				<p>
-					1. sshd may link libpthread in the wrong order, shadowing libc functions and causing a possible DOS attack for connecting clients. 
+					1. sshd puede enlazar libpthread en el orden incorrecto, sombreando las funciones de libc y causando un posible ataque de DOS para conectar clientes. 
 				<p>
-					2. getlogin may leak kernel memory via a buffer that is copied without clearing. 
+					2. getlogin puede perder memoria del kernel a través de un búfer que se copia sin borrar. 
 			</blockquote>
 			<blockquote class="bluebox" id="a20141031">
 				<h3>
-					October 31, 2014
+					31 de Octubre de 2014
 				</h3>
 				<p>
-					0.5.5 RELEASE 
+					LANZAMIENTO 0.5.5
 				<p>
-					tnftp 20141031 fixes a security vulnerability with tnftp, CVE-2014-8517. 
+					tnftp 20141031 Corrige una vulnerabilidad de seguridad con tnftp, CVE-2014-8517. 
 			</blockquote>
 			<blockquote class="bluebox" id="a20141027">
 				<h3>
-					October 27, 2014
+					27 de Octubre de 2014
 				</h3>
 				<p>
-					0.5.4 RELEASE 
+					LANZAMIENTO 0.5.4 
 				<p>
-					libmport fix for packages 
+					Corrección de libmport para paquetes
 			</blockquote>
 			<blockquote class="bluebox" id="a20141021">
 				<h3>
-					October 21, 2014
+					21 de Octubre de 2014
 				</h3>
 				<p>
-					0.5.3-RELEASE
+					LANZAMIENTO-0.5.3
 				</p>
 				<p>
-					MidnightBSD 0.5.3-RELEASE is now available via subversion. 
+					MidnightBSD LANZAMIENTO-0.5.3 está ahora disponible vía subversion. 
 				<p>
 					Fix several security vulnerabilities in OpenSSL, routed, rtsold, and namei with respect to Capsicum sandboxes looking up nonexistent path names and leaking memory. 
 				<p>
-					OpenSSL update adds some workarounds for the recent poodle vulnerability reported by Google. 
+					La actualización de OpenSSL agrega algunas soluciones provisionales para la reciente vulnerabilidad de poodle reportada por Google. 
 				<p>
-					The input path in routed(8) will accept queries from any source and attempt to answer them. However, the output path assumes that the destination address for the response is on a directly connected network. 
+					La ruta de entrada en enrutado (8) aceptará consultas de cualquier fuente e intentará responderlas. Sin embargo, la ruta de salida supone que la dirección de destino de la respuesta está en una red conectada directamente.
 				<p>
-					Due to a missing length check in the code that handles DNS parameters, a malformed router advertisement message can result in a stack buffer overflow in rtsold(8). 
+					Debido a una comprobación de longitud que falta en el código que controla los parámetros DNS, un mensaje de anuncio enrutador malformado puede resultar en un desbordamiento de búfer de pila en rtsold (8). 
 				<p>
-					In addition, we've released 0.5.2-RELEASE ISOs on the FTP server for both amd64 and i386. We plan to do rollup security releases periodically. 
+					Además, hemos lanzado ISOs del LANZAMIENTO-0.5.2 en el servidor FTP para amd64 e i386. Planeamos hacer rollups de seguridad de forma periódica.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20141011">
 				<h3>
-					October 11, 2014
+					11 de Octubre de 2014
 				</h3>
 				<p>
-					0.5.2-RELEASE
+					LANZAMIENTO-0.5.2
 				</p>
 				<p>
-					Fixed a regression with mksh R50c.
+					Se corrigió una regresión con mksh R50c.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20141004">
 				<h3>
-					October 4, 2014
+					4 de Octubre de 2014
 				</h3>
 				<p>
-					0.5.1-RELEASE
+					LANZAMIENT0-0.5.1
 				</p>
 				<p>
-					Fixed a security issue with mksh. For more details, view the 
+					Solucionado un problema de seguridad con mksh. Para más detalles, vea la 
 				<a href="https://www.mirbsd.org/permalinks/wlog-10_e20141003-tg.htm#e20141003-tg_wlog-10">
-					mksh notification
+					notificación mksh
 				</a>
 				.
 				</p>
