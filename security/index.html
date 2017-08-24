@@ -38,6 +38,101 @@
 			<h2>
 				<img src="../images/oxygen/security32.png" alt="�"/> Security Updates
 			</h2>
+
+			<blockquote class="bluebox" id="a20161105">
+				<h3>November 5, 2016</h3>
+
+				<p>MidnightBSD 0.8.4 RELEASE
+				<p> BIND 9.9.9-p4
+					<br>
+					OpenSSH 7.3p1
+
+				<p>
+					OpenSSL security patch
+					<br>
+					Due to improper handling of alert packets, OpenSSL would consume an excessive
+					amount of CPU time processing undefined alert messages.</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20161025">
+				<h3>October 25, 2016</h3>
+
+				<p>MidnightBSD 0.8.3 RELEASE
+				<p>Revised patch to address a problem pointed out by
+				        ahaha from Chaitin Tech.</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20161001">
+				<h3>October 1, 2016</h3>
+
+				<p>MidnightBSD 0.8.2 RELEASE
+
+				<p>Fix a regression with OpenSSL security.
+
+				<p>Sendmail 8.15.2
+			</blockquote>
+			<blockquote class="bluebox" id="a20160923">
+				<h3>September 23, 2016</h3>
+
+				<p>MidnightBSD 0.8.1 RELEASE
+
+				<p>Security Updates for OpenSSL</p>
+
+				<p>A malicious client can send an excessively large OCSP Status Request extension.
+					If that client continually requests renegotiation, sending a large OCSP Status
+					Request extension each time, then there will be unbounded memory growth on the
+					server. [CVE-2016-6304]
+
+				<p>An overflow can occur in MDC2_Update() either if called directly or through
+					the EVP_DigestUpdate() function using MDC2. If an attacker is able to supply
+					very large amounts of input data after a previous call to EVP_EncryptUpdate()
+					with a partial block then a length check can overflow resulting in a heap
+					corruption. [CVE-2016-6303]
+
+				<p>If a server uses SHA512 for TLS session ticket HMAC it is vulnerable to a
+					DoS attack where a malformed ticket will result in an OOB read which will
+					ultimately crash. [CVE-2016-6302]
+
+				<p>The function BN_bn2dec() does not check the return value of BN_div_word().
+					This can cause an OOB write if an application uses this function with an
+					overly large BIGNUM. This could be a problem if an overly large certificate
+					or CRL is printed out from an untrusted source. TLS is not affected because
+					record limits will reject an oversized certificate before it is parsed.
+					[CVE-2016-2182]
+
+				<p>The function TS_OBJ_print_bio() misuses OBJ_obj2txt(): the return value is
+					the total length the OID text representation would use and not the amount
+					of data written. This will result in OOB reads when large OIDs are presented.
+					[CVE-2016-2180]
+
+				<p>Some calculations of limits in OpenSSL have used undefined pointer arithmetic.
+					This could cause problems with some malloc implementations. [CVE-2016-2177]
+
+				<p>Operations in the DSA signing algorithm should run in constant time in order to
+					avoid side channel attacks. A flaw in the OpenSSL DSA implementation means that
+					a non-constant time codepath is followed for certain operations. [CVE-2016-2178]
+
+				<p>In a DTLS connection where handshake messages are delivered out-of-order those
+					messages that OpenSSL is not yet ready to process will be buffered for later
+					use. Under certain circumstances, a flaw in the logic means that those messages
+					do not get removed from the buffer even though the handshake has been completed.
+					An attacker could force up to approx. 15 messages to remain in the buffer when
+					they are no longer required. These messages will be cleared when the DTLS
+					connection is closed. The default maximum size for a message is 100k. Therefore
+					the attacker could force an additional 1500k to be consumed per connection.
+					[CVE-2016-2179]
+
+				<p> A flaw in the DTLS replay attack protection mechanism means that records that
+					arrive for future epochs update the replay protection "window" before the MAC
+					for the record has been validated. This could be exploited by an attacker by
+					sending a record for the next epoch (which does not have to decrypt or have a
+					valid MAC), with a very large sequence number. This means that all subsequent
+					legitimate packets are dropped causing a denial of service for a specific
+					DTLS connection. [CVE-2016-2181]
+
+				<p>In OpenSSL 1.0.2 and earlier some missing message length checks can result in
+					OOB reads of up to 2 bytes beyond an allocated buffer. There is a theoretical
+					DoS risk but this has not been observed in practice on common platforms.
+					[CVE-2016-6306]
+			</blockquote>
 			<blockquote class="bluebox" id="a20160531">
 				<h3>May 31, 2016</h3>
 
@@ -45,54 +140,54 @@
 
 				<p>Fix four security issues with MidnightBSD.
 
-			<p>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
-			struct before sending to userland in the linux emulation layer.
+				<p>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
+					struct before sending to userland in the linux emulation layer.
 
-			<p>The compat 43 stat(2) system call exposes kernel stack to userland.
+				<p>The compat 43 stat(2) system call exposes kernel stack to userland.
 
-			<p>libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
-			cpio directory traversal and an integer signedness error in the archive
-			write zip data routine.
+				<p>libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
+					cpio directory traversal and an integer signedness error in the archive
+					write zip data routine.
 			</blockquote>
-	<blockquote class="bluebox" id="a20160519">
-		<h3>May 19, 2016</h3>
+			<blockquote class="bluebox" id="a20160519">
+				<h3>May 19, 2016</h3>
 
-		<p>MidnightBSD 0.7.8 RELEASE
+				<p>MidnightBSD 0.7.8 RELEASE
 
-       <p> Kernel Security updates
+				<p> Kernel Security updates
 
-        <p>atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
-        local user to overwrite a portion of the kernel memory.
+				<p>atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
+					local user to overwrite a portion of the kernel memory.
 
-        <p>Incorrect argument handling in sendmsg(2)
+				<p>Incorrect argument handling in sendmsg(2)
 
-       <p>Incorrect argument handling in the socket code allows malicious local
-        user to overwrite large portion of the kernel memory.
-    </blockquote>
-	<blockquote class="bluebox" id="a20160505">
-		<h3>May 5, 2016</h3>
+				<p>Incorrect argument handling in the socket code allows malicious local
+					user to overwrite large portion of the kernel memory.
+			</blockquote>
+			<blockquote class="bluebox" id="a20160505">
+				<h3>May 5, 2016</h3>
 
-	<p>MidnightBSD 0.7.7 RELEASE
+				<p>MidnightBSD 0.7.7 RELEASE
 
-	<p>OpenSSL security patch
+				<p>OpenSSL security patch
 
-	<p>The padding check in AES-NI CBC MAC was rewritten to be in constant time
-	by making sure that always the same bytes are read and compared against
-	either the MAC or padding bytes. But it no longer checked that there was
-	enough data to have both the MAC and padding bytes. [CVE-2016-2107]
+				<p>The padding check in AES-NI CBC MAC was rewritten to be in constant time
+					by making sure that always the same bytes are read and compared against
+					either the MAC or padding bytes. But it no longer checked that there was
+					enough data to have both the MAC and padding bytes. [CVE-2016-2107]
 
-	<p>An overflow can occur in the EVP_EncodeUpdate() function which is used for
-	Base64 encoding of binary data. [CVE-2016-2105]
+				<p>An overflow can occur in the EVP_EncodeUpdate() function which is used for
+					Base64 encoding of binary data. [CVE-2016-2105]
 
-	<p>An overflow can occur in the EVP_EncryptUpdate() function, however it is
-	believed that there can be no overflows in internal code due to this problem.
-	[CVE-2016-2106]
+				<p>An overflow can occur in the EVP_EncryptUpdate() function, however it is
+					believed that there can be no overflows in internal code due to this problem.
+					[CVE-2016-2106]
 
-	<p>When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio()
-	a short invalid encoding can cause allocation of large amounts of memory
-	potentially consuming excessive resources or exhausting memory.
-	[CVE-2016-2109]
-		</blockquote>
+				<p>When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio()
+					a short invalid encoding can cause allocation of large amounts of memory
+					potentially consuming excessive resources or exhausting memory.
+					[CVE-2016-2109]
+			</blockquote>
 			<blockquote class="bluebox" id="a20160317">
 				<h3>March 17, 2016</h3>
 
