@@ -509,186 +509,186 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20140916">
 				<h3>
-					September 16, 2014
+					16 de Septiembre de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p15
+					LANZAMIENTO-0.4-p15
 				</p>
 				<p>
-					Fix a security issue with TCP SYN. 
+					Soluciona un problema de seguridad con TCP SYN. 
 				<p>
-					When a segment with the SYN flag for an already existing connection arrives, the TCP stack tears down the connection, bypassing a check that the sequence number in the segment is in the expected window. 
+					Cuando un segmento con el indicador SYN de una conexión ya existente llega, la pila TCP arranca la conexión, omitiendo una comprobación de que el número de secuencia en el segmento está en la ventana esperada. 
 			</blockquote>
 			<blockquote class="bluebox" id="a20140909">
 				<h3>
-					September 9, 2014
+					9 de Septiembre de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p14
+					LANZAMIENTO-0.4-p14
 				</p>
 				<p>
-					OpenSSL security patch: 
+					OpenSSL parche de seguridad: 
 				<p>
-					The receipt of a specifically crafted DTLS handshake message may cause OpenSSL to consume large amounts of memory. [CVE-2014-3506] 
+					La recepción de un mensaje de handshake DTLS específicamente diseñado puede hacer que OpenSSL consuma grandes cantidades de memoria. [CVE-2014-3506] 
 				<p>
-					The receipt of a specifically crafted DTLS packet could cause OpenSSL to leak memory. [CVE-2014-3507] 
+					La recepción de un paquete DTLS específicamente diseñado podría hacer que OpenSSL vaciara memoria. [CVE-2014-3507] 
 				<p>
-					A flaw in OBJ_obj2txt may cause pretty printing functions such as X509_name_oneline, X509_name_print_ex et al. to leak some information from the stack. [CVE-2014-3508] 
+					Una falla en OBJ_obj2txt puede causar funciones de impresión bonitas como X509_name_oneline, X509_name_print_ex et al. para filtrar alguna información de la pila. [CVE-2014-3508] 
 				<p>
-					OpenSSL DTLS clients enabling anonymous (EC)DH ciphersuites are subject to a denial of service attack. [CVE-2014-3510] 
+					Los clientes OpenSSL DTLS que habilitan ciphersuites DH anónimas (EC) están sujetos a un ataque de denegación de servicio. [CVE-2014-3510] 
 			</blockquote>
 			<blockquote class="bluebox" id="a20140710">
 				<h3>
-					July 10, 2014
+					10 de Julio de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p13
+					LANZAMIENTO-0.4-p13
 				</p>
 				<p>
-					Fix a vulnerability in the control message API. A buffer is not properly cleared before sharing with userland.
+					Corrige una vulnerabilidad en la API de mensajes de control. Un búfer no se borra correctamente antes de compartir con el espacio del usuario.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140605">
 				<h3>
-					June 5, 2014
+					5 de Junio de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p12
+					LANZAMIENTO-0.4-p12
 				</p>
 				<p>
-					OpenSSL vulnerabilities Receipt of an invalid DTLS fragment on an OpenSSL DTLS client or server can lead to a buffer overrun. [CVE-2014-0195] Receipt of an invalid DTLS handshake on an OpenSSL DTLS client can lead the code to unnecessary recurse. [CVE-2014-0221] Carefully crafted handshake can force the use of weak keying material in OpenSSL SSL/TLS clients and servers. [CVE-2014-0224] Carefully crafted packets can lead to a NULL pointer deference in OpenSSL TLS client code if anonymous ECDH ciphersuites are enabled. [CVE-2014-3470]
+					OpenSSL vulnerabilidades. La recepción de un fragmento DTLS no válido en un cliente o servidor OpenSSL DTLS puede provocar un desbordamiento del búfer. [CVE-2014-0195] La recepción de un apretón de manos DTLS inválido en un cliente OpenSSL DTLS puede conducir el código a recurse innecesario. [CVE-2014-0221] El apretón de manos cuidadosamente elaborado puede forzar el uso de material de clave débil en clientes y servidores OpenSSL SSL / TLS. [CVE-2014-0224] Los paquetes cuidadosamente elaborados pueden conducir a una deferencia de puntero NULL en el código de cliente OpenSSL TLS si se habilitan las ciphersuites ECDH anónimas. [CVE-2014-3470]
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140604">
 				<h3>
-					June 4, 2014
+					4 de Junio de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p11
+					LANZAMIENTO-0.4-p11
 				</p>
 				<p>
-					Sendmail failed to properly set close-on-exec for open file descriptors.
+					Sendmail falló al establecer correctamente close-on-exec para los descriptores de archivos abiertos.
 				</p>
 				<p>
-					ktrace page fault kernel trace entries were set to an incorrect size which resulted in a leak of information. 
+					Las entradas de seguimiento de kernel de falla de página de Ktrace se establecieron en un tamaño incorrecto que resultó en una pérdida de información. 
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140430">
 				<h3>
-					April 30, 2014
+					30 de Abril de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p10
+					LANZAMIENTO-0.4-p10
 				</p>
 				<p>
-					Fix a TCP reassembly bug that could result in a DOS attack of the system. It may be possible to obtain portions of kernel memory as well.
+					Soluciona un error de reensamblado TCP que podría resultar en un ataque de DOS del sistema. También puede ser posible obtener porciones de memoria del núcleo.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140409">
 				<h3>
-					April 9, 2014
+					9 de Abril de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p9
+					LANZAMIENTO-0.4-p9
 				</p>
 				<p>
-					Fix an issue allowing an attacker to deadlock the NFS Server from a trusted client.
+					Soluciona un problema que permite a un atacante bloquear el servidor NFS desde un cliente de confianza.
 				</p>
 				<p>
-					0.4-RELEASE-p8
+					LANZAMIENTO-0.4-p8
 				</p>
 				<p>
-					Fix a security issue in OpenSSL [CVE-2014-0076]
+					Resuelto un asunto de seguridad en OpenSSL [CVE-2014-0076]
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140201">
 				<h3>
-					February 1, 2014
+					1 de Febrero de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p7
+					LANZAMIENTO-0.4-p7
 				</p>
 				<p>
-					Fix a minor annoyance with the default dot.profile and ssh-agent
+					Soluciona una molestia menor con el dot.profile y ssh-agent predeterminados
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20140114">
 				<h3>
-					January 14, 2014
+					14 de Enero de 2014
 				</h3>
 				<p>
-					0.4-RELEASE-p6
+					LANZAMIENTO-0.4-p6
 				</p>
 				<p>
-					Fix two security vulnerabilities. bsnmpd contains a stack overflow when sent certain queries. bind 9.8 when using NSEC3-signed zones zones, will crash with special crafted packets. 
+					Corrige dos vulnerabilidades de seguridad. Bsnmpd contiene un desbordamiento de pila cuando se envían determinadas consultas. Bind 9.8 al usar zonas de zonas con signo NSEC3, se bloqueará con paquetes especiales creados.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20131129">
 				<h3>
-					November 29, 2013
+					29 de Noviembre de 2013
 				</h3>
 				<p>
-					MidnightBSD 0.4-RELEASE-p5
+					MidnightBSD LANZAMIENTO-0.4-p5
 				</p>
 				<p>
-					libc's iconv support includes an optimization that is imcompatible with gettext's msgfmt command. By turning off this optimization, we gain compatiblity with several GNU packages.
+					El soporte iconv de libc incluye una optimización que es incompatible con el comando gettext msgfmt. Al desactivar esta optimización, ganamos compatibilidad con varios paquetes GNU.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20130910">
 				<h3>
-					September 10, 2013
+					10 de Septiembre de 2013
 				</h3>
 				<p>
-					MidnightBSD 0.4-RELEASE-p4
+					MidnightBSD LANZAMIENTO-0.4-p4
 				</p>
 				<p>
 					nullfs(5)
 				</p>
 				<p>
-					The nullfs(5) implementation of the VOP_LINK(9) VFS operation does not check whether the source and target of the link are both in the same nullfs instance. It is therefore possible to create a hardlink from a location in one nullfs instance to a file in another, as long as the underlying (source) filesystem is the same.
+					La implementación nullfs(5) de la operación VFS VOP_LINK(9) no comprueba si la fuente y el destino del enlace están en la misma instancia nullfs. Por lo tanto, es posible crear un enlace físico desde una ubicación en una instancia nullfs a un archivo en otra, siempre y cuando el sistema de archivos subyacente (fuente) sea el mismo.
 				</p>
 				<p>
 					ifioctl
 				</p>
 				<p>
-					As is commonly the case, the IPv6 and ATM network layer ioctl request handlers are written in such a way that an unrecognized request is passed on unmodified to the link layer, which will either handle it or return an error code.
+					Como suele suceder, los controladores de peticiones ioctl de la capa de red IPv6 y ATM se escriben de tal manera que una solicitud no reconocida se transmite sin modificaciones a la capa de enlace, que lo manejará o devolverá un código de error.
 				</p>
 				<p>
-					Network interface drivers, however, assume that the SIOCSIFADDR, SIOCSIFBRDADDR, SIOCSIFDSTADDR and SIOCSIFNETMASK requests have been handled at the network layer, and therefore do not perform input validation or verify the caller's credentials. Typical link-layer actions for these requests may include marking the interface as "up" and resetting the underlying hardware. 
+					Sin embargo, los controladores de interfaz de red suponen que las solicitudes SIOCSIFADDR, SIOCSIFBRDADDR, SIOCSIFDSTADDR y SIOCSIFNETMASK se han tratado en la capa de red y, por lo tanto, no realizan validación de entrada ni verifican las credenciales de la persona que llama. Las acciones típicas de capa de enlace para estas solicitudes pueden incluir marcar la interfaz como "arriba" y restablecer el hardware subyacente.
 				</p>
 				<p>
-					Patches obtained from FreeBSD
+					Parches obtenidos desde FreeBSD
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20130822">
 				<h3>
-					August 22, 2013
+					22 de Agosto de 2013
 				</h3>
 				<p>
-					MidnightBSD 0.4-RELEASE-p2
+					MidnightBSD LANZAMIENTO-0.4-p2
 				</p>
 				<p>
-					Fix an integer overflow in IP_MSFILTER (IP MULTICAST). This could be exploited to read memory by a user process.
+					Corrige un desbordamiento de número entero en IP_MSFILTER (IP MULTICAST). Esto podría explotarse para leer la memoria mediante un proceso de usuario.
 				</p>
 				<p>
-					When initializing the SCTP state cookie being sent in INIT-ACK chunks, a buffer allocated from the kernel stack is not completely initialized.
+					Al inicializar la cookie de estado SCTP que se envía en trozos INIT-ACK, no se inicializa completamente un búfer asignado desde la pila del kernel.
 				</p>
 				<p>
-					Patches obtained from FreeBSD
+					Parches obtenidos desde FreeBSD
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20130728">
 				<h3>
-					July 28, 2013
+					28 de Julio de 2013
 				</h3>
 				<p>
-					MidnightBSD 0.4-RELEASE-p1
+					MidnightBSD LANZAMIENTO-0.4-p1
 				</p>
 				<p>
-					Vulnerabilities were reported in BIND and NFS Server. BIND has a defect resulting in a possible denial of service attack with malformed rdata in a query. This affects only systems running named and not DNS clients.
+					Las vulnerabilidades fueron reportadas en BIND y NFS Server. BIND tiene un defecto que resulta en un posible ataque de denegación de servicio con rdatos malformados en una consulta. Esto afecta sólo a los sistemas que ejecutan clientes denominados y no DNS.
 				</p>
 				<p>
-					For NFS, the kernel incorrectly uses client supplied credentials instead of the one configured in exports(5) when filling out the anonymous credential for a NFS export, when -network or -host restrictions are used at the same time. This patch was obtained from FreeBSD. 
+					Para NFS, el kernel utiliza incorrectamente las credenciales suministradas por el cliente en lugar de las configuradas en exports (5) cuando rellena la credencial anónima para una exportación NFS, cuando se usan restricciones de red o de host al mismo tiempo. Este parche se obtuvo de FreeBSD.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20120612">
