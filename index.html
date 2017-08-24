@@ -74,40 +74,34 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
 			<blockquote>
-				<p class="date">May 31, 2016</p>
+				<p class="date">August 08, 2017</p>
 
 				<p class="update">
-					0.7.9 RELEASE
+					0.8.6 RELEASE
 
-						<br><br>Fix four security issues with MidnightBSD.
+					<br><br> Update em(4) to support skylake and kabylake era Intel NICs.
 
-			<br><br>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
-			struct before sending to userland in the linux emulation layer.
+					<br><br> Update usb(4) to support newer Intel and Asmedia controllers and
+					several new devices.
 
-			<br><br>The compat 43 stat(2) system call exposes kernel stack to userland.
+					<br><br>Heimdal KDC-REP service name validation vulerability patched.
 
-			<br><br>libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
-			cpio directory traversal and an integer signedness error in the archive
-			write zip data routine.
+					<br><br>serf 1.3.9
+
+					<br><br>subversion 1.8.10
 				</p>
 
-				<p class="more"><a href="security/index.html#a20160531">Read more ...</a></p>
+				<p class="more"><a href="security/index.html#a20170818">Read more ...</a></p>
 			</blockquote>
 			<blockquote>
-				<p class="date">May 19, 2016</p>
+				<p class="date">December 13, 2016</p>
 
-				<p class="update">0.7.8 RELEASE <br>
-				atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
-        local user to overwrite a portion of the kernel memory.
-
-        	<br><br>Incorrect argument handling in sendmsg(2)
-
-       	<br><br>Incorrect argument handling in the socket code allows malicious local
-        user to overwrite large portion of the kernel memory.
+				<p class="update">0.8.5 RELEASE <br>
+					Fix two security issues, telnetd and link_ntoa(3) in libc.
 				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20160519">Read more ...</a>
+					<a href="security/index.html#a20161213">Read more ...</a>
 				</p>
 			</blockquote>
 		</div>

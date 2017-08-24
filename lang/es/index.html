@@ -75,42 +75,34 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="/security/">Seguridad &#187;</a></h2>
 			<blockquote>
-				<p class="date">31 de Mayo de 2016</p>
+				<p class="date">August 08, 2017</p>
 
 				<p class="update">
-					LANZAMIENTO 0.7.9
+					0.8.6 RELEASE
 
-						<br><br>Resuelve cuatro asuntos de seguridad con MidnightBSD.
+					<br><br> Update em(4) to support skylake and kabylake era Intel NICs.
 
-			<br><br>La implementación de TIOCGSERIAL ioctl(2) no borra la salida
-			struct antes de enviar al espacio de usuario de usuario en la capa de emulación 
-			de Linux.
+					<br><br> Update usb(4) to support newer Intel and Asmedia controllers and
+					several new devices.
 
-			<br><br>La llamada del sistema compat 43 stat(2) expone la pila del 
-			kernel al espacio de usuario.
+					<br><br>Heimdal KDC-REP service name validation vulerability patched.
 
-			<br><br>Libarchive - CVE-2015-2304 y CVE-2013-0211 corrigen problemas con
-			el directory traversal cpio y un error de entero signedness en el archivo
-			al escribir la rutina de datos zip.
+					<br><br>serf 1.3.9
+
+					<br><br>subversion 1.8.10
 				</p>
 
-				<p class="more"><a href="security/index.html#a20160531">Leer más...</a></p>
+				<p class="more"><a href="security/index.html#a20170818">Read more ...</a></p>
 			</blockquote>
 			<blockquote>
-				<p class="date">19 de Mayo de 2016</p>
+				<p class="date">December 13, 2016</p>
 
-				<p class="update">LANZAMIENTO 0.7.8<br><br>
-				atkbd(4) - Comparación incorrecta signedness en el manipulador ioctl(2) permite a un usuario
-        			local malicioso sobreescribir una porción de la memoria del kernel.
-
-        	<br><br>Argumento incorrecto sostenido en sendmsg(2)
-
-       	<br><br>Argumento incorrecto sostenido en el código de socket permite a un usuario
-        local malicioso sobreescribir una larga porción de la memoria del kernel.
+				<p class="update">0.8.5 RELEASE <br>
+					Fix two security issues, telnetd and link_ntoa(3) in libc.
 				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20160519">Leer más...</a>
+					<a href="security/index.html#a20161213">Read more ...</a>
 				</p>
 			</blockquote>
 		</div>
