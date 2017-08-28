@@ -3,7 +3,7 @@
   xmlns="http://www.metalinker.org/"
   generator="http://metalinks.sourceforge.net/"
   >
-	<description>MidnightBSD 0.8.6 amd64</description>
+	<description>MidnightBSD 0.8.5 amd64</description>
 <files>
 	<file name="MidnightBSD-release.iso">
 		<size>825579520</size>
