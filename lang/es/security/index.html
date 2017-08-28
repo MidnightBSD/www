@@ -932,83 +932,83 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20100902">
 				<h3>
-					September 2, 2010
+					2 de Septiembre de 2010
 				</h3>
 				<p>
-					A minor vulnerability in libutil was reported. It can cause uses of some services such as OpenSSH to bypass cpu resource restrictions in 0.3 by use of a custom login.conf. This issue has been fixed today in kern.osreldate 3015 or better. 
+					Se informó de una vulnerabilidad menor en libutil. Puede provocar que algunos servicios como OpenSSH pasen por alto las restricciones de recursos de la CPU en la 0.3 mediante el uso de un login.conf personalizado. Este problema se ha corregido hoy en kern.osreldate 3015 o mejor.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090610">
 				<h3>
-					June 10, 2009
+					10 de Junio de 2009
 				</h3>
 				<p>
-					This should be applied to all systems running 0.2.1. Users on p9 simply should update their kernels. No world update is required.
+					Esto debe aplicarse a todos los sistemas que ejecutan la 0.2.1. Los usuarios de p9 simplemente deben actualizar sus kernels. No se requiere actualización del mundo.
 				</p>
 				<p>
-					ipv6:<br /> The SIOCSIFINFO_IN6 ioctl is missing a necessary permissions check. Don't let everyone on the planet (with local access) change the properties on the ipv6 interfaces.
+					IPV6:<br /> El ioctl SIOCSIFINFO_IN6 no tiene una verificación de permisos necesaria. No deja que todos en el planeta (con acceso local) cambien las propiedades de las interfaces IPV6.
 				</p>
 				<p>
-					anonymous pipes:<br /> Stop unprivileged processes from reading pages of memory belonging to other processes with anonymous pipes.
+					Tuberías anónimas: <br /> Detiene procesos no privilegiados de leer páginas de memoria pertenecientes a otros procesos con tuberías anónimas.
 				</p>
 				<p>
-					0.3-Current users can verify they have the patch by checking sysctl kern.osreldate. If the value is 3005 or better, you have the patch.
+					Actual-0.3 Los usuarios pueden verificar que tienen el parche comprobando sysctl kern.osreldate. Si el valor es 3005 o mejor, tiene el parche.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090521">
 				<h3>
-					May 21, 2009
+					21 de Mayo de 2009
 				</h3>
 				<p>
-					This fix is only in configuration files for ssh and sshd. Users on p8 should simply add <pre>Ciphers aes128-ctr,aes256-ctr,arcfour256,arcfour,aes128-cbc,aes256-cbc</pre> to their configuration files for sshd_config and ssh_config in etc/ssh
+					Esta corrección sólo está en los archivos de configuración de ssh y sshd. Los usuarios de p8 deberían simplemente añadir <pre> claves aes128-ctr, aes256-ctr, arcfour256, arcfour, aes128-cbc, aes256-cbc </ pre> a sus archivos de configuración para sshd_config y ssh_config en etc/ssh.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090422">
 				<h3>
-					April 22, 2009
+					22 de Abril de 2009
 				</h3>
 				<p>
-					The function ASN1_STRING_print_ex does not properly validate the lengths of BMPString or UniversalString objects before attempting to print them. MidnightBSD 0.2.1-RELEASE-p8 and 0.3-CURRENT include this fix.
+					La función ASN1_STRING_print_ex no valida correctamente las longitudes de los objetos BMPString o UniversalString antes de intentar imprimirlos. MidnightBSD LANZAMIENTO-0.2.1-p8 y ACTUAL-O.3 incluyen esta corrección.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090326">
 				<h3>
-					March 26, 2009
+					26 de Marzo de 2009
 				</h3>
 				<p>
-					Update for sudo that corrects several outstanding security advisories. This was corrected in 0.2.1-RELEASE-p7 and 0.3-CURRENT. 0.1.x is no longer receiving security patches. It is recommended that you upgrade to 0.2.1-RELEASE-p7 when possible.
+					Actualización para sudo que corrige varios avisos de seguridad pendientes. Esto se corrigió en el LANZAMIENT0-0.2.1-p7 y el ACTUAL-0.3. 0.1.x ya no está recibiendo parches de seguridad. Se recomienda actualizar a LANZAMIENT0-0.2.1-p7 cuando sea posible.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090115">
 				<h3>
-					January 15, 2009
+					15 de Enero de 2009
 				</h3>
 				<p>
-					Prevent a DNSSEC attack with BIND. This was corrected in 0.2.1 and 0.3-CURRENT. 0.1.x is no longer receiving security patches. It is recommended that you upgrade to 0.2.1-RELEASE when possible.
+					Evita un ataque DNSSEC con BIND. Esto fue corregido en la 0.2.1 y la ACTUAL-0.3. La 0.1.x ya no está recibiendo parches de seguridad. Se recomienda actualizar a LANZAMIENTO-0.2.1 cuando sea posible.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20090110">
 				<h3>
-					January 10, 2009
+					10 de Enero de 2009
 				</h3>
 				<p>
-					Fix two issues with MidnightBSD 0.2.1 and 0.3-CURRENT. The first is in OpenSSL and would allow applications that use OpenSSL to interpret an invalid certificate as valid. The second is in lukemftpd(8) that could allow long commands to be split into multiple commands.
+					Corrige dos problemas con MidnightBSD 0.2.1 y ACTUAL-0.3. El primero está en OpenSSL y permitiría a las aplicaciones que utilizan OpenSSL interpretar un certificado no válido como válido. El segundo es en lukemftpd(8) que podría permitir que comandos largos se dividan en múltiples comandos.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20081231">
 				<h3>
-					December 31, 2008
+					31 de Diciembre de 2008
 				</h3>
 				<p>
-					Correct a problem where bluetooth and netgraph sockets were not initialized properly. This is available in RELENG_0_2, RELENG_0_1, and current.
+					Corrige un problema en el que los sockets bluetooth y netgraph no se inicializaron correctamente. Esto está disponible en RELENG_0_2, RELENG_0_1 y actual.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20081124">
 				<h3>
-					November 24, 2008
+					24 de Noviembre de 2008
 				</h3>
 				<p>
-					Correct a problem in arc4random which causes the device not to get enough entropy for system services. Â Geom classes initialized at startup will still have problems. Update your system to RELENG_0_2 (MidnightBSD 0.2.1-p3)
+					Corrige un problema en arc4random que hace que el dispositivo no obtenga suficiente entropía para los servicios del sistema. Las clases Geom inicializadas al arrancar todavía tendrán problemas. Actualiza su sistema a RELENG_0_2 (MidnightBSD 0.2.1-p3)
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20080929">
