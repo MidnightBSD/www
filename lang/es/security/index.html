@@ -753,7 +753,7 @@
 					La implementación nullfs(5) de la operación VFS VOP_LINK(9) no comprueba si la fuente y el destino del enlace están en la misma instancia nullfs. Por lo tanto, es posible crear un enlace físico desde una ubicación en una instancia nullfs a un archivo en otra, siempre y cuando el sistema de archivos subyacente (fuente) sea el mismo.
 				</p>
 				<p>
-					ifioctl
+					Ifioctl
 				</p>
 				<p>
 					Como suele suceder, los controladores de peticiones ioctl de la capa de red IPv6 y ATM se escriben de tal manera que una solicitud no reconocida se transmite sin modificaciones a la capa de enlace, que lo manejará o devolverá un código de error.
@@ -798,13 +798,13 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20120612">
 				<h3>
-					June 6, 2012
+					6 de Junio de 2012
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p9
+					MidnightBSD LANZAMIENTO-0.3-p9
 				</p>
 				<p>
-					A vulnerability exists in bind related to resource records. A zero length request can cause bind to crash resulting in a denial of service or disclosure of information.
+					Existe una vulnerabilidad en bind relacionada con los registros de recursos. Una solicitud de longitud cero puede causar que se bloquee, dando como resultado una denegación de servicio o divulgación de información.
 				</p>
 				<p>
 					CVE-2012-1667
@@ -812,111 +812,111 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20120530a">
 				<h3>
-					May 30, 2012
+					30 de Mayo de 2012
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p8
+					MidnightBSD LANZAMIENTO-0.3-p8
 				</p>
 				<p>
-					Fix a problem with cyrpt's DES implementation when used with non 7-bit ascii passwords.
+					Soluciona un problema con la implementación DES de cyrpt cuando se utiliza con contraseñas ascii de 7 bits.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20120530">
 				<h3>
-					May 30, 2012
+					30 de Mayo de 2012
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p7
+					MidnightBSD LANZAMIENTO-0.3-p7
 				</p>
 				<p>
-					An additional problem in OpenSSL was identified related to the previous (p6) patch. 
+					Se identificó un problema adicional en OpenSSL relacionado con el parche anterior(p6). 
 				</p>
 				<p>
-					add SGC and BUF_MEM_grow_clean(3) bug fixes.
+					Agrega las correcciones de errores SGC y BUF_MEM_grow_clean (3).
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20120503">
 				<h3>
-					May 3, 2012
+					3 de Mayo de 2012
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p6
+					MidnightBSD LANZAMIENTO-0.3-p6
 				</p>
 				<p>
-					OpenSSL failes to clear the bytes used as block cipher padding in SSL 3.0 records when operating as a client or a server that accept SSL 3.0 handshakes. As a result, in each record, up to 15 bytes of uninitialized memory may be sent, encrypted, to the SSL peer. This could include sensitive contents of previously freed memory. [CVE-2011-4576] 
+					OpenSSL no puede borrar los bytes utilizados como relleno de cifrado de bloque en registros SSL 3.0 cuando se opera como un cliente o un servidor que acepta handshakes SSL 3.0. Como resultado, en cada registro, se pueden enviar hasta 15 bytes de memoria no inicializada, cifrada, al servidor SSL. Esto podría incluir contenido sensible de memoria previamente liberada. [CVE-2011-4576]
 				</p>
 				<p>
-					OpenSSL support for handshake restarts for server gated cryptograpy (SGC) can be used in a denial-of-service attack. [CVE-2011-4619]
+					La compatibilidad de OpenSSL para reinicios de handshake para la criptografía de servidor cerrado (SGC) se puede utilizar en un ataque de denegación de servicio. [CVE-2011-4619]
 				</p>
 				<p>
-					If an application uses OpenSSL's certificate policy checking when verifying X509 certificates, by enabling the X509_V_FLAG_POLICY_CHECK flag, a policy check failure can lead to a double-free. [CVE-2011-4109] 
+					Si una aplicación utiliza la comprobación de políticas de certificados de OpenSSL al verificar certificados X509, al habilitar el indicador X509_V_FLAG_POLICY_CHECK, un error de comprobación de directivas puede dar lugar a un doble libre. [CVE-2011-4109]
 				</p>
 				<p>
-					A weakness in the OpenSSL PKCS #7 code can be exploited using Bleichenbacher's attack on PKCS #1 v1.5 RSA padding also known as the million message attack (MMA). [CVE-2012-0884]
+					Una debilidad en el código OpenSSL PKCS # 7 puede ser explotada usando el ataque de Bleichenbacher contra el relleno RSA de PKCS # 1 v1.5 también conocido como el ataque de mensajes de millones (MMA). [CVE-2012-0884]
 				</p>
 				<p>
-					The asn1_d2i_read_bio() function, used by the d2i_*_bio and d2i_*_fp functions, in OpenSSL contains multiple integer errors that can cause memory corruption when parsing encoded ASN.1 data. This error can occur on systems that parse untrusted ASN.1 data, such as X.509 certificates or RSA public keys. [CVE-2012-2110] 
+					La función asn1_d2i_read_bio (), utilizada por las funciones d2i _ * _ bio y d2i _ * _ fp, en OpenSSL contiene varios errores de enteros que pueden causar daños en la memoria al analizar datos ASN.1 codificados. Este error puede ocurrir en sistemas que analizan datos ASN.1 no confiables, como certificados X.509 o claves públicas RSA. [CVE-2012-2110]
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20111223">
 				<h3>
-					December 23, 2011
+					23 de Diciembre de 2011
 				</h3>
 				<p>
-					Multiple security vulnerabilities impacting 0.3-RELEASE and 0.4-CURRENT have been patched in MidnightBSD.
+					Varias vulnerabilidades de seguridad que impactan al LANZAMIENTO-0.3 y al ACTUAL-0.4 han sido parcheadas en MidnightBSD.
 				</p>
 				<ul>
 					<li>
-						telnetd: fix a root exploit from a fixed buffer that was not checked
+						Telnetd: Corrige un exploit de raíz de un búfer fijo que no se ha comprobado
 					</li>
 					<li>
-						pam: don't allow escape from policy path. Exploitable in KDE, etc.
+						PAM: No permite el escape de la ruta de la política. Explotable en KDE, etc.
 					</li>
 					<li>
-						Fix pam_ssh module: If the pam_ssh module is enabled, attackers may be able to gain access to user accounts which have unencrypted SSH private keys.
+						Fix pam_ssh module: Si el módulo pam_ssh está habilitado, los atacantes pueden tener acceso a las cuentas de usuario que tienen claves privadas SSH no cifradas.
 					</li>
 					<li>
-						Fix security issue with chroot and ftpd.
+						Soluciona el problema de seguridad con chroot y ftpd.
 					</li>
 					<li>
-						nsdispatch(3) doesn't know it's working in a chroot and some operations can cause files to get reloaded causing a security hole in things like ftpd.
+						Nsdispatch(3) no sabe que está funcionando en un chroot y algunas operaciones pueden hacer que los archivos se vuelvan a cargar causando un agujero de seguridad en cosas como ftpd.
 					</li>
 				</ul>
 				<p>
-					Users should update via CVS and buildworld / installworld. This corresponds to 0.3-RELEASE-p5.
+					Los usuarios deben actualizar a través de CVS y buildworld / installworld. Esto corresponde al LANZAMIENT0-0.3-p5.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20111104">
 				<h3>
-					November 4, 2011
+					4 de Noviembre de 2011
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p4
+					MidnightBSD LANZAMIENTO-0.3-p4
 				</p>
 				<p>
-					Fix a problem with unix socket handling caused by the recent patch to unix socket path handling. This allows network apps to work under the linuxolator again.
+					Solucionar un problema con la manipulación de socket unix causada por el parche reciente a la manipulación de la ruta de socket unix. Esto permite que las aplicaciones de red funcionen bajo el linuxolator de nuevo.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20110928">
 				<h3>
-					September 28, 2011
+					28 de Septiembre de 2011
 				</h3>
 				<p>
-					MidnightBSD 0.3-RELEASE-p3
+					MidnightBSD LANZAMIENTO-0.3-p3
 				</p>
 				<p>
-					Security hole in compress and gzip with malformed .Z files can cause an infinite loop in these utilities.
+					Agujero de seguridad en comprimir y gzip con archivos .Z mal formados puede causar un bucle infinito en estas utilidades.
 				</p>
 				<p>
-					Validate paths for unix domain sockets.
+					Valida las rutas para los sockets de dominio unix.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20110530">
 				<h3>
-					May 30, 2011
+					30 de Mayo de 2011
 				</h3>
 				<p>
-					0.3-RELEASE and 0.4-CURRENT contain a vulnerable version of BIND 9.6.x. Users who use BIND and a recursive DNS server should update to 0.3-RELEASE-p2. More information can be found at 
+					El LANZAMIENTO-0.3 y el ACTUAL-0.4 contienen una versión vulnerable de BIND 9.6.x. Los usuarios que utilizan BIND y un servidor DNS recursivo deben actualizar a LANZAMIENT0-0.3-p2. Puede encontrar más información en
 				<a href="http://www.kb.cert.org/vuls/id/795694">
 					US-CERT
 				</a>
@@ -924,10 +924,10 @@
 			</blockquote>
 			<blockquote class="bluebox" id="a20101012">
 				<h3>
-					October 12, 2010
+					12 de Octubre de 2010
 				</h3>
 				<p>
-					0.3-PRERELEASE and 0.4-CURRENT have an issue in all pseudofs based file systems including procfs and linprocfs that either can be used to run code as the kernel or at best crash the system. It's important to update the kernel on systems affected. If you can't do that, disable proc and linproc on your systems until a new kernel can be built. 0.2.1 is not believed to be affected as the code is significantly different and the locking issue is not present. 
+					El PRELANZAMIENTO-0.3 y ACTUAL-0.4 tienen un problema en todos los sistemas de archivos basados en pseudofs, incluyendo procfs y linprocfs que pueden ser utilizados para ejecutar código como el kernel o, en el mejor de los casos, bloquear el sistema. Es importante actualizar el kernel en los sistemas afectados. Si no puede hacerlo, desactive proc y linproc en sus sistemas hasta que se pueda crear un nuevo kernel. 0.2.1 no se cree que se ve afectado ya que el código es significativamente diferente y la cuestión de bloqueo no está presente.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20100902">
