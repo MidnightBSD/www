@@ -728,7 +728,7 @@
 					The nullfs(5) implementation of the VOP_LINK(9) VFS operation does not check whether the source and target of the link are both in the same nullfs instance. It is therefore possible to create a hardlink from a location in one nullfs instance to a file in another, as long as the underlying (source) filesystem is the same.
 				</p>
 				<p>
-					ifioctl
+					Ifioctl
 				</p>
 				<p>
 					As is commonly the case, the IPv6 and ATM network layer ioctl request handlers are written in such a way that an unrecognized request is passed on unmodified to the link layer, which will either handle it or return an error code.
@@ -845,7 +845,7 @@
 						Telnetd: fix a root exploit from a fixed buffer that was not checked
 					</li>
 					<li>
-						PAM: don't allow escape from policy path. Exploitable in KDE, etc.
+						PAM: Fon't allow escape from policy path. Exploitable in KDE, etc.
 					</li>
 					<li>
 						Fix pam_ssh module: If the pam_ssh module is enabled, attackers may be able to gain access to user accounts which have unencrypted SSH private keys.
