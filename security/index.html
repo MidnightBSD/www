@@ -807,7 +807,7 @@
 					An additional problem in OpenSSL was identified related to the previous (p6) patch. 
 				</p>
 				<p>
-					add SGC and BUF_MEM_grow_clean(3) bug fixes.
+					Add SGC and BUF_MEM_grow_clean(3) bug fixes.
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20120503">
@@ -842,10 +842,10 @@
 				</p>
 				<ul>
 					<li>
-						telnetd: fix a root exploit from a fixed buffer that was not checked
+						Telnetd: fix a root exploit from a fixed buffer that was not checked
 					</li>
 					<li>
-						pam: don't allow escape from policy path. Exploitable in KDE, etc.
+						PAM: don't allow escape from policy path. Exploitable in KDE, etc.
 					</li>
 					<li>
 						Fix pam_ssh module: If the pam_ssh module is enabled, attackers may be able to gain access to user accounts which have unencrypted SSH private keys.
@@ -854,7 +854,7 @@
 						Fix security issue with chroot and ftpd.
 					</li>
 					<li>
-						nsdispatch(3) doesn't know it's working in a chroot and some operations can cause files to get reloaded causing a security hole in things like ftpd.
+						Nsdispatch(3) doesn't know it's working in a chroot and some operations can cause files to get reloaded causing a security hole in things like ftpd.
 					</li>
 				</ul>
 				<p>
@@ -921,10 +921,10 @@
 					This should be applied to all systems running 0.2.1. Users on p9 simply should update their kernels. No world update is required.
 				</p>
 				<p>
-					ipv6:<br /> The SIOCSIFINFO_IN6 ioctl is missing a necessary permissions check. Don't let everyone on the planet (with local access) change the properties on the ipv6 interfaces.
+					IPV6:<br /> The SIOCSIFINFO_IN6 ioctl is missing a necessary permissions check. Don't let everyone on the planet (with local access) change the properties on the ipv6 interfaces.
 				</p>
 				<p>
-					anonymous pipes:<br /> Stop unprivileged processes from reading pages of memory belonging to other processes with anonymous pipes.
+					Anonymous pipes:<br /> Stop unprivileged processes from reading pages of memory belonging to other processes with anonymous pipes.
 				</p>
 				<p>
 					0.3-Current users can verify they have the patch by checking sysctl kern.osreldate. If the value is 3005 or better, you have the patch.
@@ -1041,7 +1041,7 @@
 				<p>
 					A 
 				<a href="http://secunia.com/advisories/29803/">
-					security issue
+					Security issue
 				</a>
 				was found in mksh. This only affected CURRENT users. The software was updated to r33d
 				</p>
@@ -1051,7 +1051,7 @@
 					April 6, 2008
 				</h3>
 				<p>
-					bzip2 was updated to 1.05 in CURRENT to correct a security issue. 
+					Bzip2 was updated to 1.05 in CURRENT to correct a security issue. 
 				</p>
 			</blockquote>
 			<blockquote class="bluebox" id="a20080403">
