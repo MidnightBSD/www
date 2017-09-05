@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <title>MidnightBSD :: Documentación :: LANZAMIENTO-0.1 Errata</title>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/essence.css"/>
+<!-- $MidnightBSD$ -->
+    <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+    <script type="text/javascript">
+        window.cookieconsent_options = {
+            "message": "Esta web usa cookies para asegurarte la mejor experiencia",
+            "dismiss": "¡Consíguelo!",
+            "learnMore": "Más información",
+            "link": null,
+            "theme": "dark-top"
+        };
+    </script>
+    <script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+    <!-- End Cookie Consent plugin -->
+</head>
+
+<body>
+<div id="globe">
+        <div id="header"><h1 title="MidnightBSD Inicio"><a href="../" title="MidnightBSD Inicio">MidnightBSD: El BSD Para Todos</a></h1></div>
+<!--#include virtual="/menu.html"-->
+                        <div class="clear"></div>
+        <div id="text">
+                <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="" /> MidnightBSD Notas de Lanzamiento</h2>
+
+<h2>LANZAMIENTO-0.1 Errata</h2>
+
+<h3>Asuntos de instalación</h3>
+
+<p>Al paquete projectcenter.app le faltan dependencias en el disco2. 
+Al paquete mutt le falta la dependencia urlview en el disco2.
+</p>
+<p>El paquete GNUstep incluye gdnc al que le falta libgcc_s.so.1. 
+</p>
+<p>A bash 3 y gmake les falta libintl.so.6. Esto puede ser resuelto 
+mediante la desinstalación de gettext y su construcción desde el port. 
+Se colocó un nuevo paquete en el servidor FTP.
+</p>
+<h3>Asuntos del sistema</h3>
+
+<p>Ejemplo de CVSUP que para actualizar src busca ACTUAL en lugar de RELENG_0_1
+</p>
+<p>El nuevo sistema de mports no fue incluido en el RELEASE. Muchos puertos 
+funcionan en mports que no funcionan en el sistema antiguo. Se sugiere que actualice 
+su fuente utilizando RELENG_0_1 y descargue los últimos mports utilizando CVS o CVSup.
+</p>
+<p>Uso de Virtual PC para Windows: <br />
+Si instala MidnightBSD en VPC, deberá configurar hint.acpi.0.disabled = "1" en 
+/boot/device.hints. Esto ayudará con el problema "calcru: negative runtime of".
+</p>
+<p>
+11 de Agosto de 2007:<br /> 
+Las herramientas pkg_install que se encuentran en src/usr.sbin/pkg_install no 
+se actualizaron para mports. Esto ha sido corregido. Usted debe ser capaz de 
+actualizar a través cvs ese directorio y ejecutar make install y obtener las 
+nuevas versiones de pkg_add, pkg_delete, y así sucesivamente. 
+</p> 
+    </div>
+   <!--#include virtual="/footer.html" -->
+
+</body>
+</html>
