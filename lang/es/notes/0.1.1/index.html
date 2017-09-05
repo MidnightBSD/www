@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+        <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>MidnightBSD Notas de Lanzamiento</title>
+                <link rel="shortcut icon" href="/favicon.ico">
+                <style type="text/css" media="all">
+                <!--
+                        @import url("../../css/essence.css");
+                        #text ul li { font-size: 11pt; margin-bottom: 5px; }
+                        .note { font-size: 80%; color: #aaa; padding: 15px; margin-top: 15px; }
+                        .update h4 { color: #15a9ed; text-align: center; padding-top: 0.4em; margin-bottom: 0; display: block; }
+                        .update { background: #f2fbff; border: 2px solid #dff2fb; font-size: 80%; width: 40%; float: left; margin-right: 2.4em; color: #555; }
+                        .ast { color: #1373ce; }
+                        #list ul { margin-left: 2em; padding-left: 1em; list-style-position: inside; }
+                -->
+                </style>
+                <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+                <script type="text/javascript">
+                        window.cookieconsent_options = {
+                                "message": "Esta web usa cookies para asegurarte la mejor experiencia",
+                                "dismiss": "¡Consíguelo!",
+                                "learnMore": "Más información",
+                                "link": null,
+                                "theme": "dark-top"
+                        };
+                </script>
+                <script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+                <!-- End Cookie Consent plugin -->
+        </head>
+        <body>
+                <div id="globe">
+                        <div id="header"><h1 title="MidnightBSD Inicio"><a href="../../" title="MidnightBSD Inicio">MidnightBSD: El BSD Para Todos</a></h1></div>
+                <!--#include virtual="/menu.html"-->
+                                        <div class="clear"></div>
+                        <div id="text">
+                                <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt=""> MidnightBSD Notas de Lanzamiento</h2>
+                                <div class="devupdate fleft">
+                                        <h4>Información de última hora:</h4>
+                                        <blockquote>
+                                                <p><a href="errata.html">Errata</a></p>
+                                                <p>Esta versión incluye x.org 6.9. Será la última versión con x.org 6.9. Los usuarios que deseen utilizar x.org 7.3 deben actualizar su árbol de mports y desinstalar todos los puertos dependiendo de X11. Se recomienda que elimine / usr / X11R6 y cree un enlace simbólico a /usr/local para /usr/X11R6. Esto permitirá que todos los ports funcionen. El árbol de ports actualizados tiene muchos paquetes de software nuevos que incluyen la mayoría de Gnome 2.18.3. Desde que se creó este árbol de mports (0.1.1), más de 300 ports fueron agregados a MidnightBSD. 1500 ports se están construyendo correctamente en nuestro clúster de construcción.</p>
+                                        </blockquote>
+                                </div>
+                                <h3>(11/07/07) MidnightBSD LANZAMIENTO-0.1.1</h3>
+                                <p>Estamos felices de anunciar el lanzamiento de MidnightBSD 0.1.1. El software está disponible en nuestro servidor FTP y estará en los espejos en breve.</p>
+                                <p>Los paquetes para 0.1.1 están en el <a href="#">servidor FTP</a>, pero los enlaces simbólicos Latest y category aún no se han puesto en su lugar en el servidor FTP. Puede descargar paquetes manualmente con <code>pkg_add</code> o darle una url exacta al archivo con <code>pkg_add -r</code> Estamos planeando arreglar esto en unos días. Estos paquetes se generaron en nuestro nuevo clúster de construcción de mports llamado magus. Había cerca de 1000 paquetes generados para esta versión en i386.</p>
+                                <p>Estoy planeando hacer una versión de amd64, pero no he empezado esa compilación todavía. Probablemente será otra semana antes de que eso sea hecho, ya que tengo que construir paquetes también.</p>
+                                <h4>Qué hay de nuevo:</h4>
+                                <ul>
+                                        <li>Actualiza bzip2 a 1.04</li>
+                                        <li>mports colección se incluye con el lanzamiento. Esto simplifica enormemente la obtención de software adicional para MidnightBSD.</li>
+                                        <li>OpenSSL asunto de seguridad corregido.</li>
+                                        <li>La salida de libpthread se escribe como un error en stderr en lugar de stdout</li>
+                                        <li>find tiene nuevas opciones de tiempo de "nacimiento".</li>
+                                        <li> Las herramientas de pkg_install como pkg_add conocen los mports.</li>
+                                </ul>
+                                <h5>Agradecimientos Especiales: El Departamento de Ciencias de la Computación de la Universidad de Michigan Oriental donó los recursos de computación para el clúster de construcción magus. Esto nos permitió construir paquetes en 10 horas para esta versión.</h5>
+                                <h4>El siguiente lanzamiento:</h4>
+                                <p>0.2 será la próxima liberación que excluye cualquier necesidad de una versión posterior 0.1.x. Incluirá reemplazos para <code>pkg_add</code> y una nueva opción de instalador. Se espera en 2008.</p>
+                        </div>
+                        <div class="horiz"><blockquote><hr></blockquote></div>
+                        <div class="clear"></div>
+                        <div id="footer">
+                                <blockquote>
+                                        <p><a href="../../legal/">Avisos Legales</a> &#8226; <a href="../sitemap/">Mapa del sitio</a> &#8226; <a href="http://www.cafepress.com/midnightbsd">Store</a> &#8226; MidnightBSD &copy; 2005-2009 Lucas Holt &#8226; <span id="cc"><a href="http://commoncreature.com/">common creature</a></span></p>
+                                </blockquote>
+                        </div>
+                </div>
+                <!-- START GOOGLE -->
+                <div id="googlead" class="center">
+                <script type="text/javascript"><!--
+                google_ad_client = "pub-1321195614665440";
+                google_ad_width = 468;
+                google_ad_height = 60;
+                google_ad_format = "468x60_as";
+                google_ad_type = "text_image";
+                google_ad_channel ="";
+                google_color_border = "1651b5";
+                google_color_bg = "edf7f7";
+                google_color_link = "1651b5";
+                google_color_text = "1651b5";
+                google_color_url = "1651b5";
+                //--></script>
+                <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                </script>
+                </div>
+                <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+                <script type="text/javascript">
+                var pageTracker = _gat._getTracker("UA-560995-2");
+                pageTracker._initData();
+                pageTracker._trackPageview();
+                </script>
+                <!-- END GOOGLE -->
+        </body>
+</html>
