@@ -81,171 +81,180 @@ bsdstats de modo que podamos tener una idea mejor en uso.
 </p>
 
 <p>
-Si necesita volver a ejecutar el script firstboot, haga rm /etc/fbreciept 
-y luego sh /etc/rc.d/firstboot start.
+        Si necesita volver a ejecutar el script firstboot, haga <strong>rm /etc/fbreciept</strong> 
+        y luego <strong>sh /etc/rc.d/firstboot start</strong>
 </p>
 
 <h4>Registro de Cambios</h4>
 <pre>
 20090326:
-        MidnightBSD 0.2.1-RELEASE-p7
+        MidnightBSD LANZAMIENTO-0.2.1-p7
 
-        Fix several security problems with sudo.  It is now 1.6.9-p20
+        Soluciona varios problemas de seguridad con sudo. Ahora es 1.6.9-p20
 
 20090115:
-        MidnightBSD 0.2.1-RELEASE-p6
+        MidnightBSD LANZAMIENTO-0.2.1-p6
 
-        Correct an issue with BIND that allows for DNSSEC spoofing
-        attacks.
+        Corrija un problema con BIND que permita ataques de falsificación 
+        de DNSSEC.
 
 20090110:
-        MidnightBSD 0.2.1-RELEASE-p5
+        MidnightBSD LANZAMIENTO-0.2.1-p5
 
-        For applications using OpenSSL for SSL connections, an invalid SSL
-        certificate may be interpreted as valid.  This could for example be
-        used by an attacker to perform a man-in-the-middle attack.
+        Para aplicaciones que utilizan OpenSSL para conexiones SSL, un 
+        certificado SSL no válido puede interpretarse como válido. Esto 
+        podría ser utilizado, por ejemplo, por un atacante para realizar 
+        un ataque man-in-the-middle.
 
-        Other applications which use the OpenSSL EVP API may similarly be
-        affected.
+        Otras aplicaciones que utilizan OpenSSL EVP API también pueden 
+        ser afectadas.
 
-        Stop cross site request forgery attacks in lukemftpd
+        Detiene ataques de falsificación de solicitud de sitio cruzado 
+        en lukemftpd.
 
 20081231:
-        MidnightBSD 0.2.1-RELEASE-p4
+        MidnightBSD LANZAMIENTO-0.2.1-p4
 
-        Correct a problem where function pointers for netgraph
-        and bluetooth sockets are not initialized properly.
+        Corrija un problema en el que los punteros de funciones para los 
+        sockets netgraph y bluetooth no se inicializan correctamente.
 
 20081124:
-        MidnightBSD 0.2.1-RELEASE-p3
+        MidnightBSD LANZAMIENT0-0.2.1-p3
 
-        Correct a problem in arc4random which causes the device
-        not get get enough entropy for system services.  Geom
-        classes initialized at startup will still have problems.
+        Corrige un problema en arc4random que hace que el dispositivo no 
+        obtenga suficiente entropía para los servicios del sistema. Las 
+        clases de Geom inicializadas en el inicio todavía tendrán problemas.
 
 20081002:
-        MidnightBSD 0.2.1-RELEASE-p2
+        MidnightBSD LANZAMIENTO-0.2.1-p2
 
-        IPv6 Neighbor Discovery Protocol routing vulnerability
+        Vulnerabilidad de enrutamiento de Protocolo de Detección de Vecinos 
+        de IPv6
 
         http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2476
         http://www.kb.cert.org/vuls/id/472363
 
-        This fix causes IPv6 Neighbor Discovery Neighbor Solicitation 
-        messages to be ignored from non-neighbors.
+        Esta corrección hace que los mensajes de Solicitud de Vecinos 
+        de Descubrimiento de Vecinos de IPv6 sean ignorados desde los 
+        no vecinos.
 
-        This can be re-enabled, if needed, by setting the newly added
-        net.inet6.icmp6.nd6_onlink_ns_rfc4861 sysctl to 1.
+        Esto se puede volver a habilitar, si es necesario, estableciendo 
+        el nuevo añadido net.inet6.icmp6.nd6_onlink_ns_rfc4861 sysctl a 1.
 
 20080929:
-        MidnightBSD 0.2.1-RELEASE-p1
+        MidnightBSD LANZAMIENT0-0.2.1-p1
 
-        Fix a defect in ftpd.  The command buffer was split which allowed
-        attackers to send arbritrary commands over the network.
+        Solucionar un defecto en ftpd. El búfer de comandos se dividió, 
+        lo que permitió a los atacantes enviar comandos arbritrary a través 
+        de la red.
 
 20080905:
-        Update nve(4) to support newer hardware.
+        Actualiza nve (4) para admitir hardware más nuevo.
 
 20080903:
-        Correct two defects in MidnightBSD.  AMD64/EMT64 systems had a 
-        privledge escalation issue.  CVE-2008-3890
+        Corrige dos defectos en MidnightBSD. Los sistemas AMD64/EMT64 tuvieron 
+        un problema de escalamiento de privilegios.  CVE-2008-3890
 
-        In case of an incoming ICMPv6 'Packet Too Big Message', there is an
-        insufficient check on the proposed new MTU for a path to the 
-        destination.
+        En el caso de un ICMPv6 entrante 'Packet Too Big Message', hay un chequeo 
+        insuficiente en la nueva MTU propuesta para una ruta hacia el destino. 
         CVE-2008-3530
 
 20080830:
-        MidnightBSD 0.2.1-RELEASE
+        MidnightBSD LANZAMIENTO-0.2.1
 
-        Oops, fix some bugs with sysinstall's handling of packages found 
-        on the release ISOs.  Tweak etc/firstboot while where here.
+        Vaya, solucione algunos errores con el manejo de paquetes de sysinstall 
+        que se encuentran en las ISOs de lanzamiento. Tweak etc/firstboot mientras 
+        que aquí.
 
 20080829:
-        MidnightBSD 0.2-RELEASE
+        MidnightBSD LANZAMIENTO-0.2
 
 20080703:
-        Correct problem with pcc and DESTDIR that affected creating live cds
-        and jails. 
+        Corregir el problema con pcc y DESTDIR que afectó la creación de cds y 
+        cárceles en vivo. 
 
-        sysinstall would incorrectly truncate DHCP info when configuring
-        ipv4 networking.  This was the result of a bad patch several months
-        ago.  Fix this error.  Found via testing a snapshot.
+        sysinstall truncaría incorrectamente información DHCP al configurar redes 
+        IPv4. Esto fue el resultado de un mal parche hace varios meses. Corrige 
+        este error. Encontrado a través de la prueba de una instantánea.
 
 20080627:
-        Add firmware(9), WEP, CCMP, TKIP to GENERIC.
+        Añade firmware(9), WEP, CCMP, TKIP a GENERIC.
 
-        Add glabel to GENERIC.
+        Agrega glabel a GENERIC.
 
-        Intel ICH8 mobile chipset used on some iMacs included with ata.
+        Intel ICH8 chipset móvil utilizado en algunos iMacs incluidos con ata.
 
-        pcc connected to the build on i386. (alternative compiler)
+        pcc conectado a la compilación en i386. (compilador alternativo)
 
 20080613:
-        Begin work for MidnightBSD 0.2-PRERELEASE
+        Empieza el trabajo para MidnightBSD PRELANZAMIENTO-0.2
 
 20080528:
         Sendmail 8.14.3
 
 20080516:
-        ssh-vulnkey allows you to look for vulnerable ssh keys that
-        were generated on Debian and Ubuntu hosts over the last
-        few years.  sshd can block offending keys with a configuration
-        option.
+        ssh-vulnkey le permite buscar las claves ssh vulnerables 
+        que se generaron en los hosts Debian y Ubuntu durante los 
+        últimos años. sshd puede bloquear claves ofensivas con una 
+        opción de configuración.
 
-        The elf note on binaries is now set to MidnightBSD.
+        La nota elf en los binarios ahora se fija a MidnightBSD.
 
 20080514:
-        Fixed a number of problems with pcc.  It is not yet connected
-        to the build, but usable on i386 hosts.  You may use it 
-        by make; make install in /usr/src/usr.bin/pcc.  It will
-        install in /usr/local as some of the files conflict with
-        GCC versions. __MidnightBSD__ is defined in PCC as well.
+        Solucionado una serie de problemas con pcc. Todavía no está 
+        conectado a la compilación, pero puede utilizarse en hosts i386. 
+        Usted puede usarlo por make; make install en /usr/src/usr.bin/pcc. 
+        Se instalará en /usr/local ya que algunos de los archivos 
+        estarán en conflicto con las versiones de GCC. 
+        __MidnightBSD__ se define en PCC también.
 
-        System headers were fixed to allow pcc to compile many binaries
-        on MidnightBSD.  bin/cp will work now for instance.
+        Los encabezados del sistema se han fijado para permitir que pcc 
+        compile muchos binarios en MidnightBSD. bin/cp funcionará ahora, 
+        por ejemplo.
 
 20080430:
-        __MidnightBSD__ is now defined via gcc.  This can be tested
-        to determine we're running on MidnightBSD in the preprocessor..
+        __MidnightBSD__ se define ahora a través de gcc. Esto se puede 
+        probar para determinar que estamos corriendo en MidnightBSD en 
+        el preprocesador.
 
 20080429:
-        Import bind 9.4.2 with threading
+        Importa bind 9.4.2 con roscado.
 
-        libpthread (KSE) and libthr are built earlier
+        libpthread (KSE) y libthr se construyen antes.
         
-        pcvt(4) removed!
+        ¡pcvt(4) eliminado!
 
-        Alias added for core2 cpus.
+        Alias añadido para cpus core2.
 
-        Alpha and PC98 only utilities removed from usr/sbin
+        Sólo las utilidades alfa y PC98 se eliminaron de usr/sbin.
 
-        syslogd, adduser, rmuser, mergemaster and mailwrapper have been
-        improved.  See the man pages for info.
+        syslogd, adduser, rmuser, mergemaster y mailwrapper han sido 
+        mejorados. Consulte las páginas de manual para obtener información.
 
-        periodic scripts will not send emails with empty message bodies.
-        See mailwrapper fix.
+        los scripts periódicos no enviarán correos electrónicos con cuerpos 
+        de mensajes vacíos. Ver corrección mailwrapper.
 
 20080410:
-        Sync cpdup with DragonFly.  Add parallel transaction support and
-        -l flag to line-buffer stdout and stderr.
+        Sincroniza cpdup con DragonFly. Agrega soporte de transacciones 
+        paralelas e indicador -l a line-buffer stdout y stderr.
 
 20080406:
-        Import bzip2 1.05
-        Import OpenSSH 4.9p1
+        Importa bzip2 1.05
+        Importa OpenSSH 4.9p1
 
 20080322:
-        The default umask was changed to 022.
+        La umask predeterminada se cambió a 022.
         
-        /usr/X11R6 paths were removed from several config files.
+        Las rutas /usr/X11R6 fueron eliminadas de varios archivos de 
+        configuración.
 
-        .mkshrc files are now installed for root.
+         Los archivos .mkshrc ahora están instalados para root.
 
 20080316:
-        FIx a problem with gif0 tunnels and neighbors with IPV6.
+        Soluciona un problema con los túneles gif0 y vecinos con IPV6.
 
 20080312:
-        Add lndir from X.org.  This aides in the porting of MirPorts.
+        Add lndir from X.org. This aides in the porting of MirPorts.
 
         New OS versions were added to the mapage code (groff)
 
