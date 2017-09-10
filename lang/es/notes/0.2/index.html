@@ -254,132 +254,138 @@ bsdstats de modo que podamos tener una idea mejor en uso.
         Soluciona un problema con los túneles gif0 y vecinos con IPV6.
 
 20080312:
-        Add lndir from X.org. This aides in the porting of MirPorts.
+        Añade lndir de X.org. Esto ayuda en el portado de MirPorts.
 
-        New OS versions were added to the mapage code (groff)
+        Se añadieron nuevas versiones de SO al código mapage (groff).
 
 20080310:
-        Correct a buffer overflow in ppp.
+        Corrige un desbordamiento de búfer en ppp.
 
 20080308:
-        Remove /usr/X11R6 from manpath config.
+        Elimina /usr/X11R6 de la configuración de manpath.
 
 20080307:
-        Atheros driver no longer has several options set
-        which corrects building in tinderbox on all three platforms.
+        El controlador de Atheros ya no tiene varias opciones que 
+        corrigen la construcción en tinderbox en las tres plataformas.
 
-        Added a new macro to sx.h which returns true if the current
-        thread holds an exclusive lock on a specifix sx.
+        Se agregó una nueva macro a sx.h que devuelve true si el 
+        thread actual tiene un bloqueo exclusivo en un specifix sx.
 
-        Removed OS/2's HPFS file system.   It's not maintained and
-        I don't know anyone using OS/2 or ecomstation these days.
-        My copy is in the closet collecting dust.
+        Se eliminó el sistema de archivos HPFS de OS/2. No se 
+        mantiene y no conozco a nadie usando OS/2 o ecomstation 
+        estos días. Mi copia está en el armario recogiendo polvo.
 
 20080306:
-        Synced tinderbox with FreeBSD.  Modified it for MidnightBSD.
-        Developers can now use it to check src builds.
+        Sincronizado tinderbox con FreeBSD. Se ha modificado para 
+        MidnightBSD. Los desarrolladores ahora pueden usarlo para 
+        comprobar las compilaciones src.
 
 20080303:
-        Add mksh to /etc/shells, made some adjustments to options
-        for mksh builds per suggestion upstream.
+        Agrega mksh a /etc/shells, se realizaron algunos ajustes en las 
+        opciones para las compilaciones mksh por sugerencia en sentido 
+        ascendente.
 
-        USB HID table updated with modern hardware list.
+        USB HID tabla actualizada con la lista de hardware moderno.
 
-        Updated BSD family true (we're not in there yet)
+        Actualizada familia verdadera de BSD (no estamos allí todavía).
 
-        iso3166 file updated and import of tzdata2007k for 
-        new time zones.
+        Actualizado archivo iso3166 e importación de tzdata2007k para 
+        nuevas zonas horarias.
 
-        Updated mksh to latest version R33.
+        Actualizado mksh a la última versión R33.
 
 20080228:
-        Remplaced the random IP id generation code with a new
-        version by Amit Klein.
+        Sustituido el código de generación de ID de 
+        identificación aleatoria por una nueva versión 
+        de Amit Klein.
 
 20080221:
-        Sendfile write only permissions fix.
+        Resuelve que sendfile escriba sólo permisos.
 
-        Removed some HPFS and PC98 code.
+        Se eliminaron algunos códigos HPFS y PC98.
 
-        iso639 file sycned with DragonFly.
+        Archivo iso639 sincrozinado con libélula.
 
 20080128:
-        Changed NTP configuration so that ips aren't cached
-        so multiple servers are used.
+        Se ha cambiado la configuración de NTP para 
+        que los ips no se almacenen en caché, por lo 
+        que se utilizan varios servidores.
 
-        Fix an issue with fork() in libpthread.
+        Soluciona un problema con fork() en libpthread.
 
 20080121:
-        Add virtualization detection to set the HZ rate
-        according to a VM present.  VMWare and Parallels
-        should work better like this.
+        Agrega la detección de virtualización para 
+        establecer la frecuencia HZ según una VM presente. 
+        VMWare y Parallels deberían funcionar mejor así.
 
-        Change to full x11 install in sysinstall.  Add
-        xorg 7 support.
+        Cambia a instalación completa x11 en sysinstall. 
+        Añade la compatibilidad con xorg 7.
 
 20080115:
-        Fix the handling of PTY's.  CVE-2008-0216
+        Soluciona el manejo de PTY. CVE-2008-0216
 
 20080105:
-        mport delete code added, USE_MPORT_TOOLS knob aded.
+        mmport elimina código añadido, añadido USE_MPORT_TOOLS perilla.
 
 20080101:
-        Happy New Year
+        Feliz año nuevo
 
 20071123:
-        Update sendmail to 8.14.2
+        Actualiza sendmail a 8.14.2.
 
 20071120:
-        Update system compiler to gcc 3.4.6.
+        Actualiza el compilador del sistema a gcc 3.4.6..
 
 20071023:
-        Updated mksh to R31d.
+        Actualizado mksh a R31d
 
 20070911:
-        Updated mksh to version R31b.
+        Actualizado mksh a la versión R31b.
 
-        Fixed stderr output in libpthread.  Previously it was
-        written to stdout.
+        Se ha corregido la salida stderr en libpthread. 
+        Anteriormente se escribió en stdout.
 
 20070831:
-        Added dot.mkshrc file to support the recent change to 
-        mksh from OpenBSD's ksh derived from pdksh.  
+        Se agregó el archivo dot.mkshrc para soportar el reciente 
+        cambio a mksh desde el ksh de OpenBSD derivado de pdksh.  
 
-        Added new firewall configuration.  ipfw is enabled by default
-        with a "desktop" configuration.  Consult /etc/rc.firewall
-        or ipfw show to see the ruleset used.  You can disable
-        ipfw by setting firewall_enable="NO" in /etc/rc.conf This
-        change only effects IPv4.  IPv6 does not have a firewall
-        enabled by default.
+        Se ha añadido una nueva configuración de cortafuegos. ipfw 
+        está habilitado de forma predeterminada con una configuración 
+        de "escritorio". Consulte /etc/rc.firewall o ipfw show para 
+        ver el conjunto de reglas utilizado. Puede desactivar ipfw 
+        estableciendo firewall_enable = "NO" en /etc/rc.conf Este 
+        cambio sólo afecta a IPv4. IPv6 no tiene un firewall 
+        habilitado de forma predeterminada.
+        
 20070814:
-        Removed GNU tar source.  We've been using BSD tar 
-        for awhile.
+        Se ha eliminado la fuente GNU tar. Hemos estado usando BSD 
+        tar por un tiempo.
 
 20070806:
-        Finished removing umapfs and autofs from the tree.
+        Finalizada la eliminación de umapfs y autofs del árbol.
 
 20070804:
-        BIND and Tcpdump have been patched for recent vulnerabilities.
+        BIND y Tcpdump han sido parcheados para vulnerabilidades recientes.
 
-        We switched to BSD cpio (pax).
+        Hemos cambiado a BSD cpio (pax).
 
 20070719:
-        Imported cpdup from DragonFly as /bin/cpdup
+        Importado cpdup desde DragonFly como /bin/cpdup
 
 20070716:
-        Update GNU cpio to 2.8. 
+        Actualiza GNU cpio a 2.8. 
 
 20070410:
-        cvs was updated to 1.12.13.  cvsbug was removed.
-        cvs now behaves similarly to DragonFly's cvs with
-        most of their local changes.  
+        cvs fue actualizado a 1.12.13.  cvsbug fue eliminado.
+        cvs ahora se comporta de manera similar a los cvs de 
+        DragonFly con la mayoría de sus cambios locales.  
 
 20070409:
-        RELENG_0_1 was created. More aggresive changes will
-        continue here.
+        Se creó RELENG_0_1. Se continuarán cambios más agresivos 
+        aquí.
 </pre>
-                                <h4>The next release:</h4>
-                                <p>0.3 will be the next release barring any need for a later 0.2.x release. It will include replacements for <code>pkg_add</code> and a new installer option. Expect it in late 2010.</p>
+                                <h4>El siguiente lanzamiento:</h4>
+                                <p>0.3 será la próxima liberación que excluye cualquier necesidad de una versión 0.2.x posterior. Incluirá reemplazos para <code>pkg_add</ code> y una nueva opción de instalador. Se espera a finales de 2010.</p>
                         </div>
 <!--#include virtual="/footer.html"-->
         </body>
