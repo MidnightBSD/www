@@ -21,3 +21,5 @@ Sitemap: http://www.midnightbsd.org/sitemap7.xml
 Sitemap: http://www.midnightbsd.org/sitemap8.xml
 Sitemap: http://www.midnightbsd.org/sitemap9.xml
 Host: www.midnightbsd.org
+User-agent: AhrefsBot 
+Disallow: /
