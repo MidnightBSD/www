@@ -8,7 +8,6 @@ Disallow: /magus/auth/
 Disallow: /ftp/MidnightBSD/distfiles/*.asc
 Disallow: /ftp/MidnightBSD/distfiles/*.sig
 Disallow: /ftp/
-Disallow: /opengrok/
 Crawl-delay: 5
 Sitemap: http://www.midnightbsd.org/sitemap.xml
 Sitemap: http://www.midnightbsd.org/sitemap1.xml
