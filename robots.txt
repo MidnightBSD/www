@@ -22,3 +22,11 @@ Sitemap: http://www.midnightbsd.org/sitemap9.xml
 Host: www.midnightbsd.org
 User-agent: AhrefsBot 
 Disallow: /
+
+User-agent: The Knowledge AI
+Disallow: /
+
+User-agent: dotbot
+Disallow: /magus/
+
+
