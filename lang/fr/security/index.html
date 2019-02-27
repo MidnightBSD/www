@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+			Mises à Jour de Sécurité de MidnightBSD
+		</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<style type="text/css" media="all">
+			@import url("/css/essence.css");
+		</style>
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header">
+				<h1 title="MidnightBSD Home">
+				<a href="../" title="MidnightBSD Home">MidnightBSD: Le BSD pour Tous</a>
+				</h1>
+			</div>
+<!--#include virtual="/menu.html"-->
+		<div class="clear">
+		</div>
+		<div id="text">
+			<h2>
+				<img src="/images/oxygen/security32.png" alt="�"/> Mises à jour de Sécurité
+			</h2>
+
+		<h3>Paquets Logiciels de mport</h3>
+
+		<p>Pour les avis de sécurité liés aux paquets, essayez le nouveau site web <a href="http://sec.midnightbsd.org/#!/">Conseil de Sécurité</a>.
+		Pour détecter des paquets vulnérables intallés sur le système, installer le client de conseil de sécurité avec
+		<i>mport install  security-advisory-client</i>. Puis exécuter simplement advisory.pl pour vérifier votre système.
+
+	    <h3>Conseil de sécurité sur MidnightBSD</h3>
+
+            <blockquote class="bluebox" id="a20170818">
+                <h3>8 Août 2017</h3>
+
+                <p>MidnightBSD 0.8.6 RELEASE
+                <p> Update em(4) ajout du support des era Intel NICs skylake et kabylake.
+
+                <p> Update usb(4) ajout du support des nouveaux contrôleurs Intel et Asmedia et
+                    de plusieurs nouveaux matériels.
+
+                <p>Vulnérabilité du service de nom Heimdal KDC-REP patchée.
+
+                <p>serf 1.3.9
+
+                <p>subversion 1.8.10
+            </blockquote>
+            <blockquote class="bluebox" id="a20161213">
+                <h3>13 Décembre 2016</h3>
+
+                <p>MidnightBSD 0.8.5 RELEASE
+                <p>Résolution de deux problèmes de sécurité, telnetd et link_ntoa(3) dans libc.
+            </blockquote>
+			<blockquote class="bluebox" id="a20161105">
+				<h3>5 Novembre 2016</h3>
+
+				<p>MidnightBSD 0.8.4 RELEASE
+				<p> BIND 9.9.9-p4
+					<br>
+					OpenSSH 7.3p1
+
+				<p>
+					Patch de sécurité OpenSSL
+					<br>
+					Due to improper handling of alert packets, OpenSSL would consume an excessive
+					amount of CPU time processing undefined alert messages.</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20161025">
+				<h3>25 Octobre 2016</h3>
+
+				<p>MidnightBSD 0.8.3 RELEASE
+				<p>Revised patch to address a problem pointed out by
+				        ahaha from Chaitin Tech.</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20161001">
+				<h3>1 Octobre 2016</h3>
+
+				<p>MidnightBSD 0.8.2 RELEASE
+
+				<p>Fix a regression with OpenSSL security.
+
+				<p>Sendmail 8.15.2
+			</blockquote>
+			<blockquote class="bluebox" id="a20160923">
+				<h3>23 Spetembre 2016</h3>
+
+				<p>MidnightBSD 0.8.1 RELEASE
+
+				<p>Security Updates for OpenSSL</p>
+
+				<p>A malicious client can send an excessively large OCSP Status Request extension.
+					If that client continually requests renegotiation, sending a large OCSP Status
+					Request extension each time, then there will be unbounded memory growth on the
+					server. [CVE-2016-6304]
+
+				<p>An overflow can occur in MDC2_Update() either if called directly or through
+					the EVP_DigestUpdate() function using MDC2. If an attacker is able to supply
+					very large amounts of input data after a previous call to EVP_EncryptUpdate()
+					with a partial block then a length check can overflow resulting in a heap
+					corruption. [CVE-2016-6303]
+
+				<p>If a server uses SHA512 for TLS session ticket HMAC it is vulnerable to a
+					DoS attack where a malformed ticket will result in an OOB read which will
+					ultimately crash. [CVE-2016-6302]
+
+				<p>The function BN_bn2dec() does not check the return value of BN_div_word().
+					This can cause an OOB write if an application uses this function with an
+					overly large BIGNUM. This could be a problem if an overly large certificate
+					or CRL is printed out from an untrusted source. TLS is not affected because
+					record limits will reject an oversized certificate before it is parsed.
+					[CVE-2016-2182]
+
+				<p>The function TS_OBJ_print_bio() misuses OBJ_obj2txt(): the return value is
+					the total length the OID text representation would use and not the amount
+					of data written. This will result in OOB reads when large OIDs are presented.
+					[CVE-2016-2180]
+
+				<p>Some calculations of limits in OpenSSL have used undefined pointer arithmetic.
+					This could cause problems with some malloc implementations. [CVE-2016-2177]
+
+				<p>Operations in the DSA signing algorithm should run in constant time in order to
+					avoid side channel attacks. A flaw in the OpenSSL DSA implementation means that
+					a non-constant time codepath is followed for certain operations. [CVE-2016-2178]
+
+				<p>In a DTLS connection where handshake messages are delivered out-of-order those
+					messages that OpenSSL is not yet ready to process will be buffered for later
+					use. Under certain circumstances, a flaw in the logic means that those messages
+					do not get removed from the buffer even though the handshake has been completed.
+					An attacker could force up to approx. 15 messages to remain in the buffer when
+					they are no longer required. These messages will be cleared when the DTLS
+					connection is closed. The default maximum size for a message is 100k. Therefore
+					the attacker could force an additional 1500k to be consumed per connection.
+					[CVE-2016-2179]
+
+				<p> A flaw in the DTLS replay attack protection mechanism means that records that
+					arrive for future epochs update the replay protection "window" before the MAC
+					for the record has been validated. This could be exploited by an attacker by
+					sending a record for the next epoch (which does not have to decrypt or have a
+					valid MAC), with a very large sequence number. This means that all subsequent
+					legitimate packets are dropped causing a denial of service for a specific
+					DTLS connection. [CVE-2016-2181]
+
+				<p>In OpenSSL 1.0.2 and earlier some missing message length checks can result in
+					OOB reads of up to 2 bytes beyond an allocated buffer. There is a theoretical
+					DoS risk but this has not been observed in practice on common platforms.
+					[CVE-2016-6306]
+			</blockquote>
+			<blockquote class="bluebox" id="a20160531">
+				<h3>31 Mai 2016</h3>
+
+				<p>MidnightBSD 0.7.9 RELEASE
+
+				<p>Fix four security issues with MidnightBSD.
+
+				<p>The implementation of TIOCGSERIAL ioctl(2) does not clear the output
+					struct before sending to userland in the linux emulation layer.
+
+				<p>The compat 43 stat(2) system call exposes kernel stack to userland.
+
+				<p>libarchive - CVE-2015-2304 and CVE-2013-0211 fix issues with
+					cpio directory traversal and an integer signedness error in the archive
+					write zip data routine.
+			</blockquote>
+			<blockquote class="bluebox" id="a20160519">
+				<h3>19 Mai 2016</h3>
+
+				<p>MidnightBSD 0.7.8 RELEASE
+
+				<p> Kernel Security updates
+
+				<p>atkbd(4) - Incorrect signedness comparison in the ioctl(2) handler allows a malicious
+					local user to overwrite a portion of the kernel memory.
+
+				<p>Incorrect argument handling in sendmsg(2)
+
+				<p>Incorrect argument handling in the socket code allows malicious local
+					user to overwrite large portion of the kernel memory.
+			</blockquote>
+			<blockquote class="bluebox" id="a20160505">
+				<h3>5 Mai 2016</h3>
+
+				<p>MidnightBSD 0.7.7 RELEASE
+
+				<p>OpenSSL security patch
+
+				<p>The padding check in AES-NI CBC MAC was rewritten to be in constant time
+					by making sure that always the same bytes are read and compared against
+					either the MAC or padding bytes. But it no longer checked that there was
+					enough data to have both the MAC and padding bytes. [CVE-2016-2107]
+
+				<p>An overflow can occur in the EVP_EncodeUpdate() function which is used for
+					Base64 encoding of binary data. [CVE-2016-2105]
+
+				<p>An overflow can occur in the EVP_EncryptUpdate() function, however it is
+					believed that there can be no overflows in internal code due to this problem.
+					[CVE-2016-2106]
+
+				<p>When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio()
+					a short invalid encoding can cause allocation of large amounts of memory
+					potentially consuming excessive resources or exhausting memory.
+					[CVE-2016-2109]
+			</blockquote>
+			<blockquote class="bluebox" id="a20160317">
+				<h3>17 Mars 2016</h3>
+
+				<p>MidnightBSD 0.7.6 RELEASE
+
+				<p>OpenSSH doesn't have the luck of the Irish.</p>
+
+				<p>Fix a security issue with OpenSSH X11 forwarding that can allow an attacker
+					run shell commands on the call to xauth.</p>
+
+				<p>Incorrect argument validation in sysarch(2) </p>
+
+				<p>A special combination of sysarch(2) arguments, specify a request to
+					uninstall a set of descriptors from the LDT. The start descriptor
+					is cleared and the number of descriptors are provided. Due to invalid
+					use of a signed intermediate value in the bounds checking during argument
+					validity verification, unbound zero'ing of the process LDT and adjacent
+					memory can be initiated from usermode.
+
+					<br> Patch obtained from FreeBSD.</p>
+
+
+			<blockquote class="bluebox" id="a20160310">
+
+				<h3>10 Mars 2016</h3>
+
+				<p>MidnightBSD 0.7.5 RELEASE</p>
+
+				<p>Security patch for OpenSSL to stop DROWN [CVE-2016-0800]
+					[CVE-2016-0705] [CVE-2016-0798] [CVE-2016-0797]
+					[CVE-2016-0799] [CVE-2016-0702] [CVE-2016-0704]</p>
+
+				<p>A programming error in the Linux compatibility layer could cause the
+					issetugid(2) system call to return incorrect information.  </p>
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20160130">
+				<h3>30 Janvier 2016</h3>
+
+				<p>MidnightBSD 0.7.4 RELEASE</p>
+
+				<p>OpenSSL CVE-2015-3197 </p>
+
+				<p>A malicious client can negotiate SSLv2 ciphers that have been disabled on
+					the server and complete SSLv2 handshakes even if all SSLv2 ciphers have
+					been disabled, provided that the SSLv2 protocol was not also disabled via
+					SSL_OP_NO_SSLv2.</p>
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20160114">
+				<h3>14 Janvier 2016</h3>
+
+				<p>OpenSSH </p>
+
+				<p>Disable roaming to mitigate a security issue with OpenSSH.</p>
+
+				<p>0.7.3 RELEASE </p>
+
+				<p>OpenSSL </p>
+
+				<p>The signature verification routines will crash with a NULL pointer dereference
+					if presented with an ASN.1 signature using the RSA PSS algorithm and absent
+					mask generation function parameter. [CVE-2015-3194] </p>
+
+				<p>When presented with a malformed X509_ATTRIBUTE structure, OpenSSL will leak
+					memory. [CVE-2015-3195] </p>
+
+				<p>If PSK identity hints are received by a multi-threaded client then the values
+					are incorrectly updated in the parent SSL_CTX structure. [CVE-2015-3196] </p>
+
+				<p>linuxolator </p>
+
+				<p>A programming error in the Linux compatibility layer setgroups(2) system
+					call can lead to an unexpected results, such as overwriting random kernel
+					memory contents. </p>
+
+				<p>A programming error in the handling of Linux futex robust lists may result
+					in incorrect memory locations being accessed. </p>
+			</blockquote>
+
+			<blockquote class="bluebox">
+				<p>0.7.2 RELEASE
+
+				<p>Fix a security issue with bsnmpd configuration file installation.
+
+				<p>TCP MD5 signature denial of service
+
+				<p>A programming error in processing a TCP connection with both TCP_MD5SIG
+					and TCP_NOOPT socket options may lead to kernel crash.
+
+				<p>SCTP
+
+				<p>A lack of proper input checks in the ICMPv6 processing in the SCTP stack
+					can lead to either a failed kernel assertion or to a NULL pointer
+					dereference. In either case, a kernel panic will follow.
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150930">
+				<h3>
+					Spetembre 30, 2015
+				</h3>
+
+				<p>
+					0.7.1 RELEASE
+
+				<p> rpcbind(8) remote denial of service
+
+				<p>In rpcbind(8), netbuf structures are copied directly, which would result in
+					two netbuf structures that reference to one shared address buffer. When one
+					of the two netbuf structures is freed, access to the other netbuf structure
+					would result in an undefined result that may crash the rpcbind(8) daemon.</p>
+
+				<p>10/2: Revised rpcbind(8) patch to fix issues with NIS</p>
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150825">
+				<h3>
+					Août 25, 2015
+				</h3>
+
+				<p>0.6.7 RELEASE
+
+				<p> Kernel:
+					Fix a security issue on amd64 where the GS segment CPU register can be changed via
+					userland value in kernel mode by using an IRET with #SS or #NP exceptions.
+
+				<p><b>OpenSSH</b>:
+					A programming error in the privileged monitor process of the sshd(8)
+					service may allow the username of an already-authenticated user to be
+					overwritten by the unprivileged child process.
+
+				<p> A use-after-free error in the privileged monitor process of he sshd(8)
+					service may be deterministically triggered by the actions of a
+					compromised unprivileged child process.
+
+				<p> A use-after-free error in the session multiplexing code in the sshd(8)
+					service may result in unintended termination of the connection.
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150818">
+				<h3>
+					Août 18, 2015
+				</h3>
+
+				<p>
+					0.6.6 RELEASE
+
+				<p> Fix a security vulnerabiity in the expat XML parser.
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150808">
+				<h3>
+					Août 8, 2015
+				</h3>
+
+				<p>
+					0.6.5 RELEASE
+
+				<p> Routed - fix a potential security issue where traffic from outside
+					the network can disrupt routing.
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150728">
+				<h3>
+					Juillet 28, 2015
+				</h3>
+
+				<p>
+					0.6.4 RELEASE
+
+				<p> TCP Resassembly resource exhaustion bug:
+					There is a mistake with the introduction of VNET, which converted the
+					global limit on the number of segments that could belong to reassembly
+					queues into a per-VNET limit. Because mbufs are allocated from a
+					global pool, in the presence of a sufficient number of VNETs, the
+					total number of mbufs attached to reassembly queues can grow to the
+					total number of mbufs in the system, at which point all network
+					traffic would cease.
+					<br>Obtained from: FreeBSD 8
+
+				<p> OpenSSH
+
+				<p> Fix two security vulnerabilities:
+					OpenSSH clients does not correctly verify DNS SSHFP records when a server
+					offers a certificate. [CVE-2014-2653]
+
+				</p>
+
+				<p> OpenSSH servers which are configured to allow password authentication
+					using PAM (default) would allow many password attempts. A bug allows
+					MaxAuthTries to be bypassed. [CVE-2015-5600]
+				</p>
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150722">
+				<h3>
+					Juillet 22, 2015
+				</h3>
+
+				<p>
+					0.6.3 RELEASE
+
+				<p>
+
+					Fix a bug where TCP connections transitioning to LAST_ACK
+					state can get stuck. This can result in a denial of service.
+			</blockquote>
+
+			<blockquote class="bluebox" id="a20150612">
+				<h3>
+					Juin 12, 2015
+				</h3>
+
+				<p>
+					0.6.1 RELEASE
+
+				<p>
+					OpenSSL Security update - new version is OpenSSL 0.9.8zg
+			</blockquote>
+			<blockquote class="bluebox" id="a20150319">
+				<h3>
+					Mars 19, 2015
+				</h3>
+
+				<p>
+					0.5.10 RELEASE
+
+				<p>
+					OpenSSL Security update
+
+				<p>
+					A malformed elliptic curve private key file could cause a use-after-free condition in the
+					d2i_ECPrivateKey function. [CVE-2015-0209]
+
+				<p>
+					An attempt to compare ASN.1 boolean types will cause the ASN1_TYPE_cmp function to crash with an
+					invalid read. [CVE-2015-0286]
+
+				<p>
+					Reusing a structure in ASN.1 parsing may allow an attacker to cause memory corruption via an invalid
+					write. [CVE-2015-0287]
+
+				<p>
+					The function X509_to_X509_REQ will crash with a NULL pointer dereference if the certificate key is
+					invalid. [CVE-2015-0288]
+
+				<p>
+					The PKCS#7 parsing code does not handle missing outer ContentInfo correctly. [CVE-2015-0289]
+
+				<p>
+					A malicious client can trigger an OPENSSL_assert in servers that both support SSLv2 and enable
+					export cipher suites by sending a specially crafted SSLv2 CLIENT-MASTER-KEY message. [CVE-2015-0293]
+			</blockquote>
+			<blockquote class="bluebox" id="a20150225">
+				<h3>
+					Février 25, 2015
+				</h3>
+				<p>
+					0.5.9 RELEASE
+				<p>
+					Fix two security vulnerabilities.
+				<p>
+					1. BIND servers which are configured to perform DNSSEC validation and which are using managed keys (which occurs implicitly when using "dnssec-validation auto;" or "dnssec-lookaside auto;") may exhibit unpredictable behavior due to the use of an improperly initialized variable.
+				<p>
+					CVE-2015-1349
+				<p>
+					2. An integer overflow in computing the size of IGMPv3 data buffer can result in a buffer which is too small for the requested operation.
+				<p>
+					This can result in a DOS attack.
+			</blockquote>
+			<blockquote class="bluebox" id="a20150114">
+				<h3>
+					Janvier 14, 2015
+				</h3>
+				<p>
+					0.5.8 RELEASE
+				<p>
+					Fix several security issues with OpenSSL.
+				<p>
+					A carefully crafted DTLS message can cause a segmentation fault in OpenSSL due to a NULL pointer dereference. [CVE-2014-3571]
+				<p>
+					A memory leak can occur in the dtls1_buffer_record function under certain conditions. [CVE-2015-0206]
+				<p>
+					When OpenSSL is built with the no-ssl3 option and a SSL v3 ClientHello is received the ssl method would be set to NULL which could later result in a NULL pointer dereference. [CVE-2014-3569]
+				<p>
+					An OpenSSL client will accept a handshake using an ephemeral ECDH ciphersuite using an ECDSA certificate if the server key exchange message is omitted. [CVE-2014-3572]
+				<p>
+					An OpenSSL client will accept the use of an RSA temporary key in a non-export RSA key exchange ciphersuite. [CVE-2015-0204]
+				<p>
+					An OpenSSL server will accept a DH certificate for client authentication without the certificate verify message. [CVE-2015-0205]
+				<p>
+					OpenSSL accepts several non-DER-variations of certificate signature algorithm and signature encodings. OpenSSL also does not enforce a match between the signature algorithm between the signed and unsigned portions of the certificate. [CVE-2014-8275]
+				<p>
+					Bignum squaring (BN_sqr) may produce incorrect results on some platforms, including x86_64. [CVE-2014-3570]
+			</blockquote>
+			<blockquote class="bluebox" id="a20141211">
+				<h3>
+					Décembre 11, 2014
+				</h3>
+				<p>
+					0.5.7 RELEASE
+				<p>
+					Fix a security issue with file and libmagic that can allow an attacker to create a denial of service attack on any program that uses libmagic.
+				<p>
+					20141109:
+				<p>
+					Fix perl build during buildworld when the GDBM port is installed.
+			</blockquote>
+			<blockquote class="bluebox" id="a20141106">
+				<h3>
+					Novembre 6, 2014
+				</h3>
+				<p>
+					0.5.6 RELEASE
+				<p>
+					Update timezone data tzdata 2014i
+				<p>
+					(plus previous security fixes)
+				<p>
+					Fix two security issues:
+				<p>
+					1. sshd may link libpthread in the wrong order, shadowing libc functions and causing a possible DOS attack for connecting clients.
+				<p>
+					2. getlogin may leak kernel memory via a buffer that is copied without clearing.
+			</blockquote>
+			<blockquote class="bluebox" id="a20141031">
+				<h3>
+					Octobre 31, 2014
+				</h3>
+				<p>
+					0.5.5 RELEASE
+				<p>
+					tnftp 20141031 fixes a security vulnerability with tnftp, CVE-2014-8517.
+			</blockquote>
+			<blockquote class="bluebox" id="a20141027">
+				<h3>
+					Octobre 27, 2014
+				</h3>
+				<p>
+					0.5.4 RELEASE
+				<p>
+					libmport fix for packages
+			</blockquote>
+			<blockquote class="bluebox" id="a20141021">
+				<h3>
+					Octobre 21, 2014
+				</h3>
+				<p>
+					0.5.3-RELEASE
+				</p>
+				<p>
+					MidnightBSD 0.5.3-RELEASE is now available via subversion.
+				<p>
+					Fix several security vulnerabilities in OpenSSL, routed, rtsold, and namei with respect to Capsicum sandboxes looking up nonexistent path names and leaking memory.
+				<p>
+					OpenSSL update adds some workarounds for the recent poodle vulnerability reported by Google.
+				<p>
+					The input path in routed(8) will accept queries from any source and attempt to answer them. However, the output path assumes that the destination address for the response is on a directly connected network.
+				<p>
+					Due to a missing length check in the code that handles DNS parameters, a malformed router advertisement message can result in a stack buffer overflow in rtsold(8).
+				<p>
+					In addition, we've released 0.5.2-RELEASE ISOs on the FTP server for both amd64 and i386. We plan to do rollup security releases periodically.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20141011">
+				<h3>
+					Octobre 11, 2014
+				</h3>
+				<p>
+					0.5.2-RELEASE
+				</p>
+				<p>
+					Fixed a regression with mksh R50c.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20141004">
+				<h3>
+					Octobre 4, 2014
+				</h3>
+				<p>
+					0.5.1-RELEASE
+				</p>
+				<p>
+					Fixed a security issue with mksh. For more details, view the
+				<a href="https://www.mirbsd.org/permalinks/wlog-10_e20141003-tg.htm#e20141003-tg_wlog-10">
+					mksh notification
+				</a>
+				.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140916">
+				<h3>
+					Spetembre 16, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p15
+				</p>
+				<p>
+					Fix a security issue with TCP SYN.
+				<p>
+					When a segment with the SYN flag for an already existing connection arrives, the TCP stack tears down the connection, bypassing a check that the sequence number in the segment is in the expected window.
+			</blockquote>
+			<blockquote class="bluebox" id="a20140909">
+				<h3>
+					Spetembre 9, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p14
+				</p>
+				<p>
+					OpenSSL security patch:
+				<p>
+					The receipt of a specifically crafted DTLS handshake message may cause OpenSSL to consume large amounts of memory. [CVE-2014-3506]
+				<p>
+					The receipt of a specifically crafted DTLS packet could cause OpenSSL to leak memory. [CVE-2014-3507]
+				<p>
+					A flaw in OBJ_obj2txt may cause pretty printing functions such as X509_name_oneline, X509_name_print_ex et al. to leak some information from the stack. [CVE-2014-3508]
+				<p>
+					OpenSSL DTLS clients enabling anonymous (EC)DH ciphersuites are subject to a denial of service attack. [CVE-2014-3510]
+			</blockquote>
+			<blockquote class="bluebox" id="a20140710">
+				<h3>
+					Juillet 10, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p13
+				</p>
+				<p>
+					Fix a vulnerability in the control message API. A buffer is not properly cleared before sharing with userland.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140605">
+				<h3>
+					Juin 5, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p12
+				</p>
+				<p>
+					OpenSSL vulnerabilities Receipt of an invalid DTLS fragment on an OpenSSL DTLS client or server can lead to a buffer overrun. [CVE-2014-0195] Receipt of an invalid DTLS handshake on an OpenSSL DTLS client can lead the code to unnecessary recurse. [CVE-2014-0221] Carefully crafted handshake can force the use of weak keying material in OpenSSL SSL/TLS clients and servers. [CVE-2014-0224] Carefully crafted packets can lead to a NULL pointer deference in OpenSSL TLS client code if anonymous ECDH ciphersuites are enabled. [CVE-2014-3470]
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140604">
+				<h3>
+					Juin 4, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p11
+				</p>
+				<p>
+					Sendmail failed to properly set close-on-exec for open file descriptors.
+				</p>
+				<p>
+					Ktrace page fault kernel trace entries were set to an incorrect size which resulted in a leak of information.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140430">
+				<h3>
+					Avril 30, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p10
+				</p>
+				<p>
+					Fix a TCP reassembly bug that could result in a DOS attack of the system. It may be possible to obtain portions of kernel memory as well.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140409">
+				<h3>
+					Avril 9, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p9
+				</p>
+				<p>
+					Fix an issue allowing an attacker to deadlock the NFS Server from a trusted client.
+				</p>
+				<p>
+					0.4-RELEASE-p8
+				</p>
+				<p>
+					Fix a security issue in OpenSSL [CVE-2014-0076]
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140201">
+				<h3>
+					Février 1, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p7
+				</p>
+				<p>
+					Fix a minor annoyance with the default dot.profile and ssh-agent
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20140114">
+				<h3>
+					Janvier 14, 2014
+				</h3>
+				<p>
+					0.4-RELEASE-p6
+				</p>
+				<p>
+					Fix two security vulnerabilities. bsnmpd contains a stack overflow when sent certain queries. bind 9.8 when using NSEC3-signed zones zones, will crash with special crafted packets.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20131129">
+				<h3>
+					Novembre 29, 2013
+				</h3>
+				<p>
+					MidnightBSD 0.4-RELEASE-p5
+				</p>
+				<p>
+					libc's iconv support includes an optimization that is imcompatible with gettext's msgfmt command. By turning off this optimization, we gain compatiblity with several GNU packages.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20130910">
+				<h3>
+					Spetembre 10, 2013
+				</h3>
+				<p>
+					MidnightBSD 0.4-RELEASE-p4
+				</p>
+				<p>
+					nullfs(5)
+				</p>
+				<p>
+					The nullfs(5) implementation of the VOP_LINK(9) VFS operation does not check whether the source and target of the link are both in the same nullfs instance. It is therefore possible to create a hardlink from a location in one nullfs instance to a file in another, as long as the underlying (source) filesystem is the same.
+				</p>
+				<p>
+					Ifioctl
+				</p>
+				<p>
+					As is commonly the case, the IPv6 and ATM network layer ioctl request handlers are written in such a way that an unrecognized request is passed on unmodified to the link layer, which will either handle it or return an error code.
+				</p>
+				<p>
+					Network interface drivers, however, assume that the SIOCSIFADDR, SIOCSIFBRDADDR, SIOCSIFDSTADDR and SIOCSIFNETMASK requests have been handled at the network layer, and therefore do not perform input validation or verify the caller's credentials. Typical link-layer actions for these requests may include marking the interface as "up" and resetting the underlying hardware.
+				</p>
+				<p>
+					Patches obtained from FreeBSD
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20130822">
+				<h3>
+					Août 22, 2013
+				</h3>
+				<p>
+					MidnightBSD 0.4-RELEASE-p2
+				</p>
+				<p>
+					Fix an integer overflow in IP_MSFILTER (IP MULTICAST). This could be exploited to read memory by a user process.
+				</p>
+				<p>
+					When initializing the SCTP state cookie being sent in INIT-ACK chunks, a buffer allocated from the kernel stack is not completely initialized.
+				</p>
+				<p>
+					Patches obtained from FreeBSD
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20130728">
+				<h3>
+					Juillet 28, 2013
+				</h3>
+				<p>
+					MidnightBSD 0.4-RELEASE-p1
+				</p>
+				<p>
+					Vulnerabilities were reported in BIND and NFS Server. BIND has a defect resulting in a possible denial of service attack with malformed rdata in a query. This affects only systems running named and not DNS clients.
+				</p>
+				<p>
+					For NFS, the kernel incorrectly uses client supplied credentials instead of the one configured in exports(5) when filling out the anonymous credential for a NFS export, when -network or -host restrictions are used at the same time. This patch was obtained from FreeBSD.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20120612">
+				<h3>
+					Juin 6, 2012
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p9
+				</p>
+				<p>
+					A vulnerability exists in bind related to resource records. A zero length request can cause bind to crash resulting in a denial of service or disclosure of information.
+				</p>
+				<p>
+					CVE-2012-1667
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20120530a">
+				<h3>
+					Mai 30, 2012
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p8
+				</p>
+				<p>
+					Fix a problem with cyrpt's DES implementation when used with non 7-bit ascii passwords.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20120530">
+				<h3>
+					Mai 30, 2012
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p7
+				</p>
+				<p>
+					An additional problem in OpenSSL was identified related to the previous (p6) patch.
+				</p>
+				<p>
+					Add SGC and BUF_MEM_grow_clean(3) bug fixes.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20120503">
+				<h3>
+					Mai 3, 2012
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p6
+				</p>
+				<p>
+					OpenSSL failes to clear the bytes used as block cipher padding in SSL 3.0 records when operating as a client or a server that accept SSL 3.0 handshakes. As a result, in each record, up to 15 bytes of uninitialized memory may be sent, encrypted, to the SSL peer. This could include sensitive contents of previously freed memory. [CVE-2011-4576]
+				</p>
+				<p>
+					OpenSSL support for handshake restarts for server gated cryptograpy (SGC) can be used in a denial-of-service attack. [CVE-2011-4619]
+				</p>
+				<p>
+					If an application uses OpenSSL's certificate policy checking when verifying X509 certificates, by enabling the X509_V_FLAG_POLICY_CHECK flag, a policy check failure can lead to a double-free. [CVE-2011-4109]
+				</p>
+				<p>
+					A weakness in the OpenSSL PKCS #7 code can be exploited using Bleichenbacher's attack on PKCS #1 v1.5 RSA padding also known as the million message attack (MMA). [CVE-2012-0884]
+				</p>
+				<p>
+					The asn1_d2i_read_bio() function, used by the d2i_*_bio and d2i_*_fp functions, in OpenSSL contains multiple integer errors that can cause memory corruption when parsing encoded ASN.1 data. This error can occur on systems that parse untrusted ASN.1 data, such as X.509 certificates or RSA public keys. [CVE-2012-2110]
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20111223">
+				<h3>
+					Décembre 23, 2011
+				</h3>
+				<p>
+					Multiple security vulnerabilities impacting 0.3-RELEASE and 0.4-CURRENT have been patched in MidnightBSD.
+				</p>
+				<ul>
+					<li>
+						Telnetd: Fix a root exploit from a fixed buffer that was not checked.
+					</li>
+					<li>
+						PAM: Don't allow escape from policy path. Exploitable in KDE, etc.
+					</li>
+					<li>
+						Fix pam_ssh module: If the pam_ssh module is enabled, attackers may be able to gain access to user accounts which have unencrypted SSH private keys.
+					</li>
+					<li>
+						Fix security issue with chroot and ftpd.
+					</li>
+					<li>
+						Nsdispatch(3) doesn't know it's working in a chroot and some operations can cause files to get reloaded causing a security hole in things like ftpd.
+					</li>
+				</ul>
+				<p>
+					Users should update via CVS and buildworld / installworld. This corresponds to 0.3-RELEASE-p5.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20111104">
+				<h3>
+					Novembre 4, 2011
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p4
+				</p>
+				<p>
+					Fix a problem with unix socket handling caused by the recent patch to unix socket path handling. This allows network apps to work under the linuxolator again.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20110928">
+				<h3>
+					Spetembre 28, 2011
+				</h3>
+				<p>
+					MidnightBSD 0.3-RELEASE-p3
+				</p>
+				<p>
+					Security hole in compress and gzip with malformed .Z files can cause an infinite loop in these utilities.
+				</p>
+				<p>
+					Validate paths for unix domain sockets.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20110530">
+				<h3>
+					Mai 30, 2011
+				</h3>
+				<p>
+					0.3-RELEASE and 0.4-CURRENT contain a vulnerable version of BIND 9.6.x. Users who use BIND and a recursive DNS server should update to 0.3-RELEASE-p2. More information can be found at
+				<a href="http://www.kb.cert.org/vuls/id/795694">
+					US-CERT
+				</a>
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20101012">
+				<h3>
+					Octobre 12, 2010
+				</h3>
+				<p>
+					0.3-PRERELEASE and 0.4-CURRENT have an issue in all pseudofs based file systems including procfs and linprocfs that either can be used to run code as the kernel or at best crash the system. It's important to update the kernel on systems affected. If you can't do that, disable proc and linproc on your systems until a new kernel can be built. 0.2.1 is not believed to be affected as the code is significantly different and the locking issue is not present.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20100902">
+				<h3>
+					Spetembre 2, 2010
+				</h3>
+				<p>
+					A minor vulnerability in libutil was reported. It can cause uses of some services such as OpenSSH to bypass cpu resource restrictions in 0.3 by use of a custom login.conf. This issue has been fixed today in kern.osreldate 3015 or better.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090610">
+				<h3>
+					Juin 10, 2009
+				</h3>
+				<p>
+					This should be applied to all systems running 0.2.1. Users on p9 simply should update their kernels. No world update is required.
+				</p>
+				<p>
+					IPV6:<br /> The SIOCSIFINFO_IN6 ioctl is missing a necessary permissions check. Don't let everyone on the planet (with local access) change the properties on the IPV6 interfaces.
+				</p>
+				<p>
+					Anonymous pipes:<br /> Stop unprivileged processes from reading pages of memory belonging to other processes with anonymous pipes.
+				</p>
+				<p>
+					0.3-Current users can verify they have the patch by checking sysctl kern.osreldate. If the value is 3005 or better, you have the patch.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090521">
+				<h3>
+					Mai 21, 2009
+				</h3>
+				<p>
+					This fix is only in configuration files for ssh and sshd. Users on p8 should simply add <pre>Ciphers aes128-ctr,aes256-ctr,arcfour256,arcfour,aes128-cbc,aes256-cbc</pre> to their configuration files for sshd_config and ssh_config in etc/ssh
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090422">
+				<h3>
+					Avril 22, 2009
+				</h3>
+				<p>
+					The function ASN1_STRING_print_ex does not properly validate the lengths of BMPString or UniversalString objects before attempting to print them. MidnightBSD 0.2.1-RELEASE-p8 and 0.3-CURRENT include this fix.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090326">
+				<h3>
+					Mars 26, 2009
+				</h3>
+				<p>
+					Update for sudo that corrects several outstanding security advisories. This was corrected in 0.2.1-RELEASE-p7 and 0.3-CURRENT. 0.1.x is no longer receiving security patches. It is recommended that you upgrade to 0.2.1-RELEASE-p7 when possible.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090115">
+				<h3>
+					Janvier 15, 2009
+				</h3>
+				<p>
+					Prevent a DNSSEC attack with BIND. This was corrected in 0.2.1 and 0.3-CURRENT. 0.1.x is no longer receiving security patches. It is recommended that you upgrade to 0.2.1-RELEASE when possible.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20090110">
+				<h3>
+					Janvier 10, 2009
+				</h3>
+				<p>
+					Fix two issues with MidnightBSD 0.2.1 and 0.3-CURRENT. The first is in OpenSSL and would allow applications that use OpenSSL to interpret an invalid certificate as valid. The second is in lukemftpd(8) that could allow long commands to be split into multiple commands.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20081231">
+				<h3>
+					Décembre 31, 2008
+				</h3>
+				<p>
+					Correct a problem where bluetooth and netgraph sockets were not initialized properly. This is available in RELENG_0_2, RELENG_0_1, and current.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20081124">
+				<h3>
+					Novembre 24, 2008
+				</h3>
+				<p>
+					Correct a problem in arc4random which causes the device not to get enough entropy for system services.  Geom classes initialized at startup will still have problems. Update your system to RELENG_0_2 (MidnightBSD 0.2.1-p3)
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080929">
+				<h3>
+					Spetembre 29, 2008
+				</h3>
+				<p>
+					A vulnerability in ftpd could allow unauthorized access. This is network exploitable and affects all versions of MidnightBSD. <br />CVE-2008-4247<br /> Update your system using cvs to RELENG_0_2 or apply the patch on the ftp server in pub/MidnightBSD/patches/0.2.1/patch-ftpd and rebuild ftpd.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080904a">
+				<h3>
+					Spetembre 4, 2008
+				</h3>
+				<p>
+					ICMPv6 code does not properly check the proposed MTU in the case of a &quot;Packet Too Big Message&quot; Systems without IPV6 support are safe. You may update your systems or block the ICMP traffic from a firewall or router. (CURRENT/RELENG_0_2)
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080904">
+				<h3>
+					Spetembre 4, 2008
+				</h3>
+				<p>
+					An issue has been reported on systems running MidnightBSD for amd64/emt64 processors. (in 64bit os) This patch was released AFTER 0.2.1-RELEASE. Update systems to RELENG_0_2 or CURRENT to get the fix. From the FreeBSD advisory on the same issue: If a General Protection Fault happens on a FreeBSD/amd64 system while it is returning from an interrupt, trap or system call, the swapgs CPU instruction may be called one extra time when it should not resulting in userland and kernel state being mixed.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080610">
+				<h3>
+					Juillet 11, 2008
+				</h3>
+				<p>
+					Update to bind 9.4.1 p1 to fix the recently reported vulnerability in most dns software. Users of BIND are recommended to update to the latest version in src on RELENG_0_2 or CURRENT, or to obtain a newer version from mports.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080516">
+				<h3>
+					Mai 16, 2008
+				</h3>
+				<p>
+					The Debian project made a patch to openssl causing a defect in the generation of ssh keys. A new utility was added to midnightbsd to detect these keys and deny them. This was applied to RELENG_0_2 and CURRENT. The utility was obtained from Ubuntu.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080417a">
+				<h3>
+					Avril 17, 2008
+				</h3>
+				<p>
+					OpenSSH was updated to 5.0p1 in CURRENT to correct an issue with X11 forwarding. A patch for this issue was committed to RELENG_0_1 as well as a fix for a config file issue.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080417">
+				<h3>
+					Avril 17, 2008
+				</h3>
+				<p>
+					A
+				<a href="http://secunia.com/advisories/29803/">
+					Security issue
+				</a>
+				was found in mksh. This only affected CURRENT users. The software was updated to r33d.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080406">
+				<h3>
+					Avril 6, 2008
+				</h3>
+				<p>
+					Bzip2 was updated to 1.05 in CURRENT to correct a security issue.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080403">
+				<h3>
+					Avril 3, 2008
+				</h3>
+				<p>
+					A security issue was found with strfmon in libc.
+				<a href="http://nvd.nist.gov/nvd.cfm?cvename=CVE-2008-1391">
+					CVE-2008-1391
+				</a>
+				Integer Overflow. This was fixed in CURRENT.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20080215">
+				<h3>
+					Février 15, 2008
+				</h3>
+				<p>
+					CURRENT now has a patch to correct a potential security issue with sendfile. Files were not checked prior to serving which would allow a file that was write only to be served. While this scenario is rare, we decided to fix it anyway. <br /> sendfile is used by many daemons including Apache httpd.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20070801">
+				<h3>
+					Août 1, 2007
+				</h3>
+				<p>
+					BIND and Tcpdump were patched in 0.2 and 0.1 for recent security issues. BIND is now equivalent to 9.3.4p1.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20070502">
+				<h3>
+					Mai 2, 2007
+				</h3>
+				<p>
+					CURRENT and STABLE both have the patch for IPV6 type 0 routing headers. The problem is that ipv6 routing headers could be run over the same link multiple times.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20070310">
+				<h3>
+					Mars 10, 2007
+				</h3>
+				<p>
+					While many of the DST changes were imported last year, we decided to cover all cases and import the latest tzdata2007c. Users concerned about DST changes should update their sources and rebuild. The java ports may not have DST changes in place. We will review that issue.
+				</p>
+			</blockquote>
+			<blockquote class="bluebox" id="a20070132">
+				<h3>
+					Janvier 23, 2007
+				</h3>
+				<p>
+					A "symlink" exploit was found in the MidnightBSD jail system. A fix was made available. Please update your /etc/rc.d/jail file from cvs. Patches will not be created until our first release.
+				</p>
+			</blockquote>
+		</div>
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
