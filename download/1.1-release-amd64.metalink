@@ -1484,11 +1484,11 @@
 			</pieces>
 		</verification>
 		<resources>
-			<url type="http">http://www.midnightbsd.org/ftp/MidnightBSD/uefi-mini-memstick.img</url>
-			<url type="http">http://files.midnightbsd.org/uefi-mini-memstick.img</url>
-			<url type="http">http://pub.allbsd.org/MidnightBSD/uefi-mini-memstick.img</url>
-			<url type="ftp">ftp://ftp.allbsd.org/pub/MidnightBSD/uefi-mini-memstick.img</url>
-			<url type="ftp">ftp://ftp1.midnightbsd.org/pub/MidnightBSD/uefi-mini-memstick.img</url>
+			<url type="http">http://ns3.midnightbsd.org/releases/amd64/ISO/IMAGES/1.1/uefi-mini-memstick.img</url>
+			<url type="http">http://discovery.midnightbsd.org/releases/amd64/ISO/IMAGES/1.1/uefi-mini-memstick.img</url>
+			<url type="http">http://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/1.1/uefi-mini-memstick.img</url>
+			<url type="ftp">ftp://ftp.allbsd.org/pub/MidnightBSD/releases/amd64/ISO-IMAGES/1.1/uefi-mini-memstick.img</url>
+			<url type="ftp">ftp://ftp1.midnightbsd.org/pub/MidnightBSD/releases/amd64/ISO-IMAGES/1.1/uefi-mini-memstick.img</url>
 			<url type="magnet">magnet:?xt=urn:sha1:57e667335c6cd16872be1461055f6c3aca852b5f&amp;dn=uefi-mini-memstick.img</url>
 			<url type="ed2k">ed2k://|file|uefi-mini-memstick.img|327191040|c95c928615b6eeaf2fda9fa15872fa22|/</url>
 			<url type="gnunet">gnunet://ecrs/chk/4NFNC1IDPL6H5A0MUORV0R5CSAI0ACQSJUJS3FON2FVV2JL0HJ7DEMFEJHL1RFOM5HCSP2ARE7AKFFTU2RK9SA1RPSNTINJUNMLNM28.I90OAAS39KFLV5EOGKBCNLJ1HH8OT0BLV5HGKILG1E274T5G0MIUJCMLITUSD477PSH8FKK622V1HN502IOMPCK83T63NHDISCOTF30.327191040</url>

@@ -664,11 +664,11 @@
 			</pieces>
 		</verification>
 		<resources>
-			<url type="http">http://www.midnightbsd.org/ftp/MidnightBSD/mini-memstick.img</url>
-			<url type="http">http://files.midnightbsd.org/mini-memstick.img</url>
-			<url type="http">http://pub.allbsd.org/MidnightBSD/mini-memstick.img</url>
-			<url type="ftp">ftp://ftp.allbsd.org/pub/MidnightBSD/mini-memstick.img</url>
-			<url type="ftp">ftp://ftp1.midnightbsd.org/pub/MidnightBSD/mini-memstick.img</url>
+			<url type="http">http://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/1.1/mini-memstick.img</url>
+			<url type="http">http://ns3.midnightbsd.org/releases/i386/ISO-IMAGES/1.1/mini-memstick.img</url>
+			<url type="http">http://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/1.1/mini-memstick.img</url>
+			<url type="ftp">ftp://ftp.allbsd.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/1.1/mini-memstick.img</url>
+			<url type="ftp">ftp://ftp1.midnightbsd.org/pub/MidnightBSD/releases/i386/ISO-IMAGES/1.1/mini-memstick.img</url>
 			<url type="magnet">magnet:?xt=urn:sha1:4747f446bb8f91796ae91d61c8e97eb71403f548&amp;dn=mini-memstick.img</url>
 			<url type="ed2k">ed2k://|file|mini-memstick.img|285665792|495786dc935dfc5adf0b6c56ff037239|/</url>
 			<url type="gnunet">gnunet://ecrs/chk/0FSUDFP21DB0EKP2UFGO4NTOGKE055T8VG4O59D33TEV1VBBTBNE8J0EGMTKJBNVSQAHFPK5FL5S9MM8K5TCQVNM40V6UQBMKQQ1JQ8.GH7FVS49IKCGDV23OUB4281N58TU1UH552MV1CFDFOE3EF8D8LMG3GFL709L1PRFBGQ332J9FU0EP3UVPVB4H4DOJFQM244QLG78VUO.285665792</url>
