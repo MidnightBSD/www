@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>mports' Policies :: Documentation :: MidnightBSD</title>
+	<!-- $MidnightBSD: www/documentation/mports/policy.html,v 1.7 2012/01/05 19:42:34 laffer1 Exp $ -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<style type="text/css" media="all">
+		@import url("../../css/essence.css");
+	</style>
+	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+			<script type="text/javascript">
+			    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-top"};
+			</script>
+			<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+			<!-- End Cookie Consent plugin -->
+</head>
+
+<body>
+<div id="globe">
+		<div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+		<!--#include virtual="/menu.html"-->
+		<div class="clear"></div>
+		<div id="text">
+			<h2><img src="../../images/oxygen/doc32.png" alt="Text Document Icon" /> mports' Policies</h2>			
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1a"><strong>Introduction</strong></a></li>
+						<li><a href="#s2a"><strong>PKGNAME</strong></a></li>
+						<li><a href="#s3a"><strong>PORTREVISION</strong></a></li>
+						<li><a href="#s4a"><strong>LICENSE</strong></a></li>
+						<li><a href="#s5a"><strong>INSTALLS_SHLIB</strong></a></li>
+						<li><a href="#s6a"><strong>MASTER_SITES</strong></a></li>
+						<li><a href="#s7a"><strong>OSVERSION</strong></a></li>
+						<li><a href="#s8a"><strong>Sub Files</strong></a></li>
+						<li><a href="#s9a"><strong>Fake Cleanups</strong></a></li>
+						<li><a href="#s10a"><strong>pkg-message</strong></a></li>
+						<li><a href="#s11a"><strong>OPTIONS</strong></a></li>
+						<li><a href="#s12a"><strong>Man Pages</strong></a></li>
+						<li><a href="#s13a"><strong>pre-su-install</strong></a></li>
+						<li><a href="#s14a"><strong>Old Variables</strong></a></li>
+						<li><a href="#s15a"><strong>Interactive Scripts</strong></a></li>
+						<li><a href="#s16a"><strong>Plist and Echo</strong></a></li>
+						<li><a href="#s17a"><strong>pkg-req</strong></a></li>
+					</ul>
+				</div>
+
+<h3 id="s1a">Introduction</h3>
+
+<p>If you are working on mports, you should define the MPORT_MAINTAINER_MODE variable in your make.conf.</p>
+
+<p>The following are guidelines for the behavior and layout of a port.  
+<em>Any time</em> a port is updated or created, it should be checked for compliance with these guidelines.  
+Note that this is a living document that should be checked from time to time for changes.</p>
+
+<h3 id="s2a">PKGNAME</h3>
+
+<p>(Note that PKGNAME currently includes the version, which is unfortunate and an artifact from our FreeBSD roots.  
+In time PKGNAME will be renamed, and PKGSUBNAME will renamed to PKGNAME.)</p>
+
+<p>Every PKGSUBNAME must be unique.  This is not currently the case in the tree, but work has begun on this front.</p>
+
+<h3 id="s3a">PORTREVISION</h3>
+
+<p>The PORTREVISION variable should only be incremented when there changes that will affect:</p>
+	<ul>
+		<li>Behaviors. (used to provide the foo widget, changed this to the bar widget).
+		<li>File locations (moved configuration file to $PREFIX/etc/ instead of $PREFIX/$PKGSUBNAME/etc)</li>
+		<li>Dependencies up or down the chain. (some depend bumped a shared lib version, bump so that
+		people will get the new version and link correctly).
+		<li>Other issuse at the port maintainer's discretion.</li>
+	</ul>
+<p>The following are <em>not</em> cause for incrementing the PORTREVISION:</p>
+	<ul>
+		<li>Fixing a broken port.  Version numbers are for tracking packages, not ports.</li>
+		<li>Setting the LICENSE variable</li>
+		<li>Stylistic changes</p>
+	</ul>
+
+<p>PORTREVISION used to be bumped in more cases, due to the way that our cluster software used to work.  
+The cluster now checks each port for each run.</p>		
+
+<h3 id="s4a">LICENSE</h3>
+
+<p>Every port should define a LICENSE variable with a valid license. A list of valid licenses is 
+printed by the <code>license-list</code> target. 
+The LICENSE variable should immediately follow the COMMENT variable.</p>
+
+<h3 id="s5a">INSTALLS_SHLIB</h3>
+
+<p>No port should use the INSTALLS_SHLIB variable.  Use USE_LDCONFIG instead.</p>
+
+<h3 id="s6a">MASTER_SITES</h3>
+
+<p>Every port should define at least 2 master sites.</p>
+
+<h3 id="s7a">OSVERSION</h3>
+
+<p>No port should use OSVERSION.  Currently this refers to the FreeBSD version that MBSD branched from.  
+This will not always be the case.  Eventually this will refer to the MidnightBSD version.  
+To facilitate this change, the old uses of OSVERSION must be removed.</p>
+
+<h3 id="s8a">Sub Files</h3>
+
+<p>If a file like pkg-message or pkg-install requires varible substitution, the SUB_FILES 
+framework must be used.  Do not hand roll your own.</p>
+
+<h3 id="s9a">Fake Cleanups</h3>
+
+<p>No port should run a pkg-install script, or display a package message.  This should be left to pkg_add.</p>
+
+<h3 id="s10a">pkg-message format</h3>
+
+<p>The pkg-message file should be as simple in layout as possible.  There should be no ascii art or lines.  
+Eventually this message may be displayed in the GUI, do not assume that it merely needs to look good
+on the command line.</p>
+
+<h3 id="s11a">OPTIONS</h3>
+
+<p>Use OPTIONS if there are knobs, even if there is only one knob.  The mport package system is going
+to be options aware, but it can't use the options if they aren't defined.</p>
+
+<h3 id="s12a">Man Pages</h3>
+
+<p>Very old FreeBSD ports do not use the MANX variables for man pages.  Any such port should be 
+changed to use the MANX variables.  This is important so that package deletion will correctly 
+remove the man pages.</p>
+
+<h3 id="s13a">pre-su-install</h3>
+
+<p>Now that su is not used in the fake process, the pre-su-install target is deprecated.  Usually it
+can be moved to the pre-install target, but if it is doing anything with the plist the maintainer 
+will need to use their judgement to determine the correct fix.</p>
+
+<h3 id="s14a">Old Variables</h3>
+
+<p>The following variables are no longer used (they are either totally deprecated, or needed by 
+older FreeBSD versions):</p>
+
+<ul>
+<li>USE_GETOPT_LONG</li>
+<li>USE_REINPLACE</li>
+</ul>
+
+<p>No port should use these variables</p>
+
+<h3 id="s15a">Interactive Scripts</h3>
+
+<p>No pkg-install or pkg-deinstall script should expect to run in an interactive envirement.  They 
+should not prompt the user or expect input from the user.</p>
+
+<h3 id="s16a">Plist and Echo</h3>
+
+<p>Don't expect to be able to echo things to the user from the plist during
+a <code>@exec</code> or <code>@unexec</code> directive.  It will work fine
+with the old FreeBSD pkg_* tools, but the behavior is undefined under
+libmport.  The user might see what you have to say, it might not. If in
+doubt use a pkg-install script or a pkg-message file.</p>
+
+<h3 id="s17a">pkg-req</h3>
+
+<p>Package requirement scripts are deprecated.  There is only one such script at the moment and its 
+function will be reimplemented under the mport package system.</p>
+
+			<!--#include virtual="/disqus.html"-->
+	</div>
+		<!--#include virtual="/footer.html"-->
+</body>
+</html>
