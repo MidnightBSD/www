@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 80%;
+            color: #aaa;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .update {
+            background: #f2fbff;
+            border: 2px solid #dff2fb;
+            font-size: 80%;
+            width: 40%;
+            float: left;
+            margin-right: 2.4em;
+            color: #555;
+        }
+
+        .ast {
+            color: #1373ce;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+            </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(10/12/2018) MidnightBSD 1.0</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 1.0 for amd64 and i386. Over the years, many ambitious
+            goals were set for our 1.0 release. As it approached, it was clear we wouldn’t be able to accomplish all of
+            them.
+            This release is more of a natural progression rather than a groundbreaking event. It includes many updates
+            to the base system, improvements to the package manager, an updated compiler, and tools.
+
+        <p>Of particular note, you can now boot off of ZFS and use NVME SSDs and some AMD Radeon graphics cards support
+            acceleration. AMD Ryzen support has greatly improved in this release. We also have added bhyve from FreeBSD.
+
+        <h4>Removal of features</h4>
+        <p>The single largest removal of functionality was the sensors framework. We found that there were some locking
+            issues that couldn’t easily be addressed without some major work. It may reappear in a new form in the
+            future. That said, many of the features provided by the framework are still available.
+
+        <p>Sudo was removed from the base system and replaced with doas(1) from OpenBSD. You can still install sudo from
+            mports.
+
+        <p>Lindev was removed as a device as /dev/full has replaced it.
+
+        <h4>3rd party software</h4>
+        <p>Many software packages were updated for this release in the base system.
+
+        <h5>Updated Software</h5>
+
+        <ul>
+            <li>ACPI support
+            <li>Perl 5.26.0
+            <li>WPA_Supplicant 2
+            <li>Bsnmp
+            <li>Binutils
+            <li>Dialog 1.2
+            <li>Expat 2.2.0
+            <li>file 5.32
+            <li>LLVM / Clang 3.4.1
+            <li>gperf 3.0.3
+            <li>less 530
+            <li>libarchive 3.2.1
+            <li>libc-vis 2017/4/30 (netbsd)
+            <li>Netcat
+            <li>Nvi
+            <li>OpenPAM
+            <li>OpenBSM
+            <li>OpenSSH 7.3p1
+            <li>openresolv
+            <li>Pf
+            <li>Subversion 1.8.17
+            <li>SQLite 3.20.1
+            <li>SMBFS
+            <li>Tcsh 6.20
+            <li>Telnet
+            <li>Texinfo
+            <li>Xz 5.23
+            <li>Open ZFS
+            <li>Zlib 1.2.11
+        </ul>
+
+        <h5>New Software</h5>
+
+        <ul>
+            <li>Unbound
+            <li>Ldns
+            <li>Microsoft hyper-v support
+            <li>mandoc 1.14.3
+        </ul>
+
+        <h4>Hardware</h4>
+        <p>Ryzen support was added including a fix for moving the shared page down by one to prevent hanging as well as
+            new chipset support for AMD B350, X370, and X399 chipsets.
+
+        <p>New hardware features include support for Intel 8th generation chipsets, Corsair K70 LUX keyboards, several
+            wifi devices such as Realtek USB 802.11n devices.
+
+        <p>Updated Intel® network drivers for em, ix, igb, including support for Ice Lake and Cannon Lake devices and
+            Intel® i219(4)/ i219(5) kaby lake support. Wake on lan support was added to em(4) for Intel® i217, i218 and
+            i219 chips and igb(4).
+
+        <p>There is now support for older AMD graphics cards with KMS such as the 6450. X.org was also updated to go
+            along with this functionality. When trying this functionality out, you may wish to change your VT by using
+            the following
+            echo >> "kern.vty=vt" /boot/loader.conf
+
+        <p> The drm code has been updated to match Linux® version 3.8.13.
+
+        <p> nvme(4) and nvd(4) have been imported from FreeBSD as well as eMMC support from FreeBSD 10.4.
+
+        <p>qlxgbe(4) firmware updated to 5.4.66.
+        <p>
+            Mellanox® ConnectX-4 series adapters are supported by mlx5ib(4).
+
+        <p>cxgbetool(8) has been added, to support debugging cxgbe(4) devices.
+
+        <p>cxgbev(4), glnxe(4) network drivers added.
+
+        <p> mpr(4) supports tri-mode broadcom storage adapters.
+
+        <p>Atheros Killer E2400 and E2500 NICs are supported.
+
+        <p> psm(4) supports touchpads on newer Lenovo laptops.
+
+        <p>cdce(4) supports RTL8153
+
+        <p>snd_hda(4) supports ThinkPad X1 20BS
+
+        <p> Support for AMD® Family 16h sensor devices has been added to amdtemp(4).
+
+        <p>Intel® XL710 ixlv(4) added.
+
+        <h4>mport package manager and packages</h4>
+
+        <p> Mport now supports installing multiple packages with one command. Updating multiple packages using mport
+            upgrade has been fixed.
+
+        <p> Mport now tracks deprecated and expired packages to give warning ahead of time. You can see this information
+            using mport info.
+            A known bug exists with setting permissions when using @(,,755) syntax in plists. This will be fixed in a
+            future update. Most ports have a workaround in place already so that shouldn’t affect regular users much.
+
+        <p> A new package format was introduced with this release. Older packages may not install properly.
+
+        <p> At the time of writing, new packages are being built for amd64 and i386.
+
+        <h4>Additions from FreeBSD</h4>
+        <p> Bhyve support!!!! In order to boot FreeBSD on MidnightBSD in bhyve, you need to get a boot loader from a
+            FreeBSD 10.x system. There is an mport for this also. You may also use grub.
+
+        <p> Boot loader and ZFS boot capability were iimported from FreeBSD 10 stable (rev 334154)
+
+        <p> For GPT partitions, fsck_ffs can use alternate superblocks.
+
+        <p> aesni(4) no longer shares a single FPU context for multiple sessions in multiple threads, fixing issues with
+            ipsec(4).
+
+        <p> Userland coredumps can now trigger events such as generating a human readable crash report via devd(8). This
+            feature is off by default.
+
+        <p> inetd(8) is built without libwrap support when tcp wrappers are turned off for the build.
+
+        <p> truss(1) updated to include -H flag.
+
+        <p> zfsbootcfg(8) added for one time boot.config style options for zfsboot(8)
+
+        <p> pw(8) now respects pw.conf(5)
+
+        <p> Ifconfig can now display MAC addresses
+
+        <p> Syslogd can restart logging a subprocess. It also can look for config files in /etc/syslog.d and
+            /usr/local/etc/syslog.d
+
+        <p>Cron can now see files in /etc/cron.d and /usr/local/etc/cron.d
+
+        <p> newsyslog(8) can handle RFC5424 format.
+
+        <p> Bsdinstall now aligns on 4096 byte boundaries for partitions. EFI partition size was increased.
+
+        <p> Max_align_t is defined for C11 compliance.
+
+        <p> vt(4) is now available.
+
+        <p> Linux emulation now supports 64bit and 32bit binaries. Ports are not yet available to take advantage of this
+            feature yet. The version of the Linux kernel emulated was also updated so that we may provide newer Linux
+            packages.
+
+        <p> devctl(8) supports clear driver command
+
+        <p> ar(1) supports the-D flag to prevent real mtime, uid, gid and file modes
+
+        <p> camcontrol(8) fwdonwload was improved.
+
+        <p> cp(1) supports -s flag to create a sym link to a source.
+
+        <p>Ifconfig supports showing SFP/SFP+ data with -v flag.
+
+        <p> jail(8) supports a -l flag to create a clean environment.
+
+        <p> last(1) shows reboot.
+
+        <p> mkimg(1) handles MBR and GPT and fixes a bug with VHD format with qemu.
+        <p> pciconf(8) can use the pci ids from ports if present.
+
+        <p>“Reroot” support added to reboot.
+
+        <p>uefisign(8) added.
+
+        <h4>Known Issues</h4>
+
+        <p> The release of ACPI included has a known issue with some Z170 & Z270 Intel motherboards that causes sysctl
+            -a to hang, occasional errors reported from ACPI/AML and reboot may hang on these systems. Aside from these
+            issues, the system should work fine. We plan on updating to a newer version in a future release. If you have
+            a Kabylake based system, you may see this behavior. It’s been reported on various brands of motherboards
+            including Asus, Asrock, and OEM systems from Dell. It is not the vendor’s fault, but rather a regression in
+            the ACPI code.
+
+        <p> Initial ISOs provided for i386 had an issue with the perl install that prevented manual pages from getting
+            generated. Compiling perl and installing will fix the issue. A revised ISO will be posted.
+
+        <p>If you are updating an existing system, after installing 1.0,
+            you can use mport upgrade to update packages with 1.0 versions. It is recommended that you delete
+            /usr/mports/Packages and
+            run mport clean to remove old package remnants.
+
+        <p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the
+            svn package.
+
+            <br>e.g.
+            <br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
+        </p>
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+
