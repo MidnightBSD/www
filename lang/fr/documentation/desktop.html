@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>MidnightBSD Desktop Environemnt Documentation</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../css/essence.css">
+	</head>
+	<body>
+		<div id="globe">
+			<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+			<!--#include virtual="/menu.html"-->
+					<div class="clear"></div>
+			<div id="text">
+				<h2><img src="../images/oxygen/doc32.png" alt="" /> Xorg and Desktop Environments</h2>
+				<div id="toc">
+					<h3>Contents</h3>
+					<ul>
+						<li><a href="#s1b">Introduction</a></li>
+						<li><a href="#s1c">Installing</a></li>
+						<li><a href="index.html"><strong>Documentation</strong></a></li>
+					</ul>
+				</div>
+				<h3 id="s1a">Dump &amp; Restore</h3>
+				<h4 id="s1b">Introduction</h4>
+				<p>MidnightBSD uses <a href="http://x.org/">Xorg</a> to display graphical applicatons. Users will
+                need to select an available desktop environment to use. Choices include Xfce, Gnome 3, WindowMaker + GNUStep
+                as well as a few lightweight options.</p>
+
+				<h4 id="s1c">Installation</h4>
+
+                <h5>Xorg</h5>
+                <p>
+                    To install the X-Windows environment from packages, simply run
+                    <code>mport install xorg</code>.
+                    If you wish to build the software manually, you may do so from mports
+                    <code>cd /usr/mports/x11/xorg; make install clean</code>
+                </p>
+                <p>You may then start Xorg by running <code>startx</code> from the console. If you are using tcsh, you may need
+                to first run <code>rehash</code> before startx will be picked up.</p>
+                <p>In order to exit Xorg, you can enable the control + alt + backspace keyboard sequence by running this in an
+                xterm window within Xorg.  <code>setxkbmap -option terminate:ctrl_alt_bksp</code></p>
+
+                <h5>Grapical login manager</h5>
+                <p>There are several graphical login managers that can be used instead of running startx manually. You can install
+                xdm from packages or mports with <code>mport install xdm</code> or <code>cd /usr/mports/x11/xdm && make install clean</code>
+                </p>
+                <p>To configure xdm, edit /etc/ttys and edit the line
+                <code>ttyv8   "/usr/local/bin/xdm -nodaemon"  xterm   off secure</code> to say on.</p>
+
+                <p>xdm configuration files are located in <b>/usr/local/lib/X11/xdm</b></p>
+                <p>Other options include slim, gdm (for GNOME) and wdm (for WindowMaker).</p>
+
+                <h5>GNOME</h5>
+                <p>You can install GNOME 3 by running <code>mport install gnome3</code> or manually building and installing from
+                mports with <code>cd /usr/mports/x11/gnome3 && make install clean</code>. There is also a gnome3-lite port
+                that contains only a subset of gnome for systems with less disk space.</p>
+                <p>You will need to edit /etc/fstab and add <code>proc           /proc       procfs  rw  0   0</code> to mount
+                the proc file system.</p>
+                <p>You should also edit /etc/rc.conf and add gdm_enable="YES" and gnome_enable="YES" to the file to startup
+                all the relevant services for the GNOME desktop environment. In particular, dbus is required for proper operation.</p>
+                <p>If you wish to try out gnome manually or use startx rather than gdm to run GNOME, you can instead run the following
+                command. <code>echo "exec /usr/local/bin/gnome-session" > ~/.xinitrc</code> one time to enable GNOME for X.</p>
+                <p>If you woudl rather use xdm, you can edit the xsession configuration file as so
+                <code>
+                    echo "#!/bin/sh" > ~/.xsession<br>
+                    echo "exec /usr/local/bin/gnome-session" >> ~/.xsession<br>
+                    chmod +x ~/.xsession<br>
+                </code></p>
+
+                <h5>Xfce</h5>
+                <p>Install XFCE with <code>mport install xfce4</code> or build with
+                <code>cd /usr/mports/x11-wm/xfce4 && make install clean</code></p>
+                <p>Setup for manually starting xfce with startx by running
+                <code>echo "exec /usr/local/bin/startxfce4" > ~/.xinitrc</code></p>
+
+                <p>If using xdm, you can run this to set it up.
+                <code>
+                     echo "#!/bin/sh" > ~/.xsession<br>
+                     echo "exec /usr/local/bin/startxfce4" >> ~/.xsession<br>
+                     chmod +x ~/.xsession<br>
+                </code></p>
+
+                <h5>WindowMaker</h5>
+                <p>To install, run <code>mport install windowmaker</code>.</p>
+                <p>If you want to install wdm and several other apps, you can run
+                <code>mport install windowmaker-desktop</code> or via mports with
+                <code>cd /usr/mports/x11/windowmaker-desktop && make install clean</code></p>
+
+                <p>To add on GNUstep, you can install it via <code>mport install gnustep</code> and
+                also add apps with <code>mport install gnustep-app</code></p>
+
+                <!--#include virtual="/disqus.html"-->
+</div>
+		<!--#include virtual="/footer.html"-->
+	</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <title>MidnightBSD :: Documentation :: 0.1-RELEASE Errata</title>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/essence.css"/>
+</head>
+
+<body>
+<div id="globe">
+	<div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+<!--#include virtual="/menu.html"-->
+			<div class="clear"></div>
+	<div id="text">
+		<h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="" /> MidnightBSD Release Notes</h2>
+
+<h2>0.1-RELEASE Errata</h2>
+
+<h3>Installation issues</h3>
+
+<p>projectcenter.app package is missing dependancies on disc2. 
+mutt package is missing urlview dependancy on disc2. 
+</p>
+<p>GNUstep package includes gdnc which is missing libgcc_s.so.1. 
+</p>
+<p>bash 3 and gmake missing libintl.so.6. This can be fixed by 
+uninstalling gettext and building it from the port. A new
+ package was placed on the FTP server.
+</p>
+<h3>System issues</h3>
+
+<p>CVSUP example for updating src fetches CURRENT instead of RELENG_0_1
+</p>
+<p>The new mports system was not included in the RELEASE.  Many ports work in
+mports that do not work in the old system.  It is suggested that you update
+your source using RELENG_0_1 and download the latest mports using CVS or CVSup.
+</p>
+<p>Using Virtual PC for Windows: <br />
+If you install MidnightBSD in VPC, you will need to set hint.acpi.0.disabled="1" 
+in /boot/device.hints. This will help with the "calcru: negative runtime of" issue.
+</p>
+<p>
+August 11, 2007:<br /> 
+The pkg_install tools found in src/usr.sbin/pkg_install were not updated for
+mports.  This has been corrected.  You should be able to do cvs update on that directory 
+and run make install and get the new versions of pkg_add, pkg_delete, and so on.  
+</p> 
+    </div>
+   <!--#include virtual="/footer.html" -->
+
+</body>
+</html>
