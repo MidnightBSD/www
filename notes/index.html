@@ -75,81 +75,115 @@
                 <li><a href="0.7/index.html">0.7-RELEASE</a></li>
                 <li><a href="0.8/index.html">0.8-RELEASE</a></li>
                 <li><a href="1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="1.1/index.html">1.1-RELEASE</a></li>
             </ul>
         </div>
 
-        <h3>(02/02/2019) MidnightBSD 1.1</h3>
+        <h3>(10/31/2019) MidnightBSD 1.2</h3>
 
-
-        <p>I’m happy to announce the availability of MidnightBSD 1.1 for amd64 and i386.  This is a minor release to fix
-            a few hardware and security issues that have come up since the 1.0 release.
-            It is strongly recommended that you upgrade, particularly if you have newer Intel hardware.
+        <p>I’m happy to announce the availability of MidnightBSD 1.2 for amd64 and i386. This release
+            focused on updating base system libraries and security. A significant effort has been put into
+            updating various mports.
         </p>
 
-        <p>This release also includes a new version of OpenSSL.  This is a move from 1.0.1 to 1.0.2p in base. Many
-            mports are built with a package and will likely not be affected. It is still recommended that you rebuild
-            any mports using SSL or update the packages as appropriate.
+        <p>Portsnap is now included in the base system.  You can use it to fetch mports. As this is a relatively
+        new feature, please report any issues.</p>
 
-        <p>OpenSSH was also updated and removes support for older SSH v1 connections.
+        <h4>Bug Fixes</h4>
+        
+        <p>Fixed spell(1) by bringing back deroff(1).</p>
+        
+        <p>Fixed a bug with the mdnsd startup script (/etc/rc.d/mdnsd) where it wouldn't modify the
+        /etc/nsswitch.conf properly when enabling mDNSresponder.</p>
 
-        <p>A bug fix for ICMP underwrites is included. The icmp_error routine allocates either an mbuf or a cluster
-        depending on the size of the data to be quoted in the ICMP reply, but the calculation failed to account for
-        additional padding on 64-bit platforms when using a non-default sysctl value for net.inet.icmp.quotelen.
+        <h4>Security fixes</h4>
 
-        <p>Perl 5.28.0 fixes a number of security issues present in the older 5.26 version included with 1.0.
+        <p> The kernel driver for /dev/midistat implements a handler for read(2).
+            This handler is not thread-safe, and a multi-threaded program can
+            exploit races in the handler to cause it to copy out kernel memory
+            outside the boundaries of midistat's data buffer.
+        </p>
+        <p>
+            System calls operating on file descriptors obtain a reference to
+            relevant struct file which due to a programming error was not always put
+            back, which in turn could be used to overflow the counter of affected
+            struct file.
+        </p>
+
+        <p>
+            Security patch for CVE-2019-5611.<br>
+
+            Due do a missing check in the code of m_pulldown(9) data returned may not be
+            contiguous as requested by the caller.
+        </p>
+
+        <p>
+            Fix some buffer overflows in telnet client<br>
+
+            The code which handles a close(2) of a descriptor created by
+            posix_openpt(2) fails to undo the configuration which causes SIGIO to be
+            raised. This bug can lead to a write-after-free of kernel memory.
+            <br>
+            Due to insufficient initialization of memory copied to userland in the
+            components listed above small amounts of kernel memory may be disclosed
+            to userland processes.
+
+        </p>
+
 
         <h4>3rd party software</h4>
 
         <ul>
-            <li>ACPICA 20170728
-            <li>Perl 5.28.0
-            <li>mksh R56c
-            <li>OpenSSH 7.5p1
-            <li>OpenSSL 1.0.2p
+            <li>OpenSSH 7.9p1
+            <li>bzip2 1.0.7
         </ul>
 
+        <p>
+            bsnmp bug fix - A function extracting the length from type-length-value encoding is not properly validating
+            the submitted length.
+        </p>
+
         <h4>Hardware</h4>
-        Add the ability to disable TRIM on specific controllers or drives that have bugs. This includes some ASMedia
-        controllers using on AMD hardware.
 
-        <p>Several bugs with Intel em(4) and igb(4) network card drivers have been fixed.
+        <p>jedec_dimm - some modules falsely report supporting temp sensors. Handle this
+            better.
 
-        - Or in the DMA coalescing Rx threshold so the other bits set in E1000_DMACR
-        remain intact as intended in igb_init_dmac(). [1]
-        - Fix igb corrupting checksums with BPF and VLAN
-
-        <p>Fix MSI-X to properly fail allocations when full. The off-by-one errors in 332735 weren't actual errors and
-        were preventing the last MSI interrupt source from being used.</p>
+        <p>Some work was also completed on the USB stack.</p>
+        <ul>
+            <li>add some quirks for sandisk sdcz48_32 ultra 32gb, ploytec spl crimson rev 1, edirol ua-25ex</li>
+            <li>Fix for reception of large full speed isochronous frames via the transaction translator.
+            <li>In xhci(4) there is no stream ID in the completion TRB. instead interate all the stream idds in stream mode to find the matching USB transfer.</li>
+            <li>Fix a lost completion event issue towards libusb(3).</li>
+            <li>Reduce timeout for reading the USB HUB port status to 1000ms and try to filter out dead USB HUB devices by implemention of an error counter.</li>
+        </ul>
 
         <h4>Mport Package Manager</h4>
-        <p>Introduced new setting to set the mirror region you wish to use. Currently, we have two mirrors including
-            the main site in Ypsilanti, MI and another in Japan.</p>
+
+        <p>Several bug fixes to existing SQL queries were done in this release. It should improve lookups of
+            packages when searching or installing updates. Error handling improvements were also done.</p>
+
+        <p>Some bug fixes around absolute paths should improve installation when plists contain absoluate paths.</p>
+
+        <p>You may choose an alternate package mirror location by setting the configuration after install.</p>
 
         <p>Lookup current setting:
-        <code>
-            mport config get mirror_region
-        </code>
+            <code>
+                mport config get mirror_region
+            </code>
 
         <p>Set the a new mirror location:
-        <code>
-            mport config set mirror_region jp
-        </code>
+            <code>
+                mport config set mirror_region jp
+            </code>
 
         <h4>Known Issues</h4>
-        <p>There is a known issue with scp in OpenSSH.  While this version does not fix the issue, it is new enough that
-            we expect to be able to release a patch for it soon.  We chose to release anyway due to issues with OpenSSL and Perl.
 
         <p>Several issues were reported with the 1.0 release an the LiveCD functionality. These have not been corrected
-        yet. We recommend installing MidnightBSD in a virtual machine to try it out before committing to dedicated hardware with it.
+            yet. We recommend installing MidnightBSD in a virtual machine to try it out before committing to dedicated
+            hardware with it.
 
-        <p>At the time of release, several packages are still getting updated in mports. Initial package availability
-        will be limited, but we expect better support going forward.
-
-        <p>mports/devel/p5-version must be updated in order to work with the system perl.
-
-
-        <p>If you are updating an existing system, after installing 1.1,
-            you can use mport upgrade to update packages with 1.1 versions. It is recommended that you delete
+        <p>If you are updating an existing system, after installing 1.2,
+            you can use mport upgrade to update packages with 1.2 versions. It is recommended that you delete
             /usr/mports/Packages and
             run mport clean to remove old package remnants.
 
@@ -159,6 +193,16 @@
             <br>e.g.
             <br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
         </p>
+
+        <p>mports moved to github and you can also use the git package to fetch updated mports with
+        cd /usr/ && git clone https://github.com/midnightbsd/mports.git </p>
+
+        <p>portsnap is also available in this release and can be used to update mports also.
+        <br>first use:  portsnap fetch extract
+        <br>then: portsnap fetch update
+        </p>
+
+        <p>See the man page for more information.</p>
 
     </div>
     <!--#include virtual="/footer.html"-->
