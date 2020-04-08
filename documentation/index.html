@@ -101,6 +101,57 @@
 				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
 				<div class="hardware">
 				  <table>
+					<caption>Hardware tested with MidnightBSD 1.2.x</caption>
+					        <tr>
+                                                        <td>Lenovo ThinkPad A485</td>
+                                                        <td>Partially works</td>
+                                                        <td>The onboard WiFi chip is not supported. Display dimming does not work.
+                                                                Sound works. When installed with UEFI amd64 release, X will work
+                                                                with the fb. The AMD graphics are not supported for acceleration.
+                                                                (1.2 release)
+							   Note: Ryzen mobile 2500u chips require a boot loader setting in order to boot properly.
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>HP Z420 Workstation</td>
+                                                        <td>Works</td>
+                                                        <td>Fully supported. Onboard NIC and sound work.  The original nvidia workstation graphics
+                                                        adapter requires a legacy version of the nvidia driver to function due to it's age.
+                                                        Also tested with an AMD Radeon HD 7450 and native x acceleration works with that card.
+                                                </tr>
+                                                <tr>
+                                                        <td>Asus Prime X370 Pro Motherboard</td>
+                                                        <td>Works</td>
+                                                        <td>Sound, onboard NIC, SATA controller work. Works with amd64 release of 1.1 and 1.2.</td>
+                                                </tr>
+                                                <tr>
+                                                        <td>Asus Tuf B350-M Gaming  Motherboard</td>
+                                                        <td>Works</td>
+                                                        <td>Sound, onboard NIC, SATA controller work. Works with amd64 release of 1.1 and 1.2.</td>
+                                                </tr>
+						<tr>
+							<td>ASUS PRIME Z270M-Plus motherboard</td>
+							<td>Works</td>
+							<td>Tested with i7-7700. Works fine. Audio and integrated graphics work in UEFI fb mode. 
+							This board does not work correctly with older releases due to USB compatibility.  1.1 or higher only.</td>
+						</tr>
+						<tr>
+							<td>AMD Radeon HD 7450</td>
+							<td>Works</td>
+							<td>Recommended card. Has high compatibility</td>
+						</tr>
+						<tr>
+							<td>NVIDIA</td>
+							<td>Works</td>
+							<td>Using the binary driver in mports, you can use a NVIDIA 710GT, 960, or 1080ti. Additional cards may work but are untested.</td>
+						</tr>
+						<tr>
+							<td>AMD integrated graphics (Ryzen)</td>
+							<td>Partially works</td>
+							<td>No hardware acceleration is available for AMD vega or higher GPUs. They do work in UEFI fb mode though</td>
+						</tr>
+				</table>
+				  <table>
 					<caption>Hardware Tested with MidnightBSD 0.2.x</caption>
 						<tr>
 							<th>Hardware</th>
@@ -121,7 +172,7 @@
 							Audigy Gamer and Nvidia GeForce PCIe 7300 work as expected. System was
 							upgraded to an ATI X1900 GT PCIe, that works with X11 using radeonhd (2D only)</td>
 						</tr>
-			        	<tr>
+			        		<tr>
 							<td>Virtual PC</td>
 							<td>Works</td>
 							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X 
@@ -152,25 +203,6 @@
 						    <td>Works</td>
 						    <td>Parallels 3 or 4 work with MidnightBSD.  Releases were tested on Parallels 
 						    first actually.  0.4's SMP support works.  Mac or PC versions.</td>
-						</tr>
-						<tr>
-							<td>Lenovo ThinkPad A485</td>
-							<td>Partially works</td>
-							<td>The onboard WiFi chip is not supported. Display dimming does not work.
-								Sound works. When installed with UEFI amd64 release, X will work
-								with the fb. The AMD graphics are not supported for acceleration. 
-								(1.2 release)
-							</td>
-						</tr>
-						<tr>
-							<td>Asus Prime X370 Pro Motherboard</td>
-							<td>Works</td>
-							<td>Sound, onboard NIC, SATA controller work. Works with amd64 release of 1.1 and 1.2.</td>
-						</tr>
-						<tr>
-							<td>Asus B350 Tuf Motherboard</td>
-							<td>Works</td>
-							<td>Sound, onboard NIC, SATA controller work. Works with amd64 release of 1.1 and 1.2.</td>
 						</tr>
 						<tr>
 						    <td>IBM Thinkpad T30</td>
