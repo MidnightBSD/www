@@ -30,7 +30,7 @@ a:active, a:hover {
     width: 1002px; /* Fits most 1024x768 in fullscreen */
     margin: 0 auto;
     padding: 0;
-    background: url(//d2ibasrwfd3o7m.cloudfront.net/images/shadow.png) repeat-y;
+    background: url(/images/shadow.png) repeat-y;
 }
 
 #header h1 {
@@ -42,7 +42,7 @@ a:active, a:hover {
 
 #header a {
     /* CSS Text-to-Image replacement */
-    background-image: url("//d2ibasrwfd3o7m.cloudfront.net/images/logo.jpg");
+    background-image: url("/images/logo.jpg");
     background-repeat: no-repeat;
     width: 928px;
     height: 0 !important;
