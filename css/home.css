@@ -4,7 +4,7 @@ blockquote { line-height: 130%; }
 #welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif }
 #welcome h2 { text-align: center; margin: 0 0 0 25px; }
 
-#getbox { background: url("//d2ibasrwfd3o7m.cloudfront.net/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center; color: #333; float: right; margin: -10px 0 0 0; }
+#getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center; color: #333; float: right; margin: -10px 0 0 0; }
 #getbox * { font-weight: normal; }
 #getbox a { color: #333; }
 #getbox a:hover { color: #666; }
@@ -20,7 +20,7 @@ blockquote { line-height: 130%; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
 #getcd { width: 215px; height: 107px; }
-#getcd a { background: url("//d2ibasrwfd3o7m.cloudfront.net/images/cd.png") no-repeat; float: left; width: 215px; height: 107px; margin: 0px 90px 5px 30px; }
+#getcd a { background: url("/images/cd.png") no-repeat; float: left; width: 215px; height: 107px; margin: 0px 90px 5px 30px; }
 
 #gravity { width: 900px; background: transparent; padding: 0 20px; margin: auto;}
 #gravity div { float: left; background: transparent; }
