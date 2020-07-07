@@ -31,29 +31,31 @@
         <h4>Implementation</h4>
 
         <h5>Creating the image</h5>
-<pre>	
- * Create a [[livecd|LiveCD]]. 
- * Look at the script: [[http://www.midnightbsd.org/cgi-bin/cvsweb.cgi/src/nrelease/install-iso2img.sh | install-iso2img.sh]]  T
+
+    <ul>
+ <li> Create a <a href="livecd.html">LiveCD</a> .
+        <li> Look at the script: <a href="https://github.com/MidnightBSD/src/blob/master/nrelease/install-iso2img.sh">install-iso2img.sh</a>  T
 his script does not work as is, but it is a rough outline of what needs to be done.
- * dd if=/dev/zero of=theimgfilename.img count=${SECTS}  where SECTS is enough to fit the OS on.  This number can be tricky to c
-ome up with.  The method in the script is not large enough.  See [[http://unstableme.blogspot.com/2009/01/create-file-with-given
--size-linux-dd.html|Creating a file with a given size with dd]]. For example, dd if=/dev/zero of=imagefile bs=1048576 count=900
+        <li> dd if=/dev/zero of=theimgfilename.img count=${SECTS}  where SECTS is enough to fit the OS on.  This number can be tricky to c
+ome up with.  The method in the script is not large enough.  See <a href="http://unstableme.blogspot.com/2009/01/create-file-with-given
+-size-linux-dd.html">Creating a file with a given size with dd</a>. For example, dd if=/dev/zero of=imagefile bs=1048576 count=900
 will give you a 900MB file. 
- * Make a temp directory such as /usr/flash and create two subdirectories img and iso.  This will be tmpdir
- * mdconfig -a -t vnode -f ${isoimage}  (path to iso image obviously)   note the device name   isodev
- * mdconfig -a -t vnode -f ${imgoutfile}  (path to file you dd'd above) note the device name as imgdev
- * bsdlabel -w -B ${imgdev}   (should be something like /dev/md6)
- * newfs -n /dev/${imgdev}a   (should be something like /dev/md6a)
- * mount -t cd9660 /dev/${isodev} ${tmpdir}/iso
- * mount /dev/${imgdev}a ${tmpdir}/img
- * cd ${tmpdir}/iso && find . -print -depth | cpio -dump ${tmpdir}/img    (i had better luck with gcpio from mports, one could u
-se pax or cpdup too)
- * Fix the etc/fstab in ${tmpdir}:  /dev/da0a    /        ufs    rw        1    1
- * umount ${tmpdir}/iso
- * mdconfig -d -u ${isodev}
- * umount ${tmpdir}/img
- * mdconfig -d -u ${imgdev}
-</pre>
+        <li> Make a temp directory such as /usr/flash and create two subdirectories img and iso.  This will be tmpdir
+        <li> mdconfig -a -t vnode -f ${isoimage}  (path to iso image obviously)   note the device name   isodev
+        <li> mdconfig -a -t vnode -f ${imgoutfile}  (path to file you dd'd above) note the device name as imgdev
+        <li> bsdlabel -w -B ${imgdev}   (should be something like /dev/md6)
+        <li> newfs -n /dev/${imgdev}a   (should be something like /dev/md6a)
+        <li> mount -t cd9660 /dev/${isodev} ${tmpdir}/iso
+        <li> mount /dev/${imgdev}a ${tmpdir}/img
+        <li> cd ${tmpdir}/iso && find . -print -depth | cpio -dump ${tmpdir}/img    (i had better luck with gcpio from mports, one could
+        use pax or cpdup too)
+        <li> Fix the etc/fstab in ${tmpdir}:  /dev/da0a    /        ufs    rw        1    1
+        <li> umount ${tmpdir}/iso
+        <li> mdconfig -d -u ${isodev}
+        <li> umount ${tmpdir}/img
+        <li> mdconfig -d -u ${imgdev}
+    </ul>
+
         <h5>Putting it on flash media</h5>
 
         <p>
