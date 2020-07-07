@@ -32,46 +32,52 @@
 
         <h5>Creating the image</h5>
 
-    <ul>
- <li> Create a <a href="livecd.html">LiveCD</a> .
-        <li> Look at the script: <a href="https://github.com/MidnightBSD/src/blob/master/nrelease/install-iso2img.sh">install-iso2img.sh</a>  T
-his script does not work as is, but it is a rough outline of what needs to be done.
-        <li> dd if=/dev/zero of=theimgfilename.img count=${SECTS}  where SECTS is enough to fit the OS on.  This number can be tricky to c
-ome up with.  The method in the script is not large enough.  See <a href="http://unstableme.blogspot.com/2009/01/create-file-with-given
--size-linux-dd.html">Creating a file with a given size with dd</a>. For example, dd if=/dev/zero of=imagefile bs=1048576 count=900
-will give you a 900MB file. 
-        <li> Make a temp directory such as /usr/flash and create two subdirectories img and iso.  This will be tmpdir
-        <li> mdconfig -a -t vnode -f ${isoimage}  (path to iso image obviously)   note the device name   isodev
-        <li> mdconfig -a -t vnode -f ${imgoutfile}  (path to file you dd'd above) note the device name as imgdev
-        <li> bsdlabel -w -B ${imgdev}   (should be something like /dev/md6)
-        <li> newfs -n /dev/${imgdev}a   (should be something like /dev/md6a)
-        <li> mount -t cd9660 /dev/${isodev} ${tmpdir}/iso
-        <li> mount /dev/${imgdev}a ${tmpdir}/img
-        <li> cd ${tmpdir}/iso && find . -print -depth | cpio -dump ${tmpdir}/img    (i had better luck with gcpio from mports, one could
-        use pax or cpdup too)
-        <li> Fix the etc/fstab in ${tmpdir}:  /dev/da0a    /        ufs    rw        1    1
-        <li> umount ${tmpdir}/iso
-        <li> mdconfig -d -u ${isodev}
-        <li> umount ${tmpdir}/img
-        <li> mdconfig -d -u ${imgdev}
-    </ul>
+        <ul>
+            <li> Create a <a href="livecd.html">LiveCD</a> .
+            <li> Look at the script: <a
+                    href="https://github.com/MidnightBSD/src/blob/master/nrelease/install-iso2img.sh">install-iso2img.sh</a>
+                T
+                his script does not work as is, but it is a rough outline of what needs to be done.
+            <li> dd if=/dev/zero of=theimgfilename.img count=${SECTS} where SECTS is enough to fit the OS on. This
+                number can be tricky to c
+                ome up with. The method in the script is not large enough. See <a href="http://unstableme.blogspot.com/2009/01/create-file-with-given
+-size-linux-dd.html">Creating a file with a given size with dd</a>. For example, dd if=/dev/zero of=imagefile bs=1048576
+                count=900
+                will give you a 900MB file.
+            <li> Make a temp directory such as /usr/flash and create two subdirectories img and iso. This will be tmpdir
+            <li> mdconfig -a -t vnode -f ${isoimage} (path to iso image obviously) note the device name isodev
+            <li> mdconfig -a -t vnode -f ${imgoutfile} (path to file you dd'd above) note the device name as imgdev
+            <li> bsdlabel -w -B ${imgdev} (should be something like /dev/md6)
+            <li> newfs -n /dev/${imgdev}a (should be something like /dev/md6a)
+            <li> mount -t cd9660 /dev/${isodev} ${tmpdir}/iso
+            <li> mount /dev/${imgdev}a ${tmpdir}/img
+            <li> cd ${tmpdir}/iso && find . -print -depth | cpio -dump ${tmpdir}/img (i had better luck with gcpio from
+                mports, one could
+                use pax or cpdup too)
+            <li> Fix the etc/fstab in ${tmpdir}: /dev/da0a / ufs rw 1 1
+            <li> umount ${tmpdir}/iso
+            <li> mdconfig -d -u ${isodev}
+            <li> umount ${tmpdir}/img
+            <li> mdconfig -d -u ${imgdev}
+        </ul>
 
         <h5>Putting it on flash media</h5>
 
         <p>
             (assumes flash is /dev/da0)
 
-        <code>dd if=${imgoutfile} of=/dev/da0 bs=1m</code>
+            <code>dd if=${imgoutfile} of=/dev/da0 bs=1m</code>
 
         <h4>Test Environment</h4>
 
         <p>This setup was tested on 0.3-CURRENT (Jan 4, 2009) i386 with an Intel DP965LT motherboard. It worked well.
 
         <p>I also attempted to use it on a Mac Pro (Quad 2.0Ghz), and while holding option showed an EFI boot option,
-            nothing would work with the flash.  I have not tried GPT yet. Suggestions welcome.</p>
+            nothing would work with the flash. I have not tried GPT yet. Suggestions welcome.</p>
 
-	<p>A similar process should work with newer releases (e.g. 0.8.5 release) but the memstick image file is already built
-	for installation purposes. It might be wise to look at modifying the make release process there.</p>
+        <p>A similar process should work with newer releases (e.g. 0.8.5 release) but the memstick image file is already
+            built
+            for installation purposes. It might be wise to look at modifying the make release process there.</p>
 
         <h4>Possible Uses</h4>
 

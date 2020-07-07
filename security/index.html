@@ -33,9 +33,24 @@
         <p>For third party security adviories related to packages, try the new <a href="http://sec.midnightbsd.org/#!/">Security
             Advisory</a> website. To detect
             vulnerable software packages installed on the system, install the security advisory client.
-            <i>mport install security-advisory-client</i>. Then simply run advisory.pl to check your system.
+            <i>mport install security-advisory-client</i>. Then simply run advisory.pl to check your system.</p>
 
         <h3>MidnightBSD Security Advisories</h3>
+
+        <blockquote class="bluebox" id="a20200514">
+            <h3>May 14, 2020</h3>
+
+            <p>MidnightBSD 1.2.2 (in git)</p>
+            <p>Fixed a security issue in libalias.</p>
+            <p>
+                The FTP packet handler in libalias incorrectly calculates some packet
+                lengths. This may result in disclosing small amounts of memory from the
+                kernel (for the in-kernel NAT implementation) or from the process space for
+                natd (for the userspace implementation).
+            </p>
+
+            <p>Updated tzdata to 2020a.</p>
+        </blockquote>
 
         <blockquote class="bluebox" id="a20190822">
             <h3>August 22, 2019</h3>
@@ -44,12 +59,12 @@
             <p>The kernel driver for /dev/midistat implements a handler for read(2).
                 This handler is not thread-safe, and a multi-threaded program can
                 exploit races in the handler to cause it to copy out kernel memory
-                outside the boundaries of midistat's data buffer.
+                outside the boundaries of midistat's data buffer.</p>
 
             <p>System calls operating on file descriptors obtain a reference to
                 relevant struct file which due to a programming error was not always put
                 back, which in turn could be used to overflow the counter of affected
-                struct file.
+                struct file.</p>
         </blockquote>
 
         <blockquote class="bluebox" id="a20190821">
@@ -74,15 +89,15 @@
         <blockquote class="bluebox" id="a20190724">
             <h3>July 24, 2019</h3>
 
-            <p>Fix some buffer overflows in telnet client
+            <p>Fix some buffer overflows in telnet client</p>
 
             <p> The code which handles a close(2) of a descriptor created by
                 posix_openpt(2) fails to undo the configuration which causes SIGIO to be
-                raised. This bug can lead to a write-after-free of kernel memory.
+                raised. This bug can lead to a write-after-free of kernel memory.</p>
 
             <p> Due to insufficient initialization of memory copied to userland in the
                 components listed above small amounts of kernel memory may be disclosed
-                to userland processes.
+                to userland processes.</p>
         </blockquote>
 
         <blockquote class="bluebox" id="a20190118">
@@ -106,7 +121,7 @@
             <p> ELF header security issue
 
                 Insufficient validation was performed in the ELF header parser, and malformed
-                or otherwise invalid ELF binaries were not rejected as they should be.
+                or otherwise invalid ELF binaries were not rejected as they should be.</p>
         </blockquote>
 
         <blockquote class="bluebox" id="a20180815">
@@ -117,27 +132,27 @@
                 the dta field was encrypted using RC4, for example, when negotiating TKIP as
                 a pairwise cipher, the unauthenticated but decrypted data was subsequently
                 processed. This opened wpa_supplicant(8) to abuse by decryption and recovery
-                of sensitive information contained in EAPOL-Key messages.
+                of sensitive information contained in EAPOL-Key messages.</p>
 
             <p>
                 See https://w1.fi/security/2018-1/unauthenticated-eapol-key-decryption.txt
-                for a detailed description of the bug.
+                for a detailed description of the bug.</p>
         </blockquote>
 
         <blockquote class="bluebox" id="a20170818">
             <h3>August 08, 2017</h3>
 
-            <p>MidnightBSD 0.8.6 RELEASE
-            <p> Update em(4) to support skylake and kabylake era Intel NICs.
+            <p>MidnightBSD 0.8.6 RELEASE</p>
+            <p> Update em(4) to support skylake and kabylake era Intel NICs.</p>
 
             <p> Update usb(4) to support newer Intel and Asmedia controllers and
-                several new devices.
+                several new devices.</p>
 
-            <p>Heimdal KDC-REP service name validation vulerability patched.
+            <p>Heimdal KDC-REP service name validation vulnerability patched.</p>
 
-            <p>serf 1.3.9
+            <p>serf 1.3.9</p>
 
-            <p>subversion 1.8.10
+            <p>subversion 1.8.10</p>
         </blockquote>
         <blockquote class="bluebox" id="a20161213">
             <h3>December 13, 2016</h3>
