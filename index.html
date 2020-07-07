@@ -72,6 +72,26 @@
 
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
+
+			<blockquote>
+				<p class="date">May 14, 2020</p>
+
+					<p class="update">
+						<br>MidnightBSD 1.2.2 (in git)
+						Fixed a security issue in libalias.
+					       <br>
+					           The FTP packet handler in libalias incorrectly calculates some packet
+					           lengths. This may result in disclosing small amounts of memory from the
+					           kernel (for the in-kernel NAT implementation) or from the process space for
+					           natd (for the userspace implementation).
+					       <br>Updated tzdata to 2020a.
+					</p>
+
+					<p class="more">
+						<a href="security/index.html#a20200514">Read more ...</a>
+					</p>
+				</blockquote>
+
 			<blockquote>
 				<p class="date">August 22, 2019</p>
 
@@ -88,19 +108,6 @@
 	                struct file.
 
 				<p class="more"><a href="security/index.html#a20190822">Read more ...</a></p>
-			</blockquote>
-			<blockquote>
-				<p class="date">August 21, 2019</p>
-
-				<p class="update"> Security patch for CVE-2019-5611.
-
-					Due do a missing check in the code of m_pulldown(9) data returned may not be
-					contiguous as requested by the caller.
-				</p>
-
-				<p class="more">
-					<a href="security/index.html#a20190821">Read more ...</a>
-				</p>
 			</blockquote>
 		</div>
 
