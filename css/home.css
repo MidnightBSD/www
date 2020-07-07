@@ -20,7 +20,7 @@ blockquote { line-height: 130%; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
 #getcd { width: 215px; height: 107px; }
-#getcd a { background: url("/images/cd.png") no-repeat; float: left; width: 215px; height: 107px; margin: 0px 90px 5px 30px; }
+#getcd a { background: url("/images/cd.png") no-repeat; float: left; width: 215px; height: 107px; margin: 0 90px 5px 30px; }
 
 #gravity { width: 900px; background: transparent; padding: 0 20px; margin: auto;}
 #gravity div { float: left; background: transparent; }
@@ -32,7 +32,7 @@ blockquote { line-height: 130%; }
 #news, #tweets, #security { width: 300px; font-size: 90% }
 
 .date { font-style: italic; color: #808080; text-align: center; }
-.update { height: 3.8em; overflow: hidden; }
+.update { height: 5.8em; overflow: hidden; }
 
 #midnight { float: left; margin: 0 10px 0 0; border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 8pt; }
 #text ul li { font-size: 14px; }
