@@ -37,6 +37,54 @@
 
         <h3>MidnightBSD Security Advisories</h3>
 
+        <blockquote class="bluebox" id="a20200807">
+            <h3>August 8, 2020</h3>
+
+            <p>MidnightBSD 1.2.6</p>
+            <p>
+                A missing length validation code common to these three drivers means that a
+                malicious USB device could write beyond the end of an allocated network
+                packet buffer.</p>
+            <ul>
+                <li>smsc(4), supporting SMSC (now Microchip) devices
+                <li>muge(4), supporting Microchip devices
+                <li>cdceem(4), supporting USB Communication Device Class compatible devices
+            </ul>
+            
+            <p>sendmsg security fix
+            <p>When handling a 32-bit sendmsg(2) call, the compat32 subsystem copies the
+                control message to be transmitted (if any) into kernel memory, and adjusts
+                alignment of control message headers. The code which performs this work
+                contained a time-of-check to time-of-use (TOCTOU) vulnerability which allows a
+                malicious userspace program to modify control message headers after they were
+                validated by the kernel.
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20200723">
+            <h3>July 23, 2020</h3>
+
+            <p>MidnightBSD 1.2.5 (in git)</p>
+            <p>Fix a 30 year old bug in mountd.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20200710">
+            <h3>July 10, 2020</h3>
+
+            <p>MidnightBSD 1.2.4, 1.1.4 (in git)</p>
+            <p>update libmport to fix several package installation bugs including permissions not getting set
+                properly and path issues.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20200709">
+            <h3>July 9, 2020</h3>
+
+            <p>MidnightBSD 1.2.3 (in git)</p>
+
+            <p>Security update for sqlite3. Update to 3.32.3</p>
+
+            <p>Update unbound to 1.10.1</p>
+        </blockquote>
+
         <blockquote class="bluebox" id="a20200514">
             <h3>May 14, 2020</h3>
 
