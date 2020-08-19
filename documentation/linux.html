@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD - Linux® Binary Compatibility</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Linux® Binary Compatibility</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Install</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+        <h3 id="s1a">Linux® Binary Compatibility</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>Linux® Binary Compatibility allows users to run many Linux applications on MidnightBSD without modification.
+            Originally, MidnightBSD only supported 32bit executables, but MidnightBSD 1.0 introduced 64bit
+            compatibility.</p>
+
+        <p>Not all Linux applications will work on MidnightBSD. For example, any apps that use
+            i386™ specific calls, such as enabling virtual 8086 mode, or that make use of newer Linux system calls
+            that have not been implemented yet.
+        </p>
+
+        <p>Currently, we emulate a Linux 2.6.32 kernel. Older releases supported older kernels such as
+            2.6.16 or 2.4.x. It is possible to use a newer userland from popular distros on older kernels due to
+            glibc backward compatibility. </p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+
+        <h4 id="s1c">Install</h4>
+
+        <p>To enable Linux compatibility, you will need to first load a kernel module for either 32bit or 64bit support.
+            The latter only works on amd64. </p>
+
+        32bit:
+        <code>
+            kldload linux
+        </code>
+
+        64bit:
+        <code>kldload linux64</code>
+
+        <p>To make this permanent, you can add it to /etc/rc.conf as linux_enable="YES", or
+            possibly just add the kernel module to /boot/loader.conf as linux_load="YES"</p>
+
+        <p>You must also install a userland for linux apps. This is the native libraries that come with Linux
+            distros. For recent releases, use this:</p>
+        <code>mport install linux_base-c7</code>
+        <p>Older releases used linux_base-fc4. This is also in mports in emulators/</p>
+
+        <p>Linux files live in /compat/linux and you can add your own linux compiled libraries in that environment.</p>
+
+        <p>Elf binaries sometimes need to be marked as Linux to run properly. If you get an error about unknown elf type
+            then simply do this</p>
+        <code> brandelf -t Linux my-linux-elf-binary</code>
+
+        <p>If you need to use RPMs to install packages, first install the archivers/rpm4 port or mport install rpm4.
+            Then run this</p>
+        <code>rpm2cpio < /path/to/linux.archive.rpm | cpio -id</code>
+
+        <p>You may also need to setup the resolver. Add a file /compat/linux/etc/host.conf with the following:
+        </p>
+
+        <pre>
+            order hosts, bind
+            multi on
+        </pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
