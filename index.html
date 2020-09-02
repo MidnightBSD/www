@@ -73,6 +73,36 @@
 
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
+
+       <blockquote>
+	<p class="date"> September 2, 2020</p>
+
+        <p class="update">
+        <a href="adv/MIDNIGHTBSD-SA-20:01.txt">MIDNIGHTBSD-SA-20:01.txt</a><br>
+        <a href="adv/MIDNIGHTBSD-SA-20:02.txt">MIDNIGHTBSD-SA-20:02.txt</a>
+
+        <p class="update">Additionally a bug exists in dhclient.
+
+        <p class="update">From FreeBSD advisory for  CVE-2020-7461<br>
+        When parsing option 119 data, dhclient(8) computes the uncompressed domain
+list length so that it can allocate an appropriately sized buffer to store
+the uncompressed list.  The code to compute the length failed to handle
+certain malformed input, resulting in a heap overflow when the uncompressed
+list is copied into in inadequately sized buffer.</p>
+
+        <p class="update">sctp CVE-2020-7463 - Triggering the use-after-free situation may result in unintended kernel
+behaviour including a kernel panic.</p>
+
+        <p class="update">IPv6 Hop-by-Hop options use-after-free bug  CVE-2020-7462 -  Due to improper mbuf handling in the kernel, a use-after-free bug might be
+triggered by sending IPv6 Hop-by-Hop options over the loopback interface.</p>
+
+        <p class="update">All of these have been patched in 1.3-CURRENT, and the dhclient issue was corrected in
+        1.2 stable (1.2.8 release), and 1.3-CURRENT.</p>
+
+	      <p class="more">
+                                        <a href="security/index.html#a20200902">Read more ...</a>
+                                </p>
+        </blockquote>
 			
 			<blockquote>
 				<p class="date">August 7, 2020</p>
@@ -100,16 +130,6 @@
 				<p class="more">
 					<a href="security/index.html#a20200807">Read more ...</a>
 				</p>
-			</blockquote>
-
-			<blockquote>
-				<p class="date">July 23, 2020</p>
-
-				<p class="update">
-				<br>MidnightBSD 1.2.5 (in git)
-	            <br>Fix a 30 year old bug in mountd.
-
-				<p class="more"><a href="security/index.html#a20200723">Read more ...</a></p>
 			</blockquote>
 		</div>
 
