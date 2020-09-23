@@ -53,6 +53,30 @@
 	C Turt <ecturt@gmail.com>
 	</blockquote>
 
+	<blockquote class="bluebox" id="a20200915">
+
+	<h3>September 15, 2020</h3>
+
+	<p>ftpd<br>
+	A ftpd(8) bug in the implementation of the file system sandbox, combined
+	with capabilities available to an authenticated FTP user, can be used to
+	escape the file system restriction configured in ftpchroot(5).
+	Moreover, the bug allows a malicious client to gain root privileges.	
+
+	<p>bhyve<br>
+	AMD and Intel CPUs support hardware virtualization using specialized data
+	structures that control various aspects of guest operation.  These are the
+	Virtual Machine Control Structure (VMCS) on Intel CPUs, and the Virtual
+	Machine Control Block (VMCB) on AMD CPUs.  Insufficient access controls allow
+	root users, including those running in a jail, to change these data
+	structures.
+
+	<p>A number of AMD virtualization instructions operate on host physical
+	addresses, are not subject to nested page table translation, and guest use of
+	these instructions was not trapped.
+	
+	</blockquote>
+
 	<blockquote class="bluebox" id="a20200902">
 
 	<h3>September 2, 2020</h3>
