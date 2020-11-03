@@ -9,6 +9,9 @@ Disallow: /ftp/MidnightBSD/distfiles/*.asc
 Disallow: /ftp/MidnightBSD/distfiles/*.sig
 Disallow: /ftp/
 Disallow: /rspamd/
+Disallow: /fgmunin/
+Disallow: /roundcube/
+Disallow: /opengrok/
 Crawl-delay: 5
 Sitemap: http://www.midnightbsd.org/sitemap.xml
 Sitemap: http://www.midnightbsd.org/sitemap1.xml
