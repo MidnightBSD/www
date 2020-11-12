@@ -41,3 +41,6 @@ Disallow: /
 
 User-agent: PetalBot
 Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
