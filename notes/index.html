@@ -105,39 +105,45 @@
         <p>Due to the nature of the release, there are a few minor build issues when upgrading from MidnightBSD 1.2.x by source.  Please follow this awkward procedure:
         <br>(you can also do this with svnlite using github)
 
-            <code>
-        Install git if you don’t have it already
-        mport install git
+        <p>Install git if you don’t have it already
+        <code>mport install git</code>
 
-        Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
 
-        git clone https://github.com/MidnightBSD/src.git
+        <code>git clone https://github.com/MidnightBSD/src.git</code>
 
-        Checkout the stable/2.0 branch
-        git checkout stable/2.0
+        <p>Checkout the stable/2.0 branch
+        <code>git checkout stable/2.0</code>
 
-        Using your favorite editor (ee, vi, nano, gedit, … ) open the src/usr.bin/Makefile
-        Comment out with #
+        <p>Using your favorite editor (ee, vi, nano, gedit, … ) open the src/usr.bin/Makefile
+        <p>Comment out with #
+        <pre>
         .if defined(LINKER_FEATURES) && ${LINKER_FEATURES:Mfilter}
         SUBDIR= perl \
                 .WAIT
         .endif
-
-        cd /usr/src; make clean buildworld buildkernel;
-        mergemaster -p
-        make installkernel
-        reboot
-        (if it works OK, login and go to /usr/src)
-        make installworld
-        mergemaster -iU
+        </pre>
+        
+        <code>cd /usr/src; make clean buildworld buildkernel;<br>
+        mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        mergemaster -iU<br>
         cd /usr/src/usr.bin/perl; make; make install;
-        Open src/usr.bin/Makefile again and uncomment the previous lines (in case you do a rebuild later)
-        Update installed mports/packages
-        cd /usr/src/; make check-old;  then run make delete-old
-
-        When you are done, verify that perl is updated by running perl -v
-        You should have perl 5.32.0. If it says perl 5.28, be sure to upgrade perl!
             </code>
+        <p>
+        Open src/usr.bin/Makefile again and uncomment the previous lines (in case you do a rebuild later)<br>
+        Update installed mports/packages<br>
+        <code>
+        cd /usr/src/; make check-old;
+                make delete-old
+        </code>
+
+        <p>When you are done, verify that perl is updated by running perl -v
+        You should have perl 5.32.0. If it says perl 5.28, be sure to upgrade perl!
 
         <h4>Bug Fixes and new features</h4>
 
