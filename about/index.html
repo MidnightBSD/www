@@ -24,7 +24,7 @@
 
 					<p>MidnightBSD is a FreeBSD derived Operating System. A critical goal of 
 					the project is to create an easy to use desktop environment with graphical ports 
-					management, and system configuration using GNUstep. The vast majority of the
+					management, and system configuration using Xfce. The vast majority of the
 					operating system will maintain a BSD license. Certain software packages use 
 					other licenses such as X.org, GCC, and GNUstep.</p>
 						
@@ -46,13 +46,13 @@
 					FreeBSD developers who have worked very hard on FreeBSD 5.x and 6.x.</p>
 					<p>We hope to create something unique. Project goals include:</p>
 					<ul>
-						<li>A new window and login manager. [Replaced by Etoile]</li>
+						<li>A new window and login manager. [Replaced by Etoile, then xfce + mlogind]</li>
 						<li>Centralized system preferences while maintaining the BSD style on the command line.</li>
 						<li>A graphical ports and package management system. Currently we use a 
 						derivative of FreeBSD ports. [Now we have mports]</li>
 						<li>Work on various portions of the kernel including syscons, process and 
 						disk scheduling, imports of FreeBSD and OpenBSD drivers, etc.</li>
-						<li>Importing useful features from DragonFly, OpenBSD and NetBSD.</li>
+						<li>Importing useful features from DragonFly, MirBSD, OpenBSD and NetBSD.</li>
 						<li>Improving security with little distraction to the end user. 
 						[ipfw is enabled in 0.2+, sudo added, many other changes are coming]</li>
 					</ul>
@@ -64,6 +64,13 @@
 					additional devices.</p>
 					<p>MidnightBSD also includes ZFS, hast, UFS2 journaling, SSD TRIM, Perl, mDNSResponder, OpenSSH,
 					and a slew of other things.</p>
+					<h3>2021 Update</h3>
+					<p>We switched from GNUstep + Window Maker + GWorkspace to Xfce as our desktop environment. We still plan to maintain
+					support for GNUstep environments as much as possible, but it's much easier to do integration with Xfce. 
+					<p>MidnightBSD 2.x incorporates major features of FreeBSD 11-stable now including bhyve, updated GPU support, and toolchain.
+					<p>We're now including a default .xinitrc and updated the midnightbsd-desktop pacakge to include basics for a desktop. Work is
+					continuing on the package manager to support installs from the installer rather than the firstboot rc.d script.
+					<p>We've imported doas from OpenBSD to replace sudo.
 				</blockquote>
 
 				<h2 id="history">History</h2>
