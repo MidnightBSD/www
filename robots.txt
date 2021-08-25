@@ -1,8 +1,6 @@
 User-agent: *
 Disallow: /bin/
 Disallow: /cgi-bin/
-Disallow: /html5lightbox/index.html
-Disallow: /html5lightbox/skins/index.html
 Disallow: /assets/
 Disallow: /magus/auth/
 Disallow: /ftp/MidnightBSD/distfiles/*.asc
