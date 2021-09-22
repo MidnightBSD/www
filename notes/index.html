@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MidnightBSD Release Notes</title>
+    <title>MidnightBSD 2.1 Release Notes</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <style type="text/css" media="all">
         @import url("../css/essence.css");
@@ -62,9 +62,7 @@
         <div class="devupdate fleft">
             <h4>Late breaking information:</h4>
             <blockquote>
-                UEFI support on amd64 is broken with the 2.0 release ISO. We've released a 2.0.1 ISO for amd64 only
-                to address this issue.
-            </blockquote>
+             </blockquote>
             <h4>Previous Release Notes</h4>
             <ul>
                 <li><a href="0.1/index.html">0.1-RELEASE</a></li>
@@ -79,30 +77,21 @@
                 <li><a href="1.0/index.html">1.0-RELEASE</a></li>
                 <li><a href="1.1/index.html">1.1-RELEASE</a></li>
                 <li><a href="1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="2.0/index.html">2.0-RELEASE</a></li>
             </ul>
         </div>
 
-        <h3>(11/13/2020) MidnightBSD 2.0</h3>
+        <h3>(09/21/2021) MidnightBSD 2.1</h3>
 
-        <p>I’m happy to announce the availability of MidnightBSD 2.0 for amd64 and i386.  This is a massive release focusing on base system improvements.
-
-        <p>We’ve imported many features from FreeBSD 11.x as part of the release.
+        <p>I’m happy to announce the availability of MidnightBSD 2.1 for amd64 and i386.  This is an incremental release
+            focusing on bug fixes, improvements to the package manager and a new system compiler.</p>
 
         <ul>
-        <li>LLVM updated to 8.0.1
-        <li>ELF ToolChain updated
-        <li>OpenSSL updated
-        <li>ZFS now supports parallel mounting
-        <li>Kernel logs jail IDs when a process exits
-        <li>Network firmware updates
+            <li>LLVM updated to 10.0.1</li>
+            <li>mport 2.1.4</li>
         </ul>
 
-        <p>Updated DRM code is now in mports for 2.0 and later.  This allows us to update it outside of a release.
-
         <h4>Upgrade Process</h4>
-
-        <p>Due to the nature of the release, there are a few minor build issues when upgrading from MidnightBSD 1.2.x by source.  Please follow this awkward procedure:
-        <br>(you can also do this with svnlite using github)
 
         <p>Install git if you don’t have it already
         <code>mport install git</code>
@@ -111,18 +100,9 @@
 
         <code>git clone https://github.com/MidnightBSD/src.git</code>
 
-        <p>Checkout the stable/2.0 branch
-        <code>git checkout stable/2.0</code>
+        <p>Checkout the stable/2.1 branch
+        <code>git checkout stable/2.1</code>
 
-        <p>Using your favorite editor (ee, vi, nano, gedit, … ) open the src/usr.bin/Makefile
-        <p>Comment out with #
-        <pre>
-        .if defined(LINKER_FEATURES) && ${LINKER_FEATURES:Mfilter}
-        SUBDIR= perl \
-                .WAIT
-        .endif
-        </pre>
-        
         <code>cd /usr/src; make clean buildworld buildkernel;<br>
         mergemaster -p<br>
         make installkernel<br>
@@ -134,362 +114,174 @@
         cd /usr/src/usr.bin/perl; make; make install;
             </code>
         <p>
-        Open src/usr.bin/Makefile again and uncomment the previous lines (in case you do a rebuild later)<br>
         Update installed mports/packages<br>
         <code>
         cd /usr/src/; make check-old;
                 make delete-old
         </code>
 
-        <p>When you are done, verify that perl is updated by running perl -v
-        You should have perl 5.32.0. If it says perl 5.28, be sure to upgrade perl!
-
         <h4>Bug Fixes and new features</h4>
 
-        <p>The default devd.conf(5) has been updated to prevent duplicated hostapd(8) and wpa_supplicant(8) startup via devd(8).
+        <p>The majority of improvements come from the MidnightBSD package manager, mport.  A number of longstanding
+        bugs have been fixed.  It now can update dependencies properly on install, update or upgrade scenarios. Previously,
+        it would sometimes crash and force the user to do it manually. Several fixes have been made around PLIST
+        processing.</p>
 
-        <p>The cpuset(1), sockstat(1), ipfw(8), and ugidfw(8) utilities have been updated to support jail(8) names.
+        <p>mport now sets a character encoding so that extracting files with libarchive with special characters
+        is more likely to work properly without a crash occurring. (lang/go port is a fun trigger of this bug)
 
-        <p>The newfs_msdos(8) utility has been updated to include a new flag, -T, which is used to specify the timestamp for build reproducibility.
+        <p>libmport no
+        long relies on libdispatch.  This is slower in a few scenarios, but most invocations are now faster as it doesn't need
+        to setup the thread pools or do the locking it once did.  This makes sense as package installs have a lot of serial code
+        paths. Also fixed many memory leaks as well as some use after free and invalid free calls against the wrong
+        pointer.  We're now using sha256 for hashing plist entries installed.</p>
 
-        <p>The dd(1) utility has been updated to add a new statusoperand, progress, which reports the current status on a single line every second.
+        <p>We now generate a os-release file on system startup in /var/run</p>
 
-        <p>The last(1) utility has been updated to include libxo(3) support.
+        <p>Fixed issue where looking at some man pages would cause man to crash in MidnightBSD.</p>
 
-        <p>The lastlogin(8) utility has been updated to include libxo(3) support.
+        <p>A bug in the firstboot script was corrected that referenced an invalid package name.
 
-        <p>The traceroute(8) utility has been updated to include libcasper(3) support.
+        <p>burncd was removed.
 
-        <p>The trim(8) utility has been added, which deletes content for blocks on flash-based storage devices that use wear-leveling algorithms.
+        <p>Fixed some temp file handling bugs</p>
 
-        <p>The newfs(8) and tunefs(8) utilities have been updated to allow underscores in label names.
+        <p>Fixed some problems with libcxxrt and rtld in MidnightBSD that would cause strange problems with 32bit binaries.</p>
 
-        <p>The newfs(8) and tunefs(8) utilities have been updated to allow dashes in label names.
+        <p>Fix the buggy mdnsd 'mdns' sed in the /etc/rc.d/mdnsd script that would often cause it to fail to modify /etc/nsswitch.conf on system startup
+        as needed.</p>
 
-        <p>The fdisk(8) utility has been updated to support sectors larger than 2048 bytes.
-
-        <p>The sh(1) utility has been updated to add the pipefail option which simplifies checking the exit status of all commands in a pipeline.
-
-        <p>The spi(8) utility has been added, which is used to communicate with devices on an SPI bus through the userland.
-
-        <p>An issue that could result in a system hang during ZFS vnode reclamation has been fixed.
-
-        <p>The functionality provided by zfsloader has been added to loader(8). Once the system boot blocks have been updated, zfsloader is not needed.
-
-        <p>The ipfw(8) firewall has been updated to include new rule options, record-state, set-limit, and defer-action.
-
-        <p>Support for NAT64 CLAT has been added, as defined in RFC6877.
-
-        <p>The ln(1) utility has been updated to correct the behavior of the -F flag by unlinking an existing directory before creating a symbolic link.
-
-        <p>The crontab(1) utility has been updated to include a new flag, -f, which forces crontab(5) removal when -r is used non-interactively.
-
-        <p>The newsyslog(8) utility has been updated to support RFC5424-compliant messages when rotating system logs.
-
-        <p>The sesutil(8) utility has been updated to include libxo(3) support in output.
-
-        <p>The diskinfo(8) utility has been updated to include two new flags, -s which displays the disk identity (usually the serial number), and -p which displays the physical path to the disk in a storage controller. The -s and -p flags are mutually exclusive, and cannot be used with any other flags.
-
-        <p>The diskinfo(8) utility has also been updated to include the device model when the -s flag is used.
-
-        <p>The top(1) utility has been updated to allow filtering on multiple user names when the -U flag is used.
-
-        <p>The bsdgrep(1) utility has been updated to include a rgrep hard link to grep(1), which when used is equivalent to grep -r.
-
-        <p>The bsdgrep(1) utility has been updated to address various issues with pattern matching behavior.
-
-        <p>The umount(8) utility has been updated to include a new flag, -N, which is used to forcefully unmount an NFS mounted filesystem.
-
-        <p>The pw(8) utility has been updated to properly handle empty secondary group lists as an argument to the -G flag when using the usermod subcommand.
-
-        <p>The getconf(1) utility has been updated to include a new flag, -a, which prints the name and value of all system or path configuration values to stdout(4) or optionally a file as an argument to -a.
-
-        <p>The ps(1) utility has been updated to reflect realtime and idle priorities in state flags.
-
-        <p>The ps(1) utility has been updated to display if a process is running with capsicum(4) capability mode, indicated by C.
-        <p>The cpucontrol(8) utility has been updated to include a new flag, -n, that disables the default microcode update search path when used.
-        <p>The fsck_ffs(8) utility has been updated to prevent a filesystem from being reported as modified when only the timestamp in the superblock is updated.
-        <p>The diskinfo(8) utility has been updated to display disk rotation rate and if TRIM/UNMAP is supported by the disk.
-        <p>The rsh(1) utility has been updated to include a new flag, -N, which disables shutdown of a socket sending path when used.
-        <p>The pfctl(8) utility has been updated to allow route-to to properly handle network interfaces with multiple IP addresses.
-        <p>The camcontrol(8) utility has been updated to include ZAC (Zoned-device ATA command set) information when the identify subcommand is used.
-        <p>The pw(8) utility has been updated to correct handling of account expiration periods.
-        <p>The mdmfs(8) utility has been updated to support tmpfs(5).
-        <p>The lint(1) utility is no longer built by default. The WITH_LINT src.conf(5) option has been added to enable building and installing the utility.
-        <p>The cpucontrol(8) utility has been updated to include a new flag, -e, which is used to re-evaluate reported CPU features after applying firmware updates.
-        <p>The indent(1) utility has been updated to respect the SIMPLE_BACKUP_SUFFIX environment variable if set.
-        <p>The du(1) utility has been updated to include the --si long option, which is used to display output in "human-readable" output in powers of 1000.
-        <p>The df(1) utility has been updated to include the --si long option, which is an alias to -H.
-        <p>The service(8) utility has been updated to include a new flag, -j, which is used to interact with services running within a jail(8). The argument to -j can be either the name or numeric jail ID.
-        <p>The fsck_ffs(8) utility has been updated to exit with a non-zero status when the filesystem is not repaired.
-        <p>The nvmecontrol(8) utility has been updated to print the full 128 bit value for SMART data, instead of the hexadecimal value.
-        <p>The nvmecontrol(8) utility has been updated to include control options for Western Digital® HGST drives. The new options are cap-diag, get-crash-dump, drive-log, purge, and purge-monitor.
-        <p>The dhclient(8) utility has been updated to be more compliant with RFC2131 by setting the source address field in the IP header to 0 when sending a DHCPREQUEST message to attempt to obtain a previously-assigned IP address.
-        <p>The pw(8) utility has been updated to allow the @ and ! characters in the GECOS field.
-        <p>The zfsd(8) utility has been updated to work with any type of GEOM provider, including md(4), geli(8), glabel(8), and gstripe(8).
-        <p>The ps(1) utility has been updated to include a jail keyword, which when used will list the name of a jail(8) instead of the numeric ID.
-        <p>The mlx5tool(8) utility has been added, which is used to manage Connect-X 4 and Connect-X 5 devices supported by mlx5io(4).
-        <p>The sysctl(8) utility has been updated to support setting an array of values to nodes. Prior to this change, sysctl(8) could only set one value to a node that may return multiple values when queried.
-        <p>The ifconfig(8) utility has been updated to include a random option, which when used with the ether option, generates a random MAC address for an interface
-        <p>The efibootmgr(8) utility has been added, which is used to manipulate the EFI boot manager.
-        <p>The etdump(1) utility has been added, which is used to view El Torito boot catalog information.
-        <p>The mount(8) utility has been updated to allow fallback to mount media read-only if an attempt to mount write-protected media read-write fails. This behavior is disabled by default, and can be requested with the new autoro option
-        <p>The makefs(8) utility has been updated to default the block and fragment sizes to match that of newfs(8), 32K and 4K, respectively.
-        <p>The pwd_mkdb(8) utility has been updated to emit a notice that legacy database support will be removed when the -l flag is used.
-        <p>The dhclient(8) utility has been updated to allow the interface-mtu option to be overridden with a supersede entry in dhclient.conf(5)
-        <p>The linux(4) ABI compatibility layer has been updated to include support for musl consumers.
-
-        <p>The fdescfs(5) filesystem has been updated to support Linux®-specific fd(4) /dev/fd and /proc/self/fd behavior.
-        <p>The ng_iface(4) driver has been updated to prevent a possible system crash.
-        <p>The ipfw(4) packet filter has been updated to identify layer-2 and layer-3 packets, fixing dummynet(4) AQM packet marking.
-        <p>An issue causing boot issues with Intel® Apollo Lake™ CPUs has been fixed.
-        <p>The watchdog(4) facility has been updated to make SW_WATCHDOG dynamic, enabling the software watchdogd(8) option whenever a hardware watchdog is not present.
-
-        <p>The p1003_1b.aio_listio_max sysctl(8) has been changed to a runtime-configurable tunable
-
-        <p>The boot code and loader(8) have been updated to check for unsupported ZFS feature flags. If unsupported features are active, the pool is not considered as a bootable pool, and a diagnostic message is printed to the console
-
-        <p>The loader(8) has been updated to improve quotation parsing, distinguishing between single- and double-quotes, and check for terminating quotes.
-
-        <p>The length of GELI passphrases entered when booting a system with encrypted disks is now hidden by default.
-
-        <p>The icmp6(4) protocol has been updated to fix ICMPv6 redirects.
-
-        <p>The setproctitle_fast(3) function has been added, which is optimized for high-frequency process title updates.
-        <p>The kqueue(2) system call has been updated to allow updating EVFILT_TIMER.
-        <p>readelf(1) has been updated to report arm program and section header types.
-        <p>strings(1) has been updated to fix the exit status when multiple files are provided as arguments, and an error is encountered before the last file.
-
-        <p>The type max_align_t is now defined for C11 compliance.
-
-        <p>The sem_clockwait_np() library function has been added, which allows the caller to specify the reference clock and choose between absolute and relative mode.
-
-        <p>The clang nullability qualifiers have been added to the C library headers.
-
-        <p>Uses of the GNU __nonnull__ attribute have been replaced with the more benign Clang nullability attributes.
-
-        <p>ptrace(2) now supports events for vfork(2), permitting reliable debugging across vfork(2) invocations
-
-        <p>Process core dumps now include the process ID (PID) and command line arguments.
-
-        <p>The ipfw(4) packet filter has been updated to add support for named dynamic states.
-
-        <p>The ipfw_nptv6 kernel module has been added, implementing Network Prefix Translation for IPv6 as defined in RFC 6296
-
-        <p>The ipfw_nat64 kernel module has been added, implementing stateless and stateful NAT64.
-
-        <p>The cfumass(4) device has been added, providing a storage frontend to USB OTG-capable hardware.
-
-        <p>The ipfw_pmod kernel module has been added, designed for modifying packets of any protocol.
-
-        <p>The vfs.root_mount_always_wait tunable has been added, which forces the kernel to wait for root mount holds even if the root device is already present.
-
-        <p>When the system real time clock (RTC) is adjusted, such as by clock_settime(), sleeping threads are now awakened and absolute sleep times are reevaluated based on the new value of the RTC.
-
-        <p>The network stack has been updated to include ip6_tryforward(), providing performance benefits as result of a reduced number of checks.
-        <p>The network stack has been modified to fix incorrect or invalid IP addresses if multiple threads emit a UDP log_in_vain message concurrently.
-        <p>The TCP stack has been changed to use the estimated RTT instead of timestamps for receive buffer auto resizing.
-
-        <p>The default newsyslog.conf(5) now includes files in the /etc/newsyslog.conf.d/ and /usr/local/etc/newsyslog.conf.d/ directories for newsyslog(8)
-        <p>The mailwrapper(8) utility has been updated to use mailer.conf(5) from the LOCALBASE environment variable, which defaults to /usr/local if unset
-        <p>The pciconf(8) utility can now identify PCI devices that are attached to a driver to be identified by their device name instead of just the selector. Additionally, the -l flag now accepts an optional device argument to list details about a single device
-        <p>A new flag, “onifconsole” has been added to /etc/ttys. This allows the system to provide a login prompt via serial console if the device is an active kernel console, otherwise it is equivalent to off.
-
-        <p>Support for displaying VPD for PCI devices via pciconf(8) has been added.
-
-        <p>The bsdconfig(8) utility has been updated to skip the initial tzsetup(8) UTC versus wall-clock time prompt when run in a virtual machine, determined when the kern.vm_guest sysctl(8) is set to 1.
+        <p>libcasper(3) creates service processes by forking the calling process,
+            so they initially inherit the calling process' file descriptor table.
+            Casper services expect the lowest 3 file descriptors, traditionally
+            corresponding to standard input, output, and error, are redirected to
+            /dev/null.  libcasper(3) ensures this is the case.  However, it did not
+            handle the possibility that one of them is closed, and this scenario
+            would trigger an assertion failure during service creation, resulting in
+            a crash.
+        </p>
 
         <h4>Security Fixes</h4>
-        <p>The jail(8) utility has been updated to include a new jail.conf(5) parameter, allow.read_msgbuf, which prevents jailed processes and users from accessing the dmesg(8) buffer. This parameter is set to false by default.
 
-        <p>A new variable, init_exec, has been added to kenv(1), allowing init(8) to run an executable file after opening the console, replacing init(8) as PID 1
+        <p>Apache Portable Runtime CVE workaround.  CVE-2021-35940</p>
 
-        <p>The jail(8) utility has been updated to add a new flag, -e, which takes a jail.conf(5) parameter as an argument and prints a list of non-wildcard jails with the specified parameter.
+        <p>A programming error in the Linux compatibility layer futex(2) system
+            call might allow attackers to cause a denial of service.</p>
 
-        <p>The ping(8) utility has been updated to use the Capsicum framework to drop privileges, protecting against malicious network packets.
+        <p>Certain VirtIO-based device models failed to handle errors when fetching
+        I/O descriptors.  Such errors could be triggered by a malicious guest.
+        As a result, the device model code could be tricked into operating on
+        uninitialized I/O vectors, leading to memory corruption.
+
+        <p>The ggatec(8) daemon does not validate the size of a response before writing
+        it to a fixed-sized buffer.  This allows to overwrite the stack of ggatec(8).
+
+        <p>The passive mode in FTP communication allows an out of boundary read while
+        libfetch uses strtol to parse the relevant numbers into address bytes.  It
+        does not check if the line ends prematurely.  If it does, the for-loop
+        condition checks for *p == '\0' one byte too late because p++ was already
+        performed.
+
+        <p>A programming error in the Linux compatibility layer futex(2) system
+        call might allow attackers to cause a denial of service.
+
+        <p>libcasper(3) creates service processes by forking the calling process,
+        so they initially inherit the calling process' file descriptor table.
+        Casper services expect the lowest 3 file descriptors, traditionally
+        corresponding to standard input, output, and error, are redirected to
+        /dev/null.  libcasper(3) ensures this is the case.  However, it did not
+        handle the possibility that one of them is closed, and this scenario
+        would trigger an assertion failure during service creation, resulting in
+        a crash.
+
+        <p>A particular case of memory sharing is mishandled in the virtual memory system.  It is possible
+        and legal to establish a relationship where multiple descendant processes share a mapping which
+        shadows memory of an ancestor process.  In this scenario, when one process modifies memory
+        through such a mapping, the copy-on-write logic fails to invalidate other mappings of the source
+        page.  These stale mappings may remain even after the mapped pages have been reused for another purpose.
+
+        <p>Due to a race condition between lookup of ".." and remounting a filesystem,
+        a process running inside a jail might access filesystem hierarchy outside
+        of jail.
+
+        <p>Fix a security issue with pam.  The rules would not be applied correctly.
+
+        <p>xen fix to unmap correctly when errors occur
+
+        <p>Fix a extattr corruption bug with ufs
+
+        <p>Uninitialized kernel stack leaks in several file systems
+
+        <p>Xen guests can triger backend Out Of Memory
+
+        <p>The root certificates of the Mozilla CA Certificate Store have been
+        updated.
+
+        <p>Fixed a security problem with zlib:<br>
+        Handle case where inflateSync used when header never processed.
+        If zlib and/or gzip header processing was requested, but a header
+        was never provided and inflateSync was used successfully, then the
+        inflate state would be inconsistent, trying to compute a check
+        value but with no flags set. This commit sets the inflate mode to
+        raw in this case, since there is no other assumption that can be
+        made if a header was requested but never seen.</p>
 
         <h4>3rd Party Software</h4>
 
         <ul>
-        <li>Perl 5.32.0
-
-            <li>LLVM 8.0.1
-
-            <li>ELF Tool Chain r3614
-
-            <li>libarchive 3.4.2
-            <li>zlib/1.2.11
-            <li>liblzma/5.2.4
-            <li>bz2lib/1.0.8
-
-            <li>Lua loader from FreeBSD
-
-            <li>OpenSSL 1.0.2u
-
-            <li>Sqlite3 3.32.3
-
-            <li>OpenPAM updated
-
-            <li>svn, version 1.13.0
-            <li>file-5.37
-
-            <li>The pcap(3) library has been updated to version 1.9.0 (pre-release).
+            <li>mandoc</li>
+            <li>LLVM 10.0.1</li>
+            <li>APR-util 1.6.1/li>
+            <li>APR 1.7.0</li>
+            <li>Subversion 1.14.0</li>
+            <li>file 5.39</li>
+            <li>sendmail 8.16.1</li>
+            <li>sqlite3 3.35.5</li>
+            <li>tzdata 2021a</li>
+            <li>libarchive 3.5.0</li>
+            <li>unbound 1.13.0</li>
+            <li>xz 5.2.5</li>
+            <li>openmp</li>
         </ul>
 
         <h4>Hardware</h4>
-        <p>The number of MSI IRQs have been converted from a constant to a tunable. The default remains at 512, which can now be changed during boot with the machdep.num_msi_irqs
 
-        <p>The ichwd(4) driver has been updated to include support for TCO watchdog timers in the Lewisburg PCH (C620) chipset.
+        <p>Added sume(4) - NetFPGA SUME 4x10Gb Ethernet driver
 
-        <p>The ae(4), bm(4), cs(4), de(4), dme(4), ed(4), ep(4), ex(4), fe(4), pcn(4), sf(4), sn(4), tl(4), tx(4), txp(4), vx(4), wb(4), and xe(4) drivers have been marked as deprecated.
+        <p>JMicron JMB582/JMB585 AHCI</p>
 
-        <p>The oce(4) driver has been updated to version 11.0.50.0.
-        <p>The TP-Link® TL-WN321G™ network adapter now uses the run(4) driver instead of the rum(4) driver.
-        <p>The mlx4en(4) and mlx5en(4) drivers have been updated to version 3.5.0.
-        <p>The lagg(4) driver has been updated to allow changing the MTU without requiring destroying and recreating the interface.
-        <p>The ccr(4) driver has been added, providing support for Chelsio® T6™ cryptography accelerators.
-        <p>The cxgbe(4) driver has been updated to include support for hash filters, NAT offloading, and SMAC/DMAC swapping filters.
-        <p>The cxgbe(4) T4, T5, and T6 firmware has been updated to version 1.23.0.0.
-        <p>The ixl(4) driver has been updated to version 1.11.9.
-        <p>The ixlv(4) driver has been updated to version 1.5.8.
-        <p>The vt(4) keyboard mapping has been updated to include uk.macbook.kbd support.
-        <p>Support for PS/2 scan codes for NumLock, ScrollLock, and numerical keypad keys has been added to bhyve(8)
-        <p>The ng_pppoe(4) driver has been updated to add support for user-supplied Host-Uniq tags.
+        <p>Add deprecation notices to ctau and cx drivers</p>
 
-        <p>The mlx5io(4) driver has been added, providing an interface to manage supported Connect-X 4 and Connect-X 5 network adapters
+        <p>Update e1000 driver for Intel gigabit NICs</p>
 
-        <p>The cm(4) and fpa(4) drivers have been marked as deprecated
+        <p>evdev - fix a panic when removing a usb mouse</p>
 
-        <p>The ocs_fc(4) driver has been added, supporting Emulex 16/8G FC GEN 5 HBAs LPe15004 and LPe160XX, and Emulex 32/16G FC GEN 6 HBAs LPe3100X and LPe3200X.
+        <p>ichwd - Add Atom C3000 watchdog ID</p>
 
-        <p>The ixl(4) driver has been updated to version 1.9.9-k
+        <p>ismt - fix a left shift bug</p>
 
-        <p>The smartpqi(4) driver has been added, providing support for Microsemi® SCSI controllers.
+        <p>Fix intrhook release in MFI</p>
 
-        <p>Support for virtio_console(4) has been added to bhyve(4)
+        <p>Add support for BCM54618SE PHY</p>
 
-        <p>The jedec_ts(4) driver has been added, providing support for thermal sensors on memory modules. The driver currently supports chips that are fully compliant with the JEDEC JC 42.4 specification
+        <p>mlx5 - Account out of buffer as dropped packets in mlx5en(4)</p>
 
-        <p>The bytgpio(4) driver has been added, providing support for Intel® Bay Trail™ SoC GPIO controllers.
+        <p>netmap: ixl: add CRC to outbound frames</p>
 
-        <p>/dev/kmem no longer supports access via mmap(). Consumers wishing to use /dev/kmem must use read() and write().
+        <p>nvme bug fixes</p>
 
-        <p>devctl(8) now supports a "clear driver" command as a complement to "set driver"
+        <p>Sync nxge driver with FreeBSD</p>
 
-        <p>The digi(4), ie(4), mcd(4), scd(4), si(4), spic(4), and wl(4) drivers have been marked as deprecated
+        <p>Don't consider PCIe hot-plug command timeout fatal</p>
 
-        <p>The mpr(4) driver has been updated to support tri-mode (SAS/SATA/PCIe) Broadcom® storage adapters.
+        <p>add Bitron Video AV2010/10 ZigBee USB Stick</p>
 
-        <p>The cxgbe(4) driver now supports devices using T6-based adapters which support 10, 25, 40, and 100 Gbps
-
-        <p>The bnxt(4) driver has been added, providing support for Broadcom® NetXtreme-C™ and NetXtreme-E™ devices
-
-        <p>The cxgbev(4) driver has been added, providing support for Virtual Function devices (VFs) on Chelsio T4 and T5 adapters.
-
-        <p>TCP connections using the TCP Offload Engine (TOE) on Chelsio T4+ adapters can now perform zero-copy sends via aio_write().
-
-        <p>The cxgbe(4) driver has been updated to provide support for Virtual Function devices (VFs) on Chelsio T4 and T5 adapters
-
-        <p>The miibus(4) driver has been updated to support Microchip/Micrel KSZ9031 Gigabit ethernet cards.
-
-        <p>The alc(4) driver has been updated to provide support for Atheros® Killer E2400™ Gigabit ethernet cards.
-
-        <p>The alc(4) driver has been updated to provide support for Atheros® Killer E2500™ Gigabit ethernet cards
-
-        <p>The etherswitch(4) driver has been updated to support RTL8366RB and RTL8366SR cards
-
-        <p>The if_ipsec(4) virtual tunneling interface has been added, implementing route-based VPNs protected with Encapsulating Security Payload (ESP).
-
-        <p>The qlnxe(4) driver has been added, providing support for Cavium® Qlogic™ 45000 Series adapters.
-
-        <p>The qlnxe(4) driver has been updated to support QLE41XXX hardware.
-
-        <p>The atkbdc(4) driver has been updated to provide support for Elantech® trackpads. To enable hardware support, add hw.psm.elantech_support=1 to loader.conf(5)
-
-        <p>PCI passthrough with bhyve(4) supports more dynamic configurations permitting devices to be marked for passthrough of host use at runtime.
-
-        <p>PCI passthrough with bhyve(4) resets functions via FLR when a virtual machine is started and stopped.
-
-        <p>The hv_netvsc(4) driver SR-IOV implementation has been updated to support Virtual Function (VF) devices, such as the Mellanox® Connect-X3™ network card.
-
-        <p>Support for Microsoft® Hyper-V™ Generation 2 virtual machines has been added
-
-        <p>Support for synthetic keyboards has been added for virtual machines running on Microsoft® Hyper-V™.
-
-        <p>The ena(4) driver has been added, providing support for "next generation" Enhanced Networking on the Amazon® EC2™ platform
-
-        <p>A kernel bug that inhibited proper functionality of the dev.cpu.0.freq sysctl(8) on Intel® processors with Turbo Boost ™ enabled has been fixed.
-
-        <p>The cyapa(4) driver has been added, supporting the Cypress APA I2C trackpad.
-
-        <p>The isl(4) driver has been added, supporting the Intersil I2C ISL29018 digital ambient light sensor.
-
-        <p>Support for Broadcom chipsets BCM57764, BCM57767, BCM57782, BCM57786 and BCM57787 has been added to bge(4)
-
-        <p>The if_nf10bmac(4) device has been added, providing support for NetFPGA-10G Embedded CPU Ethernet Core
-
-        <p>The ath_hal(4) driver has been updated to support the Atheros AR1111 chipset.
-
-        <p>The iwn(4) driver was added, providing support for the Intel® Centrino™ Wireless-N 105 and 135 chipsets.
-
-        <p>Support for the cxgbe(4) Terminator 5 (T5) 10G/40G cards has been added to netmap(4)
-
-        <p>The alc(4) driver has been updated to support AR816x and AR817x ethernet controllers
-
-        <p>The pf(4) packet filter default hash has been changed from Jenkins to Murmur3, providing a 3-percent performance increase in packets-per-second.
-
-        <p>The vxlan(4) driver has been added, which creates a virtual Layer 2 (Ethernet) network overlaid in a Layer 3 (IP/UDP) network. The vxlan(4) driver is analogous to vlan(4), but is designed to be better suited for large, multiple-tenant data center environments.
-
-        <p>The gre(4) driver has been significantly overhauled, and has been split into two separate modules, gre(4) and me(4).
-
-        <p>The ral(4) driver has been updated to support the RT5390 and RT5392 chipsets.
-
-        <p>The sfxge(4) driver has been updated to support Solarflare Flareon Ultra 7000-series chipsets.
-
-        <p>The em(4) driver has been updated with improved transmission queue hang detection
-
-        <p>The cdce(4) driver has been updated to include support for the RTL8153 chipset.
-
-        <p>The iwm(4) driver has been imported from OpenBSD, providing support for Intel® 3160/7260/7265 wireless chipsets.
-
-        <p>The em(4) driver has been updated to allow disabling CRC stripping
-
-        <p>The lagg(4) driver has been updated to remove support for the fec protocol
-
-        <p>The dummynet(4) driver has been updated to include support for AQM (Active Queue Management), adding support for PIE (Proportional Integral controller Enhanced) and FQ-PIE (Fair Queueing Proportional Integral controller Enhanced).
-
-        <p>Support for the “Virtual Interrupt Delivery” feature of Intel® VT-x is enabled if supported by the CPU. This feature can be disabled by running sysctl hw.vmm.vmx.use_apic_vid=0. Additionally, to persist this setting across reboots, add hw.vmm.vmx.use_apic_vid=0 to /etc/sysctl.conf.
-
-        <p>Support for “Posted Interrupt Processing” is enabled if supported by the CPU. This feature can be disabled by running sysctl hw.vmm.vmx.use_apic_pir=0. Additionally, to persist this setting across reboots, add hw.vmm.vmx.use_apic_pir=0 to /etc/sysctl.conf.
-
-        <p>The bhyve(8) hypervisor has been updated to support AMD® processors with SVM and AMD-V hardware extensions.
-
-        <p>Support for PCI Single Root I/O Virtualization (SR-IOV) has been introduced, allowing the creation of PCI Virtual Functions (VFs) for device drivers that support SR-IOV. See iovctl(8) for details on creating and configuring VFs.
+        <p>Various bug fixes to usb, vxge</p>
 
         <h4>Known Issues</h4>
 
-        <p>UEFI issues with the amd64 ISO. We’re going to address these in the 2.0.1 release.
-
-        <p>Upgrading perl from 1.2 is not working with buildworld.
-
-        <p>Sometimes you’ll get an error with mandoc, just try reinstalling src/usr.bin/man if this is crashing. (rare build issue)
-
-        <p>Mport package manager has 3 known issues:
-        <ul>
-        <li>Some PLIST files are causing issues with @() syntax in setting permissions when partially defined. A fix is coming in a later update for this.
-        <li>mport deleteall is not catching all packages on the first pass. You may need to run it a few times.
-        <li>mport upgrade or update paths are not always finding new dependencies.  Work is underway on this as well.
-        </ul>
-        
-        <p>In some cases, you may get an error about updating /etc/nsswitch.conf at startup. This is an issue with the mdns related features. Either disable mDNSresponder or modify the hosts like to be
-            <code>Hosts: files mdns dns</code>
-
-
-        <p>There are two mports that are broken which are causing issues and will be the highest priority after the release:
-        <ul>
-        <li>Mono (amd64 and i386)
-        <li>tex-formats (i386 only)
-        </ul>
+        <p>We're in the process of building new i386 packages as many important ones for desktop use are missing
+        at the moment. </p>
         
     </div>
     <!--#include virtual="/footer.html"-->
