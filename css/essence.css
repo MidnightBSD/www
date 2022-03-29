@@ -12,7 +12,7 @@ html, body {
 body {
     background-color: #fff;
     color: #444;
-    font: 100% Oxygen, helvetica, sans-serif;
+    font: 100% Oxygen, "Segoe UI", Helvetica, Arial, Ubuntu, sans-serif;
 }
 
 a:link, a:visited {
