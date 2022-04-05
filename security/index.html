@@ -37,21 +37,32 @@
 
         <h3>MidnightBSD Security Advisories</h3>
 
-	<blockquote class="bluebox" id="a20200923">
+        <blockquote class="bluebox" id=""a20220404>
+            <h3>April 4, 2022</h3>
+            <p>MidnightBSD 2.1.12</p>
+            <p>zlib 1.2.12</p>
+            <p>Fix a deflate bug when using the Z_FIXED strategy that can result in out-of-bound accesses.
+                Fix a deflate bug when the window is full in deflate_stored().
+                Speed up CRC-32 computations by a factor of 1.5 to 3.
+                Use the hardware CRC-32 instruction on ARMv8 processors.
+                Speed up crc32_combine() with powers of x tables.
+                Add crc32_combine_gen() and crc32_combine_op() for fast combines.</p>
+        </blockquote>
 
-	<h3>September 23, 2020</h3>
+        <blockquote class="bluebox" id="a20200923">
+            <h3>September 23, 2020</h3>
 
-	<p>MidnightBSD 1.2.10</p>
+            <p>MidnightBSD 1.2.10</p>
 
-	<p>udf: Validate the full file entry length
+            <p>udf: Validate the full file entry length
 
-	<p>Otherwise a corrupted file entry containing invalid extended attribute
-	lengths or allocation descriptor lengths can trigger an overflow when
-	the file entry is loaded.
+            <p>Otherwise a corrupted file entry containing invalid extended attribute
+                lengths or allocation descriptor lengths can trigger an overflow when
+                the file entry is loaded.
 
-	Discovered by:
-	C Turt <ecturt@gmail.com>
-	</blockquote>
+                Discovered by:
+                C Turt ecturt@gmail.com
+        </blockquote>
 
 	<blockquote class="bluebox" id="a20200915">
 
