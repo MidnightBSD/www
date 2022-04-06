@@ -37,9 +37,9 @@
 
         <h3>MidnightBSD Security Advisories</h3>
 
-        <blockquote class="bluebox" id=""a20220404>
+        <blockquote class="bluebox" id="a20220404">
             <h3>April 4, 2022</h3>
-            <p>MidnightBSD 2.1.12</p>
+            <p>MidnightBSD 2.1.7</p>
             <p>zlib 1.2.12</p>
             <p>Fix a deflate bug when using the Z_FIXED strategy that can result in out-of-bound accesses.
                 Fix a deflate bug when the window is full in deflate_stored().
@@ -47,6 +47,163 @@
                 Use the hardware CRC-32 instruction on ARMv8 processors.
                 Speed up crc32_combine() with powers of x tables.
                 Add crc32_combine_gen() and crc32_combine_op() for fast combines.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20220315">
+            <h3>March 20, 2022</h3>
+            <p>MidnightBSD 2.1.6</p>
+            <p>Fix security vulnerability in OpenSSL and WiFi.</p>
+            <p>Update tzdata to 2022a</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20220210">
+            <h3>February 10, 2022</h3>
+            <p>MidnightBSD 2.1.5</p>
+            <p>Fix multiple issues with memory handling in libmport</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20220126">
+            <h3>January 26, 2022</h3>
+            <p>MidnightBSD 2.1.4</p>
+            <p>Reject execve when new argc is zero<br>
+                Fixes a security issue with NULL argv[0] entries, similar to the recent
+                CVE with polkit on Linux. The current POC for that does not work on
+                MidnightBSD since we don't use glibc, but proactively prevent similar issues.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20220116">
+            <h3>January 16, 2022</h3>
+            <p>MidnightBSD 2.1.3</p>
+            <p>mport package manager (20121217)</p>
+
+            <p>Bug fix for HyperV support in windows 2022 server.</p>
+
+            <p>Fix register restore for SSE/XMM</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20211104">
+            <h3>November 04, 2021</h3>
+            <p>MidnightBSD 2.1.2</p>
+            <p>Updated mport 2.2.0 code with bugfixes and new plist features.</p>
+
+            <p>Updated tzdata to fix some DST changes in asia</p>
+
+            <p>Update root certificates bundle</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20210825">
+            <h3>August 25, 2021</h3>
+              <p>Patch 3 security issues:
+
+            <p>Certain VirtIO-based device models failed to handle errors when fetching
+                  I/O descriptors.  Such errors could be triggered by a malicious guest.
+                  As a result, the device model code could be tricked into operating on
+                  uninitialized I/O vectors, leading to memory corruption.
+
+            <p>The ggatec(8) daemon does not validate the size of a response before writing
+                  it to a fixed-sized buffer.  This allows to overwrite the stack of ggatec(8).
+
+            <p>The passive mode in FTP communication allows an out of boundary read while
+                  libfetch uses strtol to parse the relevant numbers into address bytes.  It
+                  does not check if the line ends prematurely.  If it does, the for-loop
+                  condition checks for *p == '\0' one byte too late because p++ was already
+                  performed.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20210630">
+            <h3>June 30, 2021</h3>
+            <p>A programming error in the Linux compatibility layer futex(2) system
+                call might allow attackers to cause a denial of service.
+
+            <p>libcasper(3) creates service processes by forking the calling process,
+                so they initially inherit the calling process' file descriptor table.
+                Casper services expect the lowest 3 file descriptors, traditionally
+                corresponding to standard input, output, and error, are redirected to
+                /dev/null.  libcasper(3) ensures this is the case.  However, it did not
+                handle the possibility that one of them is closed, and this scenario
+                would trigger an assertion failure during service creation, resulting in
+                a crash.</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20210406">
+            <h3>April 6, 2021</h3>
+            <p>MidnightBSD 2.0.7</p>
+
+            <p>Fix two security issues:
+
+            <p> A particular case of memory sharing is mishandled in the virtual memory system.  It is possible
+                and legal to establish a relationship where multiple descendant processes share a mapping which
+                shadows memory of an ancestor process.  In this scenario, when one process modifies memory
+                through such a mapping, the copy-on-write logic fails to invalidate other mappings of the source
+                page.  These stale mappings may remain even after the mapped pages have been reused for another purpose.
+
+            <p>Due to a race condition between lookup of ".." and remounting a filesystem,
+                a process running inside a jail might access filesystem hierarchy outside
+                of jail.
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20210224">
+            <h3>February 24, 2021</h3>
+            <p>MidnightBSD 2.0.6</p>
+            <p>	Happy 15th anniversary to MidnightBSD!
+            <p>Fix a security issue with pam.  The rules would not be applied correctly.
+            <p>xen fix to unmap correctly when errors occur</p>
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20210206">
+            <h3>February 6, 2021</h3>
+            <p>tzdata 2021a
+            <p>Fix a extattr corruption bug with ufs
+            <p>Uninitialized kernel stack leaks in several file systems
+            <p>Xen guests can triger backend Out Of Memory
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20201220">
+            <h3>December 20, 2020</h3>
+            <p>libarchive 3.5.0
+            <p>Update caroot certs
+            <p>unbound 1.13.0
+        </blockquote>
+
+        <blockquote class="bluebox" id="a20201202">
+            <h3>December 2, 2020</h3>
+            <p>	ICMPv6: A remote host may be able to trigger a read of freed kernel memory.  This may
+                trigger a kernel panic if the address had been unmapped.
+
+            <p>	  tzdata: (2020d imported to fix)
+                An incorrect time will be displayed on a system configured to use one of the
+                affected timezones if the /usr/share/zoneinfo and /etc/localtime files are
+                not updated, and all applications on the system that rely on the system time,
+                such as cron(8) and syslog(8), will be affected.
+
+            <p>	  ipfw: initialize some variables to fix some odd handling with ports.
+
+            <p>	  callout(9)
+                Callouts may be bound to a specific CPU, in which case that CPU is
+                responsible for raising the timer interrupt which schedules execution of the
+                callout.
+                A kernel thread may attempt to stop a callout while it is actively executing,
+                in which case the thread goes to sleep until execution has completed.  In the
+                meantime the callout may be re-scheduled and re-executed on a different CPU.
+                In this scenario, when the sleeping thread finally completes removal of the
+                callout from some internal data structures, it may modify the wrong CPU's
+                data structures and thus leave them in an invalid state.
+
+            <p>	     rtsold(8)
+                Two bugs exist in rtsold(8)'s RDNSS and DNSSL option handling.  First,
+                rtsold(8) failed to perform sufficient bounds checking on the extent of the
+                option.  In particular, it does not verify that the option does not extend
+                past the end of the received packet before processing its contents.  The
+                kernel currently ignores such malformed packets but still passes them to
+                userspace programs.
+                Second, when processing a DNSSL option, rtsold(8) decodes domain name labels
+                per an encoding specified in RFC 1035 in which the first octet of each label
+                contains the label's length.  rtsold(8) did not validate label lengths
+                correctly and could overflow the destination buffer.
+
+            <p>	 A bug in the firstboot script was corrected that referenced an invalid package name.
+
+            <p>	  burncd was removed.
         </blockquote>
 
         <blockquote class="bluebox" id="a20200923">
