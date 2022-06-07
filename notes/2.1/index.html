@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 2.1 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+             </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(09/21/2021) MidnightBSD 2.1</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 2.1 for amd64 and i386.  This is an incremental release
+            focusing on bug fixes, improvements to the package manager and a new system compiler.</p>
+
+        <ul>
+            <li>LLVM updated to 10.0.1</li>
+            <li>mport 2.1.4</li>
+        </ul>
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already
+        <code>mport install git</code>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <code>git clone https://github.com/MidnightBSD/src.git</code>
+
+        <p>Checkout the stable/2.1 branch
+        <code>git checkout stable/2.1</code>
+
+        <code>cd /usr/src; make clean buildworld buildkernel;<br>
+        mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        mergemaster -iU<br>
+        cd /usr/src/usr.bin/perl; make; make install;
+            </code>
+        <p>
+        Update installed mports/packages<br>
+        <code>
+        cd /usr/src/; make check-old;
+                make delete-old
+        </code>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <p>The majority of improvements come from the MidnightBSD package manager, mport.  A number of longstanding
+        bugs have been fixed.  It now can update dependencies properly on install, update or upgrade scenarios. Previously,
+        it would sometimes crash and force the user to do it manually. Several fixes have been made around PLIST
+        processing.</p>
+
+        <p>mport now sets a character encoding so that extracting files with libarchive with special characters
+        is more likely to work properly without a crash occurring. (lang/go port is a fun trigger of this bug)
+
+        <p>libmport no
+        long relies on libdispatch.  This is slower in a few scenarios, but most invocations are now faster as it doesn't need
+        to setup the thread pools or do the locking it once did.  This makes sense as package installs have a lot of serial code
+        paths. Also fixed many memory leaks as well as some use after free and invalid free calls against the wrong
+        pointer.  We're now using sha256 for hashing plist entries installed.</p>
+
+        <p>We now generate a os-release file on system startup in /var/run</p>
+
+        <p>Fixed issue where looking at some man pages would cause man to crash in MidnightBSD.</p>
+
+        <p>A bug in the firstboot script was corrected that referenced an invalid package name.
+
+        <p>burncd was removed.
+
+        <p>Fixed some temp file handling bugs</p>
+
+        <p>Fixed some problems with libcxxrt and rtld in MidnightBSD that would cause strange problems with 32bit binaries.</p>
+
+        <p>Fix the buggy mdnsd 'mdns' sed in the /etc/rc.d/mdnsd script that would often cause it to fail to modify /etc/nsswitch.conf on system startup
+        as needed.</p>
+
+        <p>libcasper(3) creates service processes by forking the calling process,
+            so they initially inherit the calling process' file descriptor table.
+            Casper services expect the lowest 3 file descriptors, traditionally
+            corresponding to standard input, output, and error, are redirected to
+            /dev/null.  libcasper(3) ensures this is the case.  However, it did not
+            handle the possibility that one of them is closed, and this scenario
+            would trigger an assertion failure during service creation, resulting in
+            a crash.
+        </p>
+
+        <h4>Security Fixes</h4>
+
+        <p>Apache Portable Runtime CVE workaround.  CVE-2021-35940</p>
+
+        <p>A programming error in the Linux compatibility layer futex(2) system
+            call might allow attackers to cause a denial of service.</p>
+
+        <p>Certain VirtIO-based device models failed to handle errors when fetching
+        I/O descriptors.  Such errors could be triggered by a malicious guest.
+        As a result, the device model code could be tricked into operating on
+        uninitialized I/O vectors, leading to memory corruption.
+
+        <p>The ggatec(8) daemon does not validate the size of a response before writing
+        it to a fixed-sized buffer.  This allows to overwrite the stack of ggatec(8).
+
+        <p>The passive mode in FTP communication allows an out of boundary read while
+        libfetch uses strtol to parse the relevant numbers into address bytes.  It
+        does not check if the line ends prematurely.  If it does, the for-loop
+        condition checks for *p == '\0' one byte too late because p++ was already
+        performed.
+
+        <p>A programming error in the Linux compatibility layer futex(2) system
+        call might allow attackers to cause a denial of service.
+
+        <p>libcasper(3) creates service processes by forking the calling process,
+        so they initially inherit the calling process' file descriptor table.
+        Casper services expect the lowest 3 file descriptors, traditionally
+        corresponding to standard input, output, and error, are redirected to
+        /dev/null.  libcasper(3) ensures this is the case.  However, it did not
+        handle the possibility that one of them is closed, and this scenario
+        would trigger an assertion failure during service creation, resulting in
+        a crash.
+
+        <p>A particular case of memory sharing is mishandled in the virtual memory system.  It is possible
+        and legal to establish a relationship where multiple descendant processes share a mapping which
+        shadows memory of an ancestor process.  In this scenario, when one process modifies memory
+        through such a mapping, the copy-on-write logic fails to invalidate other mappings of the source
+        page.  These stale mappings may remain even after the mapped pages have been reused for another purpose.
+
+        <p>Due to a race condition between lookup of ".." and remounting a filesystem,
+        a process running inside a jail might access filesystem hierarchy outside
+        of jail.
+
+        <p>Fix a security issue with pam.  The rules would not be applied correctly.
+
+        <p>xen fix to unmap correctly when errors occur
+
+        <p>Fix a extattr corruption bug with ufs
+
+        <p>Uninitialized kernel stack leaks in several file systems
+
+        <p>Xen guests can triger backend Out Of Memory
+
+        <p>The root certificates of the Mozilla CA Certificate Store have been
+        updated.
+
+        <p>Fixed a security problem with zlib:<br>
+        Handle case where inflateSync used when header never processed.
+        If zlib and/or gzip header processing was requested, but a header
+        was never provided and inflateSync was used successfully, then the
+        inflate state would be inconsistent, trying to compute a check
+        value but with no flags set. This commit sets the inflate mode to
+        raw in this case, since there is no other assumption that can be
+        made if a header was requested but never seen.</p>
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>mandoc</li>
+            <li>LLVM 10.0.1</li>
+            <li>APR-util 1.6.1/li>
+            <li>APR 1.7.0</li>
+            <li>Subversion 1.14.0</li>
+            <li>file 5.39</li>
+            <li>sendmail 8.16.1</li>
+            <li>sqlite3 3.35.5</li>
+            <li>tzdata 2021a</li>
+            <li>libarchive 3.5.0</li>
+            <li>unbound 1.13.0</li>
+            <li>xz 5.2.5</li>
+            <li>openmp</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>Added sume(4) - NetFPGA SUME 4x10Gb Ethernet driver
+
+        <p>JMicron JMB582/JMB585 AHCI</p>
+
+        <p>Add deprecation notices to ctau and cx drivers</p>
+
+        <p>Update e1000 driver for Intel gigabit NICs</p>
+
+        <p>evdev - fix a panic when removing a usb mouse</p>
+
+        <p>ichwd - Add Atom C3000 watchdog ID</p>
+
+        <p>ismt - fix a left shift bug</p>
+
+        <p>Fix intrhook release in MFI</p>
+
+        <p>Add support for BCM54618SE PHY</p>
+
+        <p>mlx5 - Account out of buffer as dropped packets in mlx5en(4)</p>
+
+        <p>netmap: ixl: add CRC to outbound frames</p>
+
+        <p>nvme bug fixes</p>
+
+        <p>Sync nxge driver with FreeBSD</p>
+
+        <p>Don't consider PCIe hot-plug command timeout fatal</p>
+
+        <p>add Bitron Video AV2010/10 ZigBee USB Stick</p>
+
+        <p>Various bug fixes to usb, vxge</p>
+
+        <h4>Known Issues</h4>
+
+        <p>We're in the process of building new i386 packages as many important ones for desktop use are missing
+        at the moment. </p>
+        
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+

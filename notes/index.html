@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MidnightBSD 2.1 Release Notes</title>
+    <title>MidnightBSD 2.2 Release Notes</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <style type="text/css" media="all">
         @import url("../css/essence.css");
@@ -78,18 +78,13 @@
                 <li><a href="1.1/index.html">1.1-RELEASE</a></li>
                 <li><a href="1.2/index.html">1.2-RELEASE</a></li>
                 <li><a href="2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="2.1/index.html">2.1-RELEASE</a></li>
             </ul>
         </div>
 
-        <h3>(09/21/2021) MidnightBSD 2.1</h3>
+        <h3>(06/07/2022) MidnightBSD 2.2</h3>
 
-        <p>I’m happy to announce the availability of MidnightBSD 2.1 for amd64 and i386.  This is an incremental release
-            focusing on bug fixes, improvements to the package manager and a new system compiler.</p>
-
-        <ul>
-            <li>LLVM updated to 10.0.1</li>
-            <li>mport 2.1.4</li>
-        </ul>
+        <p>I’m happy to announce the availability of MidnightBSD 2.2 for amd64 and i386.  This release focused on updating third party software in the base system and some smaller enhancements.</p>
 
         <h4>Upgrade Process</h4>
 
@@ -100,8 +95,8 @@
 
         <code>git clone https://github.com/MidnightBSD/src.git</code>
 
-        <p>Checkout the stable/2.1 branch
-        <code>git checkout stable/2.1</code>
+        <p>Checkout the stable/2.2 branch
+        <code>git checkout stable/2.2</code>
 
         <code>cd /usr/src; make clean buildworld buildkernel;<br>
         mergemaster -p<br>
@@ -111,178 +106,153 @@
             <code>
             make installworld<br>
         mergemaster -iU<br>
-        cd /usr/src/usr.bin/perl; make; make install;
             </code>
         <p>
         Update installed mports/packages<br>
+        For mport package manager, run
         <code>
-        cd /usr/src/; make check-old;
-                make delete-old
+            mport index
+            mport clean
         </code>
+        <code>
+            # saves time when running make delete-old
+            rm -rf /usr/lib/perl/5.32.0
+            cd /usr/src/; make check-old; make delete-old; make installworld;
+        </code>
+
+        <p>When you are done, verify that perl is updated by running perl -v
+        You should have perl 5.36.0.</p>
 
         <h4>Bug Fixes and new features</h4>
 
-        <p>The majority of improvements come from the MidnightBSD package manager, mport.  A number of longstanding
-        bugs have been fixed.  It now can update dependencies properly on install, update or upgrade scenarios. Previously,
-        it would sometimes crash and force the user to do it manually. Several fixes have been made around PLIST
-        processing.</p>
+        <p>use md library sha256 implementation for lzma
 
-        <p>mport now sets a character encoding so that extracting files with libarchive with special characters
-        is more likely to work properly without a crash occurring. (lang/go port is a fun trigger of this bug)
+        <p>/bin/sh updated based on freebsd 12-stable sources
 
-        <p>libmport no
-        long relies on libdispatch.  This is slower in a few scenarios, but most invocations are now faster as it doesn't need
-        to setup the thread pools or do the locking it once did.  This makes sense as package installs have a lot of serial code
-        paths. Also fixed many memory leaks as well as some use after free and invalid free calls against the wrong
-        pointer.  We're now using sha256 for hashing plist entries installed.</p>
+        <p>root shell changed to tcsh from csh.  This adds history to the root user’s interactive shell.  We may change the root shell to mksh in the future.
 
-        <p>We now generate a os-release file on system startup in /var/run</p>
+        <p>Introduce a patch to dummynet from pfsense to increase max value to 4Gb/s instead of 2Gb/s.
 
-        <p>Fixed issue where looking at some man pages would cause man to crash in MidnightBSD.</p>
-
-        <p>A bug in the firstboot script was corrected that referenced an invalid package name.
-
-        <p>burncd was removed.
-
-        <p>Fixed some temp file handling bugs</p>
-
-        <p>Fixed some problems with libcxxrt and rtld in MidnightBSD that would cause strange problems with 32bit binaries.</p>
-
-        <p>Fix the buggy mdnsd 'mdns' sed in the /etc/rc.d/mdnsd script that would often cause it to fail to modify /etc/nsswitch.conf on system startup
-        as needed.</p>
-
-        <p>libcasper(3) creates service processes by forking the calling process,
-            so they initially inherit the calling process' file descriptor table.
-            Casper services expect the lowest 3 file descriptors, traditionally
-            corresponding to standard input, output, and error, are redirected to
-            /dev/null.  libcasper(3) ensures this is the case.  However, it did not
-            handle the possibility that one of them is closed, and this scenario
-            would trigger an assertion failure during service creation, resulting in
-            a crash.
+        <p>mport 2.2.0<br />
+        removes use of libdispatch / gcd dependency so we can eventually support static built mport.<br />
+        add desktop-file-utils command to plist.<br />
+        add @KLD to plist handler (allows packages to define kernel modules)<br />
+        Introduce type on ucl pkg messages  (allows package messages on specific events)<br />
+        add null check on stub detach (prevents crashing when unloading a package)<br />
+        add chroot path to libexec commands and mport.list  (allows a chroot for updating in a jail)
         </p>
+
+        <p>Fixed issues with desktop startup and created an initial .xinitrc file for GUI installs.
+
+        <p>A Hyper-V vPCI emulation change can cause SR-IOV (Single-Root I/O Virtualization) and DDA (Discrete Device Assignment) devices to fail to operate correctly under Hyper-V.
+        In recent Hyper-V releases on Windows Server 2022, the vPCI code does not initialize the last 4 bit of device registers.  This behavior change could result in failure to initialize guest drivers for SR-IOV or DDA devices.
+
+        <p>Netcat: add sctp support from FreeBSD
+
+        <p>Add ptsname_r to libc.
+
+        <p>Ipfilter bug fixes from FreeBSD.
+
+        <p>Enable dbus and hald during the firstboot script (long term we want hal to go away)
+
+        <p>Slow down the loader twiddle.  (speeds up boot on VMs like AWS AMI and older hardware)
+
+        <p> add siginfo to chflags
+
+        <p>switch to less pager for root.
+
+        <p>cat(1): Bring in a bug fix for the -e flag as found in FreeBSD 12 stable
 
         <h4>Security Fixes</h4>
 
-        <p>Apache Portable Runtime CVE workaround.  CVE-2021-35940</p>
+        <p>Update root certificates bundle
 
-        <p>A programming error in the Linux compatibility layer futex(2) system
-            call might allow attackers to cause a denial of service.</p>
+        <p>Reject execve when new argc is zero. Fixes a security issue with NULL argv[0] entries similar to the recent CVE with polkit on Linux.
 
-        <p>Certain VirtIO-based device models failed to handle errors when fetching
-        I/O descriptors.  Such errors could be triggered by a malicious guest.
-        As a result, the device model code could be tricked into operating on
-        uninitialized I/O vectors, leading to memory corruption.
+        <p>Fix an integer overflow in OpenSSL and memory leaks.
 
-        <p>The ggatec(8) daemon does not validate the size of a response before writing
-        it to a fixed-sized buffer.  This allows to overwrite the stack of ggatec(8).
+        <p>netmap: Fix TOCTOU vulnerability in nmreq_copyin
+        The total size of the user-provided nmreq was first computed and then
+        trusted during the copyin. This might lead to kernel memory corruption
+        and escape from jails/containers.<br />
+        Security: CVE-2022-23084
 
-        <p>The passive mode in FTP communication allows an out of boundary read while
-        libfetch uses strtol to parse the relevant numbers into address bytes.  It
-        does not check if the line ends prematurely.  If it does, the for-loop
-        condition checks for *p == '\0' one byte too late because p++ was already
-        performed.
+        <p>netmap<br />
+        An unsanitized field in an option could be abused, causing an integer
+        overflow followed by kernel memory corruption. This might be used
+        to escape jails/containers.<br />
+        Security: CVE-2022-23085
 
-        <p>A programming error in the Linux compatibility layer futex(2) system
-        call might allow attackers to cause a denial of service.
+        <p>The netmap_ioctl() function has a reference counting bug in case of
+        NETMAP_REQ_PORT_INFO_GET command. When `hdr->nr_name[0] == '\0'`,
+        the function does not decrease the refcount of "nmd", which is
+        increased by netmap_mem_find(), causing a refcount leak.
 
-        <p>libcasper(3) creates service processes by forking the calling process,
-        so they initially inherit the calling process' file descriptor table.
-        Casper services expect the lowest 3 file descriptors, traditionally
-        corresponding to standard input, output, and error, are redirected to
-        /dev/null.  libcasper(3) ensures this is the case.  However, it did not
-        handle the possibility that one of them is closed, and this scenario
-        would trigger an assertion failure during service creation, resulting in
-        a crash.
+        <p>Wpa_supplicant: A vulnerability was discovered in how wpa_supplicant processes P2P
+        (Wi-Fi Direct) provision discovery requests. Under a corner case
+        condition, an invalid Provision Discovery Request frame could end up
+        reaching a state where the oldest peer entry needs to be removed. With
+        a suitably constructed invalid frame, this could result in use
+        (read+write) of freed memory. This can result in an attacker within
+        radio range of the device running P2P discovery being able to cause
+        unexpected behavior, including termination of the wpa_supplicant process
+        and potentially code execution.
 
-        <p>A particular case of memory sharing is mishandled in the virtual memory system.  It is possible
-        and legal to establish a relationship where multiple descendant processes share a mapping which
-        shadows memory of an ancestor process.  In this scenario, when one process modifies memory
-        through such a mapping, the copy-on-write logic fails to invalidate other mappings of the source
-        page.  These stale mappings may remain even after the mapped pages have been reused for another purpose.
+        <p>Binutils: The function make_relative_prefix_1 does not properly free locally
+        allocated memory when it returns early. Free the memory associated with the variables full_programe, bin_dirs, prog_dirs, and prefix_dirs when the function returns early.
 
-        <p>Due to a race condition between lookup of ".." and remounting a filesystem,
-        a process running inside a jail might access filesystem hierarchy outside
-        of jail.
-
-        <p>Fix a security issue with pam.  The rules would not be applied correctly.
-
-        <p>xen fix to unmap correctly when errors occur
-
-        <p>Fix a extattr corruption bug with ufs
-
-        <p>Uninitialized kernel stack leaks in several file systems
-
-        <p>Xen guests can triger backend Out Of Memory
-
-        <p>The root certificates of the Mozilla CA Certificate Store have been
-        updated.
-
-        <p>Fixed a security problem with zlib:<br>
-        Handle case where inflateSync used when header never processed.
-        If zlib and/or gzip header processing was requested, but a header
-        was never provided and inflateSync was used successfully, then the
-        inflate state would be inconsistent, trying to compute a check
-        value but with no flags set. This commit sets the inflate mode to
-        raw in this case, since there is no other assumption that can be
-        made if a header was requested but never seen.</p>
+        <p>Zlib: Fix CLEAR_HASH macro to be usable as a single statement. Fix a security issue in inflate.c
 
         <h4>3rd Party Software</h4>
 
         <ul>
-            <li>mandoc</li>
-            <li>LLVM 10.0.1</li>
-            <li>APR-util 1.6.1/li>
-            <li>APR 1.7.0</li>
-            <li>Subversion 1.14.0</li>
-            <li>file 5.39</li>
-            <li>sendmail 8.16.1</li>
-            <li>sqlite3 3.35.5</li>
-            <li>tzdata 2021a</li>
-            <li>libarchive 3.5.0</li>
-            <li>unbound 1.13.0</li>
-            <li>xz 5.2.5</li>
-            <li>openmp</li>
+            <li>Perl 5.36.0</li>
+            <li>Libucl 0.8.1</li>
+            <li>tzdata 2022a</li>
+            <li>lua 5.3.6</li>
+            <li>subversion 1.14.1</li>
+            <li>expat 2.47</li>
+            <li>sqlite 3.38.2 (also enabled math functions)</li>
+            <li>OpenSSH 8.8p1</li>
+            <li>zlib 1.2.12</li>
+            <li>libucl</li>
         </ul>
 
         <h4>Hardware</h4>
 
-        <p>Added sume(4) - NetFPGA SUME 4x10Gb Ethernet driver
+        <p>Update pci vendor ids
+        <p>add libusb_has_capability to libusb
 
-        <p>JMicron JMB582/JMB585 AHCI</p>
+        <p>The 802.11 beacon handling routine failed to validate the length of an
+        IEEE 802.11s Mesh ID before copying it to a heap-allocated buffer.
 
-        <p>Add deprecation notices to ctau and cx drivers</p>
+        <p>Handlers for *_CFG_PAGE read / write ioctls in the mpr, mps, and mpt drivers
+        allocated a buffer of a caller-specified size, but copied to it a fixed size
+        header.  Other heap content would be overwritten if the specified size was
+        too small.
 
-        <p>Update e1000 driver for Intel gigabit NICs</p>
+        <p>bhyve<br />
+        The e1000 network adapters permit a variety of modifications to an Ethernet
+        packet when it is being transmitted.  These include the insertion of IP and
+        TCP checksums, insertion of an Ethernet VLAN header, and TCP segmentation
+        offload ("TSO").  The e1000 device model uses an on-stack buffer to generate
+        the modified packet header when simulating these modifications on transmitted
+        packets.
 
-        <p>evdev - fix a panic when removing a usb mouse</p>
+        <p>When checksum offload is requested for a transmitted packet, the e1000 device
+        model used a guest-provided value to specify the checksum offset in the on-
+        stack buffer.  The offset was not validated for certain packet types.
 
-        <p>ichwd - Add Atom C3000 watchdog ID</p>
-
-        <p>ismt - fix a left shift bug</p>
-
-        <p>Fix intrhook release in MFI</p>
-
-        <p>Add support for BCM54618SE PHY</p>
-
-        <p>mlx5 - Account out of buffer as dropped packets in mlx5en(4)</p>
-
-        <p>netmap: ixl: add CRC to outbound frames</p>
-
-        <p>nvme bug fixes</p>
-
-        <p>Sync nxge driver with FreeBSD</p>
-
-        <p>Don't consider PCIe hot-plug command timeout fatal</p>
-
-        <p>add Bitron Video AV2010/10 ZigBee USB Stick</p>
-
-        <p>Various bug fixes to usb, vxge</p>
+        <p>The hard-coded size for state region 1 (SSE/XMM) was incorrect.
 
         <h4>Known Issues</h4>
 
-        <p>We're in the process of building new i386 packages as many important ones for desktop use are missing
-        at the moment. </p>
-        
+        <p>mport package manager - On systems with a large number of packages installed, a mport upgrade can run out of file descriptors.
+
+        <p>OpenSSL is quite out of date. We had planned to update this for the release, but ran into some issues with GELI.
+        Instead, we backported some public patches to our OpenSSL version. We will continue to work on this and do another release when available.
+        Please use the mports version of OpenSSL for any software you build.
+
     </div>
     <!--#include virtual="/footer.html"-->
 </body>
