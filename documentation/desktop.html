@@ -22,15 +22,23 @@
 						<li><a href="index.html"><strong>Documentation</strong></a></li>
 					</ul>
 				</div>
-				<h3 id="s1a">Dump &amp; Restore</h3>
-				<h4 id="s1b">Introduction</h4>
-				<p>MidnightBSD uses <a href="http://x.org/">Xorg</a> to display graphical applicatons. Users will
+
+				<h3 id="s1b">Introduction</h3>
+				<p>MidnightBSD uses <a href="http://x.org/">Xorg</a> to display graphical applications. Users will
                 need to select an available desktop environment to use. Choices include Xfce, Gnome 3, WindowMaker + GNUStep
                 as well as a few lightweight options.</p>
 
-				<h4 id="s1c">Installation</h4>
+				<h3 id="s1c">Installation</h3>
 
-                <h5>Xorg</h5>
+                <h4>firstboot script</h4>
+                <p>When you first install MidnightBSD, a script called firstboot which lives in /etc/rc.d/firstboot will
+                ask if you would like to install a graphical desktop environment. This will allow you to select xfce
+                or WindowMaker. If you would like to run this script again, you can delete /etc/fbreciept and then run it
+                with service firstboot start or /etc/rc.d/firstboot start</p>
+
+                <p>The remaining options in this page cover manual installation for various desktop environments.</p>
+
+                <h4>Xorg</h4>
                 <p>
                     To install the X-Windows environment from packages, simply run
                     <code>mport install xorg</code>.
@@ -43,7 +51,12 @@
                 xterm window within Xorg.  <code>setxkbmap -option terminate:ctrl_alt_bksp</code></p>
 
                 <h5>Grapical login manager</h5>
-                <p>There are several graphical login managers that can be used instead of running startx manually. You can install
+                <p>There are several graphical login managers that can be used instead of running startx manually.
+
+                <p>The default login manager as of MidnightBSD 2.1 is mlogind.  This is based on slim.</p>
+                <p>You can install it with <code>mport install mlogind</code> or <code>cd /usr/mports/x11/mlogind && make install clean</code></p>
+
+                <p>You can install
                 xdm from packages or mports with <code>mport install xdm</code> or <code>cd /usr/mports/x11/xdm && make install clean</code>
                 </p>
                 <p>To configure xdm, edit /etc/ttys and edit the line
@@ -62,18 +75,21 @@
                 all the relevant services for the GNOME desktop environment. In particular, dbus is required for proper operation.</p>
                 <p>If you wish to try out gnome manually or use startx rather than gdm to run GNOME, you can instead run the following
                 command. <code>echo "exec /usr/local/bin/gnome-session" > ~/.xinitrc</code> one time to enable GNOME for X.</p>
-                <p>If you woudl rather use xdm, you can edit the xsession configuration file as so
+                <p>If you would rather use xdm, you can edit the xsession configuration file as so
                 <code>
                     echo "#!/bin/sh" > ~/.xsession<br>
                     echo "exec /usr/local/bin/gnome-session" >> ~/.xsession<br>
                     chmod +x ~/.xsession<br>
                 </code></p>
 
-                <h5>Xfce</h5>
+                <h4>Xfce</h4>
                 <p>Install XFCE with <code>mport install xfce4</code> or build with
                 <code>cd /usr/mports/x11-wm/xfce4 && make install clean</code></p>
                 <p>Setup for manually starting xfce with startx by running
                 <code>echo "exec /usr/local/bin/startxfce4" > ~/.xinitrc</code></p>
+
+                <p>On MidnightBSD 2.1.x or higher, user accounts get a default .xinitrc configuration that will start
+                xfce if installed.</p>
 
                 <p>If using xdm, you can run this to set it up.
                 <code>
@@ -82,7 +98,7 @@
                      chmod +x ~/.xsession<br>
                 </code></p>
 
-                <h5>WindowMaker</h5>
+                <h4>WindowMaker</h4>
                 <p>To install, run <code>mport install windowmaker</code>.</p>
                 <p>If you want to install wdm and several other apps, you can run
                 <code>mport install windowmaker-desktop</code> or via mports with
@@ -90,6 +106,9 @@
 
                 <p>To add on GNUstep, you can install it via <code>mport install gnustep</code> and
                 also add apps with <code>mport install gnustep-app</code></p>
+
+                <p>On MidnightBSD 2.1.x or higher, user accounts get a default .xinitrc configuration that will start
+                    WindowMaker if installed.</p>
 
                 <!--#include virtual="/disqus.html"-->
 </div>

@@ -20,7 +20,7 @@
 				    <blockquote>
 					<p>0.7-CURRENT and 0.6-p2 contain new ZFS support for TRIM on solid state drives. It is enabled by default.
 					The mport utility now supports locks in current. With this feature, you can disable delete or update commands
-					on packages that are installed in the system. This can prevent accidents or upgrades during a system wide update.
+					on packages that are installed in the system. This can prevent accidents or upgrades during a system-wide update.
           			    </blockquote>
 				    <h4>Update: (November 2013)</h4>
 				    <blockquote>
@@ -36,30 +36,40 @@
 					and also includes security patches.
 					</p>
 				    </blockquote>
-	
-                                    <h4>Update: (February 2012)</h4>
-                                    <blockquote>
-                                        <p>Our current big project is replacing sysinstall with a modified version of bsdinstall from FreeBSD 9.0-RELEASE. As part
-                                           of this project, several major changes have been made to GEOM in the kernel.  MidnightBSD now supports it's own
-                                           GPT partition schemes, and understands GPT types from several other operating systems including Microsoft Windows,
-                                           Apple Mac OS X (and Apple TV), Linux, FreeBSD and NetBSD.</p>
 
-                                        <p>mport has had several improvements.  An article on mport tools appeared in the February 2012 issue of BSD Magazine.</p>
+					<h4>Update: (February 2012)</h4>
+					<blockquote>
+						<p>Our current big project is replacing sysinstall with a modified version of bsdinstall from
+							FreeBSD 9.0-RELEASE. As part
+							of this project, several major changes have been made to GEOM in the kernel. MidnightBSD now
+							supports it's own
+							GPT partition schemes, and understands GPT types from several other operating systems
+							including Microsoft Windows,
+							Apple Mac OS X (and Apple TV), Linux, FreeBSD and NetBSD.</p>
 
-                                        <p>The OpenBSD sensors framework code was updated to use fine grain locking along with many sysctl's in 0.4-CURRENT.  This
-                                           should improve performance.</p>
+						<p>mport has had several improvements. An article on mport tools appeared in the February 2012
+							issue of BSD Magazine.</p>
 
-                                        <p>Apple's mDNSResponder 330.10 was recently imported.</p>
+						<p>The OpenBSD sensors framework code was updated to use fine grain locking along with many
+							sysctl's in 0.4-CURRENT. This
+							should improve performance.</p>
 
-                                        <p>Several stability problems have been corrected in the 0.4-CURRENT kernel introduced in November.  CURRENT kernels now
-                                           have WITNESS and INVARIANTS enabled by default.  This slows down performance, but allows us to catch a lot of subtle problems.
-                                           Historically, this was disabled after a buggy patch was introduced to the TCP network stack years ago.  This code was replaced
-                                           during development of 0.3.</p> 
+						<p>Apple's mDNSResponder 330.10 was recently imported.</p>
 
-                                        <p>The release building architecture is undergoing significant changes to work with the new installer.  Current documentation on
-                                           this process is out of date and one should look at the src/Makefile, src/Makefile.inc1 and release/* for the current procoess.
-                                        </p> 
-                                    </blockquote>
+						<p>Several stability problems have been corrected in the 0.4-CURRENT kernel introduced in
+							November. CURRENT kernels now
+							have WITNESS and INVARIANTS enabled by default. This slows down performance, but allows us
+							to catch a lot of subtle problems.
+							Historically, this was disabled after a buggy patch was introduced to the TCP network stack
+							years ago. This code was replaced
+							during development of 0.3.</p>
+
+						<p>The release building architecture is undergoing significant changes to work with the new
+							installer. Current documentation on
+							this process is out of date and one should look at the src/Makefile, src/Makefile.inc1 and
+							release/* for the current procoess.
+						</p>
+					</blockquote>
 				    <h4>Update: (September 2011)</h4>
 				    <blockquote>
 				        <p>ctriv@ started the libmport project several years ago.  Today, we have a functioning replacement for pkg_tools
@@ -115,7 +125,7 @@
 				</p>
 				<div id="devresources" class="fright">
 					<h3>Developer Resources</h3>
-					<p>The project was originally available in cvs, then svn and now git. The legacy svn repos are still available. 
+					<p>The project was originally available in cvs, then svn and now git. The legacy svn repos are still available for read-only use.
 
 					<p>The operating system source code "src", mports and www are now located in git. Regular users may check these out over HTTPS.</p>
 
@@ -130,7 +140,7 @@
 						To change to other branches
 					</p>
 					<p class="code">
-						git checkout stable/2.1
+						git checkout stable/3.0
 					</p>
 
 					Developers (src):
@@ -158,6 +168,11 @@
 					Users (mport package manager):
 					<p class="code">
 						git clone https://github.com/midnightbsd/mport.git
+					</p>
+
+					Users (mport graphical package manager):
+					<p class="code">
+						git clone https://github.com/midnightbsd/mport-manager.git
 					</p>
 
 					<p>You can view code on <a href="https://github.com/midnightbsd/">GitHub</a><p>
@@ -200,16 +215,17 @@
 				</div>
 				<div class="clear"></div>
 				<h3>Background</h3>
-				<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is to create a BSD with ease of use and simplicity in mind. 0.3 RELEASE brought in enhancements from FreeBSD 7.0 and 0.4 included an infusion of FreeBSD 9.1 sources. MidnightBSD 1.x included enhancements from FreeBSD 10.4 and MidnightBSD 2.x includes features from FreeBSD 11 stable (somewhere between 11.3 and 11.4).</p>
-
+				<p>MidnightBSD is based on FreeBSD 6.1 pre-release. The goal of the project is to create a BSD with ease of use and simplicity in mind. 0.3 RELEASE brought in enhancements from FreeBSD 7.0 and 0.4
+					included an infusion of FreeBSD 9.1 sources. MidnightBSD 1.x included enhancements from FreeBSD 10.4 and MidnightBSD 2.x includes features from FreeBSD 11 stable (somewhere between 11.3 and 11.4).</p>
+	            <p>With MidnightBSD 3.0, features from FreeBSD 12-stable (June 17, 2022) between FreeBSD 12.3 and 12.4 were imported.</p>
 				<h3>Goals</h3>
 				<div id="list">
 					<ul>
 						<li>Create an easy to use desktop environment with basic functionality and a full graphical administration interface.</li>
-						<li>Create a unique window manager designed with ease of use in mind. We will not use full blown desktop environments like KDE or Gnome.</li>
+						<li>Create a unique window manager designed with ease of use in mind. We will not use full-blown desktop environments like KDE or Gnome.</li>
 						<li>(original goal, recently changed) Integrate GNUstep into the system, but maintain BSD licensing on our own code whenever possible. The kernel and most userland software must be BSD licensed.</li>
 						<li>Currently using Xfce desktop environment as our standard desktop.</li>
-						<li>Incorperate new technologies from other BSD projects that may interest desktop users. OpenBSD's OpenNTPD, OpenSSH, and wireless drivers are examples.</li>
+						<li>Incorporate new technologies from other BSD projects that may interest desktop users. OpenBSD's OpenNTPD, OpenSSH, and wireless drivers are examples.</li>
 						<li>Create our own ports system based on FreeBSD's ports. The system would have a graphical interface and existing utilities would be merged into a library so identical functionality is maintained on the gui and command line.</li>
 						<li>Setup a binary update system so that users do no need to compile patches or new releases to get security updates or bug fixes.</li>
 						<li>Listen to user feedback to improve the system. At times, many open source projects fail to listen to users making systems more difficult to use and decreasing scope.</li>
