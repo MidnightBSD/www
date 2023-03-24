@@ -350,6 +350,9 @@
         <p>When doing a major upgrade, sometimes it's necessary to disable
             perl builds in usr.bin/Makefile.</p>
 
+        <p>On some AMD Ryzen systems, there is a time skew under high load or with heavy virtualizaiton workloads.  If you notice this issue, try changing the default kern.eventtimer.timer.
+        HPET sometimes helps. </p>
+
     </div>
     <!--#include virtual="/footer.html"-->
 </body>
