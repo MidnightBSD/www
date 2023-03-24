@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 2.2 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 80%;
+            color: #aaa;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .update {
+            background: #f2fbff;
+            border: 2px solid #dff2fb;
+            font-size: 80%;
+            width: 40%;
+            float: left;
+            margin-right: 2.4em;
+            color: #555;
+        }
+
+        .ast {
+            color: #1373ce;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+             </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="../2.1/index.html">2.1-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(06/07/2022) MidnightBSD 2.2</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 2.2 for amd64 and i386.  This release focused on updating third party software in the base system and some smaller enhancements.</p>
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already
+        <code>mport install git</code>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <code>git clone https://github.com/MidnightBSD/src.git</code>
+
+        <p>Checkout the stable/2.2 branch
+        <code>git checkout stable/2.2</code>
+
+        <code>cd /usr/src; make clean buildworld buildkernel;<br>
+        mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        mergemaster -iU<br>
+            </code>
+        <p>
+        Update installed mports/packages<br>
+        For mport package manager, run
+        <code>
+            mport index
+            mport clean
+        </code>
+        <code>
+            # saves time when running make delete-old
+            rm -rf /usr/lib/perl/5.32.0
+            cd /usr/src/; make check-old; make delete-old; make installworld;
+        </code>
+
+        <p>When you are done, verify that perl is updated by running perl -v
+        You should have perl 5.36.0.</p>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <p>use md library sha256 implementation for lzma</p>
+
+        <p>/bin/sh updated based on freebsd 12-stable sources</p>
+
+        <p>root shell changed to tcsh from csh.  This adds history to the root user’s interactive shell.
+        We may change the root shell to mksh in the future.</p>
+
+        <p>Introduce a patch to dummynet from pfsense to increase max value to 4Gb/s instead of 2Gb/s.</p>
+
+        <p>mport 2.2.0<br />
+        removes use of libdispatch / gcd dependency so we can eventually support static built mport.<br />
+        add desktop-file-utils command to plist.<br />
+        add @KLD to plist handler (allows packages to define kernel modules)<br />
+        Introduce type on ucl pkg messages  (allows package messages on specific events)<br />
+        add null check on stub detach (prevents crashing when unloading a package)<br />
+        add chroot path to libexec commands and mport.list  (allows a chroot for updating in a jail)
+        </p>
+
+        <p>Fixed issues with desktop startup and created an initial .xinitrc file for GUI installs.</p>
+
+        <p>A Hyper-V vPCI emulation change can cause SR-IOV (Single-Root I/O Virtualization) and DDA (Discrete Device Assignment) devices to fail to operate correctly under Hyper-V.
+        In recent Hyper-V releases on Windows Server 2022, the vPCI code does not initialize the last 4 bit of device registers.
+            This behavior change could result in failure to initialize guest drivers for SR-IOV or DDA devices.
+        </p>
+
+        <p>Netcat: add sctp support from FreeBSD</p>
+
+        <p>Add ptsname_r to libc.</p>
+
+        <p>Ipfilter bug fixes from FreeBSD.</p>
+
+        <p>Enable dbus and hald during the firstboot script (long term we want hal to go away)</p>
+
+        <p>Slow down the loader twiddle.  (speeds up boot on VMs like AWS AMI and older hardware)</p>
+
+        <p> add siginfo to chflags</p>
+
+        <p>switch to less pager for root.</p>
+
+        <p>cat(1): Bring in a bug fix for the -e flag as found in FreeBSD 12 stable</p>
+
+        <h4>Security Fixes</h4>
+
+        <p>Update root certificates bundle</p>
+
+        <p>Reject execve when new argc is zero. Fixes a security issue with NULL argv[0] entries similar to the recent CVE with polkit on Linux.</p>
+
+        <p>Fix an integer overflow in OpenSSL and memory leaks.</p>
+
+        <p>netmap: Fix TOCTOU vulnerability in nmreq_copyin
+        The total size of the user-provided nmreq was first computed and then
+        trusted during the copyin. This might lead to kernel memory corruption
+        and escape from jails/containers.<br />
+        Security: CVE-2022-23084</p>
+
+        <p>netmap<br />
+        An unsanitized field in an option could be abused, causing an integer
+        overflow followed by kernel memory corruption. This might be used
+        to escape jails/containers.<br />
+        Security: CVE-2022-23085</p>
+
+        <p>The netmap_ioctl() function has a reference counting bug in case of
+        NETMAP_REQ_PORT_INFO_GET command. When `hdr->nr_name[0] == '\0'`,
+        the function does not decrease the refcount of "nmd", which is
+        increased by netmap_mem_find(), causing a refcount leak.</p>
+
+        <p>Wpa_supplicant: A vulnerability was discovered in how wpa_supplicant processes P2P
+        (Wi-Fi Direct) provision discovery requests. Under a corner case
+        condition, an invalid Provision Discovery Request frame could end up
+        reaching a state where the oldest peer entry needs to be removed. With
+        a suitably constructed invalid frame, this could result in use
+        (read+write) of freed memory. This can result in an attacker within
+        radio range of the device running P2P discovery being able to cause
+        unexpected behavior, including termination of the wpa_supplicant process
+        and potentially code execution.</p>
+
+        <p>Binutils: The function make_relative_prefix_1 does not properly free locally
+        allocated memory when it returns early. Free the memory associated with the variables full_programe, bin_dirs, prog_dirs, and prefix_dirs when the function returns early.</p>
+
+        <p>Zlib: Fix CLEAR_HASH macro to be usable as a single statement. Fix a security issue in inflate.c</p>
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>Perl 5.36.0</li>
+            <li>Libucl 0.8.1</li>
+            <li>tzdata 2022a</li>
+            <li>lua 5.3.6</li>
+            <li>subversion 1.14.1</li>
+            <li>expat 2.47</li>
+            <li>sqlite 3.38.2 (also enabled math functions)</li>
+            <li>OpenSSH 8.8p1</li>
+            <li>zlib 1.2.12</li>
+            <li>libucl</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>Update PCI vendor ids</p>
+
+        <p>add libusb_has_capability to libusb</p>
+
+        <p>The 802.11 beacon handling routine failed to validate the length of an
+        IEEE 802.11s Mesh ID before copying it to a heap-allocated buffer.</p>
+
+        <p>Handlers for *_CFG_PAGE read / write ioctls in the mpr, mps, and mpt drivers
+        allocated a buffer of a caller-specified size, but copied to it a fixed size
+        header.  Other heap content would be overwritten if the specified size was
+        too small.</p>
+
+        <p>bhyve<br />
+        The e1000 network adapters permit a variety of modifications to an Ethernet
+        packet when it is being transmitted.  These include the insertion of IP and
+        TCP checksums, insertion of an Ethernet VLAN header, and TCP segmentation
+        offload ("TSO").  The e1000 device model uses an on-stack buffer to generate
+        the modified packet header when simulating these modifications on transmitted
+        packets.</p>
+
+        <p>When checksum offload is requested for a transmitted packet, the e1000 device
+        model used a guest-provided value to specify the checksum offset in the on-
+        stack buffer.  The offset was not validated for certain packet types.</p>
+
+        <p>The hard-coded size for state region 1 (SSE/XMM) was incorrect.</p>
+
+        <h4>Known Issues</h4>
+
+        <p>mport package manager - On systems with a large number of packages installed, a mport upgrade can run out of file descriptors.</p>
+
+        <p>OpenSSL is quite out of date. We had planned to update this for the release, but ran into some issues with GELI.
+        Instead, we backported some public patches to our OpenSSL version. We will continue to work on this and do another release when available.
+        Please use the mports version of OpenSSL for any software you build.</p>
+
+        <p>At the time of writing, packages for 2.2.0 are still building.</p>
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+

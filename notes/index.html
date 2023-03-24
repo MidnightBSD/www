@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MidnightBSD 2.2 Release Notes</title>
+    <title>MidnightBSD 3.0 Release Notes</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <style type="text/css" media="all">
         @import url("../css/essence.css");
@@ -79,12 +79,13 @@
                 <li><a href="1.2/index.html">1.2-RELEASE</a></li>
                 <li><a href="2.0/index.html">2.0-RELEASE</a></li>
                 <li><a href="2.1/index.html">2.1-RELEASE</a></li>
+                <li><a href="2.2/index.html">2.2-RELEASE</a></li>
             </ul>
         </div>
 
-        <h3>(06/07/2022) MidnightBSD 2.2</h3>
+        <h3>(03/23/2023) MidnightBSD 3.0</h3>
 
-        <p>I’m happy to announce the availability of MidnightBSD 2.2 for amd64 and i386.  This release focused on updating third party software in the base system and some smaller enhancements.</p>
+        <p>I’m happy to announce the availability of MidnightBSD 3.0 for amd64 and i386.  This release includes several larger enhancements imported from FreeBSD 12 stable.</p>
 
         <h4>Upgrade Process</h4>
 
@@ -93,10 +94,7 @@
 
         <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
 
-        <code>git clone https://github.com/MidnightBSD/src.git</code>
-
-        <p>Checkout the stable/2.2 branch
-        <code>git checkout stable/2.2</code>
+        <code>git clone -b stable/3.0 https://github.com/MidnightBSD/src.git</code>
 
         <code>cd /usr/src; make clean buildworld buildkernel;<br>
         mergemaster -p<br>
@@ -115,149 +113,242 @@
             mport clean
         </code>
         <code>
-            # saves time when running make delete-old
-            rm -rf /usr/lib/perl/5.32.0
             cd /usr/src/; make check-old; make delete-old; make installworld;
         </code>
 
-        <p>When you are done, verify that perl is updated by running perl -v
-        You should have perl 5.36.0.</p>
-
         <h4>Bug Fixes and new features</h4>
 
-        <p>use md library sha256 implementation for lzma</p>
+        <p>Fix for GELI silently omits the keyfile if read from stdin.</p>
 
-        <p>/bin/sh updated based on freebsd 12-stable sources</p>
+        <p>mport 2.2.7 + bug fixes</p>
 
-        <p>root shell changed to tcsh from csh.  This adds history to the root user’s interactive shell.
-        We may change the root shell to mksh in the future.</p>
+        <p>An update to the caroot CA bundle processor to support certificates marked with a DISTRUST_AFTER entry.
 
-        <p>Introduce a patch to dummynet from pfsense to increase max value to 4Gb/s instead of 2Gb/s.</p>
+        <p>The /etc/rc.final rc(8) script will now be run after all user processes have terminated.
 
-        <p>mport 2.2.0<br />
-        removes use of libdispatch / gcd dependency so we can eventually support static built mport.<br />
-        add desktop-file-utils command to plist.<br />
-        add @KLD to plist handler (allows packages to define kernel modules)<br />
-        Introduce type on ucl pkg messages  (allows package messages on specific events)<br />
-        add null check on stub detach (prevents crashing when unloading a package)<br />
-        add chroot path to libexec commands and mport.list  (allows a chroot for updating in a jail)
-        </p>
+        <p>The automount(8) utility will now explicitly set the root path to / before performing an automatic mount.
 
-        <p>Fixed issues with desktop startup and created an initial .xinitrc file for GUI installs.</p>
+        <p>The bectl(8) utility will now throw an error to prevent the creation of a boot environment with spaces.
 
-        <p>A Hyper-V vPCI emulation change can cause SR-IOV (Single-Root I/O Virtualization) and DDA (Discrete Device Assignment) devices to fail to operate correctly under Hyper-V.
-        In recent Hyper-V releases on Windows Server 2022, the vPCI code does not initialize the last 4 bit of device registers.
-            This behavior change could result in failure to initialize guest drivers for SR-IOV or DDA devices.
-        </p>
+        <p>The bhyve(8) utility had support for large IOs fixed in nvme(4) emulation.
 
-        <p>Netcat: add sctp support from FreeBSD</p>
+        <p>The cmp(1) utility received -b, --print-bytes flags to be compatible with GNU cmp(1).
 
-        <p>Add ptsname_r to libc.</p>
+        <p>The cmp(1) utility received the -i, --ignore-initial flags as an alternative to skip1/skip2.
 
-        <p>Ipfilter bug fixes from FreeBSD.</p>
+        <p>The cmp(1) utility now accepts SI suffixes for skip1/skip2.
 
-        <p>Enable dbus and hald during the firstboot script (long term we want hal to go away)</p>
+        <p>The cmp(1) utility received the -n, --bytes flags to limit number of bytes to compare.
 
-        <p>Slow down the loader twiddle.  (speeds up boot on VMs like AWS AMI and older hardware)</p>
+        <p>The cpuset(1) utility can now be used by a jail to modify the roots of a child jail.
 
-        <p> add siginfo to chflags</p>
+        <p>The daemon(8) utility now has a -H flag allowing it to catch a SIGHUP and re-open output file. This was added to support newsyslog(8) operations.</p>
 
-        <p>switch to less pager for root.</p>
+        <p>The fstyp(8) utility will now detect and show exFAT filesystems with the -l flag.
 
-        <p>cat(1): Bring in a bug fix for the -e flag as found in FreeBSD 12 stable</p>
+        <p>The geli(8) utility will no longer report an error when performing a resize to the same size.
+
+        <p>The grep(1) utility will now disable -w if -x is also specified.
+
+        <p>The growfs(8) utility will now function on RW mounted filesystems.
+
+        <p>The kldxref(8) utility will no longer error out if the directory specified with the -d flag is not actually a directory.
+
+        <p>The mergemaster(8) utility will now handle symbolic links during the update process.
+
+        <p>The mksnap_ffs(8) utility received a fix for a crash which triggered a Panic: snapacct_ufs2: bad block panic.
+
+        <p>The mount(8) utility will now properly show with quotas when quotas are enabled.
+
+        <p>The mountd(8) utility will now generate a syslog(3) message when the V4: line is missing from /etc/exports.
+
+        <p>The newsyslog(8) utility received a new E flag to prevent rotation of empty log files.
+
+        <p>The rc.d/jail rc(8) script had a keyword change to fix jails within jails support.
+
+        <p>The rtsold(8) daemon will now work on if_vlan (see: vlan(4)) interfaces.
+
+        <p>The service(8) utility will now set the environment of the daemon class before invoking.
+
+        <p>The wpl_cli(8) utility now has an action file event where an event may be passed to a file.
+
+        <p>The internal KAPI between the krpc and nfsd modules was updated</p>
+
+        <p>The ipfw(8) firewall was provided a dnctl(8) to manage dummynet(4) configurations.
+
+        <p>An opencrypto kern.crypto sysctl(8) node was added.
+
+        <p>A new sysctl(8), debug.uma_reclaim, was added.
+
+        <p>The kern.timecounter.hardware OID was converted into a tuneable.</p>
+
+        <p>The msdosfs(5) filesystem driver received a fix for msdosfs suspension.
+
+        <p>The ng_bridge(4) netgraph node is now SMP aware.
+
+        <p>The ng_nat(4) netgraph node received support for RFC 6598/Carrier Grade NAT support.
+
+        <p>The ng_source(4) netgraph node may now be injected into any netgraph network.
+
+        <p>The vlan(4) interface can now support ALTQ.
+
+        <p>The pf(4) firewall has received several bugfixes and updates.
+
+        <p>A fix for handling of embedded symbolic links in UFS/FFS was merged.
+
+        <p>A fix for NFSv4.1 Linux client mount getting stuck in CLOSE_WAIT status was merged.
+
+        <p>A fix for NFSv4.1/4.2 mount recovery from an expired lease was merged.
+
+        <p>Several fixes for NFSv4 were merged.
+
+        <p>A segmentation fault during wpa EAP/PEAP MSCHAPv2 authentication was fixed.
+
+        <p>The fetch(3) library now supports proxying FTP over HTTPS.
+
+        <p>A new rc.conf(5) variable has been added, linux_mounts_enable, which controls if Linux®-specific filesystems are mounted in /compat/linux if linux_enable is set to YES.</p>
+
+        <p>The devd(8) utility has been updated to change the default syslogd(8) notification for resume from kern to kernel.</p>
+
+        <p>The cron(8) utility has been updated to support two new flags in crontab(5), -n and -q, which suppress mail on successful runs and suppress logging of command execution, respectively.</p>
+
+        <p>The ifconfig library has been updated to report the status of a bridge(4) interface, similarly to lagg(4). </p>
+
+        <p>The read(2) system call has been changed to disable read() calls on directories by default. A new sysctl(8) has been added, security.bsd.allow_read_dir, which when set to 1 will restore the previous behavior.</p>
+
+        <p>The machdep.kdb_on_nmi sysctl(8) has been removed. The machdep.panic_on_nmi sysctl(8) tunable has changed to directly enter the debugger.</p>
+
+        <p>Support for APEI (ACPI Platform Error Interfaces) has been added. </p>
+
+        <p>Support for NAT64 CLAT has been added, as defined in RFC6877.</p>
+        <p>The getrandom(2) system call and getentropy(3) library have been added, compatible with Linux® and OpenBSD implementations.</p>
+        <p>get_s(3) has been added. </p>
+        <p>The pthread(3) library has been updated to incorporate POSIX/SUSv4-2018 compliance improvements. </p>
+        <p>The arc4random(3) library has been updated to remove arc4random_stir() and arc4random_addrandom(). </p>
+
+        <h5>Boot Loader</h5>
+        <p>The boot loader will now support booting an OS from a memory disk.
+        <p>The boot loader will now support pools without features.
+        <p>The boot loader will now accept the zfs features com.delphix:bookmark_written and com.datto:bookmark_v2.
+        <p>A new OID, hint.dev.X.disabled was added to lua loader prevent device attachment during boot.
+        <p>The arc4random(3) library has been updated to match the OpenBSD version 1.35</p>
 
         <h4>Security Fixes</h4>
 
-        <p>Update root certificates bundle</p>
+        <p>OpenSSL 1.1.1s is now included in base.  Previously, we were still on 1.0.2u + some extra patches. This
+        is a long overdue security update.</p>
 
-        <p>Reject execve when new argc is zero. Fixes a security issue with NULL argv[0] entries similar to the recent CVE with polkit on Linux.</p>
-
-        <p>Fix an integer overflow in OpenSSL and memory leaks.</p>
-
-        <p>netmap: Fix TOCTOU vulnerability in nmreq_copyin
-        The total size of the user-provided nmreq was first computed and then
-        trusted during the copyin. This might lead to kernel memory corruption
-        and escape from jails/containers.<br />
-        Security: CVE-2022-23084</p>
-
-        <p>netmap<br />
-        An unsanitized field in an option could be abused, causing an integer
-        overflow followed by kernel memory corruption. This might be used
-        to escape jails/containers.<br />
-        Security: CVE-2022-23085</p>
-
-        <p>The netmap_ioctl() function has a reference counting bug in case of
-        NETMAP_REQ_PORT_INFO_GET command. When `hdr->nr_name[0] == '\0'`,
-        the function does not decrease the refcount of "nmd", which is
-        increased by netmap_mem_find(), causing a refcount leak.</p>
-
-        <p>Wpa_supplicant: A vulnerability was discovered in how wpa_supplicant processes P2P
-        (Wi-Fi Direct) provision discovery requests. Under a corner case
-        condition, an invalid Provision Discovery Request frame could end up
-        reaching a state where the oldest peer entry needs to be removed. With
-        a suitably constructed invalid frame, this could result in use
-        (read+write) of freed memory. This can result in an attacker within
-        radio range of the device running P2P discovery being able to cause
-        unexpected behavior, including termination of the wpa_supplicant process
-        and potentially code execution.</p>
-
-        <p>Binutils: The function make_relative_prefix_1 does not properly free locally
-        allocated memory when it returns early. Free the memory associated with the variables full_programe, bin_dirs, prog_dirs, and prefix_dirs when the function returns early.</p>
-
-        <p>Zlib: Fix CLEAR_HASH macro to be usable as a single statement. Fix a security issue in inflate.c</p>
+        <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
+            in inflate in inflate.c via a large gzip header extra field.</p>
 
         <h4>3rd Party Software</h4>
 
         <ul>
-            <li>Perl 5.36.0</li>
-            <li>Libucl 0.8.1</li>
-            <li>tzdata 2022a</li>
-            <li>lua 5.3.6</li>
-            <li>subversion 1.14.1</li>
-            <li>expat 2.47</li>
-            <li>sqlite 3.38.2 (also enabled math functions)</li>
-            <li>OpenSSH 8.8p1</li>
-            <li>zlib 1.2.12</li>
-            <li>libucl</li>
+            <li>OpenSSL 1.1.1s</li>
+            <li>sqlite3 3.40.1</li>
+            <li>subversion 1.14.2</li>
+            <li>less 551</li>
+            <li>tzdata 2022g</li>
+            <li>expat 2.5.0</li>
+            <li>unbound 1.16.2</li>
+            <li>imported pci ids list 2022 08 07</li>
+            <li>libarchive 3.6.0</li>
+            <li>nvi 2.20</li>
+            <li>bmake 20200710</li>
+            <li>wpa 2.10</li>
         </ul>
 
         <h4>Hardware</h4>
 
-        <p>Update PCI vendor ids</p>
+        <p>Fix for Intel 82599 ixgbe device which reported errors on the interface
+            incorrectly.</p>
 
-        <p>add libusb_has_capability to libusb</p>
+        <p>The alc(4) device driver now supports the Mikrotik® 10/25G Network device.
 
-        <p>The 802.11 beacon handling routine failed to validate the length of an
-        IEEE 802.11s Mesh ID before copying it to a heap-allocated buffer.</p>
+        <p>The amdtemp(4) device driver has learned about family 17h models: M20h (Dali, Zen1), M60H (Renoir, Zen2), and M90H (Van Gogh, Zen2).
 
-        <p>Handlers for *_CFG_PAGE read / write ioctls in the mpr, mps, and mpt drivers
-        allocated a buffer of a caller-specified size, but copied to it a fixed size
-        header.  Other heap content would be overwritten if the specified size was
-        too small.</p>
+        <p>The amdtemp(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").
 
-        <p>bhyve<br />
-        The e1000 network adapters permit a variety of modifications to an Ethernet
-        packet when it is being transmitted.  These include the insertion of IP and
-        TCP checksums, insertion of an Ethernet VLAN header, and TCP segmentation
-        offload ("TSO").  The e1000 device model uses an on-stack buffer to generate
-        the modified packet header when simulating these modifications on transmitted
-        packets.</p>
+        <p>The amdsmn(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").
 
-        <p>When checksum offload is requested for a transmitted packet, the e1000 device
-        model used a guest-provided value to specify the checksum offset in the on-
-        stack buffer.  The offset was not validated for certain packet types.</p>
+        <p>The cam(4) driver had quick unplug and replug SCSI fixed.
 
-        <p>The hard-coded size for state region 1 (SSE/XMM) was incorrect.</p>
+        <p>The bnxt(4) device driver will now report if WOL (Wake On Lan) support is supported on the hardware and show an enabled status if a filter was applied on system initialization.
+
+        <p>The em(4) device driver now supports the flashless i211 PBA.
+
+        <p>The em(4) device driver received several updates to shared code.
+
+        <p>The ena(4) device driver was updated to 2.4.1.
+
+        <p>The ice(4) device driver was updated to 0.28.1-k with an updated ice_ddp package file of version 1.3.19.0.
+
+        <p>A new driver, igc(4) was added to support the Intel® I225 Ethernet controller and supports 2.5G/1G/100MB/10MB.
+
+        <p>The ixgbe(4) device driver received a shared code update.
+
+        <p>The ixgbe(4) device driver received a fix for the x550em 10G NIC link status where the auto-negotiation feature was not reported correctly.
+
+        <p>The ixl(4) device driver was given the hw.ix.flow_control tuneable.
+
+        <p>The ixl(4) device driver had an update in shared code and fixes for 2.5G and 5G speeds.
+
+        <p>The iwm(4) device driver now supports the Intel® Killer® Wireless-AC 1550i.
+
+        <p>The nvdimm(4) ACPI driver will now export health information via a sysctl(8).
+
+        <p>The nvme(4) device driver received support for MSI and single MSI-X support.
+
+        <p>The nvme(4) device driver received several merged bugfixes.
+
+        <p>The rctl(4) resource limits driver now supports throttling resource usage to 0 for rate-based resources that support throttling. These resources will respect the duration set by the kern.racct.rctl.throttle_max sysctl(8).
+
+        <p>The rsu(4) device driver now supports the ASUS® WL-167G V3 device.
+
+        <p>The rtwn_usb(4) device driver now supports the Mercusys® MW150US (N150 Nano), TP-Link® Archer T2U v3, and D-Link® DWA-121 (N150 Nano) devices.
+
+        <p>The run(4) device driver now supports the D-Link® DWA-130 rev F1 wireless adapter and the ASUS® USB-N14 wireless adapter.
+
+        <p>The tcp(4) protocol will now tolerate the missing of timestamps (RFC 1323/RFC 7323) via the use of the net.inet.tcp.tolerate_missing_ts sysctl(8).
+        <p>The uart(4) device driver now supports the Intel® 100 Series/C230 Series AMT.
+
+        <p>The mps(4) driver has been removed from the 32-bit GENERIC kernel configuration.</p>
+
+        <p>The virtio_blk(4) driver has been updated to support TRIM.</p>
+
+        <p>The ichwd(4) driver has been updated to include support for TCO watchdog timers in the Lewisburg PCH (C620) chipset.</p>
+
+        <p>The amdsmn(4) and amdtemp(4) drivers have been updated to support Ryzen™ 2 host bridges.</p>
+
+        <p>The amdtemp(4) driver has been updated to correct temperature reporting for the AMD® 2990WX.</p>
+
+        <p>The rtwn_pci(4) driver has been added for the RTL8188EE chipset.</p>
+
+        <p>The ntb_hw_amd(4) driver has been added, providing support for the AMD® Non-Transparent Bridge.</p>
+
+        <p>The nvme(4) driver has been updated to support suspend/resume for PCI attachment.</p>
+
+        <p>The cdceem(4) driver has been added, supporting virtual USB network cards provided by iLO 5, found in HPE® Proliant™ servers.</p>
+
+        <p>The mpr(4) and mps(4) drivers have been updated with stability fixes.</p>
+
+        <p>The camcontrol(8) utility has been updated to add ATA power mode support.</p>
+
+        <p>The cam(4) subsystem has been updated to improve AHCI enclosure management and SES interoperation.</p>
+
+        <p>The ACPI subsystem has been updated to implement Device object types for ACPI 6.0 support, required for some Dell, Inc. Poweredge™ AMD® Epyc™ systems.</p>
+
+        <p>Support for the Microchip® LAN78xx™ USB3-GigE controller has been added.</p>
 
         <h4>Known Issues</h4>
 
-        <p>mport package manager - On systems with a large number of packages installed, a mport upgrade can run out of file descriptors.</p>
+        <p>At the time of writing, packages for 3.0.0 i386 are still building.</p>
 
-        <p>OpenSSL is quite out of date. We had planned to update this for the release, but ran into some issues with GELI.
-        Instead, we backported some public patches to our OpenSSL version. We will continue to work on this and do another release when available.
-        Please use the mports version of OpenSSL for any software you build.</p>
+        <p>When upgrading from a previous release, be sure to get on at least MidnightBSD 2.2.5 before jumping to 3.0.
+            There are issues with usr.bin/lex on some systems.</p>
 
-        <p>At the time of writing, packages for 2.2.0 are still building.</p>
+        <p>When doing a major upgrade, sometimes it's necessary to disable
+            perl builds in usr.bin/Makefile.</p>
 
     </div>
     <!--#include virtual="/footer.html"-->
