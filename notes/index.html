@@ -353,7 +353,7 @@
 
         <p>When doing a major upgrade from 2.x to 3.x, sometimes it's necessary to disable
             perl builds in usr.bin/Makefile. If you get an error with buildworld in src/rescue/rescue, try removing
-            camcontrol from the makefile temporarily.  Once on 3.x, you can rebuild the src/rescue/rescue and src/usr.bin/perl
+            camcontrol and df from the makefile temporarily.  Once on 3.x, you can rebuild the src/rescue/rescue and src/usr.bin/perl
         directories with make && make install.  </p>
 
         <p>On some AMD Ryzen systems, there is a time skew under high load or with heavy virtualization workloads.  If you notice this issue, try changing the default kern.eventtimer.timer.
