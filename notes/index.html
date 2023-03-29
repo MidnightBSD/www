@@ -89,26 +89,34 @@
 
         <h4>Upgrade Process</h4>
 
-        <p>Install git if you don’t have it already
+        <p>Install git if you don’t have it already<br>
         <code>mport install git</code>
+        </p>
 
         <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
 
+        <p>
         <code>git clone -b stable/3.0 https://github.com/MidnightBSD/src.git</code>
+        </p>
 
         <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
        removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.  We are
        investigating the issue.</p>
 
+        <p>
         <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
         mergemaster -p<br>
         make installkernel<br>
             reboot</code>
+        </p>
+
         <p>(if it works OK, login and go to /usr/src)<br>
             <code>
             make installworld<br>
         mergemaster -iU<br>
             </code>
+        </p>
+
         <p>
         Update installed mports/packages<br>
         For mport package manager, run
@@ -117,10 +125,13 @@
             mport clean<br>
             mport upgrade<br>
         </code>
+        </p>
+
         <p>Remove old libraries and programs from the base.</p>
-        <code>
+        <p><code>
             cd /usr/src/; make check-old; make delete-old; make installworld;
         </code>
+        </p>
 
         <h4>Bug Fixes and new features</h4>
 
@@ -128,89 +139,89 @@
 
         <p>mport 2.2.7 + bug fixes</p>
 
-        <p>An update to the caroot CA bundle processor to support certificates marked with a DISTRUST_AFTER entry.
+        <p>An update to the caroot CA bundle processor to support certificates marked with a DISTRUST_AFTER entry.</p>
 
-        <p>The /etc/rc.final rc(8) script will now be run after all user processes have terminated.
+        <p>The /etc/rc.final rc(8) script will now be run after all user processes have terminated.</p>
 
-        <p>The automount(8) utility will now explicitly set the root path to / before performing an automatic mount.
+        <p>The automount(8) utility will now explicitly set the root path to / before performing an automatic mount.</p>
 
-        <p>The bectl(8) utility will now throw an error to prevent the creation of a boot environment with spaces.
+        <p>The bectl(8) utility will now throw an error to prevent the creation of a boot environment with spaces.</p>
 
-        <p>The bhyve(8) utility had support for large IOs fixed in nvme(4) emulation.
+        <p>The bhyve(8) utility had support for large IOs fixed in nvme(4) emulation.</p>
 
-        <p>The cmp(1) utility received -b, --print-bytes flags to be compatible with GNU cmp(1).
+        <p>The cmp(1) utility received -b, --print-bytes flags to be compatible with GNU cmp(1).</p>
 
-        <p>The cmp(1) utility received the -i, --ignore-initial flags as an alternative to skip1/skip2.
+        <p>The cmp(1) utility received the -i, --ignore-initial flags as an alternative to skip1/skip2.</p>
 
-        <p>The cmp(1) utility now accepts SI suffixes for skip1/skip2.
+        <p>The cmp(1) utility now accepts SI suffixes for skip1/skip2.</p>
 
-        <p>The cmp(1) utility received the -n, --bytes flags to limit number of bytes to compare.
+        <p>The cmp(1) utility received the -n, --bytes flags to limit number of bytes to compare.</p>
 
-        <p>The cpuset(1) utility can now be used by a jail to modify the roots of a child jail.
+        <p>The cpuset(1) utility can now be used by a jail to modify the roots of a child jail.</p>
 
         <p>The daemon(8) utility now has a -H flag allowing it to catch a SIGHUP and re-open output file. This was added to support newsyslog(8) operations.</p>
 
-        <p>The fstyp(8) utility will now detect and show exFAT filesystems with the -l flag.
+        <p>The fstyp(8) utility will now detect and show exFAT filesystems with the -l flag.</p>
 
-        <p>The geli(8) utility will no longer report an error when performing a resize to the same size.
+        <p>The geli(8) utility will no longer report an error when performing a resize to the same size.</p>
 
-        <p>The grep(1) utility will now disable -w if -x is also specified.
+        <p>The grep(1) utility will now disable -w if -x is also specified.</p>
 
-        <p>The growfs(8) utility will now function on RW mounted filesystems.
+        <p>The growfs(8) utility will now function on RW mounted filesystems.</p>
 
-        <p>The kldxref(8) utility will no longer error out if the directory specified with the -d flag is not actually a directory.
+        <p>The kldxref(8) utility will no longer error out if the directory specified with the -d flag is not actually a directory.</p>
 
-        <p>The mergemaster(8) utility will now handle symbolic links during the update process.
+        <p>The mergemaster(8) utility will now handle symbolic links during the update process.</p>
 
-        <p>The mksnap_ffs(8) utility received a fix for a crash which triggered a Panic: snapacct_ufs2: bad block panic.
+        <p>The mksnap_ffs(8) utility received a fix for a crash which triggered a Panic: snapacct_ufs2: bad block panic.</p>
 
-        <p>The mount(8) utility will now properly show with quotas when quotas are enabled.
+        <p>The mount(8) utility will now properly show with quotas when quotas are enabled.</p>
 
-        <p>The mountd(8) utility will now generate a syslog(3) message when the V4: line is missing from /etc/exports.
+        <p>The mountd(8) utility will now generate a syslog(3) message when the V4: line is missing from /etc/exports.</p>
 
-        <p>The newsyslog(8) utility received a new E flag to prevent rotation of empty log files.
+        <p>The newsyslog(8) utility received a new E flag to prevent rotation of empty log files.</p>
 
-        <p>The rc.d/jail rc(8) script had a keyword change to fix jails within jails support.
+        <p>The rc.d/jail rc(8) script had a keyword change to fix jails within jails support.</p>
 
         <p>The rtsold(8) daemon will now work on if_vlan (see: vlan(4)) interfaces.
 
-        <p>The service(8) utility will now set the environment of the daemon class before invoking.
+        <p>The service(8) utility will now set the environment of the daemon class before invoking.</p>
 
-        <p>The wpl_cli(8) utility now has an action file event where an event may be passed to a file.
+        <p>The wpl_cli(8) utility now has an action file event where an event may be passed to a file.</p>
 
         <p>The internal KAPI between the krpc and nfsd modules was updated</p>
 
-        <p>The ipfw(8) firewall was provided a dnctl(8) to manage dummynet(4) configurations.
+        <p>The ipfw(8) firewall was provided a dnctl(8) to manage dummynet(4) configurations.</p>
 
-        <p>An opencrypto kern.crypto sysctl(8) node was added.
+        <p>An opencrypto kern.crypto sysctl(8) node was added.</p>
 
-        <p>A new sysctl(8), debug.uma_reclaim, was added.
+        <p>A new sysctl(8), debug.uma_reclaim, was added.</p>
 
         <p>The kern.timecounter.hardware OID was converted into a tuneable.</p>
 
-        <p>The msdosfs(5) filesystem driver received a fix for msdosfs suspension.
+        <p>The msdosfs(5) filesystem driver received a fix for msdosfs suspension.</p>
 
-        <p>The ng_bridge(4) netgraph node is now SMP aware.
+        <p>The ng_bridge(4) netgraph node is now SMP aware.</p>
 
-        <p>The ng_nat(4) netgraph node received support for RFC 6598/Carrier Grade NAT support.
+        <p>The ng_nat(4) netgraph node received support for RFC 6598/Carrier Grade NAT support.</p>
 
-        <p>The ng_source(4) netgraph node may now be injected into any netgraph network.
+        <p>The ng_source(4) netgraph node may now be injected into any netgraph network.</p>
 
-        <p>The vlan(4) interface can now support ALTQ.
+        <p>The vlan(4) interface can now support ALTQ.</p>
 
-        <p>The pf(4) firewall has received several bugfixes and updates.
+        <p>The pf(4) firewall has received several bugfixes and updates.</p>
 
-        <p>A fix for handling of embedded symbolic links in UFS/FFS was merged.
+        <p>A fix for handling of embedded symbolic links in UFS/FFS was merged.</p>
 
-        <p>A fix for NFSv4.1 Linux client mount getting stuck in CLOSE_WAIT status was merged.
+        <p>A fix for NFSv4.1 Linux client mount getting stuck in CLOSE_WAIT status was merged.</p>
 
-        <p>A fix for NFSv4.1/4.2 mount recovery from an expired lease was merged.
+        <p>A fix for NFSv4.1/4.2 mount recovery from an expired lease was merged.</p>
 
-        <p>Several fixes for NFSv4 were merged.
+        <p>Several fixes for NFSv4 were merged.</p>
 
-        <p>A segmentation fault during wpa EAP/PEAP MSCHAPv2 authentication was fixed.
+        <p>A segmentation fault during wpa EAP/PEAP MSCHAPv2 authentication was fixed.</p>
 
-        <p>The fetch(3) library now supports proxying FTP over HTTPS.
+        <p>The fetch(3) library now supports proxying FTP over HTTPS.</p>
 
         <p>A new rc.conf(5) variable has been added, linux_mounts_enable, which controls if Linux®-specific filesystems are mounted in /compat/linux if linux_enable is set to YES.</p>
 
@@ -233,10 +244,11 @@
         <p>The arc4random(3) library has been updated to remove arc4random_stir() and arc4random_addrandom(). </p>
 
         <h5>Boot Loader</h5>
-        <p>The boot loader will now support booting an OS from a memory disk.
-        <p>The boot loader will now support pools without features.
-        <p>The boot loader will now accept the zfs features com.delphix:bookmark_written and com.datto:bookmark_v2.
-        <p>A new OID, hint.dev.X.disabled was added to lua loader prevent device attachment during boot.
+
+        <p>The boot loader will now support booting an OS from a memory disk.</p>
+        <p>The boot loader will now support pools without features.</p>
+        <p>The boot loader will now accept the zfs features com.delphix:bookmark_written and com.datto:bookmark_v2.</p>
+        <p>A new OID, hint.dev.X.disabled was added to lua loader prevent device attachment during boot.</p>
         <p>The arc4random(3) library has been updated to match the OpenBSD version 1.35</p>
 
         <h4>Security Fixes</h4>
@@ -269,54 +281,55 @@
         <p>Fix for Intel 82599 ixgbe device which reported errors on the interface
             incorrectly.</p>
 
-        <p>The alc(4) device driver now supports the Mikrotik® 10/25G Network device.
+        <p>The alc(4) device driver now supports the Mikrotik® 10/25G Network device.</p>
 
-        <p>The amdtemp(4) device driver has learned about family 17h models: M20h (Dali, Zen1), M60H (Renoir, Zen2), and M90H (Van Gogh, Zen2).
+        <p>The amdtemp(4) device driver has learned about family 17h models: M20h (Dali, Zen1), M60H (Renoir, Zen2), and M90H (Van Gogh, Zen2).</p>
 
-        <p>The amdtemp(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").
+        <p>The amdtemp(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
 
-        <p>The amdsmn(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").
+        <p>The amdsmn(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
 
-        <p>The cam(4) driver had quick unplug and replug SCSI fixed.
+        <p>The cam(4) driver had quick unplug and replug SCSI fixed.</p>
 
-        <p>The bnxt(4) device driver will now report if WOL (Wake On Lan) support is supported on the hardware and show an enabled status if a filter was applied on system initialization.
+        <p>The bnxt(4) device driver will now report if WOL (Wake On Lan) support is supported on the hardware and show an enabled status if a filter was applied on system initialization.</p>
 
-        <p>The em(4) device driver now supports the flashless i211 PBA.
+        <p>The em(4) device driver now supports the flashless i211 PBA.</p>
 
-        <p>The em(4) device driver received several updates to shared code.
+        <p>The em(4) device driver received several updates to shared code.</p>
 
-        <p>The ena(4) device driver was updated to 2.4.1.
+        <p>The ena(4) device driver was updated to 2.4.1.</p>
 
-        <p>The ice(4) device driver was updated to 0.28.1-k with an updated ice_ddp package file of version 1.3.19.0.
+        <p>The ice(4) device driver was updated to 0.28.1-k with an updated ice_ddp package file of version 1.3.19.0.</p>
 
-        <p>A new driver, igc(4) was added to support the Intel® I225 Ethernet controller and supports 2.5G/1G/100MB/10MB.
+        <p>A new driver, igc(4) was added to support the Intel® I225 Ethernet controller and supports 2.5G/1G/100MB/10MB.</p>
 
-        <p>The ixgbe(4) device driver received a shared code update.
+        <p>The ixgbe(4) device driver received a shared code update.</p>
 
-        <p>The ixgbe(4) device driver received a fix for the x550em 10G NIC link status where the auto-negotiation feature was not reported correctly.
+        <p>The ixgbe(4) device driver received a fix for the x550em 10G NIC link status where the auto-negotiation feature was not reported correctly.</p>
 
-        <p>The ixl(4) device driver was given the hw.ix.flow_control tuneable.
+        <p>The ixl(4) device driver was given the hw.ix.flow_control tuneable.</p>
 
-        <p>The ixl(4) device driver had an update in shared code and fixes for 2.5G and 5G speeds.
+        <p>The ixl(4) device driver had an update in shared code and fixes for 2.5G and 5G speeds.</p>
 
-        <p>The iwm(4) device driver now supports the Intel® Killer® Wireless-AC 1550i.
+        <p>The iwm(4) device driver now supports the Intel® Killer® Wireless-AC 1550i.</p>
 
-        <p>The nvdimm(4) ACPI driver will now export health information via a sysctl(8).
+        <p>The nvdimm(4) ACPI driver will now export health information via a sysctl(8).</p>
 
-        <p>The nvme(4) device driver received support for MSI and single MSI-X support.
+        <p>The nvme(4) device driver received support for MSI and single MSI-X support.</p>
 
-        <p>The nvme(4) device driver received several merged bugfixes.
+        <p>The nvme(4) device driver received several merged bugfixes.</p>
 
-        <p>The rctl(4) resource limits driver now supports throttling resource usage to 0 for rate-based resources that support throttling. These resources will respect the duration set by the kern.racct.rctl.throttle_max sysctl(8).
+        <p>The rctl(4) resource limits driver now supports throttling resource usage to 0 for rate-based resources that support throttling. These resources will respect the duration set by the kern.racct.rctl.throttle_max sysctl(8).</p>
 
-        <p>The rsu(4) device driver now supports the ASUS® WL-167G V3 device.
+        <p>The rsu(4) device driver now supports the ASUS® WL-167G V3 device.</p>
 
-        <p>The rtwn_usb(4) device driver now supports the Mercusys® MW150US (N150 Nano), TP-Link® Archer T2U v3, and D-Link® DWA-121 (N150 Nano) devices.
+        <p>The rtwn_usb(4) device driver now supports the Mercusys® MW150US (N150 Nano), TP-Link® Archer T2U v3, and D-Link® DWA-121 (N150 Nano) devices.</p>
 
-        <p>The run(4) device driver now supports the D-Link® DWA-130 rev F1 wireless adapter and the ASUS® USB-N14 wireless adapter.
+        <p>The run(4) device driver now supports the D-Link® DWA-130 rev F1 wireless adapter and the ASUS® USB-N14 wireless adapter.</p>
 
-        <p>The tcp(4) protocol will now tolerate the missing of timestamps (RFC 1323/RFC 7323) via the use of the net.inet.tcp.tolerate_missing_ts sysctl(8).
-        <p>The uart(4) device driver now supports the Intel® 100 Series/C230 Series AMT.
+        <p>The tcp(4) protocol will now tolerate the missing of timestamps (RFC 1323/RFC 7323) via the use of the net.inet.tcp.tolerate_missing_ts sysctl(8).</p>
+
+        <p>The uart(4) device driver now supports the Intel® 100 Series/C230 Series AMT.</p>
 
         <p>The mps(4) driver has been removed from the 32-bit GENERIC kernel configuration.</p>
 
