@@ -96,7 +96,11 @@
 
         <code>git clone -b stable/3.0 https://github.com/MidnightBSD/src.git</code>
 
-        <code>cd /usr/src; make clean buildworld buildkernel;<br>
+        <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
+       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.  We are
+       investigating the issue.</p>
+
+        <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
         mergemaster -p<br>
         make installkernel<br>
             reboot</code>
