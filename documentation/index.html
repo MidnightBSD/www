@@ -48,7 +48,7 @@
 				<p>While MidnightBSD plans to target moderate and novice users, currently installation 
 				is too difficult for beginners to *NIX like operating systems. Experience with BSD, 
 				Linux, or another *NIX like system is very helpful. FreeBSD users familiar with 
-				bsdinstall should have no problem with this procedure. You may also consult the
+				bsdinstall should have no problem with this procedure. You may also consult the <a href="https://github.com/MidnightBSD/src/wiki">MidnightBSD Wiki</a> or
 				<a href="http://www.freebsd.org/handbook">FreeBSD Handbook</a> for additional information 
 				not found on this page.</p>
 				
@@ -62,45 +62,145 @@
 				supported as well as a few wireless network cards. We will document them at a later time.
 				Many onboard audio controllers are supported as well as other cards like the 
 				Creative Labs Sound Blaster Audigy and Audigy 2 families.</p>
-				<p>MidnightBSD can co-exist with Microsoft Windows or Linux on the same disk. It is 
-				recommended that you use GRUB from Linux if you wish to dual boot MidnightBSD with Linux. 
-				For Windows, the included boot manager is sufficient. (Windows XP was tested). Third
-				party boot managers such as System Commander 8.20 are supported as well. I currently dual boot 
+
+				<h5>UEFI</h5>
+				<p>MidnightBSD can co-exist with Microsoft Windows or Linux on the same disk.  The approach will vary depending on your system using
+				UEFI or legacy BIOS.  With UEFI, one can use GRUB 2, the Windows built in manager (with customization), or rEFInd (recommended). reFFInd is ideal for supporting
+				Microsoft Windows and MidnightBSD dual boot.</p>
+
+				<h5>Legacy BIOS</h5>
+				<p>For legacy BIOS, it is recommended that you use GRUB from Linux if you wish to dual boot MidnightBSD with Linux.
+				For Windows XP, the included boot manager is sufficient. Third party boot managers such as GAG or System Commander 8.20+ are supported as well. I used to dual boot
 				Windows XP SP2 and MidnightBSD with System Commander on my primary desktop.  With Windows Vista,
 				you should use the boot manager included with Vista (and the boot1 file from CD) 
-				or a third party boot manager such as gag.  The included one with not work with Vista (overwrites it)</p>
-				<p>You may also install MidnightBSD using a virtualization product such as qemu, Microsoft Virtual PC, or VMware. Parallels has not been tested to my knowledge.
-				</p>
-				<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your 
+				or a third party boot manager such as GAG.  The included one with not work with Vista (overwrites it)</p>
+				<p>You may also install MidnightBSD using a virtualization product such as VMWare Workstation, VMWare ESXi, VirtualBox, Parallels, qemu, or Microsoft Virtual PC.</p>
+
+				<h5>Installation Media Preparation</h5>
+				<p>You will need to burn a copy of the Disk 1 iso from our FTP server using your
 				favorite CD burning software. If you need to download burning software, 
 				<a href="http://www.maconnect.ch/index.php?page=liquidcd&amp;lang=en">LiquidCD</a> for Mac OS X, and 
 				<a href="http://infrarecorder.sourceforge.net/">InfraRecorder</a> for Windows XP are both free and easy to use.
 				Also, on OS X, you can burn with Disk Utility.  For FreeBSD 9.x or MidnightBSD 1.2 or earlier, you can
-				use burncd (part of os). 
+				use burncd (part of os).
 
-				With the USB flash image, you can install on macOS with <a href="https://www.balena.io/etcher/">etcher</a> or by using
-				<code>sudo dd if=imagefilename of=/dev/yourusbdev</code>
+				<p>With the <b>USB flash image</b>, you can install on macOS or Windows 10+ with <a href="https://www.balena.io/etcher/">etcher</a> or by using
+				dd on macOS/Linux/BSD with <code>sudo dd if=imagefilename of=/dev/yourusbdev</code>
 				</p>
+
 				<h4 id="s1d">Installing MidnightBSD</h4>
-				<p>Insert the MidnightBSD CD into your CD-ROM drive and start up your PC. On some 
-				systems, you may need to enter the BIOS to enable booting from the CD-ROM drive first. 
+
+				<p>There is a YouTube video covering installation available: <a href="https://youtu.be/HpSEx6ICHrw">Installing MidnightBSD 2.0</a>
+				2.0 and higher have similar installation procedures.</p>
+
+				<p>Insert the MidnightBSD USB flash drive or CD into your CD-ROM drive and start up your PC. On some
+				systems, you may need to enter the BIOS to enable booting from the flash media or CD-ROM drive first.
 				On some systems, there is a button you can push to select the CD-ROM drive. For instance, 
-				on some Dell systems you can press F12 and then pick the CD-ROM drive.
+				on some Dell systems you can press F12 and then pick the CD-ROM drive. F11 is also common for the boot manager.
 				</p>
+
 				<p>You should see a red and blue screen come up after a few moments preceded by a lot
-				of white and black text. If several minutes pass with no activity and you do not see 
+				of white and black text. If several minutes pass with no activity, and you do not see
 				this screen, please report it. There maybe a bug or an incompatibility with your 
 				system we can work to fix.
 				</p>
+
 				<p>From this point, you may follow the steps in bsdinstall to complete installation.
 				</p>
 
 				<p>If you are interested in legacy releases, you  may follow along with the BSD Magazine article on
-				<a href="http://bsdmag.org/download/bsd-2010-archives/">installing MidnightBSD.</a> in the August 2010 issue.  This procedure covers 0.1-RELEASE - 0.3-RELEASE. 0.4 installs are a bit different. There are also some <a href="http://www.youtube.com/watch?v=caZ2KpLehW4">YouTube videos</a> available for older releases.</p>
+				<a href="http://bsdmag.org/download/bsd-2010-archives/">installing MidnightBSD.</a> in the August 2010 issue.
+					This procedure covers 0.1-RELEASE - 0.3-RELEASE. 0.4 installation is a bit different.
+					There are also some <a href="http://www.youtube.com/watch?v=caZ2KpLehW4">YouTube videos</a> available for older releases.</p>
 
 
 				<h4 id="s1e">Example Hardware Configurations</h4>
+
+				<p>You can check out <a href="https://bsd-hardware.info/?d=MidnightBSD">BSD Hardware</a> for a list of some systems
+				running MidnightBSD, including details on what is detected.</p>
+
 				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
+
+				<div class="hardware">
+					<table>
+						<caption>Hardware tested with MidnightBSD 3.0.x</caption>
+						<tr>
+							<th>Hardware</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+						<tr>
+							<td>Lenovo ThinkPad A485</td>
+							<td>Partially works</td>
+							<td>The onboard WiFi chip is not supported. Display dimming does not work.
+								Sound works. When installed with UEFI amd64 release, X will work
+								with the fb. The AMD graphics are not supported for acceleration, but the firmware is available
+								in mports and once X.org and mesa are updated, it should work. (June 2023)
+
+								Onboard NIC works as well as trackpad.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HP Victus Gaming laptop - 1240p i7 with nvidia 1060</td>
+							<td>Partially works</td>
+							<td>The onboard WiFi chip is not supported. Can switch out to intel wifi 8265, etc. Trackpad does not work!
+								X does not work reliably with FB.  Gets confused between onboard graphics and nvidia graphics.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Asus PRIME Z590 intel core i7 11900k</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Asus B550 TUF with Ryzen 5700x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>Gigabyte B550 motherboard with ryzen 5700x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>Asus Tuf B series motherboard with Intel i7 11700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>Asus TUF Gaming B450M-PLUS II with Ryzen 5800x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>HP Envy 8767 Desktop with Intel i7 10700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>Asrock Z490 steel legend motherboard with Intel i7 10700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>HP Z420 workstation with Xeon E5 v2 8 core CPU</td>
+							<td>Works</td>
+							<td>Original nvidia workstation GPU works with old nvidia driver from mports. Also works with
+							AMD Radeon 6450 HD with acceleration using built in X.org support.</td>
+						</tr>
+
+					</table>
+
 				<div class="hardware">
 				  <table>
 					<caption>Hardware tested with MidnightBSD 1.2.x</caption>
