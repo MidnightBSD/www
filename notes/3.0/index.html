@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 3.0 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 80%;
+            color: #aaa;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .update {
+            background: #f2fbff;
+            border: 2px solid #dff2fb;
+            font-size: 80%;
+            width: 40%;
+            float: left;
+            margin-right: 2.4em;
+            color: #555;
+        }
+
+        .ast {
+            color: #1373ce;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+		    3.0.2 release includes mport 2.3.0, and security fixes for pam and openssh.
+		    3.0.1 release includes OpenSSL 1.1.1t, mport 2.2.9, Fix CVE-2020-10188 in telnetd, doas 6.3p9, tzdata 2023c, and readelf - gnu compatibility on output.
+             </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="../2.1/index.html">2.1-RELEASE</a></li>
+                <li><a href="../2.2/index.html">2.2-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(03/23/2023) MidnightBSD 3.0</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 3.0 for amd64 and i386.  This release includes several larger enhancements imported from FreeBSD 12 stable.</p>
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already<br>
+        <code>mport install git</code>
+        </p>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <p>
+        <code>git clone -b stable/3.0 https://github.com/MidnightBSD/src.git</code>
+        </p>
+
+        <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
+       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.  We are
+       investigating the issue.</p>
+
+        <p>
+        <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
+        mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        </p>
+
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        mergemaster -iU<br>
+            </code>
+        </p>
+
+        <p>
+        Update installed mports/packages<br>
+        For mport package manager, run
+        <code>
+            mport index<br>
+            mport clean<br>
+            mport upgrade<br>
+        </code>
+        </p>
+
+        <p>Remove old libraries and programs from the base.</p>
+        <p><code>
+            cd /usr/src/; make check-old; make delete-old; make installworld;
+        </code>
+        </p>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <p>Fix for GELI silently omits the keyfile if read from stdin.</p>
+
+        <p>mport 2.2.7 + bug fixes</p>
+
+        <p>An update to the caroot CA bundle processor to support certificates marked with a DISTRUST_AFTER entry.</p>
+
+        <p>The /etc/rc.final rc(8) script will now be run after all user processes have terminated.</p>
+
+        <p>The automount(8) utility will now explicitly set the root path to / before performing an automatic mount.</p>
+
+        <p>The bectl(8) utility will now throw an error to prevent the creation of a boot environment with spaces.</p>
+
+        <p>The bhyve(8) utility had support for large IOs fixed in nvme(4) emulation.</p>
+
+        <p>The cmp(1) utility received -b, --print-bytes flags to be compatible with GNU cmp(1).</p>
+
+        <p>The cmp(1) utility received the -i, --ignore-initial flags as an alternative to skip1/skip2.</p>
+
+        <p>The cmp(1) utility now accepts SI suffixes for skip1/skip2.</p>
+
+        <p>The cmp(1) utility received the -n, --bytes flags to limit number of bytes to compare.</p>
+
+        <p>The cpuset(1) utility can now be used by a jail to modify the roots of a child jail.</p>
+
+        <p>The daemon(8) utility now has a -H flag allowing it to catch a SIGHUP and re-open output file. This was added to support newsyslog(8) operations.</p>
+
+        <p>The fstyp(8) utility will now detect and show exFAT filesystems with the -l flag.</p>
+
+        <p>The geli(8) utility will no longer report an error when performing a resize to the same size.</p>
+
+        <p>The grep(1) utility will now disable -w if -x is also specified.</p>
+
+        <p>The growfs(8) utility will now function on RW mounted filesystems.</p>
+
+        <p>The kldxref(8) utility will no longer error out if the directory specified with the -d flag is not actually a directory.</p>
+
+        <p>The mergemaster(8) utility will now handle symbolic links during the update process.</p>
+
+        <p>The mksnap_ffs(8) utility received a fix for a crash which triggered a Panic: snapacct_ufs2: bad block panic.</p>
+
+        <p>The mount(8) utility will now properly show with quotas when quotas are enabled.</p>
+
+        <p>The mountd(8) utility will now generate a syslog(3) message when the V4: line is missing from /etc/exports.</p>
+
+        <p>The newsyslog(8) utility received a new E flag to prevent rotation of empty log files.</p>
+
+        <p>The rc.d/jail rc(8) script had a keyword change to fix jails within jails support.</p>
+
+        <p>The rtsold(8) daemon will now work on if_vlan (see: vlan(4)) interfaces.
+
+        <p>The service(8) utility will now set the environment of the daemon class before invoking.</p>
+
+        <p>The wpl_cli(8) utility now has an action file event where an event may be passed to a file.</p>
+
+        <p>The internal KAPI between the krpc and nfsd modules was updated</p>
+
+        <p>The ipfw(8) firewall was provided a dnctl(8) to manage dummynet(4) configurations.</p>
+
+        <p>An opencrypto kern.crypto sysctl(8) node was added.</p>
+
+        <p>A new sysctl(8), debug.uma_reclaim, was added.</p>
+
+        <p>The kern.timecounter.hardware OID was converted into a tuneable.</p>
+
+        <p>The msdosfs(5) filesystem driver received a fix for msdosfs suspension.</p>
+
+        <p>The ng_bridge(4) netgraph node is now SMP aware.</p>
+
+        <p>The ng_nat(4) netgraph node received support for RFC 6598/Carrier Grade NAT support.</p>
+
+        <p>The ng_source(4) netgraph node may now be injected into any netgraph network.</p>
+
+        <p>The vlan(4) interface can now support ALTQ.</p>
+
+        <p>The pf(4) firewall has received several bugfixes and updates.</p>
+
+        <p>A fix for handling of embedded symbolic links in UFS/FFS was merged.</p>
+
+        <p>A fix for NFSv4.1 Linux client mount getting stuck in CLOSE_WAIT status was merged.</p>
+
+        <p>A fix for NFSv4.1/4.2 mount recovery from an expired lease was merged.</p>
+
+        <p>Several fixes for NFSv4 were merged.</p>
+
+        <p>A segmentation fault during wpa EAP/PEAP MSCHAPv2 authentication was fixed.</p>
+
+        <p>The fetch(3) library now supports proxying FTP over HTTPS.</p>
+
+        <p>A new rc.conf(5) variable has been added, linux_mounts_enable, which controls if Linux®-specific filesystems are mounted in /compat/linux if linux_enable is set to YES.</p>
+
+        <p>The devd(8) utility has been updated to change the default syslogd(8) notification for resume from kern to kernel.</p>
+
+        <p>The cron(8) utility has been updated to support two new flags in crontab(5), -n and -q, which suppress mail on successful runs and suppress logging of command execution, respectively.</p>
+
+        <p>The ifconfig library has been updated to report the status of a bridge(4) interface, similarly to lagg(4). </p>
+
+        <p>The read(2) system call has been changed to disable read() calls on directories by default. A new sysctl(8) has been added, security.bsd.allow_read_dir, which when set to 1 will restore the previous behavior.</p>
+
+        <p>The machdep.kdb_on_nmi sysctl(8) has been removed. The machdep.panic_on_nmi sysctl(8) tunable has changed to directly enter the debugger.</p>
+
+        <p>Support for APEI (ACPI Platform Error Interfaces) has been added. </p>
+
+        <p>Support for NAT64 CLAT has been added, as defined in RFC6877.</p>
+        <p>The getrandom(2) system call and getentropy(3) library have been added, compatible with Linux® and OpenBSD implementations.</p>
+        <p>get_s(3) has been added. </p>
+        <p>The pthread(3) library has been updated to incorporate POSIX/SUSv4-2018 compliance improvements. </p>
+        <p>The arc4random(3) library has been updated to remove arc4random_stir() and arc4random_addrandom(). </p>
+
+        <h5>Boot Loader</h5>
+
+        <p>The boot loader will now support booting an OS from a memory disk.</p>
+        <p>The boot loader will now support pools without features.</p>
+        <p>The boot loader will now accept the zfs features com.delphix:bookmark_written and com.datto:bookmark_v2.</p>
+        <p>A new OID, hint.dev.X.disabled was added to lua loader prevent device attachment during boot.</p>
+        <p>The arc4random(3) library has been updated to match the OpenBSD version 1.35</p>
+
+        <h4>Security Fixes</h4>
+
+        <p>OpenSSL 1.1.1s is now included in base.  Previously, we were still on 1.0.2u + some extra patches. This
+        is a long overdue security update.</p>
+
+        <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
+            in inflate in inflate.c via a large gzip header extra field.</p>
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>OpenSSL 1.1.1s</li>
+            <li>sqlite3 3.40.1</li>
+            <li>subversion 1.14.2</li>
+            <li>less 551</li>
+            <li>tzdata 2022g</li>
+            <li>expat 2.5.0</li>
+            <li>unbound 1.16.2</li>
+            <li>imported pci ids list 2022 08 07</li>
+            <li>libarchive 3.6.0</li>
+            <li>nvi 2.20</li>
+            <li>bmake 20200710</li>
+            <li>wpa 2.10</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>Fix for Intel 82599 ixgbe device which reported errors on the interface
+            incorrectly.</p>
+
+        <p>The alc(4) device driver now supports the Mikrotik® 10/25G Network device.</p>
+
+        <p>The amdtemp(4) device driver has learned about family 17h models: M20h (Dali, Zen1), M60H (Renoir, Zen2), and M90H (Van Gogh, Zen2).</p>
+
+        <p>The amdtemp(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
+
+        <p>The amdsmn(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
+
+        <p>The cam(4) driver had quick unplug and replug SCSI fixed.</p>
+
+        <p>The bnxt(4) device driver will now report if WOL (Wake On Lan) support is supported on the hardware and show an enabled status if a filter was applied on system initialization.</p>
+
+        <p>The em(4) device driver now supports the flashless i211 PBA.</p>
+
+        <p>The em(4) device driver received several updates to shared code.</p>
+
+        <p>The ena(4) device driver was updated to 2.4.1.</p>
+
+        <p>The ice(4) device driver was updated to 0.28.1-k with an updated ice_ddp package file of version 1.3.19.0.</p>
+
+        <p>A new driver, igc(4) was added to support the Intel® I225 Ethernet controller and supports 2.5G/1G/100MB/10MB.</p>
+
+        <p>The ixgbe(4) device driver received a shared code update.</p>
+
+        <p>The ixgbe(4) device driver received a fix for the x550em 10G NIC link status where the auto-negotiation feature was not reported correctly.</p>
+
+        <p>The ixl(4) device driver was given the hw.ix.flow_control tuneable.</p>
+
+        <p>The ixl(4) device driver had an update in shared code and fixes for 2.5G and 5G speeds.</p>
+
+        <p>The iwm(4) device driver now supports the Intel® Killer® Wireless-AC 1550i.</p>
+
+        <p>The nvdimm(4) ACPI driver will now export health information via a sysctl(8).</p>
+
+        <p>The nvme(4) device driver received support for MSI and single MSI-X support.</p>
+
+        <p>The nvme(4) device driver received several merged bugfixes.</p>
+
+        <p>The rctl(4) resource limits driver now supports throttling resource usage to 0 for rate-based resources that support throttling. These resources will respect the duration set by the kern.racct.rctl.throttle_max sysctl(8).</p>
+
+        <p>The rsu(4) device driver now supports the ASUS® WL-167G V3 device.</p>
+
+        <p>The rtwn_usb(4) device driver now supports the Mercusys® MW150US (N150 Nano), TP-Link® Archer T2U v3, and D-Link® DWA-121 (N150 Nano) devices.</p>
+
+        <p>The run(4) device driver now supports the D-Link® DWA-130 rev F1 wireless adapter and the ASUS® USB-N14 wireless adapter.</p>
+
+        <p>The tcp(4) protocol will now tolerate the missing of timestamps (RFC 1323/RFC 7323) via the use of the net.inet.tcp.tolerate_missing_ts sysctl(8).</p>
+
+        <p>The uart(4) device driver now supports the Intel® 100 Series/C230 Series AMT.</p>
+
+        <p>The mps(4) driver has been removed from the 32-bit GENERIC kernel configuration.</p>
+
+        <p>The virtio_blk(4) driver has been updated to support TRIM.</p>
+
+        <p>The ichwd(4) driver has been updated to include support for TCO watchdog timers in the Lewisburg PCH (C620) chipset.</p>
+
+        <p>The amdsmn(4) and amdtemp(4) drivers have been updated to support Ryzen™ 2 host bridges.</p>
+
+        <p>The amdtemp(4) driver has been updated to correct temperature reporting for the AMD® 2990WX.</p>
+
+        <p>The rtwn_pci(4) driver has been added for the RTL8188EE chipset.</p>
+
+        <p>The ntb_hw_amd(4) driver has been added, providing support for the AMD® Non-Transparent Bridge.</p>
+
+        <p>The nvme(4) driver has been updated to support suspend/resume for PCI attachment.</p>
+
+        <p>The cdceem(4) driver has been added, supporting virtual USB network cards provided by iLO 5, found in HPE® Proliant™ servers.</p>
+
+        <p>The mpr(4) and mps(4) drivers have been updated with stability fixes.</p>
+
+        <p>The camcontrol(8) utility has been updated to add ATA power mode support.</p>
+
+        <p>The cam(4) subsystem has been updated to improve AHCI enclosure management and SES interoperation.</p>
+
+        <p>The ACPI subsystem has been updated to implement Device object types for ACPI 6.0 support, required for some Dell, Inc. Poweredge™ AMD® Epyc™ systems.</p>
+
+        <p>Support for the Microchip® LAN78xx™ USB3-GigE controller has been added.</p>
+
+        <h4>Known Issues</h4>
+
+        <p>There are known issues with the firefox, chromium-bin, midori and epiphany web browser packages and mports
+        that need to be corrected.  (detected late, sorry)  Issues were created on github in mports repo to track these. (mesa issue, see below)</p>
+
+        <p>i386 and amd64 packages are available, but there was an issue with our mesa version. It has been updated in mports
+        but new packages haven't been built yet. </p>
+
+        <p>When upgrading from a previous release, be sure to get on at least MidnightBSD 2.2.5 before jumping to 3.0.
+            There are issues with usr.bin/lex on some systems.</p>
+
+        <p>When doing a major upgrade from 2.x to 3.x, sometimes it's necessary to disable
+            perl builds in usr.bin/Makefile. If you get an error with buildworld in src/rescue/rescue, try removing
+            camcontrol and df from the makefile temporarily.  Once on 3.x, you can rebuild the src/rescue/rescue and src/usr.bin/perl
+        directories with make && make install.  </p>
+
+        <p>On some AMD Ryzen systems, there is a time skew under high load or with heavy virtualization workloads.  If you notice this issue, try changing the default kern.eventtimer.timer.
+        HPET sometimes helps. </p>
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+
