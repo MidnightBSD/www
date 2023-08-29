@@ -37,6 +37,22 @@
 
         <h3>MidnightBSD Security Advisories</h3>
 
+        <blockquote class="bluebox" id="a20220408">
+            <h3>April 8, 2022</h3>
+            <p>MidnightBSD 2.1.8</p>
+            <p>netmap</p>
+            Fix TOCTOU vulnerability in nmreq_copyin
+            The total size of the user-provided nmreq was first computed and then
+            trusted during the copyin. This might lead to kernel memory corruption
+            and escape from jails/containers.
+            Security: CVE-2022-23084
+
+            An unsanitized field in an option could be abused, causing an integer
+            overflow followed by kernel memory corruption. This might be used
+            to escape jails/containers.
+            Security: CVE-2022-23085
+        </blockquote>
+
         <blockquote class="bluebox" id="a20220404">
             <h3>April 4, 2022</h3>
             <p>MidnightBSD 2.1.7</p>
