@@ -85,9 +85,12 @@
             </ul>
         </div>
 
-        <h3>(03/23/2023) MidnightBSD 3.0</h3>
+        <h3>(08/27/2023) MidnightBSD 3.1</h3>
 
-        <p>I’m happy to announce the availability of MidnightBSD 3.0 for amd64 and i386.  This release includes several larger enhancements imported from FreeBSD 12 stable.</p>
+        <p>I’m happy to announce the availability of MidnightBSD 3.1 for amd64 and i386.
+
+        <p>This release included updates to third-party libraries, bug fixes from the 3.0 release, and a new third-party package option: Ravenports Universal Package System.
+
 
         <h4>Upgrade Process</h4>
 
@@ -98,12 +101,11 @@
         <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
 
         <p>
-        <code>git clone -b stable/3.0 https://github.com/MidnightBSD/src.git</code>
+        <code>git clone -b stable/3.1 https://github.com/MidnightBSD/src.git</code>
         </p>
 
         <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
-       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.  We are
-       investigating the issue.</p>
+       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.</p>
 
         <p>
         <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
@@ -131,254 +133,154 @@
 
         <p>Remove old libraries and programs from the base.</p>
         <p><code>
+            rm -rf /usr/lib/perl/5.36.0
             cd /usr/src/; make check-old; make delete-old; make installworld;
         </code>
         </p>
 
+        <p>When you are done, verify that Perl is updated by running perl -v
+            You should have Perl 5.36.1.
+        </p>
+
         <h4>Bug Fixes and new features</h4>
 
-        <p>Fix for GELI silently omits the keyfile if read from stdin.</p>
+        <h5>Ravenports</h5>
 
-        <p>mport 2.2.7 + bug fixes</p>
+        <p>Ravenports is now available in MidnightBSD for the amd64 architecture.  The initial installation process will
+            prompt you to bootstrap Ravenports.  This will initialize it in /raven/, and you will be able to install
+            software packages using /raven/sbin/ravensw.  By default, /raven/bin, /raven/sbin, and so on are not on the
+            path.  You can add them to the path to make running software in your shell easier.  Please visit their
+            website to learn more about Ravenports and find quickstart guides.  <a href="http://www.ravenports.com/">http://www.ravenports.com/</a>
 
-        <p>An update to the caroot CA bundle processor to support certificates marked with a DISTRUST_AFTER entry.</p>
+        <p>You can choose either mports or Ravenports at installation time or use packages from both systems.
+        Please note that mixing packages may have some complications, although they are installed in a completely different place from mports.
 
-        <p>The /etc/rc.final rc(8) script will now be run after all user processes have terminated.</p>
+        <p>There are various benefits to Ravenports, but a few are more updated packages and quite a few unique packages
+        that mports doesn’t provide currently. For example, Ravenports has an updated Firefox package available.
 
-        <p>The automount(8) utility will now explicitly set the root path to / before performing an automatic mount.</p>
+        <p>You will not see Ravenports presented as an option on an i386 install.
 
-        <p>The bectl(8) utility will now throw an error to prevent the creation of a boot environment with spaces.</p>
+        <h5>Mport package manager</h5>
 
-        <p>The bhyve(8) utility had support for large IOs fixed in nvme(4) emulation.</p>
+        <p>There have been a number of improvements in the mport package manager for this release.  In 2.4.3, we fixed the XXX rate issue reported.  It now displays information about the download and a percentage of the file fetched so far.  There is an output bug where it displays the percentage with an incorrect decimal place that will be fixed in a later release.  This only impacts mport use in scripts or other non-interactive terminals.
+        </p>
 
-        <p>The cmp(1) utility received -b, --print-bytes flags to be compatible with GNU cmp(1).</p>
+        <ul>
+            <li>mport clean now removes temporary files that might get left behind by other operations
+            <li>mport clean now removes leftover /var/db/mport/infrastructure/* folders that might get left behind prior to a fix for mtree files last year. (mostly for older systems)
+            <li>mport's internal rmtree functionality has been modified to use native C routines rather than executing rm -r as a system command. (Please report any issues with removing files in packages on delete with this.) This is slightly faster with very large packages. (0.03 seconds or so)
+            <li>mport list updates will now give you better information about why a package is not found in the index. If the package is listed in the MOVED file in the mports repository, it will tell you if it's removed/expired or moved to another location.
+            </li>
+        </ul>
 
-        <p>The cmp(1) utility received the -i, --ignore-initial flags as an alternative to skip1/skip2.</p>
+        <p>Now that MOVED file contents are part of the index, we can start doing more intelligent updates in the future. The first package build to include this data is the latest amd64 3.1 build.   It will be available for i386 on the next package build done on that platform.
+        </p>
 
-        <p>The cmp(1) utility now accepts SI suffixes for skip1/skip2.</p>
+        <h5>Install Changes</h5>
 
-        <p>The cmp(1) utility received the -n, --bytes flags to limit number of bytes to compare.</p>
+        <p>Users are now prompted to try to install appropriate packages for their graphics cards.  We don’t yet do auto-detection, but it’s a step in the right direction for automating installs. </p>
 
-        <p>The cpuset(1) utility can now be used by a jail to modify the roots of a child jail.</p>
+        <h5>Miscellaneous Changes</h5>
 
-        <p>The daemon(8) utility now has a -H flag allowing it to catch a SIGHUP and re-open output file. This was added to support newsyslog(8) operations.</p>
+        <p>tftpd: introduce new option -S
 
-        <p>The fstyp(8) utility will now detect and show exFAT filesystems with the -l flag.</p>
+        <p>pf: handle multiple IPv6 fragment headers
+        <p>pf: fix pf_nv##_array() size check
 
-        <p>The geli(8) utility will no longer report an error when performing a resize to the same size.</p>
+        <p>netstat -i: compute most field widths dynamically
 
-        <p>The grep(1) utility will now disable -w if -x is also specified.</p>
+        <p>frag6: Avoid a possible integer overflow in fragment handling
 
-        <p>The growfs(8) utility will now function on RW mounted filesystems.</p>
+        <p>lib/libc/string/bcmp.c: fix integer overflow bug
 
-        <p>The kldxref(8) utility will no longer error out if the directory specified with the -d flag is not actually a directory.</p>
+        <p>logger(1): fix timestamps in case of long run
 
-        <p>The mergemaster(8) utility will now handle symbolic links during the update process.</p>
+        <p>libalias: improve handling of invalid SCTP packets
 
-        <p>The mksnap_ffs(8) utility received a fix for a crash which triggered a Panic: snapacct_ufs2: bad block panic.</p>
+        <p>wpa: Enable receiving priority tagged (VID 0) frames
 
-        <p>The mount(8) utility will now properly show with quotas when quotas are enabled.</p>
+        <p>bridge: Log MAC address port flapping
 
-        <p>The mountd(8) utility will now generate a syslog(3) message when the V4: line is missing from /etc/exports.</p>
+        <p>fusefs: update atime on reads when using cached attributes
 
-        <p>The newsyslog(8) utility received a new E flag to prevent rotation of empty log files.</p>
-
-        <p>The rc.d/jail rc(8) script had a keyword change to fix jails within jails support.</p>
-
-        <p>The rtsold(8) daemon will now work on if_vlan (see: vlan(4)) interfaces.
-
-        <p>The service(8) utility will now set the environment of the daemon class before invoking.</p>
-
-        <p>The wpl_cli(8) utility now has an action file event where an event may be passed to a file.</p>
-
-        <p>The internal KAPI between the krpc and nfsd modules was updated</p>
-
-        <p>The ipfw(8) firewall was provided a dnctl(8) to manage dummynet(4) configurations.</p>
-
-        <p>An opencrypto kern.crypto sysctl(8) node was added.</p>
-
-        <p>A new sysctl(8), debug.uma_reclaim, was added.</p>
-
-        <p>The kern.timecounter.hardware OID was converted into a tuneable.</p>
-
-        <p>The msdosfs(5) filesystem driver received a fix for msdosfs suspension.</p>
-
-        <p>The ng_bridge(4) netgraph node is now SMP aware.</p>
-
-        <p>The ng_nat(4) netgraph node received support for RFC 6598/Carrier Grade NAT support.</p>
-
-        <p>The ng_source(4) netgraph node may now be injected into any netgraph network.</p>
-
-        <p>The vlan(4) interface can now support ALTQ.</p>
-
-        <p>The pf(4) firewall has received several bugfixes and updates.</p>
-
-        <p>A fix for handling of embedded symbolic links in UFS/FFS was merged.</p>
-
-        <p>A fix for NFSv4.1 Linux client mount getting stuck in CLOSE_WAIT status was merged.</p>
-
-        <p>A fix for NFSv4.1/4.2 mount recovery from an expired lease was merged.</p>
-
-        <p>Several fixes for NFSv4 were merged.</p>
-
-        <p>A segmentation fault during wpa EAP/PEAP MSCHAPv2 authentication was fixed.</p>
-
-        <p>The fetch(3) library now supports proxying FTP over HTTPS.</p>
-
-        <p>A new rc.conf(5) variable has been added, linux_mounts_enable, which controls if Linux®-specific filesystems are mounted in /compat/linux if linux_enable is set to YES.</p>
-
-        <p>The devd(8) utility has been updated to change the default syslogd(8) notification for resume from kern to kernel.</p>
-
-        <p>The cron(8) utility has been updated to support two new flags in crontab(5), -n and -q, which suppress mail on successful runs and suppress logging of command execution, respectively.</p>
-
-        <p>The ifconfig library has been updated to report the status of a bridge(4) interface, similarly to lagg(4). </p>
-
-        <p>The read(2) system call has been changed to disable read() calls on directories by default. A new sysctl(8) has been added, security.bsd.allow_read_dir, which when set to 1 will restore the previous behavior.</p>
-
-        <p>The machdep.kdb_on_nmi sysctl(8) has been removed. The machdep.panic_on_nmi sysctl(8) tunable has changed to directly enter the debugger.</p>
-
-        <p>Support for APEI (ACPI Platform Error Interfaces) has been added. </p>
-
-        <p>Support for NAT64 CLAT has been added, as defined in RFC6877.</p>
-        <p>The getrandom(2) system call and getentropy(3) library have been added, compatible with Linux® and OpenBSD implementations.</p>
-        <p>get_s(3) has been added. </p>
-        <p>The pthread(3) library has been updated to incorporate POSIX/SUSv4-2018 compliance improvements. </p>
-        <p>The arc4random(3) library has been updated to remove arc4random_stir() and arc4random_addrandom(). </p>
-
-        <h5>Boot Loader</h5>
-
-        <p>The boot loader will now support booting an OS from a memory disk.</p>
-        <p>The boot loader will now support pools without features.</p>
-        <p>The boot loader will now accept the zfs features com.delphix:bookmark_written and com.datto:bookmark_v2.</p>
-        <p>A new OID, hint.dev.X.disabled was added to lua loader prevent device attachment during boot.</p>
-        <p>The arc4random(3) library has been updated to match the OpenBSD version 1.35</p>
 
         <h4>Security Fixes</h4>
 
-        <p>OpenSSL 1.1.1s is now included in base.  Previously, we were still on 1.0.2u + some extra patches. This
-        is a long overdue security update.</p>
+        <p>add fix for CVE-2022-25147 (apr-util)
+            workaround an integer overflow in apr_base64 functions.
+        </p>
 
-        <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
-            in inflate in inflate.c via a large gzip header extra field.</p>
+        <p>Fix CVE-2020-10188 in telnetd
+
+        <p>Fix for GELI silently omits the keyfile if read from stdin
+
+        <p>Multiple security vulnerabilities have been discovered in the Heimdal implementation of the Kerberos 5 network authentication protocols and KDC.<br/>
+
+        <br/>CVE-2022-42898 PAC parse integer overflows
+        <br/>CVE-2022-3437 Overflows and non-constant time leaks in DES{,3} and arcfour
+        <br/>CVE-2021-44758 NULL dereference DoS in SPNEGO acceptors
+        <br/>CVE-2022-44640 Heimdal KDC: invalid free in ASN.1 codec
+        <br/>CVE-2019-14870 Validate client attributes in protocol-transition
+        <br/>CVE-2019-14870 Apply forwardable policy in protocol-transition
+        <br/>CVE-2019-14870 Always lookup impersonate client in DB
+        </p>
+
 
         <h4>3rd Party Software</h4>
 
         <ul>
-            <li>OpenSSL 1.1.1s</li>
-            <li>sqlite3 3.40.1</li>
-            <li>subversion 1.14.2</li>
-            <li>less 551</li>
-            <li>tzdata 2022g</li>
-            <li>expat 2.5.0</li>
-            <li>unbound 1.16.2</li>
-            <li>imported pci ids list 2022 08 07</li>
-            <li>libarchive 3.6.0</li>
-            <li>nvi 2.20</li>
-            <li>bmake 20200710</li>
-            <li>wpa 2.10</li>
+            <li>Perl 5.36.1
+            <li>openssl 1.1.1u
+            <li>zlib 1.2.13 for kernel use
+            <li>OpenSSH 9.1p1
+            <li>libarchive 3.6.2
+            <li>sendmail 8.17.1
+            <li>libxo 1.0.4
+            <li>doas 6.3p9
+            <li>tzdata 2023c
+            <li>xz 5.2.9
+            <li>file 5.43
+            <li>sqlite3 3.40.1
+            <li>less 551
+            <li>subversion 1.14.2
+            <li>mDNSResponder-1096.40.7</li>
         </ul>
 
         <h4>Hardware</h4>
 
-        <p>Fix for Intel 82599 ixgbe device which reported errors on the interface
-            incorrectly.</p>
+        <p>ena: Update driver version to v2.6.3
 
-        <p>The alc(4) device driver now supports the Mikrotik® 10/25G Network device.</p>
+        <p>e1000: fix VLAN 0
 
-        <p>The amdtemp(4) device driver has learned about family 17h models: M20h (Dali, Zen1), M60H (Renoir, Zen2), and M90H (Van Gogh, Zen2).</p>
+        <p>Fix for Intel 82599 ixgbe device, which reported errors on the interface incorrectly.
 
-        <p>The amdtemp(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
+        <p>jedec_dimm(4): Add manufacturing year and week.
+        <p>e1000: Fix packet loss on 11th gen and later
 
-        <p>The amdsmn(4) device driver received support for Zen 3 "Vermeer" and Ryzen® 4000 APU (Zen 2, "Renoir").</p>
+        <p>ixl(4): Fix SR-IOV panics
 
-        <p>The cam(4) driver had quick unplug and replug SCSI fixed.</p>
+        <p>ixl(4): Add support for I710 devices
 
-        <p>The bnxt(4) device driver will now report if WOL (Wake On Lan) support is supported on the hardware and show an enabled status if a filter was applied on system initialization.</p>
+        <p>ixl(4): Fix VLAN HW filtering
 
-        <p>The em(4) device driver now supports the flashless i211 PBA.</p>
+        <p>ice(4): Update to 1.34.2-k
 
-        <p>The em(4) device driver received several updates to shared code.</p>
+        <p>ioat: Add Ice Lake ID.</p>
 
-        <p>The ena(4) device driver was updated to 2.4.1.</p>
-
-        <p>The ice(4) device driver was updated to 0.28.1-k with an updated ice_ddp package file of version 1.3.19.0.</p>
-
-        <p>A new driver, igc(4) was added to support the Intel® I225 Ethernet controller and supports 2.5G/1G/100MB/10MB.</p>
-
-        <p>The ixgbe(4) device driver received a shared code update.</p>
-
-        <p>The ixgbe(4) device driver received a fix for the x550em 10G NIC link status where the auto-negotiation feature was not reported correctly.</p>
-
-        <p>The ixl(4) device driver was given the hw.ix.flow_control tuneable.</p>
-
-        <p>The ixl(4) device driver had an update in shared code and fixes for 2.5G and 5G speeds.</p>
-
-        <p>The iwm(4) device driver now supports the Intel® Killer® Wireless-AC 1550i.</p>
-
-        <p>The nvdimm(4) ACPI driver will now export health information via a sysctl(8).</p>
-
-        <p>The nvme(4) device driver received support for MSI and single MSI-X support.</p>
-
-        <p>The nvme(4) device driver received several merged bugfixes.</p>
-
-        <p>The rctl(4) resource limits driver now supports throttling resource usage to 0 for rate-based resources that support throttling. These resources will respect the duration set by the kern.racct.rctl.throttle_max sysctl(8).</p>
-
-        <p>The rsu(4) device driver now supports the ASUS® WL-167G V3 device.</p>
-
-        <p>The rtwn_usb(4) device driver now supports the Mercusys® MW150US (N150 Nano), TP-Link® Archer T2U v3, and D-Link® DWA-121 (N150 Nano) devices.</p>
-
-        <p>The run(4) device driver now supports the D-Link® DWA-130 rev F1 wireless adapter and the ASUS® USB-N14 wireless adapter.</p>
-
-        <p>The tcp(4) protocol will now tolerate the missing of timestamps (RFC 1323/RFC 7323) via the use of the net.inet.tcp.tolerate_missing_ts sysctl(8).</p>
-
-        <p>The uart(4) device driver now supports the Intel® 100 Series/C230 Series AMT.</p>
-
-        <p>The mps(4) driver has been removed from the 32-bit GENERIC kernel configuration.</p>
-
-        <p>The virtio_blk(4) driver has been updated to support TRIM.</p>
-
-        <p>The ichwd(4) driver has been updated to include support for TCO watchdog timers in the Lewisburg PCH (C620) chipset.</p>
-
-        <p>The amdsmn(4) and amdtemp(4) drivers have been updated to support Ryzen™ 2 host bridges.</p>
-
-        <p>The amdtemp(4) driver has been updated to correct temperature reporting for the AMD® 2990WX.</p>
-
-        <p>The rtwn_pci(4) driver has been added for the RTL8188EE chipset.</p>
-
-        <p>The ntb_hw_amd(4) driver has been added, providing support for the AMD® Non-Transparent Bridge.</p>
-
-        <p>The nvme(4) driver has been updated to support suspend/resume for PCI attachment.</p>
-
-        <p>The cdceem(4) driver has been added, supporting virtual USB network cards provided by iLO 5, found in HPE® Proliant™ servers.</p>
-
-        <p>The mpr(4) and mps(4) drivers have been updated with stability fixes.</p>
-
-        <p>The camcontrol(8) utility has been updated to add ATA power mode support.</p>
-
-        <p>The cam(4) subsystem has been updated to improve AHCI enclosure management and SES interoperation.</p>
-
-        <p>The ACPI subsystem has been updated to implement Device object types for ACPI 6.0 support, required for some Dell, Inc. Poweredge™ AMD® Epyc™ systems.</p>
-
-        <p>Support for the Microchip® LAN78xx™ USB3-GigE controller has been added.</p>
 
         <h4>Known Issues</h4>
 
-        <p>There are known issues with the firefox, chromium-bin, midori and epiphany web browser packages and mports
-        that need to be corrected.  (detected late, sorry)  Issues were created on github in mports repo to track these. (mesa issue, see below)</p>
+        <p>Mport gives too much output when downloading packages non-interactively.
 
-        <p>i386 and amd64 packages are available, but there was an issue with our mesa version. It has been updated in mports
-        but new packages haven't been built yet. </p>
+        <p>Mport package creation crashes on a few meta ports.  We’re investigating this.  GNUstep is one example.  You can still install all the other GNUstep-related ports, just not the metaport.
 
-        <p>When upgrading from a previous release, be sure to get on at least MidnightBSD 2.2.5 before jumping to 3.0.
-            There are issues with usr.bin/lex on some systems.</p>
+        <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
 
-        <p>When doing a major upgrade from 2.x to 3.x, sometimes it's necessary to disable
-            perl builds in usr.bin/Makefile. If you get an error with buildworld in src/rescue/rescue, try removing
-            camcontrol and df from the makefile temporarily.  Once on 3.x, you can rebuild the src/rescue/rescue and src/usr.bin/perl
-        directories with make && make install.  </p>
+        <p>The Perl version was updated, so having a mix of older packages with 3.1 packages may cause issues with Perl.  Best to update all Perl libraries.
 
-        <p>On some AMD Ryzen systems, there is a time skew under high load or with heavy virtualization workloads.  If you notice this issue, try changing the default kern.eventtimer.timer.
-        HPET sometimes helps. </p>
+        <p>The Mono package is broken on 3.1 in mports.  No ETA on this one.
+
+        <p>On VirtualBox 7, Xorg needs over 1GB of RAM allocated to run without swapping or crashing.  Occasional VM hangs have also been seen. It works fine on bare metal, bhyve, or VMware products.
 
     </div>
     <!--#include virtual="/footer.html"-->
