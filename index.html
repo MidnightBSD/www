@@ -75,31 +75,35 @@
 			<h2><a href="security/">Security &#187;</a></h2>
 
 			<blockquote>
-				<p class="date">April 4, 2022</p>
+				<p class="date">August 2, 2023</p>
 
-				<p class="update">MidnightBSD 2.1.7
-					<br>zlib 1.2.12
+				<p class="update">MidnightBSD 3.0.2
+				  	<br/>pam_krb5 authenticates the user by essentially running kinit(1) with the
+					password, getting a `ticket-granting ticket' (tgt) from the Kerberos KDC (Key
+					Distribution Center) over the network, as a way to verify the password.
 
-					<br>Fix a deflate bug when using the Z_FIXED strategy that can result in out-of-bound accesses.
-					Fix a deflate bug when the window is full in deflate_stored().
-					Speed up CRC-32 computations by a factor of 1.5 to 3.
-					Use the hardware CRC-32 instruction on ARMv8 processors.
-					Speed up crc32_combine() with powers of x tables.
-					Add crc32_combine_gen() and crc32_combine_op() for fast combines.
+					<br/><br/>Normally, the system running the pam_krb5 module will also have a keytab, a
+					key provisioned by the KDC. The pam_krb5 module will use the tgt to get a
+					service ticket and validate it against the keytab, ensuring the tgt is valid
+					and therefore, the password is valid.
+
+					<br/><br/>However, if a keytab is not provisioned on the system, pam_krb5 has no way to
+					validate the response from the KDC, and essentially trusts the tgt provided
+					over the network as being valid.
+				</p>
 
 				<p class="more">
-					<a href="security/index.html#a20220404">Read more ...</a>
+					<a href="security/index.html#a20230802">Read more ...</a>
 				</p>
 			</blockquote>
 
 			<blockquote>
-				<p class="date">March 20, 2022</p>
-				<p class="update">MidnightBSD 1.2.6
-					<br>Fix security vulnerability in OpenSSL and WiFi.
-					<br>Update tzdata to 2022a
+				<p class="date">April 9, 2023</p>
+				<p class="update">MidnightBSD 2.2.8
+					<br>Fix a CVE in the APR used by svnlite  CVE-2022-25147
 				</p>
 				<p class="more">
-					<a href="security/index.html#a20220404">Read more ...</a>
+					<a href="security/index.html#a20230409">Read more ...</a>
 				</p>
 			</blockquote>
 
