@@ -42,3 +42,6 @@ Disallow: /
 
 User-agent: SemrushBot
 Disallow: /
+
+User-agent: Amazonbot
+Disallow: /magus/
