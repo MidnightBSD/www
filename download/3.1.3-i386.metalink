@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalink version="3.0"
+  xmlns="http://www.metalinker.org/"
+  generator="http://metalinks.sourceforge.net/"
+  >
+<files>
+	<file name="MidnightBSD-3.1.3--i386-bootonly.iso">
+		<size>362350592</size>
+		<verification>
+			<hash type="md5">440336e0712ef4e8316592d385bb714b</hash>
+			<hash type="sha1">c04b2bcf7df482298ec4969a10c2f21811d97128</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-bootonly.iso</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-bootonly.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-bootonly.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-bootonly.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-bootonly.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:c04b2bcf7df482298ec4969a10c2f21811d97128&amp;dn=MidnightBSD-3.1.3--i386-bootonly.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--i386-disc1.iso">
+		<size>868679680</size>
+		<verification>
+			<hash type="md5">d4a652d5736d97978f4784f92c294532</hash>
+			<hash type="sha1">bf80bf098b81a77ecc7e1b6a4cbd8f0392d601aa</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-disc1.iso</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-disc1.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-disc1.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-disc1.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-disc1.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:bf80bf098b81a77ecc7e1b6a4cbd8f0392d601aa&amp;dn=MidnightBSD-3.1.3--i386-disc1.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--i386-memstick.img">
+		<size>958276096</size>
+		<verification>
+			<hash type="md5">edcfabf42e9bfd260a88f1f89533792e</hash>
+			<hash type="sha1">e9b17b35713cb38902acc8a9572a649f1483df69</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-memstick.img</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:e9b17b35713cb38902acc8a9572a649f1483df69&amp;dn=MidnightBSD-3.1.3--i386-memstick.img</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--i386-mini-memstick.img">
+		<size>411345408</size>
+		<verification>
+			<hash type="md5">4af41c93bd05ca387c1010ba8d49a385</hash>
+			<hash type="sha1">2c65e21e4b03e027e521d75775bab8f1499c8318</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:2c65e21e4b03e027e521d75775bab8f1499c8318&amp;dn=MidnightBSD-3.1.3--i386-mini-memstick.img</url>
+		</resources>
+	</file>
+	<file name="mirror">
+		<size>398</size>
+		<verification>
+			<hash type="md5">6eafdeafaa587afcb1b97718316bb20f</hash>
+			<hash type="sha1">e2705eb086b26e52aa7cd45571071e104c470f3b</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.1.3/mirror</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/mirror</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/mirror</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/i386/ISO-IMAGES/3.1.3/mirror</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/mirror</url>
+			<url type="magnet">magnet:?xt=urn:sha1:e2705eb086b26e52aa7cd45571071e104c470f3b&amp;dn=mirror</url>
+		</resources>
+	</file>
+</files>
+</metalink>

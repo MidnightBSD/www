@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalink version="3.0"
+  xmlns="http://www.metalinker.org/"
+  generator="http://metalinks.sourceforge.net/"
+  >
+<files>
+	<file name="MidnightBSD-3.1.3--amd64-bootonly.iso">
+		<size>428986368</size>
+		<verification>
+			<hash type="md5">875f4d3a75472c541ad121ee3b82dcb1</hash>
+			<hash type="sha1">227a1019a7139a4053105a5c96b6b11ee4b3c981</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:227a1019a7139a4053105a5c96b6b11ee4b3c981&amp;dn=MidnightBSD-3.1.3--amd64-bootonly.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--amd64-disc1.iso">
+		<size>1026283520</size>
+		<verification>
+			<hash type="md5">a731c3cf17916c8d3b752c3a0c493903</hash>
+			<hash type="sha1">295a0914902a9234e97149e07e66480456461a6d</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-disc1.iso</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-disc1.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-disc1.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-disc1.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-disc1.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:295a0914902a9234e97149e07e66480456461a6d&amp;dn=MidnightBSD-3.1.3--amd64-disc1.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--amd64-memstick.img">
+		<size>1125655040</size>
+		<verification>
+			<hash type="md5">535c0fb26d10cc4e4158ca08af4bcf80</hash>
+			<hash type="sha1">686a22068a1d9e5894bf62c4448d3330f4a96a40</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-memstick.img</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:686a22068a1d9e5894bf62c4448d3330f4a96a40&amp;dn=MidnightBSD-3.1.3--amd64-memstick.img</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.1.3--amd64-mini-memstick.img">
+		<size>480518656</size>
+		<verification>
+			<hash type="md5">d845f496852f113e02fcbda0bed92310</hash>
+			<hash type="sha1">ed382d875cf8a910208d0eb3a49bf616196e30d4</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://archer.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.1.3/MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:ed382d875cf8a910208d0eb3a49bf616196e30d4&amp;dn=MidnightBSD-3.1.3--amd64-mini-memstick.img</url>
+		</resources>
+	</file>
+</files>
+</metalink>
