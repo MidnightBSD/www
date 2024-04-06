@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2023-7 OpenSSH double free vulnerability</title>
+</head>
+<body>
+<h1>MNBSD-2023-7 OpenSSH double free vulnerability</h1>
+<p>OpenSSH server (sshd) 9.1 introduced a double-free vulnerability during options.kex_algorithms handling. This is fixed in OpenSSH 9.2. The double free can be leveraged, by an unauthenticated remote attacker in the default configuration, to jump to any location in the sshd address space. One third-party report states "remote code execution is theoretically possible."</p>
+
+<p>Aliases: CVE-2023-25136</p>
+
+<p>
+Modified: 2023-12-27T00:00:00.000Z<br>
+Published: 2023-12-27T00:00:00.000Z
+</p>
+
+<p>References</p>
+<p>https://nvd.nist.gov/vuln/detail/CVE-2023-25136</p>
+</body>
+</html>

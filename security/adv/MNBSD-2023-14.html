@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2023-14 libc stdio buffer overflow</title>
+</head>
+<body>
+<h1>MNBSD-2023-14 libc stdio buffer overflow</h1>
+<p>Depending on the nature of an application that calls libc's stdio functions and the presence of errors returned from the write(2) system call (or an overridden stdio write routine) a heap buffer overflow may occur.  Such overflows may lead to data corruption or the execution of arbitrary code at the privilege level of the calling program.</p>
+
+<p>Aliases: FreeBSD-SA-23:15.libc</p>
+
+<p>
+Modified: 2023-12-27T00:00:00.000Z<br>
+Published: 2023-08-27T00:00:00.000Z
+</p>
+
+<p>References</p>
+<p>https://www.freebsd.org/security/advisories/FreeBSD-SA-23:15.libc.asc</p>
+</body>
+</html>

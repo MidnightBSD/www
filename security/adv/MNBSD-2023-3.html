@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2023-3 Double free after calling PEM_read_bio_ex</title>
+</head>
+<body>
+<h1>MNBSD-2023-3 Double free after calling PEM_read_bio_ex</h1>
+<p>The function PEM_read_bio_ex() reads a PEM file from a BIO and parses and decodes the "name" (e.g. "CERTIFICATE"), any header data and the payload data.  If the function succeeds then the "name_out", "header" and "data" arguments are populated with pointers to buffers containing the relevant decoded data. The caller is responsible for freeing those buffers. It is possible to construct a PEM file that results in 0 bytes of payload data. In this case PEM_read_bio_ex() will return a failure code but will populate the header argument with a pointer to a buffer that has already been freed.</p>
+
+<p>Aliases: CVE-2022-4450</p>
+
+<p>
+Modified: 2023-04-03T01:17:00.600Z<br>
+Published: 2023-04-03T02:22:58.600Z
+</p>
+
+<p>References</p>
+<p>https://www.openssl.org/news/vulnerabilities.html#CVE-2022-4450<br>https://github.com/MidnightBSD/src/commit/fae47427305375221e4e8d49f1027c53e8770430</p>
+</body>
+</html>
