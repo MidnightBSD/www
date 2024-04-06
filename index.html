@@ -74,64 +74,19 @@
 		<div id="security" class="col-md-4">
 			<h2><a href="security/">Security &#187;</a></h2>
 
-			MNBSD-2023-17
-
 			<blockquote>
-				<p class="date">December 28, 2023</p>
-
-				<p class="update">MidnightBSD 3.0.2
-					<br/>pam_krb5 authenticates the user by essentially running kinit(1) with the
-					password, getting a `ticket-granting ticket' (tgt) from the Kerberos KDC (Key
-					Distribution Center) over the network, as a way to verify the password.
-
-					<br/><br/>Normally, the system running the pam_krb5 module will also have a keytab, a
-					key provisioned by the KDC. The pam_krb5 module will use the tgt to get a
-					service ticket and validate it against the keytab, ensuring the tgt is valid
-					and therefore, the password is valid.
-
-					<br/><br/>However, if a keytab is not provisioned on the system, pam_krb5 has no way to
-					validate the response from the KDC, and essentially trusts the tgt provided
-					over the network as being valid.
-				</p>
-
-				<p class="more">
-					<a href="security/index.html#a20230802">Read more ...</a>
-				</p>
+			<ul>
+				<li><a href="security/adv/MNBSD-2024-0.html">MNBSD-2024-0</a></li>
+				<li><a href="security/MNBSD-2023-17.html">MNBSD-2023-17</a></li>
+				<li><a href="security/MNBSD-2023-16.html">MNBSD-2023-16</a></li>
+				<li><a href="security/MNBSD-2023-15.html">MNBSD-2023-15</a></li>
+				<li><a href="security/MNBSD-2023-14.html">MNBSD-2023-14</a></li>
+			</ul>
 			</blockquote>
 
 			<blockquote>
-				<p class="date">August 2, 2023</p>
-
-				<p class="update">MidnightBSD 3.0.2
-				  	<br/>pam_krb5 authenticates the user by essentially running kinit(1) with the
-					password, getting a `ticket-granting ticket' (tgt) from the Kerberos KDC (Key
-					Distribution Center) over the network, as a way to verify the password.
-
-					<br/><br/>Normally, the system running the pam_krb5 module will also have a keytab, a
-					key provisioned by the KDC. The pam_krb5 module will use the tgt to get a
-					service ticket and validate it against the keytab, ensuring the tgt is valid
-					and therefore, the password is valid.
-
-					<br/><br/>However, if a keytab is not provisioned on the system, pam_krb5 has no way to
-					validate the response from the KDC, and essentially trusts the tgt provided
-					over the network as being valid.
-				</p>
-
-				<p class="more">
-					<a href="security/index.html#a20230802">Read more ...</a>
-				</p>
+			<p class="update"><a href="security/index.html#a20230409">Older security advisories</a></p>
 			</blockquote>
-
-			<blockquote>
-				<p class="date">April 9, 2023</p>
-				<p class="update">MidnightBSD 2.2.8
-					<br>Fix a CVE in the APR used by svnlite  CVE-2022-25147
-				</p>
-				<p class="more">
-					<a href="security/index.html#a20230409">Read more ...</a>
-				</p>
-			</blockquote>
-
 		</div>
 
 		<div id="tweets" class="col-md-4">
