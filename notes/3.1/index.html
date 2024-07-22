@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 3.1 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 80%;
+            color: #aaa;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .update {
+            background: #f2fbff;
+            border: 2px solid #dff2fb;
+            font-size: 80%;
+            width: 40%;
+            float: left;
+            margin-right: 2.4em;
+            color: #555;
+        }
+
+        .ast {
+            color: #1373ce;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+		       </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="../2.1/index.html">2.1-RELEASE</a></li>
+                <li><a href="../2.2/index.html">2.2-RELEASE</a></li>
+                <li><a href="../3.0/index.html">3.0-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(08/27/2023) MidnightBSD 3.1</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 3.1 for amd64 and i386.
+
+        <p>This release included updates to third-party libraries, bug fixes from the 3.0 release, and a new third-party package option: Ravenports Universal Package System.
+
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already<br>
+        <code>mport install git</code>
+        </p>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <p>
+        <code>git clone -b stable/3.1 https://github.com/MidnightBSD/src.git</code>
+        </p>
+
+        <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
+       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.</p>
+
+        <p>
+        <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
+        mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        </p>
+
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        mergemaster -iU<br>
+            </code>
+        </p>
+
+        <p>
+        Update installed mports/packages<br>
+        For mport package manager, run
+        <code>
+            mport index<br>
+            mport clean<br>
+            mport upgrade<br>
+        </code>
+        </p>
+
+        <p>Remove old libraries and programs from the base.</p>
+        <p><code>
+            rm -rf /usr/lib/perl/5.36.0
+            cd /usr/src/; make check-old; make delete-old; make installworld;
+        </code>
+        </p>
+
+        <p>When you are done, verify that Perl is updated by running perl -v
+            You should have Perl 5.36.1.
+        </p>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <h5>Ravenports</h5>
+
+        <p>Ravenports is now available in MidnightBSD for the amd64 architecture.  The initial installation process will
+            prompt you to bootstrap Ravenports.  This will initialize it in /raven/, and you will be able to install
+            software packages using /raven/sbin/ravensw.  By default, /raven/bin, /raven/sbin, and so on are not on the
+            path.  You can add them to the path to make running software in your shell easier.  Please visit their
+            website to learn more about Ravenports and find quickstart guides.  <a href="http://www.ravenports.com/">http://www.ravenports.com/</a>
+
+        <p>You can choose either mports or Ravenports at installation time or use packages from both systems.
+        Please note that mixing packages may have some complications, although they are installed in a completely different place from mports.
+
+        <p>There are various benefits to Ravenports, but a few are more updated packages and quite a few unique packages
+        that mports doesn’t provide currently. For example, Ravenports has an updated Firefox package available.
+
+        <p>You will not see Ravenports presented as an option on an i386 install.
+
+        <h5>Mport package manager</h5>
+
+        <p>There have been a number of improvements in the mport package manager for this release.  In 2.4.3, we fixed the XXX rate issue reported.  It now displays information about the download and a percentage of the file fetched so far.  There is an output bug where it displays the percentage with an incorrect decimal place that will be fixed in a later release.  This only impacts mport use in scripts or other non-interactive terminals.
+        </p>
+
+        <ul>
+            <li>mport clean now removes temporary files that might get left behind by other operations
+            <li>mport clean now removes leftover /var/db/mport/infrastructure/* folders that might get left behind prior to a fix for mtree files last year. (mostly for older systems)
+            <li>mport's internal rmtree functionality has been modified to use native C routines rather than executing rm -r as a system command. (Please report any issues with removing files in packages on delete with this.) This is slightly faster with very large packages. (0.03 seconds or so)
+            <li>mport list updates will now give you better information about why a package is not found in the index. If the package is listed in the MOVED file in the mports repository, it will tell you if it's removed/expired or moved to another location.
+            </li>
+        </ul>
+
+        <p>Now that MOVED file contents are part of the index, we can start doing more intelligent updates in the future. The first package build to include this data is the latest amd64 3.1 build.   It will be available for i386 on the next package build done on that platform.
+        </p>
+
+        <h5>Install Changes</h5>
+
+        <p>Users are now prompted to try to install appropriate packages for their graphics cards.  We don’t yet do auto-detection, but it’s a step in the right direction for automating installs. </p>
+
+        <h5>Miscellaneous Changes</h5>
+
+        <p>tftpd: introduce new option -S
+
+        <p>pf: handle multiple IPv6 fragment headers
+        <p>pf: fix pf_nv##_array() size check
+
+        <p>netstat -i: compute most field widths dynamically
+
+        <p>frag6: Avoid a possible integer overflow in fragment handling
+
+        <p>lib/libc/string/bcmp.c: fix integer overflow bug
+
+        <p>logger(1): fix timestamps in case of long run
+
+        <p>libalias: improve handling of invalid SCTP packets
+
+        <p>wpa: Enable receiving priority tagged (VID 0) frames
+
+        <p>bridge: Log MAC address port flapping
+
+        <p>fusefs: update atime on reads when using cached attributes
+
+
+        <h4>Security Fixes</h4>
+
+        <p>add fix for CVE-2022-25147 (apr-util)
+            workaround an integer overflow in apr_base64 functions.
+        </p>
+
+        <p>Fix CVE-2020-10188 in telnetd
+
+        <p>Fix for GELI silently omits the keyfile if read from stdin
+
+        <p>Multiple security vulnerabilities have been discovered in the Heimdal implementation of the Kerberos 5 network authentication protocols and KDC.<br/>
+
+        <br/>CVE-2022-42898 PAC parse integer overflows
+        <br/>CVE-2022-3437 Overflows and non-constant time leaks in DES{,3} and arcfour
+        <br/>CVE-2021-44758 NULL dereference DoS in SPNEGO acceptors
+        <br/>CVE-2022-44640 Heimdal KDC: invalid free in ASN.1 codec
+        <br/>CVE-2019-14870 Validate client attributes in protocol-transition
+        <br/>CVE-2019-14870 Apply forwardable policy in protocol-transition
+        <br/>CVE-2019-14870 Always lookup impersonate client in DB
+        </p>
+
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>Perl 5.36.1
+            <li>openssl 1.1.1u
+            <li>zlib 1.2.13 for kernel use
+            <li>OpenSSH 9.1p1
+            <li>libarchive 3.6.2
+            <li>sendmail 8.17.1
+            <li>libxo 1.0.4
+            <li>doas 6.3p9
+            <li>tzdata 2023c
+            <li>xz 5.2.9
+            <li>file 5.43
+            <li>sqlite3 3.40.1
+            <li>less 551
+            <li>subversion 1.14.2
+            <li>mDNSResponder-1096.40.7</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>ena: Update driver version to v2.6.3
+
+        <p>e1000: fix VLAN 0
+
+        <p>Fix for Intel 82599 ixgbe device, which reported errors on the interface incorrectly.
+
+        <p>jedec_dimm(4): Add manufacturing year and week.
+        <p>e1000: Fix packet loss on 11th gen and later
+
+        <p>ixl(4): Fix SR-IOV panics
+
+        <p>ixl(4): Add support for I710 devices
+
+        <p>ixl(4): Fix VLAN HW filtering
+
+        <p>ice(4): Update to 1.34.2-k
+
+        <p>ioat: Add Ice Lake ID.</p>
+
+
+        <h4>Known Issues</h4>
+
+        <p>Mport gives too much output when downloading packages non-interactively.
+
+        <p>Mport package creation crashes on a few meta ports.  We’re investigating this.  GNUstep is one example.  You can still install all the other GNUstep-related ports, just not the metaport.
+
+        <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
+
+        <p>The Perl version was updated, so having a mix of older packages with 3.1 packages may cause issues with Perl.  Best to update all Perl libraries.
+
+        <p>The Mono package is broken on 3.1 in mports.  No ETA on this one.
+
+        <p>On VirtualBox 7, Xorg needs over 1GB of RAM allocated to run without swapping or crashing.  Occasional VM hangs have also been seen. It works fine on bare metal, bhyve, or VMware products.
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+

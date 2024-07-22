@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MidnightBSD 3.0 Release Notes</title>
+    <title>MidnightBSD 3.2 Release Notes</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <style type="text/css" media="all">
         @import url("../css/essence.css");
@@ -81,15 +81,16 @@
                 <li><a href="2.1/index.html">2.1-RELEASE</a></li>
                 <li><a href="2.2/index.html">2.2-RELEASE</a></li>
                 <li><a href="3.0/index.html">3.0-RELEASE</a></li>
+                <li><a href="3.1/index.html">3.1-RELEASE</a></li>
             </ul>
         </div>
 
-        <h3>(08/27/2023) MidnightBSD 3.1</h3>
+        <h3>(07/22/2024) MidnightBSD 3.2</h3>
 
-        <p>I’m happy to announce the availability of MidnightBSD 3.1 for amd64 and i386.
+        <p>I’m happy to announce the availability of MidnightBSD 3.2 for amd64 and i386.
 
-        <p>This release included updates to third-party libraries, bug fixes from the 3.0 release, and a new third-party package option: Ravenports Universal Package System.
-
+        <p>This release included updates to third-party libraries, bug fixes from the 3.1 release,
+        and security updates.
 
         <h4>Upgrade Process</h4>
 
@@ -100,7 +101,7 @@
         <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
 
         <p>
-        <code>git clone -b stable/3.1 https://github.com/MidnightBSD/src.git</code>
+        <code>git clone -b stable/3.2 https://github.com/MidnightBSD/src.git</code>
         </p>
 
         <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
@@ -108,7 +109,7 @@
 
         <p>
         <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
-        mergemaster -p<br>
+        choose one of etcupdate or mergemaster -p<br>
         make installkernel<br>
             reboot</code>
         </p>
@@ -116,7 +117,7 @@
         <p>(if it works OK, login and go to /usr/src)<br>
             <code>
             make installworld<br>
-        mergemaster -iU<br>
+        choose one of etcupdate or mergemaster -iU<br>
             </code>
         </p>
 
@@ -132,20 +133,19 @@
 
         <p>Remove old libraries and programs from the base.</p>
         <p><code>
-            rm -rf /usr/lib/perl/5.36.0
+            rm -rf /usr/lib/perl/5.36.1
             cd /usr/src/; make check-old; make delete-old; make installworld;
         </code>
         </p>
 
-        <p>When you are done, verify that Perl is updated by running perl -v
-            You should have Perl 5.36.1.
+        <p>Perl was removed from base in 3.2.  Install from mports or packages via mport install perl5.36
         </p>
 
         <h4>Bug Fixes and new features</h4>
 
         <h5>Ravenports</h5>
 
-        <p>Ravenports is now available in MidnightBSD for the amd64 architecture.  The initial installation process will
+        <p>Ravenports is available in MidnightBSD for the amd64 architecture.  The initial installation process will
             prompt you to bootstrap Ravenports.  This will initialize it in /raven/, and you will be able to install
             software packages using /raven/sbin/ravensw.  By default, /raven/bin, /raven/sbin, and so on are not on the
             path.  You can add them to the path to make running software in your shell easier.  Please visit their
@@ -161,123 +161,91 @@
 
         <h5>Mport package manager</h5>
 
-        <p>There have been a number of improvements in the mport package manager for this release.  In 2.4.3, we fixed the XXX rate issue reported.  It now displays information about the download and a percentage of the file fetched so far.  There is an output bug where it displays the percentage with an incorrect decimal place that will be fixed in a later release.  This only impacts mport use in scripts or other non-interactive terminals.
-        </p>
-
-        <ul>
-            <li>mport clean now removes temporary files that might get left behind by other operations
-            <li>mport clean now removes leftover /var/db/mport/infrastructure/* folders that might get left behind prior to a fix for mtree files last year. (mostly for older systems)
-            <li>mport's internal rmtree functionality has been modified to use native C routines rather than executing rm -r as a system command. (Please report any issues with removing files in packages on delete with this.) This is slightly faster with very large packages. (0.03 seconds or so)
-            <li>mport list updates will now give you better information about why a package is not found in the index. If the package is listed in the MOVED file in the mports repository, it will tell you if it's removed/expired or moved to another location.
-            </li>
-        </ul>
-
-        <p>Now that MOVED file contents are part of the index, we can start doing more intelligent updates in the future. The first package build to include this data is the latest amd64 3.1 build.   It will be available for i386 on the next package build done on that platform.
-        </p>
-
-        <h5>Install Changes</h5>
-
-        <p>Users are now prompted to try to install appropriate packages for their graphics cards.  We don’t yet do auto-detection, but it’s a step in the right direction for automating installs. </p>
+        <p>Updated mport to 2.6.2</p>
 
         <h5>Miscellaneous Changes</h5>
 
-        <p>tftpd: introduce new option -S
+        <p>Fixed a bug with portsnap configuration with 3.x releases where it used an old index.</p>
 
-        <p>pf: handle multiple IPv6 fragment headers
-        <p>pf: fix pf_nv##_array() size check
+        <p>Fix for some vnc clients with bhyve, added  com ports to bhyve</p>
 
-        <p>netstat -i: compute most field widths dynamically
+        <p>Various manual pages cleaned up.</p>
 
-        <p>frag6: Avoid a possible integer overflow in fragment handling
+        <p>zstd enabled in libarchive</p>
 
-        <p>lib/libc/string/bcmp.c: fix integer overflow bug
+        <p>telnetd removed</p>
 
-        <p>logger(1): fix timestamps in case of long run
+        <p>libfetch: don't rely on ca_root_nss for certificate validation</p>
 
-        <p>libalias: improve handling of invalid SCTP packets
-
-        <p>wpa: Enable receiving priority tagged (VID 0) frames
-
-        <p>bridge: Log MAC address port flapping
-
-        <p>fusefs: update atime on reads when using cached attributes
-
+        <p>add endian.h for linux compatibility</p>
 
         <h4>Security Fixes</h4>
 
-        <p>add fix for CVE-2022-25147 (apr-util)
-            workaround an integer overflow in apr_base64 functions.
-        </p>
+        <p>OpenSSH security vulnerability<br />
 
-        <p>Fix CVE-2020-10188 in telnetd
+            A signal handler in sshd(8) calls a function that is not async-signal-safe.
+            The signal handler is invoked when a client does not authenticate within the
+            LoginGraceTime seconds (120 by default).  This signal handler executes in the
+            context of the sshd(8)'s privileged code, which is not sandboxed and runs
+            with full root privileges.<br/>
 
-        <p>Fix for GELI silently omits the keyfile if read from stdin
+            This issue is a regression of CVE-2006-5051 originally reported by Mark Dowd
+            and accidentally reintroduced in OpenSSH 8.5p1.</p>
 
-        <p>Multiple security vulnerabilities have been discovered in the Heimdal implementation of the Kerberos 5 network authentication protocols and KDC.<br/>
+        <p>OpenSSH 9.3p2 - CVE-2023-38408
 
-        <br/>CVE-2022-42898 PAC parse integer overflows
-        <br/>CVE-2022-3437 Overflows and non-constant time leaks in DES{,3} and arcfour
-        <br/>CVE-2021-44758 NULL dereference DoS in SPNEGO acceptors
-        <br/>CVE-2022-44640 Heimdal KDC: invalid free in ASN.1 codec
-        <br/>CVE-2019-14870 Validate client attributes in protocol-transition
-        <br/>CVE-2019-14870 Apply forwardable policy in protocol-transition
-        <br/>CVE-2019-14870 Always lookup impersonate client in DB
-        </p>
+            Patch for CVE-2023-48795</p>
 
+        <p>Fix security issue in libpcap OSV-2020-1231</p>
+
+        <p>Fix for wpa supplicant CVE-2023-52160</p>
+
+        <p>pf security issue:<br/>
+            As part of its stateful TCP connection tracking implementation, pf
+            performs sequence number validation on inbound packets.  This makes it
+            difficult for a would-be attacker to spoof the sender and inject packets
+            into a TCP stream, since crafted packets must contain sequence numbers
+            which match the current connection state to avoid being rejected by the
+            firewall. A bug in the implementation of sequence number validation means that the
+            sequence number is not in fact validated, allowing an attacker who is
+            able to impersonate the remote host and guess the connection's port
+            numbers to inject packets into the TCP stream.</p>
 
         <h4>3rd Party Software</h4>
 
         <ul>
-            <li>Perl 5.36.1
-            <li>openssl 1.1.1u
-            <li>zlib 1.2.13 for kernel use
-            <li>OpenSSH 9.1p1
-            <li>libarchive 3.6.2
-            <li>sendmail 8.17.1
-            <li>libxo 1.0.4
-            <li>doas 6.3p9
-            <li>tzdata 2023c
-            <li>xz 5.2.9
-            <li>file 5.43
-            <li>sqlite3 3.40.1
-            <li>less 551
-            <li>subversion 1.14.2
-            <li>mDNSResponder-1096.40.7</li>
+            <li>Perl removed from base.  Install via mports
+            <li>brainfuck removed from base.  Moved to mports</li>
+            <li>Removed subversion from base.  install from mports if needed. (use git for MidnightBSD)</li>
+            <li>expat 2.6.2</li>
+            <li>ldns 1.8.3</li>
+            <li>sendmail 8.18.1</li>
+            <li>libarchive 3.7.2</li>
+            <li>zstd 1.5.2</li>
+            <li>Unbound 1.19.3</li>
+            <li>xz / lzma 5.4.5</li>
+            <li>tzdata 2023d</li>
+            <li>mandoc 1.14.6</li>
+            <li>OpenSSH 9.3p2</li>
+            <li>nvi 2.2.1</li>
+            <li>openssl 1.1.1w</li>
         </ul>
 
         <h4>Hardware</h4>
 
-        <p>ena: Update driver version to v2.6.3
+        <p>PCI vendors list updated (April 2024)</p>
 
-        <p>e1000: fix VLAN 0
+        <p>AMD zen4 temperature sensor support</p>
 
-        <p>Fix for Intel 82599 ixgbe device, which reported errors on the interface incorrectly.
+        <p>unbreak Promise RAID1 with 4+ providers</p>
 
-        <p>jedec_dimm(4): Add manufacturing year and week.
-        <p>e1000: Fix packet loss on 11th gen and later
+        <p>usbdevs: add quirk for WD MyPassport Ultra External HDD</p>
 
-        <p>ixl(4): Fix SR-IOV panics
-
-        <p>ixl(4): Add support for I710 devices
-
-        <p>ixl(4): Fix VLAN HW filtering
-
-        <p>ice(4): Update to 1.34.2-k
-
-        <p>ioat: Add Ice Lake ID.</p>
-
+        <p>ahci: add AMD KERNCZ (RAID) device id in RAID mode</p>
 
         <h4>Known Issues</h4>
 
-        <p>Mport gives too much output when downloading packages non-interactively.
-
-        <p>Mport package creation crashes on a few meta ports.  We’re investigating this.  GNUstep is one example.  You can still install all the other GNUstep-related ports, just not the metaport.
-
         <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
-
-        <p>The Perl version was updated, so having a mix of older packages with 3.1 packages may cause issues with Perl.  Best to update all Perl libraries.
-
-        <p>The Mono package is broken on 3.1 in mports.  No ETA on this one.
 
         <p>On VirtualBox 7, Xorg needs over 1GB of RAM allocated to run without swapping or crashing.  Occasional VM hangs have also been seen. It works fine on bare metal, bhyve, or VMware products.
 
