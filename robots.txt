@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /bin/
 Disallow: /cgi-bin/
 Disallow: /assets/
-Disallow: /magus/auth/
+Disallow: /magus/
 Disallow: /ftp/MidnightBSD/distfiles/*.asc
 Disallow: /ftp/MidnightBSD/distfiles/*.sig
 Disallow: /ftp/
@@ -10,7 +10,7 @@ Disallow: /rspamd/
 Disallow: /fgmunin/
 Disallow: /roundcube/
 Disallow: /opengrok/
-Crawl-delay: 5
+Crawl-delay: 10
 Sitemap: http://www.midnightbsd.org/sitemap.xml
 Sitemap: http://www.midnightbsd.org/sitemap1.xml
 Sitemap: http://www.midnightbsd.org/sitemap2.xml
@@ -30,6 +30,7 @@ Disallow: /
 
 User-agent: dotbot
 Disallow: /magus/
+Disallow: /ftp/
 
 User-agent: AhrefsBot
 Disallow: /
