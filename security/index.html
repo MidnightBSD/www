@@ -76,46 +76,6 @@
             <li><a href="adv/MNBSD-2023-0.html">MNBSD-2023-0</a></li>
         </ul>
 
-        <blockquote class="bluebox" id="a20230802">
-            <h3>August 2, 2023</h3>
-            <p>MidnightBSD 3.0.2</p>
-
-            <p>pam_krb5 authenticates the user by essentially running kinit(1) with the
-            password, getting a `ticket-granting ticket' (tgt) from the Kerberos KDC (Key
-            Distribution Center) over the network, as a way to verify the password.
-
-            <br/><br/>Normally, the system running the pam_krb5 module will also have a keytab, a
-            key provisioned by the KDC. The pam_krb5 module will use the tgt to get a
-            service ticket and validate it against the keytab, ensuring the tgt is valid
-            and therefore, the password is valid.
-
-            <br/><br/>However, if a keytab is not provisioned on the system, pam_krb5 has no way to
-            validate the response from the KDC, and essentially trusts the tgt provided
-            over the network as being valid.
-            </p>
-
-            <p>Remove some unused files from contrib that trigger security scanners
-        </blockquote>
-
-
-        <blockquote class="bluebox" id="a20230409">
-            <h3>April 9, 2023</h3>
-            <p>MidnightBSD 2.2.8</p>
-
-            <p>Fix a CVE in the APR used by svnlite  CVE-2022-25147</p>
-        </blockquote>
-
-
-        <blockquote class="bluebox" id="a20230403">
-            <h3>April 3, 2023</h3>
-            <p>MidnightBSD 3.0.1</p>
-
-            <p>OpenSSL 1.1.1t
-            <p>Fix CVE-2020-10188 in telnetd
-            <p>doas 6.3p9
-            <p>tzdata 2023c
-        </blockquote>
-
         <blockquote class="bluebox" id="a20230213">
             <h3>February 13, 2023</h3>
             <p>MidnightBSD 2.2.7</p>
