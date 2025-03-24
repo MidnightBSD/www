@@ -3,19 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <title>MidnightBSD Advisory: MNBSD-2023-2 Timing Oracle in RSA Decryption</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
 </head>
 <body>
-<h1>MNBSD-2023-2 Timing Oracle in RSA Decryption</h1>
+<h1>MNBSD-2023-2: Timing Oracle in RSA Decryption</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity low">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> Timing Oracle in RSA Decryption</p>
+</div>
+
+<h2>Description</h2>
 <p>A timing based side channel exists in the OpenSSL RSA Decryption implementation.</p>
 
-<p>Aliases: CVE-2022-4304</p>
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul><p>Specific versions:</p><ul><li>2.0.0</li><li>2.0.1</li><li>2.0.2</li><li>2.1.0</li><li>2.1.1</li><li>2.2.0</li><li>2.2.1</li><li>2.2.2</li><li>2.2.3</li><li>2.2.4</li><li>2.2.5</li><li>2.2.6</li><li>2.2.7</li><li>2.2.8</li><li>3.0.0</li><li>3.0.1</li><li>3.0.2</li><li>3.0.3</li><li>3.0.4</li><li>3.0.5</li><li>3.1.0</li><li>3.1.1</li></ul>
 
-<p>
-Modified: 2023-04-03T01:17:00.600Z<br>
-Published: 2023-04-03T02:22:58.600Z
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.openssl.org/news/vulnerabilities.html#CVE-2022-4304">https://www.openssl.org/news/vulnerabilities.html#CVE-2022-4304</a></li>
+<li><a href="https://github.com/MidnightBSD/src/commit/fae47427305375221e4e8d49f1027c53e8770430">https://github.com/MidnightBSD/src/commit/fae47427305375221e4e8d49f1027c53e8770430</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2022-4304</p>
+<p class="dates">
+Published: April 03, 2023<br>
+Last Modified: April 03, 2023
 </p>
-
-<p>References</p>
-<p>https://www.openssl.org/news/vulnerabilities.html#CVE-2022-4304<br>https://github.com/MidnightBSD/src/commit/fae47427305375221e4e8d49f1027c53e8770430</p>
 </body>
 </html>

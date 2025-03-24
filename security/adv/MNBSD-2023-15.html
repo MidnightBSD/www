@@ -3,19 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <title>MidnightBSD Advisory: MNBSD-2023-15 msdosfs data disclosure</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
 </head>
 <body>
-<h1>MNBSD-2023-15 msdosfs data disclosure</h1>
+<h1>MNBSD-2023-15: msdosfs data disclosure</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity low">Unknown</span></p>
+  <p><strong>Affected Package:</strong> msdosfs</p>
+  <p><strong>Summary:</strong> msdosfs data disclosure</p>
+</div>
+
+<h2>Description</h2>
 <p>A user with write access to files on a msdosfs file system may be able to read unintended data (for example, from a previously deleted file).</p>
 
-<p>Aliases: FreeBSD-SA-23:12.msdosfs,CVE-2023-5368</p>
+<h2>Affected Versions</h2>
+<h3>msdosfs</h3><ul></ul><p>Specific versions:</p><ul><li>3.0.0</li><li>3.0.1</li><li>3.0.2</li><li>3.1.0</li></ul>
 
-<p>
-Modified: 2023-12-28T00:00:00.000Z<br>
-Published: 2023-12-28T00:00:00.000Z
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-5368">https://nvd.nist.gov/vuln/detail/CVE-2023-5368</a></li>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-23:12.msdosfs.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-23:12.msdosfs.asc</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> FreeBSD-SA-23:12.msdosfs, CVE-2023-5368</p>
+<p class="dates">
+Published: December 28, 2023<br>
+Last Modified: December 28, 2023
 </p>
-
-<p>References</p>
-<p>https://nvd.nist.gov/vuln/detail/CVE-2023-5368<br>https://www.freebsd.org/security/advisories/FreeBSD-SA-23:12.msdosfs.asc</p>
 </body>
 </html>

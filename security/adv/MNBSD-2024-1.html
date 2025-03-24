@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2024-1 Unbound DNSSEC DOS attack</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2024-1: Unbound DNSSEC DOS attack</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity low">Unknown</span></p>
+  <p><strong>Affected Package:</strong> unbound</p>
+  <p><strong>Summary:</strong> Unbound DNSSEC DOS attack</p>
+</div>
+
+<h2>Description</h2>
+<p>Certain DNSSEC aspects of the DNS protocol (in RFC 4033, 4034, 4035, 6840, and related RFCs) allow remote attackers to cause a denial of service (CPU consumption) via one or more DNSSEC responses, aka the "KeyTrap" issue. One of the concerns is that, when there is a zone with many DNSKEY and RRSIG records, the protocol specification implies that an algorithm must evaluate all combinations of DNSKEY and RRSIG records.</p>
+
+<h2>Affected Versions</h2>
+<h3>unbound</h3><ul></ul><p>Specific versions:</p><ul><li>2.2.0</li><li>2.2.1</li><li>2.2.2</li><li>2.2.3</li><li>2.2.4</li><li>2.2.5</li><li>2.2.6</li><li>2.2.7</li><li>2.2.8</li><li>3.0.0</li><li>3.0.1</li><li>3.0.2</li><li>3.1.0</li><li>3.1.1</li><li>3.1.2</li><li>3.1.3</li><li>3.1.4</li></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cvedetails.com/cve/CVE-2023-50387/">https://www.cvedetails.com/cve/CVE-2023-50387/</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2023-50387</p>
+<p class="dates">
+Published: April 09, 2024<br>
+Last Modified: April 09, 2024
+</p>
+</body>
+</html>

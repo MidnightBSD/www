@@ -3,19 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>MidnightBSD Advisory: MNBSD-2023-6 pam_krb5 blindly validates messages when no keytab is provided.</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
 </head>
 <body>
-<h1>MNBSD-2023-6 pam_krb5 blindly validates messages when no keytab is provided.</h1>
+<h1>MNBSD-2023-6: pam_krb5 blindly validates messages when no keytab is provided.</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity low">Unknown</span></p>
+  <p><strong>Affected Package:</strong> pam_krb5</p>
+  <p><strong>Summary:</strong> pam_krb5 blindly validates messages when no keytab is provided.</p>
+</div>
+
+<h2>Description</h2>
 <p>pam_krb5 authenticates the user by essentially running kinit(1) with the password, getting a `ticket-granting ticket' (tgt) from the Kerberos KDC (Key Distribution Center) over the network, as a way to verify the password. Normally, the system running the pam_krb5 module will also have a keytab, a key provisioned by the KDC. The pam_krb5 module will use the tgt to get a service ticket and validate it against the keytab, ensuring the tgt is valid and therefore, the password is valid. However, if a keytab is not provisioned on the system, pam_krb5 has no way to validate the response from the KDC, and essentially trusts the tgt provided over the network as being valid.</p>
 
-<p>Aliases: FreeBSD-SA-23:09.pam_krb5</p>
+<h2>Affected Versions</h2>
+<h3>pam_krb5</h3><ul></ul><p>Specific versions:</p><ul><li>2.0.0</li><li>2.1.0</li><li>2.2.0</li><li>2.2.1</li><li>2.2.2</li><li>2.2.3</li><li>2.2.4</li><li>2.2.5</li><li>2.2.6</li><li>2.2.7</li><li>2.2.8</li><li>3.0.0</li><li>3.0.1</li></ul>
 
-<p>
-Modified: 2023-08-09T00:00:00.000Z<br>
-Published: 2023-08-09T00:00:00.000Z
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-23:09.pam_krb5.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-23:09.pam_krb5.asc</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> FreeBSD-SA-23:09.pam_krb5</p>
+<p class="dates">
+Published: August 09, 2023<br>
+Last Modified: August 09, 2023
 </p>
-
-<p>References</p>
-<p>https://www.freebsd.org/security/advisories/FreeBSD-SA-23:09.pam_krb5.asc</p>
 </body>
 </html>

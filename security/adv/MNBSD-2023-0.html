@@ -3,19 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>MidnightBSD Advisory: MNBSD-2023-0 Buffer overflow in telnetd allows remote code execution</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
 </head>
 <body>
-<h1>MNBSD-2023-0 Buffer overflow in telnetd allows remote code execution</h1>
+<h1>MNBSD-2023-0: Buffer overflow in telnetd allows remote code execution</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity low">Unknown</span></p>
+  <p><strong>Affected Package:</strong> telnetd</p>
+  <p><strong>Summary:</strong> Buffer overflow in telnetd allows remote code execution</p>
+</div>
+
+<h2>Description</h2>
 <p>utility.c in telnetd in netkit telnet through 0.17 allows remote attackers to execute arbitrary code via short writes or urgent data, because of a buffer overflow involving the netclear and nextitem functions.</p>
 
-<p>Aliases: CVE-2020-10188</p>
+<h2>Affected Versions</h2>
+<h3>telnetd</h3><ul></ul><p>Specific versions:</p><ul><li>0.1.0</li><li>0.1.1</li><li>0.2.0</li><li>0.2.1</li><li>0.3.0</li><li>0.4.0</li><li>0.5.0</li><li>0.6.0</li><li>0.7.0</li><li>0.8.0</li><li>0.9.0</li><li>1.0.0</li><li>1.1.0</li><li>1.2.0</li><li>2.0.0</li><li>2.0.1</li><li>2.0.2</li><li>2.1.0</li><li>2.1.1</li><li>2.2.0</li><li>2.2.1</li><li>2.2.2</li><li>2.2.3</li><li>2.2.4</li><li>2.2.5</li><li>2.2.6</li><li>2.2.7</li><li>2.2.8</li><li>3.0.0</li></ul>
 
-<p>
-Modified: 2023-04-03T01:17:00.600Z<br>
-Published: 2023-04-03T02:22:58.600Z
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2020-10188">https://nvd.nist.gov/vuln/detail/CVE-2020-10188</a></li>
+<li><a href="https://github.com/krb5/krb5-appl/blob/d00cd671dfe945791b33d4f1f6a5c57ae1667ef8/telnet/telnetd/utility.c#L205-L216">https://github.com/krb5/krb5-appl/blob/d00cd671dfe945791b33d4f1f6a5c57ae1667ef8/telnet/telnetd/utility.c#L205-L216</a></li>
+<li><a href="https://appgateresearch.blogspot.com/2020/02/bravestarr-fedora-31-netkit-telnetd_28.html">https://appgateresearch.blogspot.com/2020/02/bravestarr-fedora-31-netkit-telnetd_28.html</a></li>
+<li><a href="https://github.com/MidnightBSD/src/commit/db4d8bca9d3c1922a921d0ec5036a28b25332433">https://github.com/MidnightBSD/src/commit/db4d8bca9d3c1922a921d0ec5036a28b25332433</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2020-10188</p>
+<p class="dates">
+Published: April 03, 2023<br>
+Last Modified: April 03, 2023
 </p>
-
-<p>References</p>
-<p>https://nvd.nist.gov/vuln/detail/CVE-2020-10188<br>https://github.com/krb5/krb5-appl/blob/d00cd671dfe945791b33d4f1f6a5c57ae1667ef8/telnet/telnetd/utility.c#L205-L216<br>https://appgateresearch.blogspot.com/2020/02/bravestarr-fedora-31-netkit-telnetd_28.html<br>https://github.com/MidnightBSD/src/commit/db4d8bca9d3c1922a921d0ec5036a28b25332433</p>
 </body>
 </html>
