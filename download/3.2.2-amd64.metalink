@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalink version="3.0"
+  xmlns="http://www.metalinker.org/"
+  generator="http://metalinks.sourceforge.net/"
+  >
+<files>
+	<file name="MidnightBSD-3.2.2--amd64-bootonly.iso">
+		<size>347361280</size>
+		<verification>
+			<hash type="md5">0d90f70c3c61abf521e3c0345d7a10a8</hash>
+			<hash type="sha1">029412921082b127059bfb7245dd28f2bdd5a6af</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-bootonly.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-bootonly.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-bootonly.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-bootonly.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:029412921082b127059bfb7245dd28f2bdd5a6af&amp;dn=MidnightBSD-3.2.2--amd64-bootonly.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--amd64-disc1.iso">
+		<size>950773760</size>
+		<verification>
+			<hash type="md5">01e1ee392364326716fa1e68d9421cad</hash>
+			<hash type="sha1">48e54a0612ce929006e2b5327eb9da17d4a72c28</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-disc1.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-disc1.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-disc1.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-disc1.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:48e54a0612ce929006e2b5327eb9da17d4a72c28&amp;dn=MidnightBSD-3.2.2--amd64-disc1.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--amd64-memstick.img">
+		<size>1040589312</size>
+		<verification>
+			<hash type="md5">c2349ed1c53eb2622705ef8435cad39d</hash>
+			<hash type="sha1">26119153eb8ec05ca2134faca8e1fdbba7f4e34e</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:26119153eb8ec05ca2134faca8e1fdbba7f4e34e&amp;dn=MidnightBSD-3.2.2--amd64-memstick.img</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--amd64-mini-memstick.img">
+		<size>388866560</size>
+		<verification>
+			<hash type="md5">c245f33751492030d26f2fc984161d9e</hash>
+			<hash type="sha1">2e274aec9acf29e4f47039e0335d30dfed1714ea</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-mini-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-mini-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-mini-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/amd64/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--amd64-mini-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:2e274aec9acf29e4f47039e0335d30dfed1714ea&amp;dn=MidnightBSD-3.2.2--amd64-mini-memstick.img</url>
+		</resources>
+	</file>
+</files>
+</metalink>

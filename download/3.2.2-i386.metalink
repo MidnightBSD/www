@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalink version="3.0"
+  xmlns="http://www.metalinker.org/"
+  generator="http://metalinks.sourceforge.net/"
+  >
+<files>
+	<file name="MidnightBSD-3.2.2--i386-bootonly.iso">
+		<size>290021376</size>
+		<verification>
+			<hash type="md5">e177d3e374cea67879689bce60d58b61</hash>
+			<hash type="sha1">878b442309323f75c06b3bf86da0ea82077df48e</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-bootonly.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-bootonly.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-bootonly.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-bootonly.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:878b442309323f75c06b3bf86da0ea82077df48e&amp;dn=MidnightBSD-3.2.2--i386-bootonly.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--i386-disc1.iso">
+		<size>761544704</size>
+		<verification>
+			<hash type="md5">dbc8141e6b90669f8ffa02489e13f3dd</hash>
+			<hash type="sha1">1a21624a6f5704081813bf6ab4c74333571d9628</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-disc1.iso</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-disc1.iso</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-disc1.iso</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-disc1.iso</url>
+			<url type="magnet">magnet:?xt=urn:sha1:1a21624a6f5704081813bf6ab4c74333571d9628&amp;dn=MidnightBSD-3.2.2--i386-disc1.iso</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--i386-memstick.img">
+		<size>839033344</size>
+		<verification>
+			<hash type="md5">0beb320826b58aa0e57b7e9cd6a03a59</hash>
+			<hash type="sha1">dd38698a335ae5f33a1c52ae8fff0daa564ee7bb</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:dd38698a335ae5f33a1c52ae8fff0daa564ee7bb&amp;dn=MidnightBSD-3.2.2--i386-memstick.img</url>
+		</resources>
+	</file>
+	<file name="MidnightBSD-3.2.2--i386-mini-memstick.img">
+		<size>329720320</size>
+		<verification>
+			<hash type="md5">081fdbf6d764d018d92b85f29cbb6e8e</hash>
+			<hash type="sha1">044ad0ff106675227224e77c85889569d3b78cd7</hash>
+		</verification>
+		<resources>
+			<url preference="10" location="us" type="https">https://ns3.foolishgames.net/ftp/pub/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-mini-memstick.img</url>
+			<url preference="20" location="us" type="https">https://www.midnightbsd.org/ftp/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-mini-memstick.img</url>
+			<url preference="10" location="uk" type="https">https://discovery.midnightbsd.org/ftp/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-mini-memstick.img</url>
+			<url preference="10" location="jp" type="https">https://pub.allbsd.org/MidnightBSD/releases/i386/ISO-IMAGES/3.2.2/MidnightBSD-3.2.2--i386-mini-memstick.img</url>
+			<url type="magnet">magnet:?xt=urn:sha1:044ad0ff106675227224e77c85889569d3b78cd7&amp;dn=MidnightBSD-3.2.2--i386-mini-memstick.img</url>
+		</resources>
+	</file>
+</files>
+</metalink>
