@@ -52,3 +52,7 @@ User-agent: DataForSeoBot
 Crawl-delay: 20
 Disallow: /magus/
 Disallow: /ftp/
+
+User-agent: meta-externalagent
+Disallow: /magus/
+Disallow: /ftp/
