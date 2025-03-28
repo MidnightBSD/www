@@ -4,106 +4,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
- <url>
-  <loc>https://www.midnightbsd.org/art/dtps/midnightbsdwallpaper3.jpg</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/art/dtps/mnbsd_bg-oxalis.jpg</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/art/dtps/mnbsd_bg_green.png</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/deskutils/appwrapper/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/devel/py-ply/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/2bsd-vi/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/abiword/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/emacs/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/gedit/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/impress/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/jedit/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/jupp/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/linux-openoffice3/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/manedit/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/mousepad/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/nano/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/textedit/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/vim/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/editors/zile/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/finance/expense/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/finance/libofx/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/finance/openhbci/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/finance/opentaxsolver/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/finance/wmstock/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/mports/textproc/enchant/pkg-descr</loc>
-  <priority>0.0010</priority>
- </url>
+ 
  <url>
   <loc>https://www.midnightbsd.org/pipermail/midnightbsd-cvs/2007-August/013308.html</loc>
   <priority>0.0010</priority>
@@ -42862,6 +42763,10 @@
  </url>
  <url>
   <loc>https://www.midnightbsd.org/pipermail/midnightbsd-users/Week-of-Mon-20090309/004140.html</loc>
+  <priority>0.0010</priority>
+ </url>
+  <url>
+  <loc>https://www.midnightbsd.org/notes/0.3/errata.html</loc>
   <priority>0.0010</priority>
  </url>
  <url>
