@@ -47,3 +47,8 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /magus/
 Disallow: /ftp/
+
+User-agent: DataForSeoBot
+Crawl-delay: 20
+Disallow: /magus/
+Disallow: /ftp/
