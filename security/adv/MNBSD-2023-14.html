@@ -28,7 +28,7 @@
 </div>
 
 <h2>Description</h2>
-<p>Depending on the nature of an application that calls libc's stdio functions and the presence of errors returned from the write(2) system call (or an overridden stdio write routine) a heap buffer overflow may occur.  Such overflows may lead to data corruption or the execution of arbitrary code at the privilege level of the calling program.</p>
+<p>For line-buffered streams the __sflush() function did not correctly update the FILE object's write space member when the write(2) system call returns an error. Depending on the nature of an application that calls libc's stdio functions and the presence of errors returned from the write(2) system call (or an overridden stdio write routine) a heap buffer overflow may occur.  Such overflows may lead to data corruption or the execution of arbitrary code at the privilege level of the calling program.</p>
 
 <h2>Affected Versions</h2>
 <h3>libc</h3><ul></ul><p>Specific versions:</p><ul><li>3.0.0</li><li>3.0.1</li><li>3.0.2</li><li>3.1.0</li></ul>
@@ -38,14 +38,15 @@
 
 <h2>References</h2>
 <ul>
-<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-23:15.libc.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-23:15.libc.asc</a></li>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-23:15.stdio.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-23:15.stdio.asc</a></li>
+<li><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-5941">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-5941</a></li>
 </ul>
 
 <h2>Additional Information</h2>
-<p><strong>Aliases:</strong> FreeBSD-SA-23:15.libc</p>
+<p><strong>Aliases:</strong> FreeBSD-SA-23:15.libc, CVE-2023-5941</p>
 <p class="dates">
 Published: August 27, 2023<br>
-Last Modified: December 27, 2023
+Last Modified: March 24, 2025
 </p>
 </body>
 </html>
