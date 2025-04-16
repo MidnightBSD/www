@@ -31,6 +31,7 @@ Disallow: /
 User-agent: dotbot
 Disallow: /magus/
 Disallow: /ftp/
+Disallow: /opengrok/
 
 User-agent: AhrefsBot
 Disallow: /
@@ -57,3 +58,4 @@ Disallow: /ftp/
 User-agent: meta-externalagent
 Disallow: /magus/
 Disallow: /ftp/
+Disallow: /opengrok/
