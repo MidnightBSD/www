@@ -46,7 +46,6 @@ a:active, a:hover {
     background-repeat: no-repeat;
     width: 928px;
     height: 0 !important;
-    height /**/: 189px; /* Exploit IE parsing error to give height */
     padding: 189px 0 0 0; /* Pushes the div down to reveal the image */
     margin: 0 auto;
     display: block;

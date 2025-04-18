@@ -21,6 +21,10 @@
   <priority>0.0031</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/art/logo/</loc>
+  <priority>0.0031</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/community/</loc>
   <priority>0.0240</priority>
  </url>
@@ -31,6 +35,26 @@
  <url>
   <loc>https://www.midnightbsd.org/documentation/</loc>
   <priority>0.0627</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/kernel/modules.html</loc>
+  <priority>0.0031</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/mports/</loc>
+  <priority>0.0021</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/mports/fake.html</loc>
+  <priority>0.0031</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/mports/policy.html</loc>
+  <priority>0.0031</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/mports/bsd.port.pre.mk.html</loc>
+  <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/desktop.html</loc>
@@ -49,24 +73,8 @@
   <priority>0.0063</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/documentation/kernel/modules.html</loc>
-  <priority>0.0031</priority>
- </url>
- <url>
   <loc>https://www.midnightbsd.org/documentation/livecd.html</loc>
   <priority>0.0073</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/documentation/mports/</loc>
-  <priority>0.0021</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/documentation/mports/fake.html</loc>
-  <priority>0.0031</priority>
- </url>
- <url>
-  <loc>https://www.midnightbsd.org/documentation/mports/index.html</loc>
-  <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/postgresql.html</loc>
@@ -85,8 +93,12 @@
   <priority>0.1045</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/index.html</loc>
-  <priority>0.0178</priority>
+  <loc>https://www.midnightbsd.org/download/parallels.html</loc>
+  <priority>0.1045</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/download/vmware.html</loc>
+  <priority>0.1045</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/</loc>
@@ -129,11 +141,11 @@
   <priority>0.1045</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/notes/0.1.1/</loc>
+  <loc>https://www.midnightbsd.org/notes/0.1/errata.html</loc>
   <priority>0.0010</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/notes/0.1/index.html</loc>
+  <loc>https://www.midnightbsd.org/notes/0.1/</loc>
   <priority>0.0063</priority>
  </url>
  <url>
@@ -141,11 +153,31 @@
   <priority>0.0010</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/notes/0.2/index.html</loc>
+  <loc>https://www.midnightbsd.org/notes/0.1.1/</loc>
+  <priority>0.0010</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/0.1.1/errata.html</loc>
+  <priority>0.0010</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/0.2/</loc>
+  <priority>0.0052</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/0.2/errata.html</loc>
+  <priority>0.0052</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/0.2/notes.html</loc>
   <priority>0.0052</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.3/</loc>
+  <priority>0.0042</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/0.3/errata.html</loc>
   <priority>0.0042</priority>
  </url>
  <url>
@@ -169,16 +201,40 @@
   <priority>0.0031</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/notes/1.2/</loc>
-  <priority>0.0094</priority>
- </url>
-  <url>
   <loc>https://www.midnightbsd.org/notes/1.0/</loc>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/1.1/</loc>
   <priority>0.0010</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/1.2/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/2.0/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/2.1/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/2.2/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/3.0/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/3.1/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/3.2/</loc>
+  <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/</loc>
@@ -221,8 +277,16 @@
   <priority>0.0502</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/security/adv/</loc>
+  <priority>0.0502</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/sitemap/</loc>
   <priority>0.0251</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/soc/</loc>
+  <priority>0.0209</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/support/</loc>

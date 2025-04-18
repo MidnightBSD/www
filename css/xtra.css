@@ -41,7 +41,10 @@ table.download { margin: 0 auto; border: 1px solid #ccc; border-collapse: collap
 #text img { border: none; }
 
 /* ========= ART Project ========= */
-table.art { margin: 0 auto; border-collapse: collapse; margin-top: 2em; }
+table.art {
+    border-collapse: collapse;
+    margin: 2em auto 0;
+}
 .art td { border: 1px solid #ccc; padding: 5px; text-align: center; }
 .art th { background: #f2fbff; border: 1px solid #dff2fb; padding: 5px; text-align: center; }
 .art caption { font-weight: bold; margin-bottom: .4em; }
@@ -64,7 +67,7 @@ pre { font-size: 12pt; color: #4A8797; padding: 0 40px; }
 #sitemap-col1 ul, #sitemap-col2 ul { margin-left: 1.5em; padding: 0; }
 
 /* ========= FEATURED ========= */
-.featured img { float: left; padding: 0 10px 0px 0; border: none; }
+.featured img { float: left; padding: 0 10px 0 0; border: none; }
 .featured { margin: 0; padding: 0; }
 .featured h3 { margin: 40px 0 0 74px; padding: 0; }
 .featured-date { color: #666; margin: 3px 0 0 0; text-align: left; }
