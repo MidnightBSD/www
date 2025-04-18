@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>MidnightBSD :: Documentation :: 0.1.1-RELEASE Errata</title>
-<link rel="stylesheet" type="text/css" media="all" href="/css/essence.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <title>MidnightBSD :: Documentation :: 0.1.1-RELEASE Errata</title>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/essence.css"/>
+    <link rel="canonical" href="https://www.midnightbsd.org/notes/0.1.1/errata.html">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
             <li><a href="/support/index.html" title="Support">Support</a></li>
         </ul>
 	<p style="border-top: thin dashed silver; padding-top: 10px;"><img src="/images/feed.gif" alt="RSS Feed" /> 
-	<a href="http://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
+	<a href="https://www.justjournal.com/users/mbsd/rss">Developer Blog</a></p>
 </div>
 
 <h2>0.1.1-RELEASE Errata</h2>
@@ -32,29 +33,30 @@
 Several security issues have been patched since 0.1.1.  It is recommended that
 users update to the latest sources on the RELENG_0_1 branch using CVSup or cvs
 and build source if they are using MidnightBSD on servers or important systems.
+</p>
 
 <p>
 Users attempting to run IPV6 tunnels may notice a lot of spam in their logs
 about neighbor peering.  This has recently been corrected in 0.2 (development version).
+</p>
 
 <p>
 The order of packages on the CDs require users to swap between them.  GNUstep users
-would be advised to checkout a new version of mports.  
+would be advised to checkout a new version of mports.</p>
 
 <p>
 Users planning on updating mports should consider avoiding package installation on the
-CD.  This release shipped with x.org 6.9 and we now include 7.3 with mports.
+CD.  This release shipped with x.org 6.9 and we now include 7.3 with mports.</p>
 
 <p>
 Using Virtual PC, Parallels or VMWare: <br />
 If you install MidnightBSD in VPC, you will need to set hint.acpi.0.disabled="1" 
 in /boot/device.hints This will help with the "calcru: negative runtime of" issue.
+</p>
 
 <p>
 This has been addressed in 0.2-CURRENT for some virtualization products.
- 
-</pre>
- 
+</p>
 </div>
 <!-- END CONTENT -->
 

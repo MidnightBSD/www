@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MidnightBSD 1.2 Release Notes</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="canonical" href="https://www.midnightbsd.org/notes/1.2/">
     <style type="text/css" media="all">
         @import url("../../css/essence.css");
 
@@ -13,33 +14,12 @@
             margin-bottom: 5px;
         }
 
-        .note {
-            font-size: 80%;
-            color: #aaa;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
         .update h4 {
             color: #15a9ed;
             text-align: center;
             padding-top: 0.4em;
             margin-bottom: 0;
             display: block;
-        }
-
-        .update {
-            background: #f2fbff;
-            border: 2px solid #dff2fb;
-            font-size: 80%;
-            width: 40%;
-            float: left;
-            margin-right: 2.4em;
-            color: #555;
-        }
-
-        .ast {
-            color: #1373ce;
         }
 
         #list ul {
@@ -70,7 +50,7 @@
                 Recommended to update to the 1.2-stable branch.
 
                 In addition, we migrated from SVN to Git after the release. Be sure
-                to fetch updates from Github.
+                to fetch updates from GitHub.
 
 		1.2.7 - Fix bugs in USB stack, mport package manager, and multiple security issues. (see security page)
 		1.2.8 - Fix security vulnerability in dhclient
@@ -182,7 +162,7 @@
                 mport config get mirror_region
             </code>
 
-        <p>Set the a new mirror location:
+        <p>Set the new mirror location:
             <code>
                 mport config set mirror_region jp
             </code>
@@ -198,14 +178,14 @@
             /usr/mports/Packages and
             run mport clean to remove old package remnants.
 
-        <p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the
+        <p>You may use svnlite (part of the base system) to check out mports or src, if you do not wish to install the
             svn package.
 
             <br>e.g.
-            <br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
+            <br>cd /usr/ && svnlite co https://svn.midnightbsd.org/svn/mports/trunk mports
         </p>
 
-        <p>mports moved to github and you can also use the git package to fetch updated mports with
+        <p>mports moved to GitHub and you can also use the git package to fetch updated mports with
         cd /usr/ && git clone https://github.com/midnightbsd/mports.git </p>
 
         <p>portsnap is also available in this release and can be used to update mports also.

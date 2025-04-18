@@ -3,9 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        MidnightBSD Security Updates
-    </title>
+    <title>MidnightBSD Security Updates</title>
     <link rel="shortcut icon" href="/favicon.ico"/>
     <style type="text/css" media="all">
         @import url("../css/essence.css");
@@ -29,26 +27,53 @@
             <img src="../images/oxygen/security32.png" alt="�"/> Security Updates
         </h2>
 
+        <h3>Reporting Security Issues</h3>
+
+        <p>Below are instructions for reporting issues.  We do <b>not</b> have a bug bounty program. That's for large companies that make money.
+            We are a volunteer open source project.</p>
+
+        <h4>OS</h4>
+
+        <p>For new issues that aren't already public, report security vulnerabilities to security@midnightbsd.org or via the GitHub private vulnerability feature.</p>
+        <p>For publicly disclosed issues, create a pull request at https://github.com/MidnightBSD/midnightbsd-vulns
+        with the details. You may also create a PR to fix it on the <a href="https://github.com/MidnightBSD/src">src repository</a>.</p>
+
+        <h4>mports &amp; Magus</h4>
+        <p>Report security vulnerabilities to security@midnightbsd.org or create a pull request or issue on the
+            <a href="https://github.com/MidnightBSD/mports">mports repository</a> for
+        ports/packages that need updates.  Also report Magus security issues here.</p>
+
+        <h4>MidnightBSD Infrastructure</h4>
+        <p>Report security vulnerabilities to security@midnightbsd.org.</p>
+        <p>The following are not vulnerabilities:</p>
+        <ul>
+            <li>FTP server  - yes we run one for older MidnightBSD versions.  It's anonymous only and public. Not a vulnerability.  Prefer https when downloading.</li>
+            <li>Jenkins - yes we run a public jenkins.  it's an open source project. we are transparent.</li>
+        </ul>
+
+
         <h3>mport Software Packages</h3>
 
-        <p>For third party security advisories related to packages, try the <a href="http://sec.midnightbsd.org/#!/">Security
-            Advisory</a> website. To detect
-            vulnerable software packages installed on the system, install the security advisory client.
-            <i>mport install security-advisory-client</i>. Then simply run advisory.pl to check your system.</p>
+        <p><code>mport audit</code> can be used to check for security issues with packages on mport versions included with MidnightBSD 3.0.2 and higher</p>
 
-        <p><code>mport audit</code> can also be used to check for security issues with packages on mport versions included with MidnightBSD 3.0.2 and higher</p>
+        <p>To detect
+            vulnerable software packages installed on the system, install the security advisory client.
+            <code>mport install security-advisory-client</code>. Then simply run advisory.pl to check your system.</p>
+
+        <p>For third party security advisories related to packages, try the <a href="http://sec.midnightbsd.org/#!/">Security
+            Advisory</a> website.</p>
 
         <h3>MidnightBSD Security Advisories</h3>
 
-	<h4>2025</h4>
+        <h4>2025</h4>
         <ul>
             <li><a href="adv/MNBSD-2025-3.html">MNBSD-2025-3</a></li>
             <li><a href="adv/MNBSD-2025-2.html">MNBSD-2025-2</a></li>
             <li><a href="adv/MNBSD-2025-1.html">MNBSD-2025-1</a></li>
             <li><a href="adv/MNBSD-2025-0.html">MNBSD-2025-0</a></li>
-	</ul>
-	<h4>2024</h4>
-	<ul>
+        </ul>
+        <h4>2024</h4>
+        <ul>
             <li><a href="adv/MNBSD-2024-6.html">MNBSD-2024-6</a></li>
             <li><a href="adv/MNBSD-2024-5.html">MNBSD-2024-5</a></li>
             <li><a href="adv/MNBSD-2024-4.html">MNBSD-2024-4</a></li>
@@ -56,9 +81,9 @@
             <li><a href="adv/MNBSD-2024-2.html">MNBSD-2024-2</a></li>
             <li><a href="adv/MNBSD-2024-1.html">MNBSD-2024-1</a></li>
             <li><a href="adv/MNBSD-2024-0.html">MNBSD-2024-0</a></li>
-	</ul>
-	<h4>2023</h4>
-	<ul>
+        </ul>
+        <h4>2023</h4>
+        <ul>
             <li><a href="adv/MNBSD-2023-17.html">MNBSD-2023-17</a></li>
             <li><a href="adv/MNBSD-2023-16.html">MNBSD-2023-16</a></li>
             <li><a href="adv/MNBSD-2023-15.html">MNBSD-2023-15</a></li>
@@ -115,7 +140,7 @@
             <p>MidnightBSD 2.2.4</p>
 
             <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
-                in inflate in inflate.c via a large gzip header extra field.</p>
+                in inflate.c via a large gzip header extra field.</p>
 
             <p>Update tzdata to 2022c</p>
         </blockquote>
@@ -197,7 +222,7 @@
             <p>MidnightBSD 2.1.3</p>
             <p>mport package manager (20121217)</p>
 
-            <p>Bug fix for HyperV support in windows 2022 server.</p>
+            <p>Bug fix for HyperV support in Windows 2022 server.</p>
 
             <p>Fix register restore for SSE/XMM</p>
         </blockquote>

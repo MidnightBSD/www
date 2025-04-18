@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MidnightBSD Release Notes</title>
-    <link rel="shortcut icon" href="/favicon.ico"/>
+    <title>MidnightBSD Release Notes - 0.8-RELEASE</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://www.midnightbsd.org/notes/0.8/">
     <style type="text/css" media="all">
         @import url("../../css/essence.css");
 
@@ -13,33 +14,12 @@
             margin-bottom: 5px;
         }
 
-        .note {
-            font-size: 80%;
-            color: #aaa;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
         .update h4 {
             color: #15a9ed;
             text-align: center;
             padding-top: 0.4em;
             margin-bottom: 0;
             display: block;
-        }
-
-        .update {
-            background: #f2fbff;
-            border: 2px solid #dff2fb;
-            font-size: 80%;
-            width: 40%;
-            float: left;
-            margin-right: 2.4em;
-            color: #555;
-        }
-
-        .ast {
-            color: #1373ce;
         }
 
         #list ul {
@@ -234,7 +214,7 @@
 
         <ul>
             <li>mlogind is the new MidnightBSD login manager. It’s based on slim with some customizations and bug fixes.
-                The code is on github.
+                The code is on GitHub.
 
             <li>Mport manager - a graphical front end to MidnightBSD’s package manager
 
@@ -247,7 +227,7 @@
         <p>Note: this release is a little weak on packages and that will be corrected over time.
             Many ports actually work if you build from source such as ruby, gnome 3, node/npm, etc.
             We also made progress on the openjdk 6 port. It’s not working with some software, most notably
-            Tomcat but you can run some desktop applications on it.
+            Tomcat, but you can run some desktop applications on it.
 
 
         <p>If you are updating an existing system, after installing 0.8,
@@ -255,11 +235,11 @@
             /usr/mports/Packages and
             run mport clean to remove old package remnants.
 
-        <p>You may use svnlite (part of the base system) to checkout mports or src, if you do not wish to install the
+        <p>You may use svnlite (part of the base system) to check out mports or src, if you do not wish to install the
             svn package.
 
             <br>e.g.
-            <br>cd /usr/ && svnlite co http://svn.midnightbsd.org/svn/mports/trunk mports
+            <br>cd /usr/ && svnlite co https://svn.midnightbsd.org/svn/mports/trunk mports
         </p>
 
 

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 3.2 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css" media="all">
+        @import url("../../css/essence.css");
+
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+    <link rel="canonical" href="https://www.midnightbsd.org/notes/3.2/">
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+		       </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="../2.1/index.html">2.1-RELEASE</a></li>
+                <li><a href="../2.2/index.html">2.2-RELEASE</a></li>
+                <li><a href="../3.0/index.html">3.0-RELEASE</a></li>
+                <li><a href="../3.1/index.html">3.1-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <h3>(07/22/2024) MidnightBSD 3.2</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 3.2 for amd64 and i386.
+
+        <p>This release included updates to third-party libraries, bug fixes from the 3.1 release,
+        and security updates.
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already<br>
+        <code>mport install git</code>
+        </p>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <p>
+        <code>git clone -b stable/3.2 https://github.com/MidnightBSD/src.git</code>
+        </p>
+
+        <p>NOTE: some users have experienced build errors on 2.x which require disabling perl in usr.bin/Makefile at the top and
+       removing camcontrol and df from the rescue/rescue/Makefile temporarily.  You can build these once on 3.x.</p>
+
+        <p>
+        <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
+        choose one of etcupdate or mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        </p>
+
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        choose one of etcupdate or mergemaster -iU<br>
+            </code>
+        </p>
+
+        <p>
+        Update installed mports/packages<br>
+        For mport package manager, run
+        <code>
+            mport index<br>
+            mport clean<br>
+            mport upgrade<br>
+        </code>
+        </p>
+
+        <p>Remove old libraries and programs from the base.</p>
+        <p><code>
+            rm -rf /usr/lib/perl/5.36.1
+            cd /usr/src/; make check-old; make delete-old; make installworld;
+        </code>
+        </p>
+
+        <p>Perl was removed from base in 3.2.  Install from mports or packages via mport install perl5.36
+        </p>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <h5>Ravenports</h5>
+
+        <p>Ravenports is available in MidnightBSD for the amd64 architecture.  The initial installation process will
+            prompt you to bootstrap Ravenports.  This will initialize it in /raven/, and you will be able to install
+            software packages using /raven/sbin/ravensw.  By default, /raven/bin, /raven/sbin, and so on are not on the
+            path.  You can add them to the path to make running software in your shell easier.  Please visit their
+            website to learn more about Ravenports and find quickstart guides.  <a href="http://www.ravenports.com/">http://www.ravenports.com/</a>
+
+        <p>You can choose either mports or Ravenports at installation time or use packages from both systems.
+        Please note that mixing packages may have some complications, although they are installed in a completely different place from mports.
+
+        <p>There are various benefits to Ravenports, but a few are more updated packages and quite a few unique packages
+        that mports doesn’t provide currently. For example, Ravenports has an updated Firefox package available.
+
+        <p>You will not see Ravenports presented as an option on an i386 install.
+
+        <h5>Mport package manager</h5>
+
+        <p>Updated mport to 2.6.2</p>
+
+        <h5>Miscellaneous Changes</h5>
+
+        <p>Fixed a bug with portsnap configuration with 3.x releases where it used an old index.</p>
+
+        <p>Fix for some vnc clients with bhyve, added  com ports to bhyve</p>
+
+        <p>Various manual pages cleaned up.</p>
+
+        <p>zstd enabled in libarchive</p>
+
+        <p>telnetd removed</p>
+
+        <p>libfetch: don't rely on ca_root_nss for certificate validation</p>
+
+        <p>add endian.h for linux compatibility</p>
+
+        <h4>Security Fixes</h4>
+
+        <p>OpenSSH security vulnerability<br />
+
+            A signal handler in sshd(8) calls a function that is not async-signal-safe.
+            The signal handler is invoked when a client does not authenticate within the
+            LoginGraceTime seconds (120 by default).  This signal handler executes in the
+            context of the sshd(8)'s privileged code, which is not sandboxed and runs
+            with full root privileges.<br/>
+
+            This issue is a regression of CVE-2006-5051 originally reported by Mark Dowd
+            and accidentally reintroduced in OpenSSH 8.5p1.</p>
+
+        <p>OpenSSH 9.3p2 - CVE-2023-38408
+
+            Patch for CVE-2023-48795</p>
+
+        <p>Fix security issue in libpcap OSV-2020-1231</p>
+
+        <p>Fix for wpa supplicant CVE-2023-52160</p>
+
+        <p>pf security issue:<br/>
+            As part of its stateful TCP connection tracking implementation, pf
+            performs sequence number validation on inbound packets.  This makes it
+            difficult for a would-be attacker to spoof the sender and inject packets
+            into a TCP stream, since crafted packets must contain sequence numbers
+            which match the current connection state to avoid being rejected by the
+            firewall. A bug in the implementation of sequence number validation means that the
+            sequence number is not in fact validated, allowing an attacker who is
+            able to impersonate the remote host and guess the connection's port
+            numbers to inject packets into the TCP stream.</p>
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>Perl removed from base.  Install via mports
+            <li>brainfuck removed from base.  Moved to mports</li>
+            <li>Removed subversion from base.  install from mports if needed. (use git for MidnightBSD)</li>
+            <li>expat 2.6.2</li>
+            <li>ldns 1.8.3</li>
+            <li>sendmail 8.18.1</li>
+            <li>libarchive 3.7.2</li>
+            <li>zstd 1.5.2</li>
+            <li>Unbound 1.19.3</li>
+            <li>xz / lzma 5.4.5</li>
+            <li>tzdata 2023d</li>
+            <li>mandoc 1.14.6</li>
+            <li>OpenSSH 9.3p2</li>
+            <li>nvi 2.2.1</li>
+            <li>openssl 1.1.1w</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>PCI vendors list updated (April 2024)</p>
+
+        <p>AMD zen4 temperature sensor support</p>
+
+        <p>unbreak Promise RAID1 with 4+ providers</p>
+
+        <p>usbdevs: add quirk for WD MyPassport Ultra External HDD</p>
+
+        <p>ahci: add AMD KERNCZ (RAID) device id in RAID mode</p>
+
+        <h4>Known Issues</h4>
+
+        <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
+
+        <p>On VirtualBox 7, Xorg needs over 1GB of RAM allocated to run without swapping or crashing.  Occasional VM hangs have also been seen. It works fine on bare metal, bhyve, or VMware products.
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+
