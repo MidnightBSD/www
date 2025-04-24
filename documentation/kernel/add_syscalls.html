@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Kernel Documentation - Adding System Calls</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/kernel/modules.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../../images/oxygen/doc32.png" alt="" /> Kernel Documentation</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Adding Syscalls</a></li>
+                <li><a href="../index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+        <h3 id="s1a">Kernel Modules</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>This guide, when complete, will give you the background information necessary to add system calls.</p>
+        <h4 id="s1c">Adding Syscalls</h4>
+
+        <p>Note: this is based on the FreeBSD document https://wiki.freebsd.org/AddingSyscalls
+
+        <p>The process of adding syscalls to MidnightBSD has slowly grown more complex over the years. New features such as audit have added extra fields to the syscalls.master files, symbol versioning added another file to edit in src/lib/libc, and 32-bit compatibility for 64-bit versions requires two declarations of each syscall and translation of some arguments.
+
+        <p>NOTE WELL: Adding new syscalls is not to be done lightly. Once we have shipped a syscall in a release, we are generally stuck with it or at least with something that implements the same interface forever. When in doubt, request and obtain review from senior developers!
+
+        <p> WARNING: Incorrectly implemented system calls may present serious risks to system stability and security. This document does not address many issues that must be considered when adding any new kernel interface and should not be considered complete.
+
+        <p>Registering a syscall Syscalls are declared in sys/kern/syscalls.master with entries like:
+
+        <p>485 AUE_NULL STD { int cpuset_setid(cpuwhich_t which, id_t id,
+        cpusetid_t setid); } The format of this line is documented at the top of the file. In general, all new syscalls should be of type STD or NOSTD. The function declaration part contains the prototype of the syscall as seen from userspace. This prototype must also be declared somewhere so userland code can call it, typically in a header under sys/sys/. In this case, it is declared in sys/sys/cpuset.h. After adding an entry to sys/kern/syscalls.master, you must regenerate the generated files in sys/kern and sys/sys:
+
+        <p>$ make -C sys/kern/ sysent mv -f init_sysent.c init_sysent.c.bak mv -f syscalls.c syscalls.c.bak mv -f systrace_args.c systrace_args.c.bak mv -f ../sys/syscall.h ../sys/syscall.h.bak mv -f ../sys/syscall.mk ../sys/syscall.mk.bak mv -f ../sys/sysproto.h ../sys/sysproto.h.bak sh makesyscalls.sh syscalls.master $ make -C sys/i386/linux sysent $ make -C sys/amd64/linux sysent $ make -C sys/amd64/linux32 sysent $ make -C sys/compat/freebsd32 sysent
+
+        <p>Implementing a syscall The actual system calls of type STD are implemented by a function with a prototype of the form:
+
+        <p>/* XXX: Padding members removed for clarity. See sysproto.h for details. / struct cpuset_setid_args { cpuwhich_t which; id_t id; cpusetid_t setid; }; / XXX: variable names below are typical, but are not defined in sysproto.h. */ int cpuset_setid(struct thread *td, struct cpuset_setid_args *uap); The return value of this function becomes the value of errno in userspace and if non-zero the userspace function returns -1. Explicit return value can be set in td->td_retval[0]. In the cpuset_setid case, this function resides in sys/kern/kern_cpuset.c.
+
+        <p>Auditing Security event auditing allows fine-grained logging of security-relevant events in the operating system, and is described by the CAPP common criteria protection profile. Detailed information on configuring audit can be found in the FreeBSD Handbook http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/audit.html, and an implementation paper can be found on the TrustedBSD website http://www.trustedbsd.org/.
+
+        <p>Most system calls are considered security-relevant, as they frequently involve access control checks, communication between processes, or system configuration, and therefore almost all system calls will be audited. You can find more detailed information on the AddingAuditEvents page. Please do not forget to add appropriate auditing to your new system call, be it a native call or a compat one!
+
+        <p>The audit event identifier space is managed by the OpenBSM project, and you will need to request assignment of a new identifier if an existing one isn't a good match.
+
+        <p>Capsicum If the new syscall is safe for use in Capsicum capability mode, add it to sys/kern/capabilities.conf. Safe syscalls must not provide access to global namespaces such as the process ID namespace or the filesystem namespace (*at calls relative to a directory are OK), and must check capability rights when using file descriptors.
+
+        <p>Userspace considerations NOTE: This is FreeBSD based, and MidnightBSD uses it's own symbols such as MBSD_1.2
+
+        <p>In addition to adding the syscall to the kernel's table the symbol must be added to the symbol map in libc. This is done by adding entries to src/lib/libc/sys/Symbol.map. Each syscall results in three symbols. In the example of cpuset_setid, they are cpuset_setid, _cpuset_setid, and __sys_cpuset_setid. The plain cpuset_setid symbol must be added to the most recent namespace map (which is currently FBSD_1.6 for new syscalls introduced in 13.0-CURRENT but can change later) as per http://people.freebsd.org/~deischen/symver/freebsd_versioning.txt. The _cpuset_setid and __sys_cpuset_setid symbols other two are only for internal use and should not be in Symbol.map unless libthr (or some other core library) needs them. If they are added, place them in the FBSDprivate_1.0 map.
+
+        <p> Add syscall prototype to the user-visible portion of appropriate header, hiding it under the proper visibility check. For instance, a non-standard syscall prototype typically needs #if __BSD_VISIBLE/#endif visibility control.
+
+        <p>Add man page for the syscall, at lib/libc/sys/YOURSYSCALL.2, and connect it to the build in lib/libc/sys/Makefile.inc.
+
+        <p>Sometimes raw kernel syscalls interfaces cannot be used directly and require 'tiny .c wrappers' in userspace. The wrappers are typically used for one of two purposes:
+
+        <p>Convert raw kernel interface into something expected by userspace, often this conversion uses more generic and non-standard interface to implement more usual function. Examples are open(2) or waitid(2) which are really tiny wrappers around openat(2) and wait6(2) in today libc.
+
+        <p>Allow libthr to hook into libc to provide additional services. Libthr often has to modify semantic of raw syscall, for instance to implement cancellation, and libc contains the tables redirecting call to the runtime-selected implementation. The tables are patched on libthr load. Since tables must fill entries with some address in case libthr is not loaded, tiny functions which wrap syscalls are created for use in that tables.
+
+        <p>Adding 32-bit compatibility In addition to the main implementation, all new syscalls must include a 32-bit compatibility definition. For syscalls where all arguments are of identical size and layout or where arguments are 32-bit on 32-bit systems and 64-bit on 64-bit systems such as pointers, long ints, or size_t variables, it is sufficient to add a definition of type NOPROTO to sys/compat/freebsd32/syscalls.master:
+
+        <p>484 AUE_NULL NOPROTO { int cpuset(cpusetid_t *setid); } As with sys/kern/syscalls.master, files in sys/compat/freebsd32 need to be regenerated after a change to sys/compat/freebsd32/syscalls.master:
+
+        <p> $ cd sys/compat/freebsd32/ $ make sysent mv -f freebsd32_sysent.c freebsd32_sysent.c.bak mv -f freebsd32_syscalls.c freebsd32_syscalls.c.bak mv -f freebsd32_syscall.h freebsd32_syscall.h.bak mv -f freebsd32_proto.h freebsd32_proto.h.bak sh ../../kern/makesyscalls.sh syscalls.master syscalls.conf $ In other cases, things are more complex. Two key cases are 64-bit arguments such as off_t and id_t and pointers to entries of different sizes and/or layouts such as size_t or struct statfs. In the former case, 64-bit arguments are split into two arguments when actually passed. As a result, the function needs to be defined with appropriate arguments in syscalls.master and use an implementation that stiches the pieces back together. For example, this is the sys/compat/freebsd32/syscalls.master definition for cpuset_setid:
+
+        <code>
+            485 AUE_NULL STD { int freebsd32_cpuset_setid(cpuwhich_t which, uint32_t idlo, uint32_t idhi, cpusetid_t setid); }
+        </code>
+
+            and this is the implementation in sys/compate/freebsd32/freebsd32_misc.c:
+
+        <code>
+        int freebsd32_cpuset_setid(struct thread *td, struct freebsd32_cpuset_setid_args *uap) { struct cpuset_setid_args ap;
+
+        ap.which = uap->which;
+        ap.id = (uap->idlo | ((id_t)uap->idhi << 32));
+        ap.setid = uap->setid;
+
+        return (cpuset_setid(td, &ap));
+        }
+        </code>
+
+            <p>In this case, it is sufficient to simply create a new argument pointer and pass it in to the primary implementation.
+
+        <p>In the case of pointers to differently sized or aligned arguments, things get more complex. Calls to copyin and copyout must be altered so that correctly formatted data is passed to the primary implementation function and returned to userspace. In this case, a kern_syscall function is usually defined which is called to do the actual work by both the normal and 32-bit compatibility interface functions which simply handle marshaling of data. For example, let us consider a hypothetical syscall foo which takes a pointer to a buffer and a pointer to the size of the buffer and copies data to the buffer and the amount of data copied to the size pointer. The declaration of foo in sys/kern/syscalls.master would look like:
+
+        <code>666 AUE_NULL STD { int foo(char *buf, size_t *bufsize); }</code>
+
+        The primary implementation would look like (ignoring kern_foo() since we don't care what it does:
+
+        <code>
+        int foo(struct thread *td, struct foo_args *uap) { int error; size_t bufsize;
+
+        if ((error = copyin(uap->bufsize, &bufsize, sizeof(bufsize))) != 0)
+        return(error);
+
+        if ((error = kern_foo(td, uap->buf, &bufsize)) != 0)
+        return(error);
+
+        return (copyout(&bufsize, uap->bufsize, sizeof(bufsize)));
+        }
+        </code>
+
+            In sys/compat/freebsd32/syscalls.master we would need a somewhat different definition:
+
+        <code>
+        666 AUE_NULL STD { int freebsd32_foo(char *buf, uint32_t *bufsize); }
+        </code>
+
+            Likewise, the implementation is a little more complex:
+
+        <code>
+        int foo(struct thread *td, struct foo_args *uap) { int error; uint32_t bufsize32 size_t bufsize;
+
+        if ((error = copyin(uap->bufsize, &bufsize32, sizeof(bufsize32))) != 0)
+        return(error);
+        bufsize = bufsize32;
+
+        if ((error = kern_foo(td, uap->buf, &bufsize)) != 0)
+        return(error);
+
+        bufsize32 = bufsize;
+        return (copyout(&bufsize32, uap->bufsize, sizeof(bufsize32)));
+        }
+        </code>
+
+        <p>Testing 32-bit compatibility 32-bit compatibility is somewhat tricky so it's important to test it. If you have access to an amd64 machine, this is easy if you have a utility in the base use can use for testing. Just get your new code up and running normally then buildworld with TARGET=i386. You can then grab the executables you need from /usr/obj and run your tests with them.
+
+        <p>Backward compatibility The backward compatibility, i.e. ability to run older binaries on newer kernels, is required. Each case where a decision is made to abandon backward compatibility, requires coordination with re and perhaps buy-in from the community.
+
+        <p>The question of backward compatibility typically arises when either semantic or call syntax of existing syscall are changed. Such changes require allocation of new syscall number, while leaving old syscall as is. Old syscall can be marked with compatX, and its implementation wrapped into #ifdef COMPAT_FREEBSDX/#endif braces to save some space for people who know for sure to not need backward compatibility. Old syscall symbol must have same symbol version in libc as it has before the new syscall addition. Handle this in lib/libc/include/compat.h, where the __sym_compat() macro provides a wrapper around the versioning mechanism and is included into all generated syscall stubs.
+
+        <p>Forward compatibility Since it is fairly common to run a new userland with a somewhat older kernel (for example, the ports building cluster often does this), it is recommended to make this work. Running new binaries on old kernels is termed forward compatibility. Increment __MidnightBSD_version in sys/sys/param.h and only call the new syscall if __MidnightBSD_version is high enough. This check should be in a single place in libc or libthr (for example, override the syscall's symbol with a C function that does the check and calls the _sys version if the syscall is available), so it does not spread to everywhere that uses the new call. If your new syscall is used in bootstrap tools, additional work is required since these tools must build on older versions.
+
+        <p>If forward compatibility is not possible or incomplete, coordination with portmgr@ and an UPDATING entry are likely required.
+
+        <p>Keep in mind that ports may automatically detect and start using new syscalls at build time.
+
+        <p>An example of forward compatibility can be found in revision 277610.
+
+        <p>Generally speaking, if the new system call is used in the install world or pkg(8) path, that's a good candidate to consider doing forward compat shims for. If it is an obscure area that might be rarely used by most simple uses of the system, compat shims aren't necessary and the ENOSYS / SIGSYS behavior is enough to force the upgrade.
+
+        <p>This project requires backward compatibility (running old binaries on new kernels) when adding a new system call. The old interface should be placed under COMPAT_FREEBSDxx (xx is the major version one before where the new API is introduced) so they can be compiled out of the kernel. The project doesn't require forward compatibility (the UPDATING procedures are written so that it isn't required). However, it is allowed at the discretion of the new system call author and is a good idea if a install world w/o a new kernel will result in an unusable system.
+
+        <p>Committing We commit syscalls in two steps. First we commit the implementation along with the syscalls.master files. Then we run "make sysent" in sys/kern and sys/compate/freebsd32 and commit the generated files. This is done to the generated files contain the right values in their "created from MidnightBSD:" lines.
+
+        <p>MFCing Some time prior to an MFC, you should add stub entries for your syscalls to ease rollback. This can help prevent problems for users who upgrade, install applications that use the new system call, and then downgrade their kernels which results in those applications being killed with SIGSYS. If the new feature is used by login or sh this can be very bad. An example of adding such stubs can be found in revision 156791.
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
