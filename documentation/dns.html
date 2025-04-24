@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Documentation - DNS Configuration with resolv.conf</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/dns.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> DNS Configuration with resolv.conf</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Preventing Automatic Config Changes</a></li>
+                <li><a href="#s1d">Static IP</a></li>
+                <li><a href="#s1e">Immutable resolv.conf</a></li>
+                <li><a href="#s1f">Override the dhclient config</a></li>
+                <li><a href="#s1g">Disable resolvconf(8)</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1b">Introduction</h3>
+
+        <p>By default, /etc/resolv.conf is updated when DHCP is enabled for an interface. This is useful for WiFi or laptops where you frequently change networks. However, it can be problematic sometimes when different DNS servers are required.
+        </p>
+
+        <p>For static IP addresses, this is not modified automatically.</p>
+
+        <h3 id="s1c">Preventing Automatic Config Changes</h3>
+
+        <p>Methods to try:
+
+        <ul>
+            <li>Use a static IP address</li>
+            <li>Make /etc/resolv.conf immutable</li>
+            <li>Override the dhclient configuration</li>
+            <li>Turn off resolvconf</li>
+        </ul>
+
+        <h3 id="s1d">Static IP</h3>
+
+        <p>Simply edit your /etc/rc.conf and replace DHCP in your ifconfig line with a static IP configuration</p>
+
+        <h3 id="s1e">Immutable resolv.conf</h3>
+
+        <p>chflags schg /etc/resolv.conf</p>
+
+        <h3 id="s1f">Override the dhclient config</h3>
+
+        <p>place the following in /etc/dhclient.conf, but change the name of the interface as appropriate. This example uses OpenDNS with an Intel Gigabit NIC.
+
+        <pre>
+        interface "em0" {
+
+        supersede domain-name-servers 208.67.222.222,208.67.220.220;
+
+        }
+        </pre>
+
+
+        <p>You will need to restart the dhclient for changes to take effect.
+
+        <p><code>service dhclient restart em0</code>
+
+        <h3 id="s1g">Disable resolvconf(8)</h3>
+
+        <p>Create a file
+
+            <code>/etc/resolvconf.conf</code>
+
+        <p>Place this in the file
+
+        <code>resolv_conf="/dev/null"</code>
+
+        <p>Alternatively, disable in /etc/rc.conf <code>resolvconf="NO"</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
