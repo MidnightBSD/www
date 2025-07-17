@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Documentation - Firewall</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/firewall.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Firewall</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">IPFW</a></li>
+                <li><a href="#s1c">PF</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1b">IPFW</h3>
+
+        <p>By default, MidnightBSD has the IPFW enabled at startup. It is configured for desktop users and can optionally
+            allow mDNSresponder traffic if it's enabled in /etc/rc.conf as well as sshd and DHCP. Most other things are blocked inbound.
+
+        <p>There are other firewalls available such as PF in MidnightBSD. This is focused on our default firewall IPFW.
+
+        <p>Open Firewall / Custom Rules for IPFW If you'd rather create your own ruleset, do something like this in /etc/rc.conf
+
+        <pre>
+        firewall_type="OPEN"
+        firewall_enable="YES"
+        firewall_logging="YES"
+        firewall_script="/etc/firewall.rules"
+        </pre>
+
+        <p>The /etc/firewall.rules script should be a shell script that loads your rules.</p>
+
+        For example:
+
+        <pre>
+        #!/bin/sh
+
+        ipfw -f -q flush
+        ipfw add 100 pass all from any to any via lo0
+        ipfw add 200 deny all from any to 127.0.0.0/8
+        ipfw add 300 deny ip from 127.0.0.0/8 to any
+        ipfw add 400 deny ip from 224.0.0.0/3 to any in
+        ipfw add 500 deny tcp from any to 224.0.0.0/3 in
+        ipfw add 540 deny ip from 172.16.0.0/12 to any in
+        #ipfw add 550 deny all from 192.168.0.0/16 to any in
+        ipfw add 560 deny all from 172.16.0.0/12 to any in
+        ipfw add 561 deny ip from 222.248.233.220 to any in
+        ipfw add 600 allow tcp from any to any out
+        ipfw add 700 allow tcp from any to any established
+        ipfw add 800 allow tcp from any to any frag
+        ipfw add 900 check-state
+
+        #put your stuff here
+
+        ipfw add 10 pass ipv6-icmp from :: to ff02::/16
+
+        # RS, RA, NS, NA, redirect... ipfw add 20 pass ipv6-icmp from fe80::/10 to fe80::/10
+        ipfw add 30 pass ipv6-icmp from fe80::/10 to ff02::/16
+
+        # Allow ICMPv6 destination unreach ipfw add 40 pass ipv6-icmp from any to any icmp6types 1
+
+        # Allow NS/NA/toobig (don't filter it out) ipfw add 50 pass ipv6-icmp from any to any icmp6types 2,135,136
+        ipfw add 64000 pass ip6 from any to any
+
+        ipfw add 65000 deny log tcp from any to any
+        ipfw add 65100 deny icmp from any to me in icmptypes 5,8
+        ipfw add 65200 allow all from any to any
+    </pre>
+
+        <h3 id="s1b">PF</h3>
+
+        <p>Switching to PF from IPFW is easy. You can enable it in /etc/rc.conf by setting the following:
+        <pre>
+            firewall_enable="NO"
+            pf_enable="YES"
+        </pre>
+
+        <p>Simple example ruleset in /etc/pf.conf with assumption that your nic is bxe0:
+
+        <pre>
+ext_if="bxe0"
+
+set block-policy return
+scrub in on $ext_if all fragment reassemble
+set skip on lo
+
+table &lt;jails&gt; persist
+nat on $ext_if from &lt;jails&gt; to any -&gt; ($ext_if:0)
+rdr-anchor "rdr/*"
+
+block in all
+pass out quick keep state
+antispoof for $ext_if inet
+pass in inet proto tcp from any to any port ssh flags S/SA keep state
+pass in inet proto tcp from any to any flags S/SA keep state
+      </pre>
+
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
