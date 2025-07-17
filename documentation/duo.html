@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Documentation - Duo Security</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/duo.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Duo Security</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Duo Configuration</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1b">Duo Security</h3>
+
+        <p>Enabling two-factor authentication (2FA) on MidnightBSD for SSH.
+
+        <p>There is a security/duo port in mports.
+
+        <p>When setting up two-factor authentication, we recommend using the login duo setup. It's much easier to get going, and we noticed some segfaults with the duo pam module.
+
+        Steps:
+
+        <ul>
+        <li>Set up a Duo account
+        <li>Install the security/duo port.
+
+        <li>If you only want to use SSHD, you can avoid the SUID port option. However, for testing it can be helpful.
+
+        <li>Obtain the appropriate API host, skey and ikey and add them to the /usr/local/etc/login_duo.conf file.
+
+        <li>Fix the permissions on the login_duo.conf file so that they are 600 and owned by sshd if you are only using with SSHD. if you did choose SUID option in the mport, then own by root.
+
+        <li>In the /etc/ssh/sshd_config, you will need to add a line with ForceCommand /usr/local/sbin/login_duo
+
+        <li>If you wish to protect all logins, you can leave ForceCommand line global. However, you can also choose to only protect cert
+            <code>Match group wheel ForceCommand /usr/local/sbin/login_duo</code></li>
+
+        </ul>
+
+        <p>Duo also has instructions on setting up on FreeBSD and this works with MidnightBSD as well.
+
+        <p><a href="https://duo.com/docs/loginduo">Login Duo</a></p>
+
+        <p><a href="https://duo.com/docs/duounix">PAM</a></p>
+
+        <p>Using it when logging into ssh the first time, you'll get an activation link that you'll want to load in a browser.
+            It will walk you through configuring your phone. You'll probably want the duo app installed so you can do push notifications.
+
+        <p>After that, you'll see a menu asking if you want a push as you attempt to ssh into a box.
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
