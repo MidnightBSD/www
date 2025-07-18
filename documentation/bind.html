@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Documentation - BIND (named) Set up</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/duo.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> BIND (named) Set up</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Intro</a></li>
+                <li><a href="#s1c">Installation</a></li>
+                <li><a href="#s1e">DNSSEC</a></li>
+                <li><a href="#s1f">Shared instructions</a></li>
+                <li><a href="#s1g">Useful Stuff</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1b">Intro</h3>
+
+        <p>This is a quick guide to setting up an authoritative name server. It's based loosely on this guide for
+            FreeBSD, but has some additional information.
+            <a href="https://blog.andreev.it/?p=4096">https://blog.andreev.it/?p=4096</a> The original guide does cover GoDaddy configuration of DS records well.</p>
+
+        <h3 id="s1c">Installation</h3>
+
+        <p>Select a version of BIND from packages or ports. In this example,
+            we will install BIND 9.12</p>
+        <p><code>mport install bind912</code></p>
+
+        <p>The configuration files will live in <code>/usr/local/etc/namedb/</code></p>
+
+        <p>Next we need to create a RNDC key. This is used to manage BIND
+            from the command line via rndc utility.</p>
+
+        <p><code>rndc-confgen -a</code></p>
+
+        <p>Fix the permissions on the file it just created</p>
+
+        <p><code>cd /usr/local/etc/namedb</code><br><code>chown root:bind rndc.key</code><br>
+            <code>chmod 640 rndc.key</code></p>
+        <p>Next we need to enable BIND on system startup</p>
+        <p><code>sysrc named_enable="YES"</code></p>
+        <p>Now you can start it if you want to verify it's working so far.</p>
+        <p><code>service named start</code></p>
+        <p>Verify it worked with no errors by doing this:</p>
+        <p><code>tail /var/log/messages</code></p>
+
+        <p><strong>Optional</strong>: if you want to
+            control the slave servers with rndc also, they must have the same rndc key. Copy it over and edit this on
+            the slave BIND config where XXX.XXX.XXX.XXX is an ip address of the master. This has to be before the
+            options directive.</p>
+        <p><code>include "/usr/local/etc/namedb/rndc.key";</code>
+            <br><code>controls {</code><br><code>inet 127.0.0.1 allow { localhost; } keys { "rndc-key"; };</code><br>
+                <code>inet XXX.XXX.XXX.XXX allow { XXX.XXX.XXX.XXX; } keys { "rndc-key"; };</code><br>
+            <code>};</code>
+        </p>
+
+        <p>On the master and slave, you need to fix the listen directives to use the ip addresses. Use your own IP
+                addresses rather than the ones listed here.</p>
+
+        <code>
+            listen-on { 127.0.0.1; XXX.XXX.XXX.XXX; };
+        </code>
+
+        <p>Now restart BIND on both master and slaves</p>
+        <p><code>service named restart</code></p>
+        <p>You can optionally use rndc to manage them.</p>
+        <p><code>rndc reload</code>
+            <br>
+            <code>rndc status</code></p>
+        <p><code>rndc -s XXX.XXX.XXX.XXX reload</code></p>
+
+        <p>Check your firewall rules. You need TCP and UDP 53 open for DNS and if you are using rndc remotely port 953 open for all the slaves and master between each other.</p>
+        <p>If you were going to set up a recursive name server, you would use <strong>recursion yes. This is a BAD IDEA for an authoritative name server to do.</strong></p>
+        <p>Now you need to set up the master to allow zone transfers from the slaves. Put this below the listen-on directive.</p>
+        <p><code>allow-transfer { localhost; XXX.XXX.XXX.XXX; };</code>
+            <br><code>notify yes;</code>
+        </p>
+        <p>You can either use the dynamic directory or master directory to store zone files. This depends on your use case what makes sense.</p>
+        <p><code>zone "midnightbsd.org" {</code><br>
+            <code>type master;</code><br>
+            <code>file /usr/local/etc/namedb/dynamic/midnightbsd.org";</code><br><code>};</code></p>
+
+        <p><code>Next you will create the zone file listed above.</code></p>
+        <p><code>$TTL 604800</code><br>
+            <code>@ IN SOA ns1.<code>midnightbsd.org.  admin.midnightbsd.org. (</code><br>
+            <code>2018101901; Serial 3H</code><br>
+            <code>Refresh 15M;</code><br>
+            <code>Retry 2W;</code><br>
+            <code>Expiry 1D ); Minimum</code><br> <br>
+            <code>; name servers - NS records</code><br>
+                <code>        </code><code>IN      NS      ns1.<code class="bash string" >midnightbsd.org</code>.</code><br>
+            <code>        </code><code  >IN      NS      ns2.midnightbsd.org.</code><br> <br><code  >; name servers - A records</code><br>
+            <code>ns1.<code class="bash string" >midnightbsd.org</code>.       IN      A       XXX.XXX.XXX.XXX</code><br>
+            <code>ns1.<code class="bash string" >midnightbsd.org</code>.       IN      A       XXX.XXX.XXX.XXX</code><br> <br>
+            <code>; other servers - A records</code><br><code>www.midnightbsd.org.       IN      A       XXX.XXX.XXX.XXX</code></p>
+        <p>You will likely also want MX records for mail delivery. That's out of scope for this article.</p>
+        <p>You can reload with rndc or using service named restart.
+            Be sure to check /var/log/messages for any errors in case you have typos!</p>
+        <p>Now slaves are configured a little differently. </p>
+        <p><code>zone "midnightbsd.org" {</code><br><code>        </code><code>type</code><span> </span>
+            <code>slave;</code><br><code>masters { XXX.XXX.XXX.XXX; };</code><br>
+            <code>file /usr/local/etc/namedb/dynamic/db.midnightbsd.org";</code><br><code  >};</code></p>
+    <p>You may also want to add <span style="color: rgb(0, 0, 0);">allow-transfer { localhost; XXX.XXX.XXX.XXX; }; so that the whole internet can't download your zones.</span></p>
+    <p>Restart the slave named.</p>
+    <p>Now you can test things out with nslookup, dig or drill depending on your preference.</p>
+
+    <p>nslookup www.midnightbsd.org XXX.XXX.XXX.XXX</p>
+    <p>nslookup www.midnightbsd.org XXX.XXX.XXX.XXX</p>
+    <p>Both of these should respond with valid records.</p>
+    <p>>You can also test with an online tool to make sure others can find them. <a href="https://mxtoolbox.com/dnscheck.aspx">https://mxtoolbox.com/dnscheck.aspx</a></p>
+    <p>Another option is to query google dns nslookup www.midnightbsd.org 8.8.8.8</p>
+
+    <h3 id="s1e">DNSSEC</h3>
+
+    <h4>Older BIND release instructions (9.12)</h4>
+
+    <p>On the master, add this after the listen-on directive in named.conf</p>
+    <p><code>dnssec-enable yes;</code><br><code>key-directory /usr/local/etc/namedb/keys";</code></p>
+
+    <p>add this at the very bottom of named.conf</p>
+    <p><code>auto-dnssec maintain;</code><br><code>inline-signing yes;</code></p>
+
+    <h4>Newer bind release (9.16)</h4>
+
+    <p>add the key directory to named.conf in options</p>
+    <p><code>key-directory /usr/local/etc/namedb/keys";</code></p>
+    <p>Per zone, add</p>
+    <p class="p1" ><span class="s1">dnssec-policy "default";</span></p>
+    <p>You will likely want these in the dynamic directory on MidnightBSD as the permissions are changed on master, and it won't be able to write to the directory for the signed files on startup!</p>
+    <p>If you want to learn more about the DNSSEC changes in 9.16, look at <a href="http://ddiguru.com/blog/bind-9-16-release-info">http://ddiguru.com/blog/bind-9-16-release-info</a>
+        The dnssec-policy stuff is new, and you can make your own custom rules.</p>
+
+    <h3 id="s1f">Shared instructions</h3>
+
+    <p>Create the keys directory</p>
+
+    <p><code>mkdir /usr/local/etc/namedb/keys</code><br><code>cd /usr/local/etc/namedb/keys</code></p>
+    <p>Now create the signing keys</p>
+
+    <p><code>dnssec-keygen -a RSASHA256 -b 2048 -f KSK -n ZONE midnightbsd.org</code><br><code>dnssec-keygen -a RSASHA256 -b 2048 -n ZONE midnightbsd.org</code></p>
+        <p><code>cd usr/local/etc/namedb/ &amp;&amp; chown -R bind:bind keys</code></p>
+
+        <p>Restart BIND</p>
+
+        <p>It should automatically generate signed versions of the zone files. These may not have the same identical version as the tool will increment them on its own.
+            Continue to make changes to the original unsigned files not the signed ones and bind will do its thing to keep them updated.</p>
+
+        <p>There is one more step. You must modify some records in your registrar for your zones. These are called DS records. If you don't do this, no one will be able to verify your zones.
+            You first need to get info from the keys you generated earlier. They have a web interface to input the values you get from the commands below.</p>
+
+        <p><code>cd /usr/local/etc/namedb/keys</code>
+         <br><code>dnssec-dsfromkey Kmidnihgtbsd.org.+XXX+YYYYY.key</code><br>
+            <code>midnightbsd.org. IN DS 23956 8 1 encodedkeyhere</code>
+            <br><code>midnightbsd.org. IN DS 23956 8 2 encodedkeyhere</code></p>
+
+       <h3 id="s1g">Useful Stuff</h3>
+
+        <p>Find out what the algorithm numbers are.</p>
+        <p><a href="https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml">https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml</a></p>
+
+        <p>Validate the DNSSEC on your domain</p>
+
+        <p><a href="https://dnssec-analyzer.verisignlabs.com/">https://dnssec-analyzer.verisignlabs.com/</a></p>
+
+        <p><a href="http://dnsviz.net/d/useragent.us/dnssec/">http://dnsviz.net/d/useragent.us/dnssec/</a></p>
+
+        <p>Here is another guid with an alternative configuration.
+            <a href="https://www.digitalocean.com/community/tutorials/how-to-setup-dnssec-on-an-authoritative-bind-dns-server--2">Digital Ocean - How To Setup DNSSEC on an authoritative bind dns server</a></p>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
