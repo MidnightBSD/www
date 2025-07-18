@@ -30,13 +30,22 @@
 						</ul></li>
 						<li><a href="dateandtime.html">Date and Time</a></li>
 						<li><a href="desktop.html">Xorg and Desktop Environments</a></li>
-						<li><a href="dns.html">DNS Configuration with resolv.conf</a></li>
-						<li><a href="dump.html">Dump & Restore</a></li>
-						<li><a href="firewall.html">Firewall Configuration</a></li>
 						<li><a href="flashdriveboot.html">Flash Drive (live)</a></li>
-						<li><a href="gpt.html">GUID Partition Tables (GPT)</a></li>
 						<li><a href="livecd.html">LiveCD</a></li>
-						<li><a href="zfs.html">ZFS</a></li>
+
+						<li>File Systems and Storage
+						<ul>
+							<li><a href="dump.html">Dump & Restore</a></li>
+							<li><a href="gpt.html">GUID Partition Tables (GPT)</a></li>
+							<li><a href="zfs.html">ZFS</a></li>
+						</ul>
+						</li>
+						<li>Networking
+							<ul>
+								<li><a href="dns.html">DNS Configuration with resolv.conf</a></li>
+								<li><a href="firewall.html">Firewall Configuration</a></li>
+							</ul>
+						</li>
 						<li><a href="mports/index.html">mports</a></li>
 						<li>Kernel Documentation
 							<ul>
@@ -131,6 +140,162 @@
 				running MidnightBSD, including details on what is detected.</p>
 
 				<p>Here is a list of systems that MidnightBSD has been tested on.</p>
+
+				<div class="hardware">
+					<table>
+						<caption>Hardware tested with MidnightBSD 3.2.x</caption>
+						<tr>
+							<th>Hardware</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+
+						<tr>
+							<td>AMD Ryzen 7900 with MSI b650 motherboard</td>
+							<td>Partially works</td>
+							<td>
+								Video acceleration is not supported with APU.
+								SATA and nvme work fine.
+								Integrated wired lan needs a driver from mports.
+								Wi-Fi is not supported. (uses mediatek Wi-Fi chip)
+							</td>
+						</tr>
+
+						<tr>
+							<td>Intel 14700k with Asus ROG Strix z790 h</td>
+							<td>Partially works</td>
+							<td>
+								Video acceleration is not supported with iGPU.
+								SATA and nvme work fine.
+								Integrated wired lan works.
+								Wi-Fi should work in 4.0 current but not in 3.2.x.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HPE dl360 gen9 with 2690v3 xeons (dual socket)</td>
+							<td>Works</td>
+							<td>
+								All basic server functions work.  powerd is not supported for power management. HPE bios
+								seems to override. (even on OS controlled)
+								Many HPE agent and management utilities do not work on BSD.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HPE dl360 gen10</td>
+							<td>Works</td>
+							<td>
+								All basic server functions work.  powerd is not supported for power management. HPE bios
+								seems to override. (even on OS controlled)
+								Many HPE agent and management utilities do not work on BSD.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HPE dl20 gen9</td>
+							<td>Works</td>
+							<td>
+								All basic server functions work.  powerd is not supported for power management. HPE bios
+								seems to override. (even on OS controlled)
+								Many HPE agent and management utilities do not work on BSD.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Framework 13 with 12th gen CPU</td>
+							<td>Partially works</td>
+							<td>The trackpad has some issues but can be configured to function in xorg.
+								Video acceleration is not supported, but works on the frame buffer.
+								Needs updated BIOS to boot properly.  (2025 versions work)
+								WiFi works.
+								Power management isn't working that well (powerd).  Recommend using 4.0 current with
+								hwpstate instead.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Framework 13 with 11th gen CPU</td>
+							<td>Partially works</td>
+							<td>The trackpad has some issues but can be configured to function in xorg.
+								Video acceleration is not supported, but works on the frame buffer.
+								Needs updated BIOS to boot properly.  (2025 versions work)
+								WiFi works.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Lenovo ThinkPad A485</td>
+							<td>Partially works</td>
+							<td>The onboard WiFi chip is not supported. (it can be replaced with an intel 8265)
+								Display dimming does not work.
+								Sound works. When installed with UEFI amd64 release, X will work
+								with the fb. The AMD graphics are not supported for acceleration, but the firmware is available
+								in mports. It should be supported in MidnightBSD 4.0 current. (July 2025)
+
+								Onboard NIC works as well as trackpad.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HP Victus Gaming laptop - 1240p i7 with nvidia 1060</td>
+							<td>Partially works</td>
+							<td>The onboard WiFi chip is not supported. Can switch out to intel wifi 8265, etc. Trackpad does not work!
+								X does not work reliably with FB.  Gets confused between onboard graphics and nvidia graphics.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Asus PRIME Z590 intel core i7 11900k</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Asus B550 TUF with Ryzen 5700x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>Gigabyte B550 motherboard with ryzen 5700x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>Asus Tuf B series motherboard with Intel i7 11700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>Asus TUF Gaming B450M-PLUS II with Ryzen 5800x</td>
+							<td>Works</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td>HP Envy 8767 Desktop with Intel i7 10700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>Asrock Z490 steel legend motherboard with Intel i7 10700</td>
+							<td>Partially works</td>
+							<td>Onboard GPU supported only on FB, not accelerated.  Otherwise, fully supported.</td>
+						</tr>
+
+						<tr>
+							<td>HP Z420 workstation with Xeon E5 v2 8 core CPU</td>
+							<td>Works</td>
+							<td>Original nvidia workstation GPU works with old nvidia driver from mports. Also works with
+								AMD Radeon 6450 HD with acceleration using built in X.org support.</td>
+						</tr>
+
+					</table>
 
 				<div class="hardware">
 					<table>
