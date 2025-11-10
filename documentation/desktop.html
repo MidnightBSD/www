@@ -42,23 +42,23 @@
                 <h4>Xorg</h4>
                 <p>
                     To install the X-Windows environment from packages, simply run
-                    <code>mport install xorg</code>.
+                    <code>doas mport install xorg</code>.
                     If you wish to build the software manually, you may do so from mports
-                    <code>cd /usr/mports/x11/xorg; make install clean</code>
+                    <code>cd /usr/mports/x11/xorg; doas make install clean</code>
                 </p>
                 <p>You may then start Xorg by running <code>startx</code> from the console. If you are using tcsh, you may need
                 to first run <code>rehash</code> before startx will be picked up.</p>
                 <p>In order to exit Xorg, you can enable the control + alt + backspace keyboard sequence by running this in an
                 xterm window within Xorg.  <code>setxkbmap -option terminate:ctrl_alt_bksp</code></p>
 
-                <h5>Grapical login manager</h5>
+                <h5>Graphical login manager</h5>
                 <p>There are several graphical login managers that can be used instead of running startx manually.
 
                 <p>The default login manager as of MidnightBSD 2.1 is mlogind.  This is based on slim.</p>
-                <p>You can install it with <code>mport install mlogind</code> or <code>cd /usr/mports/x11/mlogind && make install clean</code></p>
+                <p>You can install it with <code>doas mport install mlogind</code> or <code>cd /usr/mports/x11/mlogind && doas make install clean</code></p>
 
                 <p>You can install
-                xdm from packages or mports with <code>mport install xdm</code> or <code>cd /usr/mports/x11/xdm && make install clean</code>
+                xdm from packages or mports with <code>doas mport install xdm</code> or <code>cd /usr/mports/x11/xdm && doas make install clean</code>
                 </p>
                 <p>To configure xdm, edit /etc/ttys and edit the line
                 <code>ttyv8   "/usr/local/bin/xdm -nodaemon"  xterm   off secure</code> to say on.</p>
@@ -104,11 +104,11 @@
                 <h4>WindowMaker</h4>
                 <p>To install, run <code>mport install windowmaker</code>.</p>
                 <p>If you want to install wdm and several other apps, you can run
-                <code>mport install windowmaker-desktop</code> or via mports with
-                <code>cd /usr/mports/x11/windowmaker-desktop && make install clean</code></p>
+                <code>doas mport install windowmaker-desktop</code> or via mports with
+                <code>cd /usr/mports/x11/windowmaker-desktop && doas make install clean</code></p>
 
                 <p>To add on GNUstep, you can install it via <code>mport install gnustep</code> and
-                also add apps with <code>mport install gnustep-app</code></p>
+                also add apps with <code>doas mport install gnustep-app</code></p>
 
                 <p>On MidnightBSD 2.1.x or higher, user accounts get a default .xinitrc configuration that will start
                     WindowMaker if installed.</p>

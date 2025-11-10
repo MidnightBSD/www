@@ -52,7 +52,7 @@
 
         <h3 id="s1e">Immutable resolv.conf</h3>
 
-        <p>chflags schg /etc/resolv.conf</p>
+        <p>doas chflags schg /etc/resolv.conf</p>
 
         <h3 id="s1f">Override the dhclient config</h3>
 
@@ -69,7 +69,7 @@
 
         <p>You will need to restart the dhclient for changes to take effect.
 
-        <p><code>service dhclient restart em0</code>
+        <p><code>doas service dhclient restart em0</code>
 
         <h3 id="s1g">Disable resolvconf(8)</h3>
 
@@ -81,7 +81,7 @@
 
         <code>resolv_conf="/dev/null"</code>
 
-        <p>Alternatively, disable in /etc/rc.conf <code>resolvconf="NO"</code>
+        <p>Alternatively, disable in /etc/rc.conf <code>doas sysrc resolvconf="NO"</code>
 
         <!--#include virtual="/disqus.html"-->
     </div>
