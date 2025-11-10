@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Documentation - NTP configuration</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/dns.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> NTP Configuration</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Switching to ntp</a></li>
+                <li><a href="#s1d">Switching to ntpsec</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1b">Introduction</h3>
+
+        <p>MidnightBSD uses OpenNTPD as the system ntpd by default. For many simple time synchronization needs, this is adequate.</p>
+
+        <p>Enable it as follows:</p>
+
+        <pre>
+        sysrc ntpd_enable="YES"
+        </pre>
+
+        <p>After enabling, start the daemon:</p>
+
+        <pre>
+        service ntpd start
+        </pre>
+
+        <h3 id="s1c">Switching to ntp</h3>
+
+        <p>You may install an alternative ntpd on MidnightBSD.</p>
+
+        <p>For example, you can install ntpd from mports:</p>
+
+        <pre>
+        mport install ntp
+        </pre>
+
+        <p>Disable the system ntpd</p>
+        <pre>
+            sysrc ntpd_enable="NO"
+            service ntpd stop
+        </pre>
+
+        <p>Then enable ntp:</p>
+
+        <pre>
+        sysrc ntp_enable="YES"
+        sysrc ntp_sync_on_start="YES"
+        </pre>
+
+        To set ntp flags:
+        <pre>
+            sysrc ntp_flags="-g"
+        </pre>
+
+        <p>Edit the configuration file in /usr/local/etc/ntp.conf</p>
+
+        <p>After enabling, start the daemon:</p>
+
+        <pre>
+        service ntp start
+        </pre>
+
+        <h3 id="s1d">Switching to ntpsec</h3>
+
+        <p>You can install ntpsec from mports:</p>
+
+        <pre>
+        mport install ntpsec
+        </pre>
+
+        <p>Disable the system ntpd</p>
+        <pre>
+            sysrc ntpd_enable="NO"
+            service ntpd stop
+        </pre>
+
+        <p>Then enable ntpsec:</p>
+
+        <pre>
+        sysrc ntpsec_enable="YES"
+        </pre>
+
+        <p>Edit the configuration file in /usr/local/etc/ntpsec.conf</p>
+
+        <p>After enabling, start the daemon:</p>
+
+        <pre>
+        service ntpsec start
+        </pre>
+
+        <p>Warning: ntpsec port is not complete yet.  The daemon works, but there are issues with the python utilities.</p>
+
+            <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
