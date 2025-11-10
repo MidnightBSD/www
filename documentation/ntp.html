@@ -30,6 +30,8 @@
 
         <p>MidnightBSD uses OpenNTPD as the system ntpd by default. For many simple time synchronization needs, this is adequate.</p>
 
+        <p>It is recommended to configure at least 4 NTP servers.</p>
+
         <p>Enable it as follows:</p>
 
         <pre>
@@ -78,6 +80,45 @@
         service ntp start
         </pre>
 
+        <p>Example configuration file</p>
+
+        <pre>
+server time.nist.gov iburst
+server time.apple.com iburst
+server 0.midnightbsd.pool.ntp.org iburst
+server 1.midnightbsd.pool.ntp.org iburst
+server 2.midnightbsd.pool.ntp.org iburst
+server 3.midnightbsd.pool.ntp.org iburst
+driftfile /var/db/ntp.drift
+tinker panic 0
+tinker step 0.128
+        </pre>
+
+        <p>Using GPS as a source</p>
+
+        <p>Example configs in /usr/local/etc/ntp.conf:</p>
+
+        <pre>
+            # gps source directly
+            #server 127.127.20.0 mode 0 minpoll 4 maxpoll 4
+            #fudge 127.127.20.0 refid GPS time1 0.000
+            # pps source directly
+            #server 127.127.22.0 minpoll 4 maxpoll 4 prefer
+            #fudge 127.127.22.0 refid PPS flag3 1
+            # uncomment for gpsd
+            #server 127.127.28.0 minpoll 4 maxpoll 4
+            #fudge 127.127.28.0 refid GPS strtaum 0 time1 0.060
+        </pre>
+
+        <p>Adjust time1 offsets to get your GPS source to be within +- 5 seconds of internet servers</p>
+
+        <p>Setup gpsd</p>
+        <pre>
+            sysrc gpsd_enable="YES"
+            sysrc gpsd_flags="-n"
+            sysrc gpsd_devices="/dev/cuaU0"
+        </pre>
+
         <h3 id="s1d">Switching to ntpsec</h3>
 
         <p>You can install ntpsec from mports:</p>
@@ -107,6 +148,15 @@
         </pre>
 
         <p>Warning: ntpsec port is not complete yet.  The daemon works, but there are issues with the python utilities.</p>
+
+        <p>Enabling NTS</p>
+
+        <pre>
+nts enable
+# Point to your existing key and certificate
+nts key /etc/ssl/mydomain.key
+nts cert /etc/ssl/mydomain.crt
+        </pre>
 
         <h3 id="s1e">Syncing on startup with rdate</h3>
 
