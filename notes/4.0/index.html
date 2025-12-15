@@ -65,7 +65,7 @@
             </ul>
         </div>
 
-        <p><b>WORK IN PROGRESS - SUBJECT TO CHANGE</b></p>
+        <p><b>DRAFT - WORK IN PROGRESS - SUBJECT TO CHANGE</b></p>
 
         <h3>(12/15/2025) MidnightBSD 4.0</h3>
 
@@ -73,6 +73,8 @@
 
         <p>This release included updates to third-party libraries, bug fixes from the 3.2 release,
         and security updates. Many third-party libraries were updated and this may cause some compatibility issues with old mports or packages.
+
+        <p>The release also includes a large number of improvements from FreeBSD 13.x.</p>
 
         <p>mports and Ravenports are both available on amd64 for packages.</p>
 
@@ -124,11 +126,322 @@
 
         <p>Updated mport to 2.7.3</p>
 
+        <p>Improves handling of color on the terminal. Fix some bugs with the mport add command, which resulted in segmentation faults.</p>
+
+        <p>Migrate rc.d start/stop to posix_spawn rather than using system</p>
+
+        <p>Added new functionality to mport verify:
+
+        <p>You can check a single port now with mport verify
+        <p>You can repair checksums now on a port. mport verify -r This often indicates a security issue, modified files after installation by the user, or a problem with mport package manager where an install was damaged.
+        <p>Fixed build issues with newer LLVM versions.
+        <p>Change the behavior of mport_install to include dependencies. make a new function mport_install_single to keep the old behavior for users. switch upgrade over to it.
+        <p>Attempt to detect packages that have the same origin for upgrades.
+        <p>The last one needs more refinement in future releases. When you do mport list updates now, it may show you updates are available but if you run mport update it will fail for some. The reason is that it now figures out that we don't have a package for say py37-foo when there is for py311-foo. So it will suggest an update. It's not yet updating the package in this scenario. I need to rework some things for this to happen. My first implementation was reverted because of some other complications. Ideally, a user will need to be prompted to do this. There are cases it's wrong. (like if a packge was just not built on the last package build in magus)
+
+        <p>I've also improved a lot of messages to the user, usage() output, and added more error handling in several places. There were a few small memory leaks fixed as well.</p>
+
         <h5>Miscellaneous Changes</h5>
 
-        <p>Removed libdispatch from base. </p>
+        <p>Removed libdispatch from base.</p>
+
+        <p>rc.subr(8) now honors ${name}_env in all rc(8) scripts.
+
+        <p>init(8), service(8), and cron(8) will now adopt user/class environment variables by default (excluding PATH). Notably, environment variables for all cron jobs and rc(8) services can now be set via login.conf(5)
+
+        <p>The default config for newsyslog(8) will now only include files from the /etc/newsyslog.conf.d/ and /usr/local/etc/newsyslog.conf.d/ directories if the filename ends with ".conf" and does not begin with a "." character.
+
+        <p>The kernel now supports enforcing a W^X memory mapping policy for user processes. The policy is not enforced by default but can be enabled by setting the kern.elf32.allow_wx and kern.elf64.allow_wx sysctls to 0. Individual binaries can be exempted from the policy by elfctl(1) via the wxneeded feature.
+
+        <p>The calendar(1) utility supports nested C pre-processor conditionals and now supports the C++ comment syntax in addition to the C syntax.
+
+        <p>The calendar(1) utility consistently prints dates according to the locale of the invoking user, not the possibly varying locales of included files.
+
+        <p>The daemon(8) utility now supports the -H flag to close and re-open the output file when SIGHUP is received. This permits rotation of the output file via newsyslog(8).
+
+        <p>The daemon(8) utility no longer blocks SIGTERM during the restart delay.
+
+        <p>The devd(8) utility now reports a kernel system event when the system resumes from sleep rather than a kern system event.
+
+        <p>The diskinfo(8) utility now reports the physical device name GEOM attribute when available.
+
+        <p>Removed userland support for i386 a.out executables. Removed the elf2aout(1) utility.
+
+        <p>Removed the obsolete version of the GNU debugger that was installed to /usr/libexec for use by crashinfo(8). Detailed kernel crash information can be obtained by installing modern GDB from mports or packages.
+
+        <p>Removed the GPL-licensed version of dtc(1). The BSD-licensed version is now built and installed unconditionally.
+
+        <p>The manual page for the gstat(8) utility now documents the use of interactive keyboard commands.
+
+        <p>The manual page for the inetd(8) utility now includes an example of how to use netcat as an HTTP proxy.
+
+        <p>Removed the ctm(1) utility. It is now provided by the misc/ctm port.
+
+        <p>The BSD version of grep(1) is now installed by default. The obsolete GNU version that was the previous default has been removed.
+
+        <p>Removed the amd(8) automount daemon. Its functionality is provided by autofs(5).
+
+        <p>The new getlocalbase(3) function in libutil retrieves the LOCALBASE path in a standard way.
+
+        <p>Removed the cap_random(3) function as it has been superseded by getrandom(2)
+
+        <p>A new Linux-compatible copy_file_range(2) system call supports efficient file copies. In particular, this system call permits the kernel to request that an NFSv4.2 server perform a copy operation locally on the server.
+
+        <p>The regex(3) function no longer accepts redundant escapes for most ordinary characters. This will cause applications such as sed(1) and grep(1) to reject regular expressions using these escapes.
+
+        <p>New aio_readv(2) and aio_writev(2) system calls provide vectored analogues of aio_read(2) and aio_write(2).
+
+        <p>Removed CU-SeeMe support from libalias(3)
+
+        <p>Processes that attach to a jail(8) will now completely rebase their cpuset(1) onto the jail’s cpuset. Notably, if a process had been assigned a numbered cpuset then it will be assigned a new numbered set that is the combination of CPUs allowed to the attaching process and the jail. Processes belonging to the superuser will implicitly widen their CPU mask as needed if they share no CPUs in common with the jail.
+
+        <p>Refactored the amd64 DMAR driver to provide a generic I/O MMU framework which can be used by other architectures. As part of this, renamed the amd64-specific ACPI_DMAR kernel option to IOMMU.
+
+        <p>Added Safe Memory Reclamation (SMR) to the kernel, a lightweight variant of epoch reclamation closely coupled to uma(9). This has been applied in parts of the VM subsystem and VFS layer to improve scalability on high core count systems.
+
+        <p>Removed support for procfs-based process debugging.
+
+        <p>Added the netgdb(4) facility, allowing the gdb(4) kernel debugger to be used over the network.
+
+        <p>Added backlight(9)
+
+        <p>Added a CAM-Newbus SDIO support module.
+
+        <p>The suite of VirtIO device drivers now support the VirtIO V1 spec.
+
+        <p>Added the axp(4) driver, supporting the 10G ethernet controller found on AMD EPYC processors.
+
+        <p>Added support for Intel Speed Shift to cpufreq(4)
+
+        <p>For iscsi(4) and ctld(8), support for specifying network QoS in the form of DiffServ Codepoints (DSCP) and Ethernet Priority Code Point (PCP) was added.
+
+        <p>The ctld(8) utility now supports the -t flag to test the validity of configuration files.
+
+        <p>Removed the nand(4) device framework and nandfs(5) filesystem and associated utilities.
+
+        <p>Removed the GEOM_SCHED class and accompanying gsched(8) tool.
+
+        <p>gnop(8) can now apply configurable delays to read and write requests to simulate a slow disk.
+
+        <p>The kernel now provides a default implementation for the SEEK_DATA and SEEK_HOLE ioctl(2)'s for filesystems which do not support sparse files.
+
+        <p>The NFS client and server now support NFSv4.2 (RFC 7862) and Extended Attributes (RFC 8276).
+
+        <p>Attempts to read a directory fail with EISDIR by default. The -d skip flags can be passed to grep(1) to suppress errors in stderr when non-recursively grepping a list that includes directories.
+
+        <p>The NFS server now permits credentials specified via -maproot or -mapall in exports(5) to include more than 16 groups.
+
+        <p>The NFS client and server now support NFS over TLS. The additional userland daemons are not built by default but can be enabled by building a new world that includes a KTLS-enabled OpenSSL via the WITH_OPENSSL_KTLS option.
+
+        <p>A new nfsv4_server_only variable can be set to YES in /etc/rc.conf to only enable support for NFSv4. This avoids the need to run rpcbind(8) on an NFS server.
+
+        <p>Updated the fusefs(5) protocol to 7.28 along with adding support for FUSE_COPY_FILE_RANGE and FUSE_LSEEK.
+
+        <p>The ZFS implementation is now provided by OpenZFS.
+
+        <p>Added the pvscsi(4) driver, supporting the para-virtualized SCSI controller in VMWare products like ESXi
+
+        <p>A new type of mbuf(9) (network data buffer) can represent multiple, unmapped physical pages as a single buffer. This improves the performance of sendfile(2) by reducing the length of mbuf linked lists in socket buffers.
+
+        <p>tcp(4) now supports Proportional Rate Reduction (as described by RFC6937) to improve SACK loss recovery during burst loss and ACK thinning scenarios. This feature is enabled by default. A new sysctl(8), net.inet.tcp.do_prr, can be set to 0 to restore the prior behavior.
+
+        <p>PRR should generally help improve loss recovery performance and prevent numerous preventable retransmit timeout (RTO) stalls. This surpasses the prior behavior, but a strictly packet conserving variant can be enabled. A misconfigured token bucket traffic policer can cause persistent loss even during loss recovery. In that case, activating the conservative PRR variant may prevent some retransmission timeouts (RTO) and associated session stalls for a few milliseconds while behaving less optimal in the general case. A new sysctl(8), net.inet.tcp.do_prr_conservative, can be set to 1 to enable strictly packet conserving behavior (at most 1 segment for each ACK received), while the normal variant may send up to 2 segments per received ACK - helping in cases of ACK thinning or significant burst loss events.
+
+        <p>The cc_cubic(4) tcp(4) congestion control algorithm aligns more closely with the standard in RFC8312.
+
+        <p>The amount of queued packets in for unresolved ARP/NDP entries has been increased to 16.
+
+        <p>Stacked VLAN (802.1ad) support has been added.
+
+        <p>The ping(8) utility now supports setting network QoS, with IP DSCP and Ethernet PCP
+
+        <p>Merged the ping(8) and ping6(8) utilities. ping(8) supports both IPv4 and IPv6. A legacy ping6(8) is retained for backwards compatibility.
+
+        <p>SCTP support is now available as a new sctp.ko kernel module and is no longer compiled into GENERIC by default.
+
+        <p>Support for custom route lookup algorithms has been added.
+
+        <p>DPDK librte-based IPv4/IPv6 route lookup algorithms has been added, optimising control-plane and data-plane for large routing tables.
+
+        <p>Interface fib is now used for proxyarp checks.
+
+        <p>Loopback route installation has been fixed for the interfaces in different fibs using the same prefix.
+
+        <p>Number of fibs can now be changed at runtime by controlling net.fibs sysctl.
+
+        <p>net.add_addr_allfibs sysctl default has been changed to 0.
+
+        <p>Temporal routes (routes with -expire time set) expiration have been for both IPv4 and IPv6.
+
+        <p>Duplicate routes installation issue for /32 or /128 interface aliases has been fixed.
+
+        <p>IPv6 interface routes are now marked with RTF_PINNED like their IPv4 counterparts.
+
+        <p>The route(8) network auto-guessing has been eliminated by removing remnants of classful behavior.
+
+        <p>Sysctl net.inet6.ip6.deembed_scopeid , making it possible to disable IPv6 scope de-embedding, has been removed.
+
+        <p>The -i flag is now added to rtsol(8) and rtsold(8) by default in /etc/defaults/rc.conf.
+
+        <p>For 64-bit architectures, the base system is now built with Position Independent Executable (PIE) support enabled by default. It may be disabled using the WITHOUT_PIE knob. A clean build is required.
+
+        <p>There is a new zfskeys rc(8) service script, which allows for automatic decryption of ZFS datasets encrypted with ZFS native encryption during boot. See the rc.conf(5) manual page for more information.
+
+        <p>The chroot facility now supports unprivileged operation, and the chroot(8) program now has a -n option to enable its use.
+
+        <p>The CAM library has been modified to use realpath(3) on device names before parsing them, which allows tools such as camcontrol(8) and smartctl(8) to be friendlier when symlinks are in use.
+
+        <p>md5sum(1) and similar message-digest programs compatible with those on Linux were added by having the corresponding BSD programs run with the -r option if the program name ends in sum.
+
+        <p>mpsutil(8) has been extended to show adapter information and to control NCQ.
+
+        <p>Problems after downloading firmware to a device using camcontrol(8) were fixed by forcing a rescan of the LUN after the firmware download.
+
+        <p>A new mode has been added to the scripted partition editor for variant disk names in bsdinstall(8). If the disk parameter DEFAULT is set in place of an actual device name, or no disk is specified for the PARTITIONS parameter, the installer will follow the logic used in the automatic-partitioning mode, in which it will either provide a selection dialog for one of several disks if several are present or automatically select it if there is only one. This simplifies the creation of fully-automatic installation media for hardware or VMs with varying disk names.
+
+        <p>Max I/O size has been reduced to avoid DMA issues in aacraid(4)
+
+        <p>A bug preventing a virtual guest using virtio_random(8) from shutting down or rebooting has been fixed.
+
+        <p>The mgb(4) network interface driver has been added, with support for Microchip devices LAN7430 PCIe Gigabit Ethernet controller with PHY and LAN7431 PCIe Gigabit Ethernet controller with RGMII interface.
+
+        <p>The iwlwifi(4) driver along with a LinuxKPI 802.11 compatibility layer was added to supplement iwm(4) for newer Intel Wireless chipsets.
+
+        <p>Kernel crash dumps can now be saved on SD cards and eMMC modules using a dwmmc controller when the kernel is configured with the MMCCAM option
+
+        <p>Kernel crash dumps can now be saved on SD cards using an sdhci controller when the kernel is configured with the MMCCAM option.
+
+        <p>The default minor version used for an NFSv4 mount has been changed to the highest minor version supported by the NFSv4 server. This default can be overridden by using the minorversion mount option.
+
+        <p>Two new daemons, rpc.tlsclntd(8) and rpc.tlsservd(8), are now built by default on amd64. They provide support for NFS-over-TLS as described in the Internet Draft entitled "Towards Remote Procedure Call Encryption By Default". These daemons are built when WITH_OPENSSL_KTLS is specified. They use KTLS to encrypt/decrypt all NFS RPC message traffic, and provide optional verification of machine identity via X.509 certificates.
+
+        <p>A new NFSv4.1/4.2 mount option nconnect has been added that can be used to specify the number of TCP connections that will be used for the mount, up to a maximum of 16. The first (default) TCP connection will be used for all RPCs that consist of small RPC messages. The RPCs that can consist of large RPC messages (Read/Readdir/ReaddirPlus/Write) will be sent on the additional TCP connections in a round-robin fashion. If either the NFS client or NFS server have multiple network interfaces aggregated together, or a network interface that uses multiple queues, this can increase NFS performance for the mount.
+
+        <p>A sysctl called vfs.nfsd.srvmaxio has been added that can be used to increase the NFS server’s maximum I/O size from 128Kbytes to any power of 2 up to 1Mbyte. It can only be set when the nfsd threads are not running, and will normally require an increase in kern.ipc.maxsockbuf to at least the value recommended by the console log message generated when setting vfs.nfsd.srvmaxio is first attempted.
+
+        <p>The kdump(1) utility has gained support for decoding Linux system calls.
+
+        <p>The killall(1) utility now allows sending signals to processes with their controlling terminal on pts(4) using the syntax -t pts/N.
+
+        <p>An nproc(1) utility has been added, compatible with the Linux program of the same name.
+
+        <p>The timeout(1) utility has been moved from /usr/bin to /bin.
+
+        <p>The pciconf(8) utility has added support for decoding ACS extended capability.
+
+        <p>The procstat(1) utility can now print information about advisory locks on files with the newly added advlock command.
+
+        <p>The pwd_mkdb(8) utility no longer copies comments from /etc/master.passwd to /etc/passwd.
+
+        <p>MSS clamping has been improved for ppp(8).
+
+        <p>Metric aliasing has been changed in prometheus_sysctl_exporter(8) to avoid confusing Prometheus server due to conflicting metric names.
+        The tcp_log_bucket UMA zone has been renamed to tcp_log_id_bucket, and tcp_log_node was renamed to tcp_log_id_node for consistency.
+        Sysctl variables with (LEGACY) in their descriptions are no longer being exported, these are used by ZFS sysctls that have been replaced by others, many of which alias to the same
+        Prometheus metric name (like vfs.zfs.arc_max and vfs.zfs.arc.max).
+
+        <p>The uuidgen(1) utility has a new option -r to generate a random UUID, version 4.
+
+        <p> When invoked by inetd(8), ctlstat -P will now produce output suitable for ingestion into Prometheus; see ctlstat(8).
+
+        <p>Support of SHA-512/224 has been added to libmd.
+
+        <p>Linux-style system call tracing is now supported by sysdecode(3) and kdump(1).
+
+        <p>The native pthread library functions can now support Linux semantics.
+
+        <p>Address Space Layout Randomization (ASLR) is enabled for 64-bit executables by default. It can be disabled as needed if applications fail unexpectedly, for example with segmentation faults. To disable for a single invocation, use the proccontrol(1) command: proccontrol -m aslr -s disable command. To disable ASLR for all invocations of a binary, use the elfctl(1) command: elfctl -e +noaslr file.
+
+        <p>A workaround has been implemented for a hardware page invalidation problem on Intel Alder Lake (twelfth generation) and Raptor Lake (thirteenth generation) hybrid CPUs. The bug can lead to file system corruption with UFS and MSDOSFS, and probably other memory corruption. The slower cores (E-cores) automatically use a slower method of page invalidation with the workaround.
+
+        <p>In order to facilitate ABI compatibility of stable branches, the CPU affinity system calls are now more tolerant of CPU sets that are smaller than used by the kernel. This will facilitate increases to the size of the kernel set, MAXCPU.
+
+        <p>64-bit linux(4) ABI support was added for saving CPU floating point state across signal delivery.
+
+        <p>vDSO (virtual dynamic shared object) support has been nearly completed in the linux(4) ABI
+
+        <p>The netlink(4) network configuration protocol is now available. It is a communication protocol defined in RFC 3549, and uses a raw socket to exchange configuration information between user space and kernel. It is used by third-party routing programs and by the linux(4) ABI.
+
+        <p>Radix tables and lookups are now supported for MAC addresses in ipfw(4). This allows MAC address tables to be constructed and used for filtering.
+
+        <p>OPIE has been deprecated
+
+        <p>The ce(4) and cp(4) synchronous serial drivers have been deprecated
+
+        <p>Drivers for ISA sound cards have been deprecated
+
+        <p>The mergemaster(8) utility has been deprecated
+
+        <p>The minigzip(1) utility has been deprecated
+
+        <p>The remaining components of ATM in netgraph (NgATM) have been deprecated
+
+        <p>The VINUM class in geom(8) has been deprecated
+
+        <h5>Bhyve</h5>
+
+        <p>The bhyve(8) utility supports additional COM3 and COM4 serial ports.
+
+        <p>Removed the deprecated bvmconsole and bvmdebug device models from bhyve(8) and the associated kernel device drivers for MidnightBSD and FreeBSD guests.
+
+        <p>The bhyve(8) utility works reliably with more VNC clients including the macOS "Screen Sharing" application.
+
+        <p>The bhyve(8) utility now supports VirtIO-9p (aka VirtFS) filesystem sharing.
+
+        <p>The bhyve(8) utility now supports virtual machine snapshots. This feature is still in active development and is not yet enabled by default.
+
+        <p>The bhyve(8) utility now supports a VM Generation Counter ACPI device.
+
+        <p>The bhyve(8) utility now supports PCI HDAudio devices.
+
+        <p>The NVMe emulation in bhyve(8) has been upgraded to version 1.4 of the NVMe specification.
+
+        <p>NVMe iovec construction for large IOs in bhyve(8) has been fixed. The problem was exposed by the UEFI driver included with Rocky Linux 8.4
+
+        <p>The bhyve(8) utility has gained virtio-input device emulation support. This will be used to inject keyboard/mouse input events into a guest. The command line syntax is: -s <slot>,virtio-input,/dev/input/eventX.
+
+        <p>The bhyve(8) hypervisor and kernel module vmm(4) now support more than 16 vCPUs in a guest. By default bhyve permits each guest to create the same number of vCPUs as the count of physical CPUs on the host. This limit can be adjusted via the loader tunable hw.vmm.maxcpu
+
+
+        <h5>Boot loader</h5>
+
+        <p>The efibootmgr(8) utility now supports the -b flag to specify an index of a specific boot entry to create or modify.
+
+        <p>The efibootmgr(8) utility now supports the -E flag to query which EFI System Partition was used to boot the system.
+
+        <p>The efibootmgr(8) utility now supports the -f and -F flags to set or clear a request to boot to the UEFI user interface on the next boot.
+
+        <p>Prior releases had a complete MS-DOS formatted filesystem packaged into /boot/boot1.efifat. Older versions of MidnightBSD installed this filesystem image into a raw partition.
+        However, uses of the ESP have proliferated, making this inflexible approach no longer desirable. Users have varied needs for the size of this partition,
+        and multiple booting setups require more detailed access. To update old ESP partitions, users should stop using the gpart(8) utility. Instead,
+        ESP partitions should be mounted as MS-DOS filesystems as /boot/efi, and /boot/loader.efi should be copied to /boot/efi/efi/boot/bootx64.efi if the default setup is used.
+        If the efibootmgr(8) utility is used to customize the boot environment, this file should be copied to the location set with the -l flag.
+
+        <p>UEFI boot is improved for amd64. The loader detects whether the loaded kernel can handle the in-place staging area (non-copying mode). The default is copy_staging auto. Auto-detection can be overridden, for example: with copy_staging enable, the loader will unconditionally copy the staging area to 2M, regardless of kernel capabilities. Also, the code to grow the staging area is more robust; for growth to occur, it’s no longer necessary to hand-tune and recompile the loader.
+
+        <p>Performance improvements have been made to loader(8), nvme(4), random(4), rtsold(8), and x86 clock calibration, which collectively yield a significant speedup in system boot time.
+
+        <p>The teken.fg_color and teken.bg_color loader.conf(5) variables now accept a bright or light prefix (and color numbers 8 through 15) to select bright colors.
+
+        <p>Several bugs have been fixed in loader(8) that caused the video console output to disappear. These appeared to be hangs after the boot loader starts the kernel.
 
         <h4>Security Fixes</h4>
+        <p>Overhauled the in-kernel cryptographic framework to better support modern cryptographic algorithms as well as simplify the interface for both device drivers and framework consumers.
+
+        <p>Removed support for Kerberos GSS algorithms deprecated by RFCs 6649 and 8429.
+
+        <p>Removed support for previously-deprecated algorithms in geli(8).
+
+        <p>Removed support for IPsec algorithms deprecated by RFC 8221 as well as Triple DES.
+
+        <p>The GENERIC kernels for amd64 and i386 now include aesni(4) to support accelerated software cryptography for geli(8)
+
+        <p>Removed the ubsec(4) driver for obsolete Broadcom BCM58xx crypto accelerators.
+
+        <p>The kernel now supports in-kernel framing and encryption of Transport Layer Security (TLS) data on TCP sockets for TLS versions 1.0 through 1.3. Transmit offload via in-kernel crypto drivers is supported for MtE cipher suites using AES-CBC as well as AEAD cipher suites using AES-GCM. Receive offload via in-kernel crypto drivers is supported for AES-GCM cipher suites for TLS 1.2. Using KTLS requires the use of a KTLS-aware userland SSL library. The OpenSSL library included in the base system does not enable KTLS support by default, but support can be enabled by building with the WITH_OPENSSL_KTLS option.
+
+        <p>KTLS (the kernel TLS implementation) has added receive offload support for TLS 1.3. Receive offload is now supported for TLS 1.1 through 1.3; send offload is supported for TLS 1.0 through 1.3.
+
 
         <p>Updated CA certificates</p>
 
@@ -141,7 +454,7 @@
             <li>less 678</li>
             <li>unbound 1.23.0</li>
             <li>netcat (imported FreeBSD 13 customizations)</li>
-            <li>cpdup synced with dragonfly current</li>
+            <li>cpdup synced with Dragonfly current</li>
             <li>add sensors script by Slawomir Wojciech Wojtczak & Trix Farrar</li>
             <li>tcpdump 4.99.5</li>
             <li>tzdata 2025b</li>
@@ -164,8 +477,6 @@
             <li>atf 0.22 + bugfixes</li>
             <li>bearssl 20230220</li>
             <li>bmake 20220208</li>
-            <li>Remove amd</li>
-            <li>Remove libdispatch</li>
             <li>byacc 20200330</li>
             <li>libdialog 1.3-20210117</li>
             <li>pnglite 2013</li>
@@ -178,6 +489,50 @@
         <p>igc(4) fix for some z790 motherboards</p>
 
         <p>Fix two CVEs in the intel iwlwifi driver: Fix CVE-2024-27434 and CVE-2024-35912</p>
+
+        <p>The amd64 architecture now supports Hygon Dhyana Family 18h processors.
+
+        <p>Removed the deprecated ufm(4) driver for USB FM tuners.
+
+        <p>Removed the deprecated ctau(4) and cx(4) drivers.
+
+        <p>Removed the vpo(4) driver for parallel port SCSI adapters.
+
+        <p>A new usbhid(4) driver uses drivers from the hid(4) framework for USB HID devices instead of ukbd(4), ums(4), and uhid(4). usbhid(4) is enabled by adding hw.usb.usbhid.enable=1 to /boot/loader.conf and adding usbhid to kld_list="" in /etc/rc.conf.
+
+        <p>Removed several deprecated network drivers:
+
+        <ul>
+            <li>bm(4) BMAC
+            <li>cs(4) Crystal Semiconductor CS8900/CS8920
+            <li>de(4) DEC DC21x4x
+            <li>ed(4) NE-2000 and WD-80x3
+            <li>ep(4) 3Com Etherlink III (3c5x9) ISA
+            <li>ex(4) Intel EtherExpress Pro/10 and Pro/10+
+            <li>fe(4) Fujitsu MB86960A/MB86965A
+            <li>hme(4) Sun Microelectronics STP2002-STQ
+            <li>pcn(4) AMD PCnet
+            <li>sf(4) Starfire
+            <li>sn(4) SMC 91Cxx
+            <li>tl(4) Texas Instruments ThunderLAN
+            <li>tx(4) SMC 83c17x
+            <li>txp(4) 3Com 3XP Typhoon/Sidewinder (3CR990)
+            <li>vx(4) 3Com EtherLink III / Fast EtherLink III (3c59x) PCI
+            <li>wb(4) Winbond W89C840F
+            <li>xe(4) Xircom PCMCIA
+        </ul>
+
+        <p>The qat(4) driver has been added, supporting some of the cryptographic acceleration functions of the Intel QuickAssist (QAT) device. The qat(4) driver supports the QAT devices integrated with Atom C2000 and C3000 and Xeon C620 and D-1500 platforms, and the Intel QAT Adapter 8950.
+
+        <p>The amd64 architecture now supports 57-bit virtual addresses (LA57) on supported CPUs. This permits user processes to use up to 56 bits of virtual address space. This also includes support for five layer nested page tables used by bhyve.
+
+        <p>The em(4) driver now correctly supports the full range of receive buffer sizes available on newer chips 82580 and i350.
+
+        <p>Basic support for Intel Alder Lake CPUs has been implemented for hwpmc(4)
+
+        <p>The irdma(4) RDMA driver was introduced for the Intel E810 Ethernet Controller, supporting both RoCEv2 and iWARP protocols in per-PF manner, RoCEv2 being the default
+
+        <p>The rtw88(4) driver was added to support several Realtek wireless PCI interfaces. It is currently limited to 802.11 a/b/g operation
 
         <h4>Known Issues</h4>
 
