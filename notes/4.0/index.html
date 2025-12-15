@@ -378,6 +378,36 @@
 
         <p>The VINUM class in geom(8) has been deprecated
 
+        <p>The libtacplus(3) library has been improved so that tacplus.conf(5) now follows POSIX shell syntax rules. This may cause TACACS+ authentication to fail if the shared secret contains a single quote, double quote, or backslash character which isn’t already properly quoted or escaped. The library allows additional AV pairs to be configured, up to 255.</p>
+
+        <p>Programs such as login(1) that utilize setusercontext(3) will now allow the process priority to be set from the ~/.login_conf file if the credentials permit setting it. Also, the priority may be specified in login.conf(5) as inherit, indicating that the process priority is inherited from the parent process. Similarly, the umask value may now be specified as inherit.</p>
+
+        <p>The configuration file and security output changes reported by periodic(8) that are emailed to system administrators now use reduced context to minimize unrelated content. The options passed to diff(1) to produce the daily output can be controlled by a daily_diff_flags variable in rc.conf(5); the options passed to diff(1) for the security scripts are controlled by security_status_diff_flags</p>
+
+        <p>The umask for a service may now be specified in rc.conf(5) using the variable &lt;service&gt;_umask, where the service is named &lt;service&gt;.</p>
+
+        <p>The head(1) and tail(1) programs now support the -q (quiet) and -v (verbose) options consistently. Numeric arguments may now use SI suffixes supported by expand_number(3).</p>
+
+        <p>The objdump(1) utility from LLVM is now available. Some LLVM objdump options have a different output format than GNU objdump; readelf(1) is available for inspecting ELF files, and GNU objdump is available from the devel/binutils port or package.</p>
+
+        <p>The tftpd(8) server can be configured to allow writes to files in a chrooted environment that are not world-writable using the new -S option.</p>
+
+        <p>The NFS server (nfsd(8), nfsuserd(8), mountd(8), gssd(8), and rpc.tlsservd(8)) can be run in an appropriately configured vnet jail. The vnet jail must be on its own file system, have the allow.nfsd jail parameter set on it, and enforce_statfs cannot be set to 0. Use of UDP and pNFS server configurations are not permitted. See jail(8), nfsd(8), and mountd(8).</p>
+
+        <p>A new syskrb5 mount option is available that allows a Kerberized NFSv4.1/4.2 mount to be done without any Kerberos credential (TGT or keytab) at mount time. See mount_nfs(8).</p>
+
+        <p>The zfsd(8) daemon will now fault disks that generate too many I/O delay events.</p>
+
+        <p>The logging priority of syslog messages due to overflow of a socket listen queue can now be set using the sysctl kern.ipc.sooverprio. The default is 7, corresponding to LOG_DEBUG. A value of -1 suppresses logging.</p>
+
+        <p>The netgraph ng_ipfw(4) module no longer truncates cookies to 16 bits, allowing a full 32 bits.</p>
+
+        <p>Support for IPv6 RFC 4620 nodeinfo is now disabled by default.</p>
+
+        <p>pf filter rules can be optionally enabled for packets delivered locally to enable pf rdr rules for connections initiated from the host. This can change the behavior of rules which match packets delivered to lo0. To enable this feature, use the commands sysctl net.pf.filter_local=1; service pf restart. When enabled, it is best to ensure that packets delivered locally are not filtered, e.g. by adding a set skip on lo rule.</p>
+
+        <p>libcapsicum has been improved to cache more time zone information. This change reduces the number of calls to tzset(3) and improves performance.</p>
+
         <h5>Bhyve</h5>
 
         <p>The bhyve(8) utility supports additional COM3 and COM4 serial ports.
@@ -442,8 +472,9 @@
 
         <p>KTLS (the kernel TLS implementation) has added receive offload support for TLS 1.3. Receive offload is now supported for TLS 1.1 through 1.3; send offload is supported for TLS 1.0 through 1.3.
 
-
         <p>Updated CA certificates</p>
+
+        <p>Several Heimdal security fixes have been applied to mitigate vulnerabilities in the Kerberos Key Distribution Center.</p>
 
         <h4>3rd Party Software</h4>
 
@@ -533,6 +564,20 @@
         <p>The irdma(4) RDMA driver was introduced for the Intel E810 Ethernet Controller, supporting both RoCEv2 and iWARP protocols in per-PF manner, RoCEv2 being the default
 
         <p>The rtw88(4) driver was added to support several Realtek wireless PCI interfaces. It is currently limited to 802.11 a/b/g operation
+
+        <p>Multiple PCI MCFG regions are now supported on x86 systems, enabling support for PCI config access for domains (segments) other than 0.</p>
+
+        <p>A problem with the graid implementation of Promise RAID1 created with 4 or more disks has been fixed. The array worked only until reboot.</p>
+
+        <p> iwlwifi(4) driver supports BE200</p>
+
+        <p>There have been many stability fixes to native and LinuxKPI-based wireless drivers. </p>
+
+        <p>The Google Virtual NIC (gve(4)) is now supported.</p>
+
+        <p>Support for SIM7600G has been added to u3g(4).</p>
+
+        <p>Added support for AMD Ryzen 7 "Phoenix" processors (family 0x19, model 0x70-0x7f) to the amdsmn(4) and amdtemp(4) drivers. This enables temperature readings of these CPUs via sysctl. The sensors function identically to those for the "Raphael" processors (model 0x60-0x6f); only the PCI device ID differs.</p>
 
         <h4>Known Issues</h4>
 
