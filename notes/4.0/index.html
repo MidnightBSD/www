@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD 4.0 Release Notes</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../css/essence.css">
+    <style type="text/css" media="all">
+        #text ul li {
+            font-size: 11pt;
+            margin-bottom: 5px;
+        }
+
+        .update h4 {
+            color: #15a9ed;
+            text-align: center;
+            padding-top: 0.4em;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        #list ul {
+            margin-left: 2em;
+            padding-left: 1em;
+            list-style-position: inside;
+        }
+    </style>
+    <link rel="canonical" href="https://www.midnightbsd.org/notes/3.2/">
+</head>
+
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2 class="icon"><img src="../../images/oxygen/notes32.png" alt="Release Notes icon"/> MidnightBSD Release Notes
+        </h2>
+        <div class="devupdate fleft">
+            <h4>Late breaking information:</h4>
+            <blockquote>
+		       </blockquote>
+            <h4>Previous Release Notes</h4>
+            <ul>
+                <li><a href="../0.1/index.html">0.1-RELEASE</a></li>
+                <li><a href="../0.1.1/index.html">0.1.1-RELEASE</a></li>
+                <li><a href="../0.2/index.html">0.2.1-RELEASE</a></li>
+                <li><a href="../0.3/index.html">0.3-RELEASE</a></li>
+                <li><a href="../0.4/index.html">0.4-RELEASE</a></li>
+                <li><a href="../0.5/index.html">0.5-RELEASE</a></li>
+                <li><a href="../0.6/index.html">0.6-RELEASE</a></li>
+                <li><a href="../0.7/index.html">0.7-RELEASE</a></li>
+                <li><a href="../0.8/index.html">0.8-RELEASE</a></li>
+                <li><a href="../1.0/index.html">1.0-RELEASE</a></li>
+                <li><a href="../1.1/index.html">1.1-RELEASE</a></li>
+                <li><a href="../1.2/index.html">1.2-RELEASE</a></li>
+                <li><a href="../2.0/index.html">2.0-RELEASE</a></li>
+                <li><a href="../2.1/index.html">2.1-RELEASE</a></li>
+                <li><a href="../2.2/index.html">2.2-RELEASE</a></li>
+                <li><a href="../3.0/index.html">3.0-RELEASE</a></li>
+                <li><a href="../3.1/index.html">3.1-RELEASE</a></li>
+                <li><a href="../3.2/index.html">3.2-RELEASE</a></li>
+            </ul>
+        </div>
+
+        <p><b>WORK IN PROGRESS - SUBJECT TO CHANGE</b></p>
+
+        <h3>(12/15/2025) MidnightBSD 4.0</h3>
+
+        <p>I’m happy to announce the availability of MidnightBSD 4.0 for amd64 and i386.
+
+        <p>This release included updates to third-party libraries, bug fixes from the 3.2 release,
+        and security updates. Many third-party libraries were updated and this may cause some compatibility issues with old mports or packages.
+
+        <p>mports and Ravenports are both available on amd64 for packages.</p>
+
+        <h4>Upgrade Process</h4>
+
+        <p>Install git if you don’t have it already<br>
+        <code>mport install git</code>
+        </p>
+
+        <p>Fetch MidnightBSD from git via github.com/midnightbsd/src.git   (assumes you don’t have /usr/src populated)
+
+        <p>
+        <code>git clone -b stable/4.0 https://github.com/MidnightBSD/src.git</code>
+        </p>
+
+        <p>
+        <code>cd /usr/src; make -j4 clean buildworld buildkernel;<br>
+        choose one of etcupdate or mergemaster -p<br>
+        make installkernel<br>
+            reboot</code>
+        </p>
+
+        <p>(if it works OK, login and go to /usr/src)<br>
+            <code>
+            make installworld<br>
+        choose one of etcupdate or mergemaster -iU<br>
+            </code>
+        </p>
+
+        <p>
+        Update installed mports/packages<br>
+        For mport package manager, run
+        <code>
+            mport index<br>
+            mport clean<br>
+            mport upgrade<br>
+        </code>
+        </p>
+
+        <p>Remove old libraries and programs from the base.</p>
+        <p><code>
+            cd /usr/src/; make check-old; make delete-old; make delete-old-libs; make installworld;
+        </code>
+        </p>
+
+        <h4>Bug Fixes and new features</h4>
+
+        <h5>Mport package manager</h5>
+
+        <p>Updated mport to 2.7.3</p>
+
+        <h5>Miscellaneous Changes</h5>
+
+        <p>Removed libdispatch from base. </p>
+
+        <h4>Security Fixes</h4>
+
+        <p>Updated CA certificates</p>
+
+        <h4>3rd Party Software</h4>
+
+        <ul>
+            <li>libarchive 3.8.1</li>
+            <li>xz 5.8.1</li>
+            <li>LLVM 19.1.7</li>
+            <li>less 678</li>
+            <li>unbound 1.23.0</li>
+            <li>netcat (imported FreeBSD 13 customizations)</li>
+            <li>cpdup synced with dragonfly current</li>
+            <li>add sensors script by Slawomir Wojciech Wojtczak & Trix Farrar</li>
+            <li>tcpdump 4.99.5</li>
+            <li>tzdata 2025b</li>
+            <li>googletest 1.15.2</li>
+            <li>expat 2.7.1</li>
+            <li>libpcap 1.10.5</li>
+            <li>OpenSSH 9.9p2</li>
+            <li>wpa 2.11 + hostapd 2.11</li>
+            <li>flex 2.6.4</li>
+            <li>lua 5.4.2</li>
+            <li>openzfs 2.1.15</li>
+            <li>device-tree from linux 5.9</li>
+            <li>pcg-c 20190718-83252d9</li>
+            <li>unifdef 2.12</li>
+            <li>terminus-font-4.49.1</li>
+            <li>libcbor 0.11.0</li>
+            <li>libfido2 1.14</li>
+            <li>wireguard tools</li>
+            <li>lib9p</li>
+            <li>atf 0.22 + bugfixes</li>
+            <li>bearssl 20230220</li>
+            <li>bmake 20220208</li>
+            <li>Remove amd</li>
+            <li>Remove libdispatch</li>
+            <li>byacc 20200330</li>
+            <li>libdialog 1.3-20210117</li>
+            <li>pnglite 2013</li>
+            <li>jemalloc 5.2.1</li>
+            <li>Removed gcc and binutils</li>
+        </ul>
+
+        <h4>Hardware</h4>
+
+        <p>igc(4) fix for some z790 motherboards</p>
+
+        <p>Fix two CVEs in the intel iwlwifi driver: Fix CVE-2024-27434 and CVE-2024-35912</p>
+
+        <h4>Known Issues</h4>
+
+        <p>The compiler update caused a lot of breakage with mports. As we fix ports for 4.0+, it will likely break 3.2.x compatibility. This
+        is particularly true with ports depending on Rust.  You should run mport delete rust if you have it installed and instead mport install rust186</p>
+
+        <p>Final packages are not yet available for i386 or amd64.  For the former, we don't have any published yet.</p>
+
+        <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
+
+        <p>On VirtualBox 7, Xorg needs over 1GB of RAM allocated to run without swapping or crashing.  Occasional VM hangs have also been seen. It works fine on bare metal, bhyve, or VMware products.
+
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
+
