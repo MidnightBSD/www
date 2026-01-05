@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /ftp
+
+User-agent: *
+Disallow: /opengrok
+
+User-agent: *
+Disallow: /opengrok
+
+Allow: /documentation
+
+Allow: /developer
+
+Allow: /notes
+
+Allow: /about
+
+Allow: /security
