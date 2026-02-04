@@ -42,11 +42,11 @@ a:active, a:hover {
 
 #header a {
     /* CSS Text-to-Image replacement */
-    background-image: url("/images/logo.jpg");
+    background-image: url("/images/logo2.png");
     background-repeat: no-repeat;
-    width: 928px;
+    width: 926px;
     height: 0 !important;
-    padding: 189px 0 0 0; /* Pushes the div down to reveal the image */
+    padding: 235px 0 0 0; /* Pushes the div down to reveal the image */
     margin: 0 auto;
     display: block;
     overflow: hidden; /* We don't want the text to show */
