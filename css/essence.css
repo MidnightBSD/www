@@ -34,9 +34,9 @@ a:active, a:hover {
     text-align: center; /* Center the text */
     text-decoration: none; /* Remove underline from links */
     cursor: pointer; /* Indicate it's clickable */
-    border: 2px solid #004085; /* Border color */
+    border: 2px solid #00408579; /* Border color */
     border-radius: 5px; /* Slightly rounded corners */
-    background-color: #004085; /* Background color */
+    background-color: #00408579; /* Background color */
     color: #ffffff; /* Text color */
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for interactions */
     -webkit-appearance: none; /* For cross-browser consistency on buttons */
@@ -79,8 +79,8 @@ a:active, a:hover {
 
 /* Example of a secondary button style */
 .my-button.secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: #6C757D6F;
+    border-color: #6C757D6F;
 }
 
 .my-button.secondary:hover {
