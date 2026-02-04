@@ -1,7 +1,10 @@
 blockquote { line-height: 130%; }
 
 #welcomebox { width: 900px; margin-left: 30px}
-#welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif; line-height: 1.3em; }
+#welcome { width: 625px; height: auto; float: left;   font-family: "Macondo", cursive;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.3em; }
 #welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 2em }
 
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center;
