@@ -1,11 +1,13 @@
 blockquote { line-height: 130%; }
 
 #welcomebox { width: 900px; margin-left: 30px}
-#welcome { width: 625px; height: auto; float: left;   font-family: "Macondo", cursive;
+#welcome { width: 625px; height: auto; float: left;   font-family: "Oxygen", sans-serif;
     font-weight: 400;
     font-style: normal;
     line-height: 1.3em; }
-#welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 2em }
+#welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 2em; font-family: "Macondo", cursive;
+    font-weight: 400;
+    font-style: normal; }
 
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center;
     color: #333; float: right; margin: -10px 0 0 0; }
@@ -29,6 +31,13 @@ blockquote { line-height: 130%; }
 #gravity h2 a:hover { color: #666; }
 
 #news, #tweets, #security { width: 300px; font-size: 90% }
+
+.macondo-regular {
+    font-family: "Macondo", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
 
 .date { font-style: italic; color: #808080; text-align: center; }
 .update { height: 3.8em; overflow: hidden; }
