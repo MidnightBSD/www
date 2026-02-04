@@ -7,17 +7,12 @@ blockquote { line-height: 130%; }
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center;
     color: #333; float: right; margin: -10px 0 0 0; }
 #getbox * { font-weight: normal; }
-#getbox a { color: #333; }
-#getbox a:hover { color: #666; }
 #getbox h2, h3, h4 { margin: 0; padding: 0; }
 #getbox h2 a { text-decoration: none; font-size: 17pt; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
 #getbox * { font-weight: normal; }
-#getbox a { color: #333; }
-#getbox a:hover { color: #666; }
 #getbox h2, h3, h4 { margin: 0; padding: 0; line-height: 1.2em; }
-#getbox h2 a { text-decoration: none; font-size: 17pt; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
 #getcd { width: 215px; height: 107px; }
