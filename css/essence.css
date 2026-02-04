@@ -34,6 +34,7 @@ a:active, a:hover {
 }
 
 #header h1 {
+    background-color: #1b3752;
     width: 928px;
     margin: 0 auto;
     z-index: 4; /* So IE has "layout" */
@@ -42,7 +43,6 @@ a:active, a:hover {
 
 #header a {
     /* CSS Text-to-Image replacement */
-    background-color: #1b3752;
     background-image: url("/images/logo2.png");
     background-repeat: no-repeat;
     width: 926px;
