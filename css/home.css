@@ -1,7 +1,7 @@
 blockquote { line-height: 130%; }
 
 #welcomebox { width: 900px; margin-left: 30px}
-#welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif; }
+#welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif; line-height: 1.3em; }
 #welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 2em }
 
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center; color: #333; float: right; margin: -10px 0 0 0; }
@@ -15,7 +15,7 @@ blockquote { line-height: 130%; }
 #getbox * { font-weight: normal; }
 #getbox a { color: #333; }
 #getbox a:hover { color: #666; }
-#getbox h2, h3, h4 { margin: 0; padding: 0; }
+#getbox h2, h3, h4 { margin: 0; padding: 0; line-height: 1.2em; }
 #getbox h2 a { text-decoration: none; font-size: 17pt; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
