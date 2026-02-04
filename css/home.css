@@ -2,7 +2,7 @@ blockquote { line-height: 130%; }
 
 #welcomebox { width: 900px; margin-left: 30px}
 #welcome { width: 625px; height: auto; float: left; font-family: Slabo, serif; }
-#welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 22px; }
+#welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 3em }
 
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center; color: #333; float: right; margin: -10px 0 0 0; }
 #getbox * { font-weight: normal; }
