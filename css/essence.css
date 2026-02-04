@@ -25,6 +25,78 @@ a:active, a:hover {
     color: #909090;
 }
 
+/* Base button style */
+.my-button {
+    display: inline-block; /* Allows setting width/height and padding, but keeps it inline */
+    padding: 10px 20px; /* Vertical and horizontal padding */
+    font-size: 16px; /* Text size */
+    font-weight: 600; /* Semi-bold text */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from links */
+    cursor: pointer; /* Indicate it's clickable */
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 5px; /* Slightly rounded corners */
+    background-color: #007bff; /* Background color */
+    color: #ffffff; /* Text color */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for interactions */
+    -webkit-appearance: none; /* For cross-browser consistency on buttons */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Hover state */
+.my-button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+    border-color: #0056b3; /* Darker border on hover */
+    color: #ffffff; /* Keep text white */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+/* Active (clicked) state */
+.my-button:active {
+    background-color: #004085; /* Even darker background when active */
+    border-color: #004085; /* Even darker border when active */
+    color: #ffffff; /* Keep text white */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) inset; /* Inset shadow for a pressed effect */
+    transform: translateY(1px); /* Slightly move down for a pressed effect */
+}
+
+/* Focus state (for keyboard navigation accessibility) */
+.my-button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus ring */
+}
+
+/* Optional: Disabled state */
+.my-button:disabled {
+    background-color: #cccccc;
+    border-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Example of a secondary button style */
+.my-button.secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.my-button.secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.my-button.secondary:active {
+    background-color: #4e555b;
+    border-color: #4e555b;
+}
+
+.my-button.secondary:focus {
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.5);
+}
+
 #globe {
     /* WRAPPER SURROUNDING ALL ELEMENTS */
     width: 1002px; /* Fits most 1024x768 in fullscreen */
