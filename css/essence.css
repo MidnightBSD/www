@@ -42,6 +42,7 @@ a:active, a:hover {
 
 #header a {
     /* CSS Text-to-Image replacement */
+    background-color: #1b3752;
     background-image: url("/images/logo2.png");
     background-repeat: no-repeat;
     width: 926px;
