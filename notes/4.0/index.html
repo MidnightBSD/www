@@ -43,6 +43,7 @@
             <blockquote>
                 Initial packages are built for the release.  There are a few issues still with desktop ports that are being worked on.
                 4.0.1 release includes several bug fixes, and some security patches. (See github release notes for details)
+                4.0.2 release includes a new mport package manager, boot loader image, and updates to expat, sqlite3, and xz.
 		       </blockquote>
             <h4>Previous Release Notes</h4>
             <ul>
@@ -590,10 +591,10 @@
 
         <h4>Known Issues</h4>
 
-        <p>The compiler update caused a lot of breakage with mports. As we fix ports for 4.0+, it will likely break 3.2.x compatibility. This
+        <p>The compiler update caused a lot of breakages with mports. As we fix ports for 4.0+, it will likely break 3.2.x compatibility. This
         is particularly true with ports depending on Rust.  You should run mport delete rust if you have it installed and instead mport install rust186</p>
 
-        <p>Final packages are not yet available for i386 or amd64.  For the former, we don't have any published yet.</p>
+        <p>Final packages are not yet available for i386 or amd64.  For the former, we don't have any published yet. UPDATE: Both amd64 and i386 have packages now.</p>
 
         <p>Ravenports install is not in the path, but we also don’t tell you that during bootstrap.
 
