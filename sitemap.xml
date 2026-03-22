@@ -57,12 +57,32 @@
   <priority>0.0031</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/documentation/bind.html</loc>
+  <priority>0.0115</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/dateandtime.html</loc>
+  <priority>0.0115</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/documentation/desktop.html</loc>
   <priority>0.0115</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/documentation/dns.html</loc>
+  <priority>0.0042</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/documentation/dump.html</loc>
   <priority>0.0042</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/duo.html</loc>
+  <priority>0.0042</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/firewall.html</loc>
+  <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/flashdriveboot.html</loc>
@@ -73,7 +93,15 @@
   <priority>0.0063</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/documentation/linux.html</loc>
+  <priority>0.0073</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/documentation/livecd.html</loc>
+  <priority>0.0073</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/documentation/ntp.html</loc>
   <priority>0.0073</priority>
  </url>
  <url>
