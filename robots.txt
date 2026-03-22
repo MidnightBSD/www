@@ -10,6 +10,7 @@ Disallow: /rspamd/
 Disallow: /fgmunin/
 Disallow: /roundcube/
 Disallow: /opengrok/
+Disallow: /viewvc/
 Crawl-delay: 10
 Sitemap: https://www.midnightbsd.org/sitemap.xml
 Sitemap: https://www.midnightbsd.org/sitemap1.xml
