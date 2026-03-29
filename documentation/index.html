@@ -581,16 +581,75 @@
 						</tr>
 					</table>
 				</div>
-				<p>In general, if hardware worked in FreeBSD 6.0 Release it will most likely work in MidnightBSD. 
-				Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2.  0.3-CURRENT
-				includes drivers from FreeBSD 7.0-RELEASE. We've also added support for several other systems such as network cards found in Intel based iMacs, newer AMD, Intel and NVIDIA SATA chipsets, and fixes for Apple mice.</p>	
+				<p>In general, if hardware worked in the FreeBSD 6.0 Release, it will most likely work in MidnightBSD.
+				Some drivers were imported from FreeBSD 6.1 beta, 6.1 Release and 6.2. 0.3-CURRENT
+				includes drivers from FreeBSD 7.0-RELEASE. We've also added support for several other systems such as network cards found in Intel-based iMacs, newer AMD,
+					Intel and NVIDIA SATA chipsets, and fixes for Apple mice.</p>
 
 				<h4 id="s1f">Updating the Operating System</h4>
-                                <p>Currently, the only method to update the OS core libraries is through use of the subversion tool.  MidnightBSD 0.6 and higher include
+
+					<h5>Build from Source in 3.2 and higher</h5>
+					<p>MidnightBSD uses git to checkout source code.  To install git, you can use the mport package manager
+					<code>mport install git</code></p>
+
+					<p>If you have the original source code for the version you are currently using in /usr/src, begin by first prepairing etcupdate</p>
+					<pre>
+						etcupdate extract
+						etcupdate diff
+					</pre>
+
+					<p>Now if you do not have that, first checkout the source code</p>
+
+					For instance, if you have MidnightBSD 4.0.2 installed
+					<pre>
+						cd /usr
+						git clone https://github.com/MidnightBSD/src.git -b stable/4.0
+						cd /usr/src
+						git checkout tags/4.0.2
+
+						etcupdate extract
+						etcupdate diff
+					</pre>
+
+					<p>Now you can get the latest source
+
+					<pre>
+					cd /usr/src
+					git checkout stable/4.0
+					git pull
+					</pre>
+
+					Then build the source
+					<pre>
+view /usr/src/UPDATING
+# cd /usr/src
+# make -j4 buildworld
+# make -j4 kernel
+# shutdown -r now
+# etcupdate -p
+# cd /usr/src
+# make installworld
+# etcupdate -B
+# shutdown -r now</pre>
+
+					<p>For optimal performance, change the -j4 to the number of CPU threads you have.  e.g. -j32 for a 16 core AMD Ryzen CPU with 32 threads.</p>
+
+					<h5>Building a custom kernel</h5>
+
+					<pre>
+					# cp /usr/src/sys/amd64/conf/GENERIC /root/MYKERNEL
+					# cd /usr/src/sys/amd64/conf
+					# ln -s /root/MYKERNEL .
+					# make buildkernel KERNCONF=MYKERNEL
+					# make installkernel
+					</pre>
+
+					<h5>MidnightBSD 3.1 and earlier</h5>
+					<p>Currently, the only method to update the OS core libraries is through use of the subversion tool.  MidnightBSD 0.6 and higher include
 				the svnlite command as part of the base system. You may checkout the updated source code from the stable branch of the release and build it.
 				Detailed instructions are available in the <a href="../developer/">developer section</a> of the website.</p>
 				<p>We plan to add binary update capability to the mport tools. This work has not yet started.</p>
-				<p>Packages may be updated with the mport update or mport upgrade commands. The latter will update all installed packages whereas the former can be
+				<p>Packages may be updated with the mport update or mport upgrade commands. The latter will update all installed packages, whereas the former can be
 				used to update individual packages.</p>
 
                 <!--#include virtual="/disqus.html"-->
