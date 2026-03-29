@@ -145,6 +145,85 @@
 
 				<div class="hardware">
 					<table>
+						<caption>Hardware tested with MidnightBSD 4.0.x</caption>
+						<tr>
+							<th>Hardware</th>
+							<th>Status</th>
+							<th>Notes</th>
+						</tr>
+
+						<tr>
+							<td>Intel 265k with Gigabyte z890 motherboard, nvidia 5070</td>
+							<td>Partially works</td>
+							<td>
+								Video acceleration is not supported with iGPU.
+								nvidia's latest freebsd driver works with 5070.
+								SATA and nvme work fine.
+								Integrated wired lan works.
+								Wi-Fi works.
+								Sound works
+							</td>
+						</tr>
+
+						<tr>
+							<td>AMD Ryzen 7900 with MSI b650 motherboard</td>
+							<td>Partially works</td>
+							<td>
+								Video acceleration is not supported with APU.
+								SATA and nvme work fine.
+								Integrated wired lan needs a driver from mports.
+								Wi-Fi is not supported. (uses Mediatek Wi-Fi chip)
+							</td>
+						</tr>
+
+						<tr>
+							<td>Intel 14700k with Asus ROG Strix z790 h</td>
+							<td>Partially works</td>
+							<td>
+								Video acceleration is not supported with iGPU.
+								SATA and nvme work fine.
+								Integrated wired lan works.
+								Wi-Fi works in 4.0.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HPE dl360 gen9 with 2690v3 xeons (dual socket)</td>
+							<td>Works</td>
+							<td>
+								All basic server functions work.  powerd is not supported for power management. HPE bios
+								seems to override. (even on OS controlled)
+								Many HPE agent and management utilities do not work on BSD.
+							</td>
+						</tr>
+
+						<tr>
+							<td>HPE dl360 gen10</td>
+							<td>Works</td>
+							<td>
+								All basic server functions work.  powerd is not supported for power management. HPE bios
+								seems to override. (even on OS controlled)
+								Many HPE agent and management utilities do not work on BSD.
+							</td>
+						</tr>
+
+						<tr>
+							<td>Framework 13 with 12th gen CPU</td>
+							<td>Partially works</td>
+							<td>The trackpad has some issues but can be configured to function in xorg.
+								Video acceleration is not supported but works on the frame buffer.
+								Needs updated BIOS to boot properly.  (2025 versions work)
+								Wi-Fi works.
+								Power management works with hwpstate. Do not use powerd on this system.
+							</td>
+						</tr>
+
+
+					</table>
+				</div>
+
+				<div class="hardware">
+					<table>
 						<caption>Hardware tested with MidnightBSD 3.2.x</caption>
 						<tr>
 							<th>Hardware</th>
@@ -493,21 +572,21 @@
 						    <td>IBM Thinkpad T30</td>
 						    <td>Works</td>
 						    <td>Sound, video, NIC, DVD all work.  System won't sleep and LCD won't
-						    turn off.  This model has the &quot;pointer stick&quot; and does not have built in
-						    wifi.  Using ndis with a broadcom wireless NIC works.</td>
+						    turn off.  This model has the &quot;pointer stick&quot; and does not have built-in
+						    Wi-Fi.  Using ndis with a broadcom wireless NIC works.</td>
 						</tr>
 						<tr>
 						    <td>Asus M4A78 Plus Motherboard + AMD Phenom 9600</td>
 						    <td>Does not work</td>
 						    <td>USB controller causes panics, freezes.  Must disable USB 2 in bios to boot.  
-						    Onboard NIC not supported and must be disabled.  System supported otherwise.</td>
+						    Onboard NIC isn’t supported and must be disabled.  System supported otherwise.</td>
 						</tr>
 						<tr>
-						    <td>iMac 2.0Ghz Core 2 Duo with 3GB RAM.  (silver/black model)  Feb 2008</td>
+						    <td>iMac 2.0Ghz Core 2 Duo with 3GB RAM.  (silver/black model) Feb 2008</td>
 						    <td>Mostly works</td>
-						    <td>Wifi is not supported, although may work with NDIS drivers from bootcamp.  
-						    Will boot off live cd without problem.  Onboard NIC supported in 0.2.1-RELEASE or
-						    CURRENT.  wifi might work in current with SMP disabled using bwi(4). Sound untested.</td>
+						    <td>Wifi is not supported, although you may work with NDIS drivers from bootcamp.
+						    Will boot off live cd without a problem.  Onboard NIC supported in 0.2.1-RELEASE or
+						    CURRENT.  Wi-Fi might work in current with SMP disabled using bwi(4). Sound untested.</td>
 						</tr>
 						<tr>
 						    <td>Mac Pro 2.0Ghz Quad Core (2 x 2)</td>
@@ -526,12 +605,12 @@
 						<tr>
 							<td>Dell Precision 650</td>
 							<td>Works</td>
-							<td>Dual 2.0Ghz Xeon 1GB ECC RAM SCSI and IDE. Onboard sound, NIC work.</td>
+							<td>Dual 2.0Ghz Xeon 1GB ECC RAM SCSI and IDE. Onboard sound, NIC works.</td>
 						</tr>
 						<tr>
 							<td>Custom Pentium PC</td>
 							<td>Works</td>
-							<td>Custom Built Intel Pentium D 805 dual core 2.66Ghz w/ Intel DP965LT motherboard. 
+							<td>Custom Built Intel Pentium D 805 dual-core 2.66Ghz w/ Intel DP965LT motherboard.
 							Onboard sound untested, network card works, IDE channels do not work (CD-ROM, etc). 
 							Sata controller works in recent snapshots. Sound Blaster Audigy Gamer and 
 							Nvidia GeForce PCIe 7300 work as expected.</td>
@@ -543,23 +622,23 @@
 							PC2700 DDR, 2 sata disks in gmirror raid 1 configuration, 1 ide disk for
 							boot partition, onboard sound, Geforce 5200 AGP 8x. Onboard NIC (nvidia maclan) 
 							did not work correctly, but an OEM Intel em worked as expected. Some disk 
-							corruption occured on the sata raid setup, but determined to be a faulty drive.</td>
+							corruption occurred on the sata raid setup, but determined to be a faulty drive.</td>
 						</tr>
 						<tr>
 							<td>Compaq Cyrix based 366Mhz</td>
 							<td>Works</td>
-							<td>X11 was not tested, but all devices including an included 3com 905 NIC worked as expected.</td>
+							<td>X11 was not tested, but all devices, including an included 3com 905 NIC, worked as expected.</td>
 						</tr>
 						<tr>
 							<td>Dell PowerEdge 5300</td>
 							<td>Works</td>
-							<td>Xeon 550Mhz PIII 512MB RAM, all scsi system. Works as expected including integrated ATI graphics.</td>
+							<td>Xeon 550Mhz PIII 512MB RAM, all scsi system. Works as expected, including integrated ATI graphics.</td>
 						</tr>
 						<tr>
 							<td>Virtual PC</td>
 							<td>Works</td>
 							<td>Virtual PC for Windows works as expected. VPC 7 for Mac OS X works 
-							except the CDROM drive is "lost" during install. If you can get it installed 
+							except the CDROM drive is "lost" during installation. If you can get it installed
 							using ftp install, it will work fine.</td>
 						</tr>
 						<tr>
@@ -571,12 +650,12 @@
 						<tr>
 							<td>Sun Ultra 10 3D creator</td>
 							<td>Works</td>
-							<td>Early releases were tested on a Sun Ultra 10 3D creator. The system died however. Last known working release was 0.1.1.</td>
+							<td>Early releases were tested on a Sun Ultra 10 3D creator. The system died, however. The last known working release was 0.1.1.</td>
 						</tr>
 						<tr>
 							<td>Qemu</td>
 							<td>Works</td>
-							<td>One of our developers uses qemu often with the system. It is included in mports.
+							<td>One of our developers often uses qemu with the system. It is included in mports.
 							I believe he's also run MidnightBSD virtualized inside of OpenBSD.</td>
 						</tr>
 					</table>
@@ -589,38 +668,38 @@
 				<h4 id="s1f">Updating the Operating System</h4>
 
 					<h5>Build from Source in 3.2 and higher</h5>
-					<p>MidnightBSD uses git to checkout source code.  To install git, you can use the mport package manager
+					<p>MidnightBSD uses git to check out source code.  To install git, you can use the mport package manager
 					<code>mport install git</code></p>
 
-					<p>If you have the original source code for the version you are currently using in /usr/src, begin by first prepairing etcupdate</p>
-					<pre>
-						etcupdate extract
-						etcupdate diff
-					</pre>
+					<p>If you have the original source code for the version you are currently using in /usr/src, begin by first preparing etcupdate</p>
+<pre>
+etcupdate extract
+etcupdate diff
+</pre>
 
-					<p>Now if you do not have that, first checkout the source code</p>
+					<p>Now if you do not have that, first check out the source code</p>
 
 					For instance, if you have MidnightBSD 4.0.2 installed
-					<pre>
-						cd /usr
-						git clone https://github.com/MidnightBSD/src.git -b stable/4.0
-						cd /usr/src
-						git checkout tags/4.0.2
+<pre>
+cd /usr
+git clone https://github.com/MidnightBSD/src.git -b stable/4.0
+cd /usr/src
+git checkout tags/4.0.2
 
-						etcupdate extract
-						etcupdate diff
-					</pre>
+etcupdate extract
+etcupdate diff
+</pre>
 
 					<p>Now you can get the latest source
 
-					<pre>
-					cd /usr/src
-					git checkout stable/4.0
-					git pull
-					</pre>
+<pre>
+cd /usr/src
+git checkout stable/4.0
+git pull
+</pre>
 
 					Then build the source
-					<pre>
+<pre>
 view /usr/src/UPDATING
 # cd /usr/src
 # make -j4 buildworld
@@ -630,23 +709,24 @@ view /usr/src/UPDATING
 # cd /usr/src
 # make installworld
 # etcupdate -B
-# shutdown -r now</pre>
+# shutdown -r now
+</pre>
 
 					<p>For optimal performance, change the -j4 to the number of CPU threads you have.  e.g. -j32 for a 16 core AMD Ryzen CPU with 32 threads.</p>
 
 					<h5>Building a custom kernel</h5>
 
-					<pre>
-					# cp /usr/src/sys/amd64/conf/GENERIC /root/MYKERNEL
-					# cd /usr/src/sys/amd64/conf
-					# ln -s /root/MYKERNEL .
-					# make buildkernel KERNCONF=MYKERNEL
-					# make installkernel
-					</pre>
+<pre>
+# cp /usr/src/sys/amd64/conf/GENERIC /root/MYKERNEL
+# cd /usr/src/sys/amd64/conf
+# ln -s /root/MYKERNEL .
+# make buildkernel KERNCONF=MYKERNEL
+# make installkernel
+</pre>
 
 					<h5>MidnightBSD 3.1 and earlier</h5>
-					<p>Currently, the only method to update the OS core libraries is through use of the subversion tool.  MidnightBSD 0.6 and higher include
-				the svnlite command as part of the base system. You may checkout the updated source code from the stable branch of the release and build it.
+					<p>Currently, the only method to update the OS core libraries is through the use of the subversion tool.  MidnightBSD 0.6 and higher include
+				the svnlite command as part of the base system. You may check out the updated source code from the stable branch of the release and build it.
 				Detailed instructions are available in the <a href="../developer/">developer section</a> of the website.</p>
 				<p>We plan to add binary update capability to the mport tools. This work has not yet started.</p>
 				<p>Packages may be updated with the mport update or mport upgrade commands. The latter will update all installed packages, whereas the former can be
