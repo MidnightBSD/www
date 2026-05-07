@@ -15,14 +15,29 @@ Crawl-delay: 10
 Sitemap: https://www.midnightbsd.org/sitemap.xml
 Sitemap: https://www.midnightbsd.org/sitemap1.xml
 Sitemap: https://www.midnightbsd.org/sitemap2.xml
-Sitemap: https://www.midnightbsd.org/sitemap3.xml
-Sitemap: https://www.midnightbsd.org/sitemap4.xml
-Sitemap: https://www.midnightbsd.org/sitemap5.xml
-Sitemap: https://www.midnightbsd.org/sitemap6.xml
-Sitemap: https://www.midnightbsd.org/sitemap7.xml
-Sitemap: https://www.midnightbsd.org/sitemap8.xml
-Sitemap: https://www.midnightbsd.org/sitemap9.xml
 Host: www.midnightbsd.org
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 User-agent: AhrefsBot 
 Disallow: /
 

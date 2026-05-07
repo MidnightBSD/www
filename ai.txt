@@ -1,18 +1,19 @@
 User-agent: *
 Disallow: /ftp
-
-User-agent: *
 Disallow: /opengrok
-
-User-agent: *
-Disallow: /opengrok
+Disallow: /magus
+Disallow: /viewvc
+Disallow: /bin
+Disallow: /cgi-bin
+Disallow: /assets
+Disallow: /rspamd
+Disallow: /fgmunin
+Disallow: /roundcube
 
 Allow: /documentation
-
 Allow: /developer
-
 Allow: /notes
-
 Allow: /about
-
 Allow: /security
+Allow: /index.html
+Allow: /
