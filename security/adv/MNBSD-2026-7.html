@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-7 pf can overflow the stack parsing crafted SCTP packets</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-7: pf can overflow the stack parsing crafted SCTP packets</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> pf</p>
+  <p><strong>Summary:</strong> pf can overflow the stack parsing crafted SCTP packets</p>
+</div>
+
+<h2>Description</h2>
+<p>pf parses SCTP packets to discover additional addresses for SCTP endpoints,
+allowing it to create states allowing connections between these additional
+addresses.
+
+Incorrect packet validation allowed unbounded recursion parsing SCTP chunk
+parameters. This can eventually result in a stack overflow and panic.
+
+Remote attackers can craft packets which cause affected systems to panic.
+This affects any system where pf is configured to process traffic,
+independent of the configured ruleset.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>pf</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://security.FreeBSD.org/advisories/FreeBSD-SA-26:14.pf.asc">https://security.FreeBSD.org/advisories/FreeBSD-SA-26:14.pf.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-7164">https://www.cve.org/CVERecord?id=CVE-2026-7164</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-7164</p>
+<p class="dates">
+Published: April 29, 2026<br>
+Last Modified: April 29, 2026
+</p>
+</body>
+</html>
