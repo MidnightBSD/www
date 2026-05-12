@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Devices and Device Nodes Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/devices.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Devices and Device Nodes</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">The /dev Directory</a></li>
+                <li><a href="#s1d">Viewing Detected Devices</a></li>
+                <li><a href="#s1e">Storage Devices</a></li>
+                <li><a href="#s1f">Disk Partitions and Slices</a></li>
+                <li><a href="#s1g">Network Devices</a></li>
+                <li><a href="#s1h">Terminal and Serial Devices</a></li>
+                <li><a href="#s1i">Input Devices</a></li>
+                <li><a href="#s1j">Pseudo-Devices</a></li>
+                <li><a href="#s1k">Device Management Tools</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Devices and Device Nodes</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>A device is a term used mostly for hardware-related activities in a system, including disks,
+            printers, graphics cards, and keyboards. When MidnightBSD boots, the majority of the boot
+            messages refer to devices being detected. A copy of the boot messages is saved to
+            <code>/var/run/dmesg.boot</code>.</p>
+
+        <p>Each device has a device name and number. For example, <code>ada0</code> is the first SATA
+            hard drive, while <code>kbd0</code> represents the keyboard. The number suffix starts at zero
+            and increments for each additional device of the same type found in the system.</p>
+
+        <p>Most devices in MidnightBSD must be accessed through special files called device nodes,
+            which are located in <code>/dev</code>. Device nodes are not regular files — they are
+            interfaces into the kernel that let programs communicate with hardware. They are created
+            and managed automatically by <code>devfs</code>, the device file system.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">The /dev Directory</h4>
+        <p><code>/dev</code> is a special in-memory file system mounted by the kernel at boot. Its
+            contents are populated dynamically as devices are detected or attached. When you plug in
+            a USB drive, a new device node such as <code>/dev/da0</code> appears automatically. When
+            you remove it, the node disappears.</p>
+
+        <p>You can list the device nodes currently present on your system:</p>
+        <code>ls /dev</code>
+
+        <p>Device nodes have a type, owner, group, and permissions just like regular files. The type
+            is shown by <code>ls -l</code> as either <code>c</code> (character device) or <code>b</code>
+            (block device). Disk devices are character devices on MidnightBSD, as is common on BSD
+            systems. Permissions control which users and programs may read from or write to a device.</p>
+
+        <p>To see the type and permissions of disk device nodes:</p>
+        <code>ls -l /dev/ada0 /dev/da0</code>
+
+        <h4 id="s1d">Viewing Detected Devices</h4>
+        <p>The kernel records messages about every device it detects during boot. These messages are
+            saved to <code>/var/run/dmesg.boot</code> and can be read at any time:</p>
+        <code>cat /var/run/dmesg.boot</code>
+
+        <p>The <code>dmesg</code> command shows the current kernel message buffer, which includes the
+            boot messages and any messages added since boot, such as devices attached after startup:</p>
+        <code>dmesg</code>
+
+        <p>To filter dmesg output for a specific device type, pipe it through <code>grep</code>:</p>
+        <code>dmesg | grep ada</code>
+        <code>dmesg | grep usb</code>
+
+        <p>The <code>pciconf</code> command lists all PCI and PCI Express devices in the system,
+            whether or not a driver has attached to them:</p>
+        <code>pciconf -lv</code>
+
+        <p>To list USB devices:</p>
+        <code>usbconfig list</code>
+
+        <h4 id="s1e">Storage Devices</h4>
+        <p>MidnightBSD uses different device name prefixes depending on the type of storage controller
+            and connection interface.</p>
+
+        <h5>SATA and PATA Disks (ada)</h5>
+        <p>SATA hard drives and SSDs connected through the ATA driver appear as <code>ada</code>
+            devices. The first drive is <code>ada0</code>, the second is <code>ada1</code>, and so on.
+            PATA (IDE) drives also use the <code>ada</code> prefix on modern MidnightBSD.</p>
+        <ul>
+            <li><code>/dev/ada0</code> &mdash; first SATA disk</li>
+            <li><code>/dev/ada1</code> &mdash; second SATA disk</li>
+        </ul>
+
+        <h5>SCSI, SAS, and USB Storage (da)</h5>
+        <p>SCSI hard drives, SAS drives, and USB mass storage devices appear as <code>da</code>
+            (Direct Access) devices. USB thumb drives and external hard drives attached via USB will
+            appear as <code>da0</code>, <code>da1</code>, etc., alongside any SCSI or SAS disks.</p>
+        <ul>
+            <li><code>/dev/da0</code> &mdash; first SCSI, SAS, or USB storage device</li>
+            <li><code>/dev/da1</code> &mdash; second such device</li>
+        </ul>
+
+        <h5>NVMe Disks (nvme, nvd, nda)</h5>
+        <p>NVMe solid state drives are exposed through two sets of nodes. The <code>nvme</code> node
+            represents the controller itself, while <code>nvd</code> (or <code>nda</code> on newer
+            MidnightBSD) represents the namespace (the disk you read and write to).</p>
+        <ul>
+            <li><code>/dev/nvme0</code> &mdash; first NVMe controller</li>
+            <li><code>/dev/nvd0</code> &mdash; first NVMe disk namespace</li>
+            <li><code>/dev/nda0</code> &mdash; NVMe disk via the CAM layer (newer releases)</li>
+        </ul>
+
+        <h5>Optical Drives (cd)</h5>
+        <p>CD-ROM, DVD, and Blu-ray drives appear as <code>cd</code> devices.</p>
+        <ul>
+            <li><code>/dev/cd0</code> &mdash; first optical drive</li>
+        </ul>
+
+        <p>To mount a CD:</p>
+        <code>mount -t cd9660 /dev/cd0 /mnt</code>
+
+        <h5>Memory Disks (md)</h5>
+        <p>Memory disks are virtual disk devices backed by RAM or a file. They are useful for
+            creating RAM disks, mounting disk images, or setting up temporary file systems.</p>
+        <ul>
+            <li><code>/dev/md0</code> &mdash; first memory disk</li>
+        </ul>
+
+        <p>Create a 64MB memory disk backed by RAM:</p>
+        <code>mdconfig -a -t malloc -s 64m -u 0</code>
+
+        <p>Attach a disk image file as a memory disk:</p>
+        <code>mdconfig -a -t vnode -f diskimage.img</code>
+
+        <p>Detach a memory disk:</p>
+        <code>mdconfig -d -u 0</code>
+
+        <h5>GEOM Disk Labels (gpt, label)</h5>
+        <p>The GEOM framework exposes stable disk labels that do not change when disks are
+            reordered. GPT partition labels appear under <code>/dev/gpt/</code> and disk labels
+            created with <code>glabel</code> appear under <code>/dev/label/</code>. Using labels
+            in <code>/etc/fstab</code> is more reliable than using raw device names.</p>
+        <ul>
+            <li><code>/dev/gpt/rootfs</code> &mdash; GPT partition labeled "rootfs"</li>
+            <li><code>/dev/label/home</code> &mdash; disk labeled "home" via glabel</li>
+        </ul>
+
+        <h4 id="s1f">Disk Partitions and Slices</h4>
+        <p>MidnightBSD supports both GPT (GUID Partition Table) and MBR (Master Boot Record)
+            partitioning. The partition naming scheme differs between the two.</p>
+
+        <h5>GPT Partitions</h5>
+        <p>On a GPT disk, partitions are named with a <code>p</code> suffix followed by the
+            partition number:</p>
+        <ul>
+            <li><code>/dev/ada0p1</code> &mdash; first GPT partition on ada0</li>
+            <li><code>/dev/ada0p2</code> &mdash; second GPT partition on ada0</li>
+            <li><code>/dev/nvd0p1</code> &mdash; first GPT partition on nvd0</li>
+        </ul>
+
+        <h5>MBR Slices and Partitions</h5>
+        <p>On an MBR disk, the top level is divided into slices (named with <code>s</code>) which
+            contain BSD partitions (named with a letter). This two-level scheme is the traditional
+            BSD disk layout:</p>
+        <ul>
+            <li><code>/dev/ada0s1</code> &mdash; first MBR slice on ada0</li>
+            <li><code>/dev/ada0s1a</code> &mdash; the <code>a</code> (root) partition within slice 1</li>
+            <li><code>/dev/ada0s1b</code> &mdash; the <code>b</code> (swap) partition within slice 1</li>
+            <li><code>/dev/ada0s1e</code> &mdash; the <code>e</code> (/var) partition within slice 1</li>
+            <li><code>/dev/ada0s1f</code> &mdash; the <code>f</code> (/usr) partition within slice 1</li>
+        </ul>
+
+        <p>The traditional BSD partition letters and their conventional mount points are:</p>
+        <ul>
+            <li><code>a</code> &mdash; root (<code>/</code>)</li>
+            <li><code>b</code> &mdash; swap</li>
+            <li><code>c</code> &mdash; the entire disk (raw slice, not normally mounted)</li>
+            <li><code>d</code> &mdash; historically reserved; now available for general use</li>
+            <li><code>e</code> &mdash; <code>/var</code></li>
+            <li><code>f</code> &mdash; <code>/usr</code></li>
+            <li><code>g</code> &mdash; <code>/home</code> or additional space</li>
+        </ul>
+
+        <h4 id="s1g">Network Devices</h4>
+        <p>Network interfaces do not have device nodes in <code>/dev</code>. They are managed directly
+            through the kernel's networking stack using commands such as <code>ifconfig</code>. However,
+            they follow the same naming convention of a driver prefix and a unit number.</p>
+
+        <p>Common network interface names:</p>
+        <ul>
+            <li><code>em0</code> &mdash; Intel PRO/1000 Gigabit Ethernet (em driver)</li>
+            <li><code>igb0</code> &mdash; Intel server Gigabit Ethernet (igb driver)</li>
+            <li><code>ix0</code> &mdash; Intel 10 Gigabit Ethernet (ix driver)</li>
+            <li><code>bge0</code> &mdash; Broadcom BCM57xx Gigabit Ethernet</li>
+            <li><code>re0</code> &mdash; Realtek 8139/8169 Ethernet</li>
+            <li><code>vtnet0</code> &mdash; VirtIO network interface (virtual machines)</li>
+            <li><code>vmx0</code> &mdash; VMware VMXNET3 network interface</li>
+            <li><code>lo0</code> &mdash; loopback interface</li>
+            <li><code>wlan0</code> &mdash; 802.11 wireless (created from a physical device such as ath0)</li>
+        </ul>
+
+        <p>To list all network interfaces and their current configuration:</p>
+        <code>ifconfig</code>
+
+        <p>To show dmesg output for a specific network driver:</p>
+        <code>dmesg | grep em0</code>
+
+        <h4 id="s1h">Terminal and Serial Devices</h4>
+
+        <h5>Virtual Consoles (ttyv)</h5>
+        <p>MidnightBSD provides several virtual consoles accessible from the physical keyboard and
+            display. They appear as <code>ttyv</code> devices and can be switched between with
+            Alt+F1 through Alt+F8 (or as configured in <code>/etc/ttys</code>).</p>
+        <ul>
+            <li><code>/dev/ttyv0</code> &mdash; first virtual console (Alt+F1)</li>
+            <li><code>/dev/ttyv1</code> &mdash; second virtual console (Alt+F2)</li>
+            <li><code>/dev/ttyv7</code> &mdash; eighth virtual console, often used by X11</li>
+        </ul>
+
+        <h5>Serial Ports (ttyu, cuau)</h5>
+        <p>Physical serial ports and USB-to-serial adapters appear as <code>ttyu</code> and
+            <code>cuau</code> devices. The <code>ttyu</code> name is used for incoming connections
+            (dial-in), while <code>cuau</code> is used for outgoing connections (dial-out) such as
+            connecting to a console server or modem.</p>
+        <ul>
+            <li><code>/dev/ttyu0</code> &mdash; first serial port (incoming / login)</li>
+            <li><code>/dev/cuau0</code> &mdash; first serial port (outgoing / dial-out)</li>
+            <li><code>/dev/ttyu1</code> &mdash; second serial port</li>
+        </ul>
+
+        <p>USB-to-serial adapters (such as FTDI or Prolific chips) appear as <code>ttyU</code>
+            (capital U) devices:</p>
+        <ul>
+            <li><code>/dev/ttyU0</code> &mdash; first USB serial adapter</li>
+        </ul>
+
+        <p>To connect to a serial device at 9600 baud using <code>cu</code>:</p>
+        <code>cu -l /dev/cuau0 -s 9600</code>
+
+        <h5>Pseudo-Terminals (pts)</h5>
+        <p>Pseudo-terminals are pairs of virtual devices used by SSH, terminal emulators, and
+            other programs that need a terminal interface. They appear as <code>/dev/pts/</code>
+            entries and are created on demand.</p>
+        <ul>
+            <li><code>/dev/pts/0</code> &mdash; first pseudo-terminal slave</li>
+        </ul>
+
+        <h4 id="s1i">Input Devices</h4>
+
+        <h5>Keyboards (kbd)</h5>
+        <p>Keyboard devices are represented by <code>kbd</code> nodes. The console keyboard
+            is typically <code>kbd0</code>. USB keyboards may appear as additional units.</p>
+        <ul>
+            <li><code>/dev/kbd0</code> &mdash; first keyboard</li>
+        </ul>
+
+        <h5>PS/2 Mouse (psm)</h5>
+        <p>PS/2 mice are accessed through the <code>psm</code> device.</p>
+        <ul>
+            <li><code>/dev/psm0</code> &mdash; PS/2 mouse</li>
+        </ul>
+
+        <h5>USB Mouse and HID Devices (ums, uhid)</h5>
+        <p>USB mice appear as <code>ums</code> devices. Generic USB HID (Human Interface Device)
+            devices that do not match a more specific driver appear as <code>uhid</code>.</p>
+        <ul>
+            <li><code>/dev/ums0</code> &mdash; first USB mouse</li>
+            <li><code>/dev/uhid0</code> &mdash; first generic USB HID device</li>
+        </ul>
+
+        <h5>Synaptics and evdev Input (input)</h5>
+        <p>On systems using the evdev input layer, input devices such as touchpads, keyboards, and
+            mice may also appear as numbered nodes under <code>/dev/input/</code>.</p>
+        <ul>
+            <li><code>/dev/input/event0</code> &mdash; first evdev input device</li>
+        </ul>
+
+        <h4 id="s1j">Pseudo-Devices</h4>
+        <p>Pseudo-devices are special device nodes that do not correspond to any physical hardware.
+            They provide useful kernel-level interfaces for general programming and system use.</p>
+
+        <h5>/dev/null</h5>
+        <p>Reading from <code>/dev/null</code> always returns end-of-file immediately. Writing to it
+            discards all data silently. It is commonly used to suppress unwanted output:</p>
+        <code>command &gt; /dev/null 2&gt;&amp;1</code>
+
+        <h5>/dev/zero</h5>
+        <p>Reading from <code>/dev/zero</code> produces an endless stream of zero bytes. It is used
+            to create blank files of a specific size or to zero out memory regions:</p>
+        <code>dd if=/dev/zero of=blankfile bs=1m count=100</code>
+
+        <h5>/dev/random and /dev/urandom</h5>
+        <p><code>/dev/random</code> provides cryptographically secure random bytes from the kernel's
+            entropy pool. <code>/dev/urandom</code> also provides random bytes and will not block
+            even when the entropy pool is low (it uses a CSPRNG seeded from the pool instead).
+            Both are suitable for generating keys, tokens, and other security-sensitive values.</p>
+        <code>dd if=/dev/random bs=32 count=1 | hexdump -C</code>
+
+        <h5>/dev/full</h5>
+        <p><code>/dev/full</code> always returns a "disk full" error when written to. It is useful
+            for testing how a program behaves when it cannot write to a file.</p>
+
+        <h5>/dev/stdin, /dev/stdout, /dev/stderr</h5>
+        <p>These nodes are symbolic references to the standard input, output, and error streams
+            of the current process. They allow programs that expect a file path to read from or
+            write to the terminal or a pipe.</p>
+        <code>cat /dev/stdin</code>
+
+        <h5>/dev/fd/</h5>
+        <p>The <code>/dev/fd/</code> directory provides nodes for each open file descriptor of
+            the current process. <code>/dev/fd/0</code>, <code>/dev/fd/1</code>, and
+            <code>/dev/fd/2</code> correspond to stdin, stdout, and stderr respectively.</p>
+
+        <h5>/dev/mem and /dev/kmem</h5>
+        <p><code>/dev/mem</code> provides access to physical memory and <code>/dev/kmem</code>
+            provides access to kernel virtual memory. Access is restricted to root. These devices
+            are used by low-level diagnostic tools.</p>
+
+        <h4 id="s1k">Device Management Tools</h4>
+        <p>MidnightBSD provides several tools for inspecting and managing devices.</p>
+
+        <h5>dmesg</h5>
+        <p>Displays the kernel message buffer, including device detection messages from boot and
+            any messages generated since:</p>
+        <code>dmesg | less</code>
+
+        <h5>devinfo</h5>
+        <p><code>devinfo</code> prints the device tree as the kernel sees it, showing parent/child
+            relationships between buses and devices:</p>
+        <code>devinfo -r</code>
+
+        <h5>pciconf</h5>
+        <p>Lists all PCI and PCIe devices with their driver bindings and hardware identifiers.
+            Useful for identifying hardware that has no driver attached (shown with a
+            <code>none</code> driver):</p>
+        <code>pciconf -lv</code>
+
+        <h5>usbconfig</h5>
+        <p>Lists connected USB devices and their configuration:</p>
+        <code>usbconfig list</code>
+        <code>usbconfig dump_info</code>
+
+        <h5>camcontrol</h5>
+        <p><code>camcontrol</code> manages devices attached through the CAM (Common Access Method)
+            storage layer, including SCSI, SAS, SATA, and NVMe disks. To list all CAM devices:</p>
+        <code>camcontrol devlist</code>
+
+        <p>To see detailed information about a specific disk, including its model and serial number:</p>
+        <code>camcontrol inquiry da0</code>
+        <code>camcontrol identify ada0</code>
+
+        <h5>diskinfo</h5>
+        <p><code>diskinfo</code> reports the geometry and size of a disk device:</p>
+        <code>diskinfo -v ada0</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
