@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Shell Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/shells.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Shell Documentation</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">System Shells</a></li>
+                <li><a href="#s1d">Additional Shells via mports</a></li>
+                <li><a href="#s1e">Changing Your Shell</a></li>
+                <li><a href="#s1f">Environment Variables</a></li>
+                <li><a href="#s1g">Pipes and Redirection</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Shells</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>A shell is a command-line interpreter that lets users interact with the operating system by typing
+            commands. Shells also serve as scripting environments for automating tasks. MidnightBSD includes
+            several shells in the base system and additional shells are available through mports.</p>
+
+        <p>Every user account has a login shell assigned to it. When you open a terminal or log in via SSH,
+            the login shell starts and reads its startup files before presenting a prompt. Interactive shells
+            and non-interactive (script) shells may read different startup files, depending on the shell.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">System Shells</h4>
+        <p>The following shells are included in the MidnightBSD base system and are available without
+            installing any additional packages.</p>
+
+        <h5>sh &mdash; Bourne Shell</h5>
+        <p><code>/bin/sh</code> is the standard POSIX-compatible Bourne shell. It is the most portable
+            shell for scripting because scripts written for <code>sh</code> will run on virtually any
+            Unix-like system. MidnightBSD's <code>sh</code> is based on the Almquist shell (ash) and
+            supports the full POSIX shell specification.</p>
+        <p><code>sh</code> is the recommended shell for system scripts, startup scripts, and any script
+            that must run in a minimal environment. It reads <code>~/.profile</code> at login.</p>
+
+        <p>It is based on ash.</p>
+
+        <h5>tcsh &mdash; TENEX C Shell</h5>
+        <p><code>/bin/tcsh</code> is an enhanced version of the C shell (<code>csh</code>) and is the
+            default login shell for the root account in MidnightBSD. It provides interactive features
+            such as command-line editing, history, and tab completion.</p>
+        <p>tcsh reads <code>~/.tcshrc</code> or <code>~/.cshrc</code> for interactive configuration and
+            <code>~/.login</code> at login. Environment variables are set with the <code>setenv</code>
+            command rather than the <code>export</code> syntax used by Bourne-compatible shells:</p>
+        <code>setenv EDITOR vim</code>
+        <p>Shell variables local to tcsh are set with <code>set</code>:</p>
+        <code>set prompt = "%n@%m %~ %# "</code>
+
+        <h5>mksh &mdash; MirBSD Korn Shell</h5>
+        <p><code>/bin/mksh</code> is the MirBSD Korn Shell, a lightweight and standards-compliant
+            implementation of the Korn shell. It is compatible with POSIX <code>sh</code> and supports
+            many <code>ksh</code> extensions such as arrays, arithmetic expressions, and associative
+            arrays. It is a good choice for scripting when you need features beyond POSIX <code>sh</code>
+            but want to avoid a dependency on <code>bash</code>.</p>
+        <p>mksh reads <code>~/.mkshrc</code> for interactive configuration.</p>
+
+        <h4 id="s1d">Additional Shells via mports</h4>
+        <p>More shells are available through mports. After installation each shell's path must be listed
+            in <code>/etc/shells</code> before it can be set as a login shell. Shells installed from
+            mports are typically placed under <code>/usr/local/bin/</code>.</p>
+
+        <h5>bash &mdash; GNU Bourne-Again Shell</h5>
+        <p>bash is the most widely used shell on Linux systems and is familiar to many users. It supports
+            interactive features such as readline editing, history expansion, job control, arrays, and
+            extensive scripting extensions beyond the POSIX standard.</p>
+        <p>Install bash from mports:</p>
+        <code>mport install bash</code>
+        <p>bash reads <code>~/.bash_profile</code> or <code>~/.profile</code> at login and
+            <code>~/.bashrc</code> for interactive non-login shells.</p>
+
+        <h5>zsh &mdash; Z Shell</h5>
+        <p>zsh is a powerful interactive shell with extensive customization options, advanced tab
+            completion, spelling correction, theme support, and compatibility with both <code>sh</code>
+            and <code>ksh</code> syntax. It is the basis for popular frameworks such as Oh My Zsh.</p>
+        <p>Install zsh from mports:</p>
+        <code>mport install zsh</code>
+        <p>zsh reads <code>~/.zshenv</code> always, <code>~/.zprofile</code> at login, and
+            <code>~/.zshrc</code> for interactive shells.</p>
+
+        <h5>fish &mdash; Friendly Interactive Shell</h5>
+        <p>fish is designed for ease of use out of the box. It provides syntax highlighting as you type,
+            autosuggestions based on history, and web-based configuration. fish does not aim to be POSIX
+            compatible and uses its own scripting syntax, so <code>sh</code> scripts cannot be sourced
+            directly.</p>
+        <p>Install fish from mports:</p>
+        <code>mport install fish</code>
+        <p>fish reads <code>~/.config/fish/config.fish</code> for interactive configuration.</p>
+
+        <h4 id="s1e">Changing Your Shell</h4>
+        <p>The <code>/etc/shells</code> file lists the shells approved for use as login shells on the
+            system. Only paths listed in this file may be selected with <code>chsh</code>. A typical
+            <code>/etc/shells</code> looks like:</p>
+        <pre>
+# List of acceptable shells for chpass(1).
+# Ftpd will not allow users to connect who are not using
+# one of these shells.
+
+/bin/sh
+/bin/csh
+/bin/tcsh
+/bin/mksh
+/usr/local/bin/bash
+/usr/local/bin/zsh
+/usr/local/bin/fish</pre>
+
+        <p>When you install a shell from mports it is usually added to <code>/etc/shells</code>
+            automatically. If it is not, add the full path manually as root using your preferred editor.</p>
+
+        <p>Use <code>chsh</code> to change your login shell. Running it without arguments opens an
+            editor where you can change your shell entry:</p>
+        <code>chsh</code>
+
+        <p>You can also pass the new shell path directly with the <code>-s</code> flag:</p>
+        <code>chsh -s /usr/local/bin/bash</code>
+
+        <p>To change another user's shell, root may specify the username:</p>
+        <code>chsh -s /usr/local/bin/zsh username</code>
+
+        <p>The change takes effect at the next login. To verify the current login shell for a user:</p>
+        <code>getent passwd username</code>
+
+        <p>Or check your own:</p>
+        <code>echo $SHELL</code>
+
+        <h4 id="s1f">Environment Variables</h4>
+        <p>Environment variables pass configuration and state information to processes. They are inherited
+            by child processes. In Bourne-compatible shells (<code>sh</code>, <code>bash</code>,
+            <code>zsh</code>, <code>mksh</code>) variables are exported with the <code>export</code>
+            command. In tcsh, use <code>setenv</code>.</p>
+
+        <p>Set and export a variable in sh/bash/zsh/mksh:</p>
+        <code>export VARNAME="value"</code>
+
+        <p>Set a variable in tcsh:</p>
+        <code>setenv VARNAME "value"</code>
+
+        <p>List all current environment variables:</p>
+        <code>env</code>
+
+        <p>Print a single variable:</p>
+        <code>echo $VARNAME</code>
+
+        <h5>EDITOR</h5>
+        <p><code>EDITOR</code> specifies the non-visual fallback text editor used by programs such as
+            <code>crontab -e</code>, <code>svn commit</code>, and various other utilities when they need
+            to open an editor. It is typically set to a simple terminal editor.</p>
+        <code>export EDITOR=vi</code>
+
+        <h5>VISUAL</h5>
+        <p><code>VISUAL</code> specifies the preferred full-screen visual editor. Many programs check
+            <code>VISUAL</code> first and fall back to <code>EDITOR</code> if it is not set. Set it to
+            a full-featured editor such as vim, nano, or emacs.</p>
+        <code>export VISUAL=vim</code>
+
+        <h5>HOME</h5>
+        <p><code>HOME</code> is the path to the current user's home directory. It is set automatically
+            at login from the password database entry. The tilde (<code>~</code>) shorthand in shells
+            expands to the value of <code>HOME</code>.</p>
+        <code>echo $HOME</code>
+
+        <h5>PATH</h5>
+        <p><code>PATH</code> is a colon-separated list of directories the shell searches when looking
+            for commands. Adding a directory to <code>PATH</code> makes executables in that directory
+            available without specifying the full path.</p>
+        <code>export PATH="$PATH:/usr/local/bin:/usr/local/sbin"</code>
+
+        <h5>MANPATH</h5>
+        <p><code>MANPATH</code> is a colon-separated list of directories searched by <code>man</code>
+            when looking for manual pages. If unset, <code>man</code> uses a built-in default. Set it
+            when you have manual pages installed in non-standard locations.</p>
+        <code>export MANPATH="/usr/share/man:/usr/local/share/man"</code>
+
+        <h5>PAGER</h5>
+        <p><code>PAGER</code> specifies the program used to display output one screen at a time.
+            Commands like <code>man</code> use <code>PAGER</code> to display their output. The default
+            is usually <code>more</code>; <code>less</code> is a popular alternative that supports
+            backward scrolling.</p>
+        <code>export PAGER=less</code>
+
+        <h5>TERM</h5>
+        <p><code>TERM</code> identifies the terminal type, which tells programs how to control the
+            display (cursor movement, colors, clearing the screen, etc.). It is normally set automatically
+            when you log in or open a terminal emulator. Common values are <code>xterm</code>,
+            <code>xterm-256color</code>, and <code>vt100</code>. Setting it incorrectly can cause
+            display corruption in full-screen programs like <code>vi</code> and <code>top</code>.</p>
+        <code>export TERM=xterm-256color</code>
+
+        <h5>COLORTERM</h5>
+        <p><code>COLORTERM</code> tells color-aware applications whether the terminal supports
+            24-bit (truecolor) output. Terminal emulators that support truecolor set this to
+            <code>truecolor</code> or <code>24bit</code>. Many modern applications such as vim, neovim,
+            and tmux check this variable to decide whether to use full RGB colors.</p>
+        <code>export COLORTERM=truecolor</code>
+
+        <h5>LSCOLORS / LS_COLORS</h5>
+        <p><code>LSCOLORS</code> controls the colors used by <code>ls</code> on BSD systems when the
+            <code>-G</code> flag is used. Each pair of characters encodes the foreground and background
+            color for a file type. Linux-style tools may use <code>LS_COLORS</code> instead, which uses
+            a different format understood by the GNU <code>dircolors</code> utility.</p>
+        <code>export LSCOLORS=ExFxCxDxBxegedabagacad</code>
+
+        <h5>LANG and LC_* Variables</h5>
+        <p><code>LANG</code> sets the default locale, which affects character encoding, date formatting,
+            number formatting, and message language for locale-aware programs. More specific locale
+            categories can be overridden individually with variables such as <code>LC_ALL</code>,
+            <code>LC_CTYPE</code>, and <code>LC_MESSAGES</code>.</p>
+        <code>export LANG=en_US.UTF-8</code>
+
+        <h5>TZ</h5>
+        <p><code>TZ</code> overrides the system timezone for a single user or process. The value should
+            be a timezone name from <code>/usr/share/zoneinfo</code>.</p>
+        <code>export TZ=America/New_York</code>
+
+        <h5>TMPDIR</h5>
+        <p><code>TMPDIR</code> specifies the directory used for temporary files created by programs and
+            shell scripts. If unset, <code>/tmp</code> is used. Changing it is useful when <code>/tmp</code>
+            is small and a larger scratch space is available elsewhere.</p>
+        <code>export TMPDIR=/var/tmp</code>
+
+        <h4 id="s1g">Pipes and Redirection</h4>
+        <p>Pipes and redirection are fundamental shell features that control where command input comes
+            from and where output goes. They work the same way across all shells covered in this document.</p>
+
+        <h5>Standard Streams</h5>
+        <p>Every process has three standard streams:</p>
+        <ul>
+            <li><strong>stdin</strong> (file descriptor 0) &mdash; standard input, read by the program</li>
+            <li><strong>stdout</strong> (file descriptor 1) &mdash; standard output, normal program output</li>
+            <li><strong>stderr</strong> (file descriptor 2) &mdash; standard error, error and diagnostic messages</li>
+        </ul>
+
+        <h5>Output Redirection</h5>
+        <p>Redirect stdout to a file, creating or overwriting it:</p>
+        <code>command &gt; output.txt</code>
+
+        <p>Append stdout to a file instead of overwriting:</p>
+        <code>command &gt;&gt; output.txt</code>
+
+        <p>Redirect stderr to a file:</p>
+        <code>command 2&gt; errors.txt</code>
+
+        <p>Redirect both stdout and stderr to the same file:</p>
+        <code>command &gt; output.txt 2&gt;&amp;1</code>
+
+        <p>Discard output by redirecting to <code>/dev/null</code>:</p>
+        <code>command &gt; /dev/null 2&gt;&amp;1</code>
+
+        <h5>Input Redirection</h5>
+        <p>Redirect a file to stdin so the command reads from it instead of the keyboard:</p>
+        <code>command &lt; input.txt</code>
+
+        <p>A here-document feeds multiple lines of text directly to a command's stdin. The delimiter
+            (<code>EOF</code> in this example) marks the end of the input:</p>
+        <pre>
+command &lt;&lt;EOF
+line one
+line two
+EOF</pre>
+
+        <p>A here-string passes a single string as stdin (supported in bash, zsh, mksh, and ksh):</p>
+        <code>command &lt;&lt;&lt; "some text"</code>
+
+        <h5>Pipes</h5>
+        <p>A pipe (<code>|</code>) connects the stdout of one command to the stdin of another, letting
+            you chain commands together to process data in stages:</p>
+        <code>command1 | command2</code>
+
+        <p>Chain multiple commands:</p>
+        <code>cat /var/log/messages | grep error | sort | uniq -c | sort -rn</code>
+
+        <p>To pipe both stdout and stderr through a pipe, redirect stderr to stdout first:</p>
+        <code>command 2&gt;&amp;1 | less</code>
+
+        <h5>Pipelines and Exit Status</h5>
+        <p>In most shells, the exit status of a pipeline is the exit status of the last command. In
+            bash and zsh, you can enable the <code>pipefail</code> option so the pipeline fails if any
+            command in it fails:</p>
+        <code>set -o pipefail</code>
+
+        <h5>Command Substitution</h5>
+        <p>Command substitution captures the output of a command and uses it as a value in another
+            command. The preferred modern syntax uses <code>$()</code>:</p>
+        <code>today=$(date +%Y-%m-%d)</code>
+        <code>echo "Files: $(ls | wc -l)"</code>
+
+        <p>The older backtick syntax is equivalent but harder to nest:</p>
+        <code>today=`date +%Y-%m-%d`</code>
+
+        <h5>Process Substitution</h5>
+        <p>Process substitution (supported in bash and zsh) treats the output of a command as if it
+            were a file. This is useful when a command requires a filename argument but you want to feed
+            it the output of another command:</p>
+        <code>diff &lt;(sort file1.txt) &lt;(sort file2.txt)</code>
+
+        <h5>Tee</h5>
+        <p>The <code>tee</code> command reads from stdin and writes to both stdout and one or more files
+            at the same time. This lets you view output in the terminal while also saving it:</p>
+        <code>make 2&gt;&amp;1 | tee build.log</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
