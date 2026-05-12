@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD NFS Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/nfs.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> NFS Documentation</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">NFS Server Setup</a></li>
+                <li><a href="#s1d">Configuring Exports</a></li>
+                <li><a href="#s1e">NFS Client Setup</a></li>
+                <li><a href="#s1f">ZFS NFS Properties</a></li>
+                <li><a href="#s1g">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+        <h3 id="s1a">NFS</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>Network File System (NFS) allows a system to share directories and files with others over a network.
+            Users and programs can access files on remote systems almost as if they were local files. MidnightBSD
+            includes NFS support derived from FreeBSD 13.x, supporting NFSv3 and NFSv4.</p>
+
+        <p>NFS is commonly used to share home directories across multiple machines, provide centralized storage,
+            or mount read-only media such as installation trees. MidnightBSD supports both the traditional kernel-based
+            NFS server and client as well as integration with ZFS dataset sharing.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">NFS Server Setup</h4>
+        <p>To enable the NFS server at boot, add the following lines to <code>/etc/rc.conf</code>:</p>
+        <code>rpcbind_enable="YES"<br>
+nfs_server_enable="YES"<br>
+mountd_enable="YES"<br>
+mountd_flags="-r"<br>
+nfsv4_server_enable="YES"</code>
+
+        <p>The <code>rpcbind</code> service is required for NFSv3. If you only intend to use NFSv4,
+            it is optional. The <code>mountd</code> daemon manages mount requests from clients and
+            reads <code>/etc/exports</code> to determine which file systems may be exported.</p>
+
+        <p>You can also enable the NFS server status monitor, which helps clients recover after a
+            server reboot:</p>
+        <code>rpc_statd_enable="YES"<br>
+rpc_lockd_enable="YES"</code>
+
+        <p>After editing <code>/etc/rc.conf</code>, start the services without rebooting:</p>
+        <code>service rpcbind start<br>
+service nfsd start<br>
+service mountd start</code>
+
+        <h4 id="s1d">Configuring Exports</h4>
+        <p>The <code>/etc/exports</code> file controls which file systems the NFS server exports and
+            to which hosts. Each line specifies a file system path followed by export options and
+            a list of allowed hosts or networks.</p>
+
+        <p>A simple export allowing full access from a single host:</p>
+        <code>/usr/home/shared -alldirs 192.168.1.10</code>
+
+        <p>Export a directory read-only to an entire network:</p>
+        <code>/usr/local/share/data -ro -network 192.168.1.0 -mask 255.255.255.0</code>
+
+        <p>Export a directory with read-write access to multiple hosts:</p>
+        <code>/tank/media -alldirs 192.168.1.10 192.168.1.11 192.168.1.12</code>
+
+        <p>For NFSv4, you must define an export root using the <code>V4:</code> keyword and
+            specify the NFSv4 root path:</p>
+        <code>V4: /tank<br>
+/tank/home -alldirs 192.168.1.0/24<br>
+/tank/media -ro 192.168.1.0/24</code>
+
+        <p>Common export options include:</p>
+        <ul>
+            <li><code>-ro</code> &mdash; export read-only</li>
+            <li><code>-alldirs</code> &mdash; allow mounting of any subdirectory</li>
+            <li><code>-maproot=0</code> &mdash; map remote root user to local root (use with caution)</li>
+            <li><code>-maproot=nobody</code> &mdash; map remote root to the nobody user</li>
+            <li><code>-mapall=nobody</code> &mdash; map all remote users to nobody</li>
+            <li><code>-network</code> &mdash; restrict access to a network address range</li>
+            <li><code>-mask</code> &mdash; subnet mask used with <code>-network</code></li>
+        </ul>
+
+        <p>After modifying <code>/etc/exports</code>, reload the export table without restarting
+            the server:</p>
+        <code>service mountd reload</code>
+
+        <h4 id="s1e">NFS Client Setup</h4>
+        <p>To enable the NFS client at boot, add the following to <code>/etc/rc.conf</code>:</p>
+        <code>rpcbind_enable="YES"<br>
+nfs_client_enable="YES"</code>
+
+        <p>For NFSv4 clients, also add:</p>
+        <code>nfsv4_client_enable="YES"</code>
+
+        <p>To mount an NFS share manually, use the <code>mount</code> command:</p>
+        <code>mount -t nfs 192.168.1.100:/tank/home /mnt/home</code>
+
+        <p>To mount an NFSv4 share explicitly:</p>
+        <code>mount -t nfs -o nfsv4 192.168.1.100:/tank/home /mnt/home</code>
+
+        <p>To mount NFS shares automatically at boot, add entries to <code>/etc/fstab</code>:</p>
+        <code>192.168.1.100:/tank/home  /mnt/home  nfs  rw,noatime  0  0</code>
+
+        <p>A read-only fstab entry:</p>
+        <code>192.168.1.100:/usr/local/share/data  /mnt/data  nfs  ro,noatime  0  0</code>
+
+        <p>Common mount options for NFS clients include:</p>
+        <ul>
+            <li><code>rw</code> / <code>ro</code> &mdash; read-write or read-only</li>
+            <li><code>noatime</code> &mdash; do not update access times, improves performance</li>
+            <li><code>soft</code> &mdash; return errors after a timeout instead of hanging indefinitely</li>
+            <li><code>hard</code> &mdash; keep retrying until the server responds (default)</li>
+            <li><code>intr</code> &mdash; allow interrupting a hung NFS mount with a signal</li>
+            <li><code>nfsv4</code> &mdash; force NFSv4 protocol</li>
+            <li><code>tcp</code> &mdash; use TCP instead of UDP (recommended for reliability)</li>
+        </ul>
+
+        <p>To start NFS client services without rebooting:</p>
+        <code>service rpcbind start<br>
+service nfsclient start</code>
+
+        <h4 id="s1f">ZFS NFS Properties</h4>
+        <p>ZFS datasets can be shared over NFS directly using ZFS properties, without manually
+            editing <code>/etc/exports</code>. This approach manages NFS exports alongside the
+            datasets themselves.</p>
+
+        <p>First, enable the ZFS sharing service in <code>/etc/rc.conf</code>. The standard NFS
+            server daemons must also be enabled as described in the server setup section above:</p>
+        <code>zfs_enable="YES"<br>
+nfs_server_enable="YES"<br>
+mountd_enable="YES"<br>
+rpcbind_enable="YES"</code>
+
+        <p>To share a ZFS dataset over NFS, set the <code>sharenfs</code> property. A value of
+            <code>on</code> exports the dataset using default options:</p>
+        <code>zfs set sharenfs=on tank/home</code>
+
+        <p>You can pass NFS export options directly as the property value:</p>
+        <code>zfs set sharenfs="-alldirs -ro -network 192.168.1.0 -mask 255.255.255.0" tank/media</code>
+
+        <p>Allow read-write access from a specific host:</p>
+        <code>zfs set sharenfs="-alldirs 192.168.1.10" tank/projects</code>
+
+        <p>To disable NFS sharing on a dataset:</p>
+        <code>zfs set sharenfs=off tank/home</code>
+
+        <p>To view the current <code>sharenfs</code> setting on a dataset:</p>
+        <code>zfs get sharenfs tank/home</code>
+
+        <p>To see all datasets with NFS sharing enabled:</p>
+        <code>zfs get sharenfs</code>
+
+        <p>After setting ZFS NFS properties, share all configured datasets and update
+            the running export table:</p>
+        <code>zfs share -a</code>
+
+        <p>Note that ZFS-managed NFS exports and entries in <code>/etc/exports</code> can coexist.
+            The <code>mountd</code> daemon reads both sources when loading exports.</p>
+
+        <h4 id="s1g">Troubleshooting</h4>
+        <p>If clients cannot connect, verify that the server's firewall allows traffic on the
+            NFS-related ports. For NFSv4, TCP port 2049 is required. NFSv3 additionally uses
+            <code>rpcbind</code> (port 111) and dynamic ports for <code>mountd</code> and
+            <code>statd</code>.</p>
+
+        <p>To fix <code>mountd</code> dynamic port assignments for firewall rules, pin them
+            in <code>/etc/rc.conf</code>:</p>
+        <code>mountd_flags="-r -p 1234"<br>
+rpc_statd_flags="-p 1235"<br>
+rpc_lockd_flags="-p 1236"</code>
+
+        <p>To see what file systems are currently exported by the server:</p>
+        <code>showmount -e localhost</code>
+
+        <p>To check which clients have active mounts:</p>
+        <code>showmount -a localhost</code>
+
+        <p>On the client side, to list available exports from a server:</p>
+        <code>showmount -e 192.168.1.100</code>
+
+        <p>If an NFS mount hangs, check that <code>rpcbind</code> is running on both the
+            server and client, and that the server's <code>nfsd</code> and <code>mountd</code>
+            processes are active:</p>
+        <code>service rpcbind status<br>
+service nfsd status<br>
+service mountd status</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
