@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Wayland Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/wayland.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Wayland</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Prerequisites</a></li>
+                <li><a href="#s1d">GPU Drivers</a></li>
+                <li><a href="#s1e">Seat Management</a></li>
+                <li><a href="#s1f">Compositors</a>
+                    <ul>
+                        <li><a href="#s1f1">Sway</a></li>
+                        <li><a href="#s1f2">Wayfire</a></li>
+                        <li><a href="#s1f3">labwc</a></li>
+                        <li><a href="#s1f4">Weston</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1g">XWayland</a></li>
+                <li><a href="#s1h">Environment Variables</a></li>
+                <li><a href="#s1i">Application Compatibility</a></li>
+                <li><a href="#s1j">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Wayland</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>Wayland is a modern display server protocol designed to replace the X Window System (Xorg).
+            Rather than routing all display communication through a central X server, Wayland compositors
+            act as both the display server and the window manager, communicating directly with client
+            applications and the kernel's Direct Rendering Manager (DRM). This architecture reduces
+            latency, improves security by isolating application windows from each other, and eliminates
+            many of the legacy layers in the X11 stack.</p>
+
+        <p>Wayland support on MidnightBSD is functional but still maturing. Users comfortable with
+            configuring BSD systems manually will find it workable. Those who prefer a more polished
+            out-of-the-box experience may wish to continue using <a href="desktop.html">Xorg</a> until
+            support matures further. Some hardware and some applications may still require Xorg or
+            XWayland compatibility.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">Prerequisites</h4>
+        <p>Before setting up Wayland, ensure the following is in place:</p>
+        <ul>
+            <li>A supported GPU with KMS (Kernel Mode Setting) support. Intel integrated graphics,
+                AMD GPUs, and some NVIDIA configurations are supported. See
+                <a href="#s1d">GPU Drivers</a> below.</li>
+            <li>The <code>dbus</code> message bus, which is required by most Wayland compositors
+                and desktop components.</li>
+            <li>Your user account must be a member of the <code>video</code> group to access
+                DRM devices.</li>
+        </ul>
+
+        <p>Add your user to the <code>video</code> group as root:</p>
+        <code>pw groupmod video -m username</code>
+
+        <p>Enable dbus in <code>/etc/rc.conf</code> and start it:</p>
+        <code>sysrc dbus_enable="YES"</code>
+        <code>service dbus start</code>
+
+        <h4 id="s1d">GPU Drivers</h4>
+        <p>Wayland requires kernel-level GPU support through DRM and KMS. The <code>drm-kmod</code>
+            package provides the necessary kernel modules for Intel and AMD GPUs.</p>
+
+        <p>Install drm-kmod from mports:</p>
+        <code>mport install drm-kmod</code>
+
+        <p>Enable the appropriate module for your GPU in <code>/etc/rc.conf</code>.</p>
+
+        <p>For Intel integrated graphics (Haswell and newer):</p>
+        <code>sysrc kld_list="i915kms"</code>
+
+        <p>For AMD GPUs (Southern Islands and newer):</p>
+        <code>sysrc kld_list="amdgpu"</code>
+
+        <p>For older AMD GPUs (pre-Southern Islands):</p>
+        <code>sysrc kld_list="radeonkms"</code>
+
+        <p>Load the module immediately without rebooting:</p>
+        <code>kldload i915kms</code>
+
+        <p>After loading, verify the DRM device nodes are present:</p>
+        <code>ls /dev/dri/</code>
+
+        <p>You should see entries such as <code>card0</code> and <code>renderD128</code>. If
+            <code>/dev/dri/</code> is empty or missing, the GPU module did not load correctly.
+            Check <code>dmesg</code> for errors.</p>
+
+        <p>NVIDIA GPUs are not currently supported through the open DRM path. NVIDIA users should
+            use <a href="desktop.html">Xorg</a> with the proprietary nvidia driver from mports.</p>
+
+        <h4 id="s1e">Seat Management</h4>
+        <p>Wayland compositors need permission to open DRM and input devices without running as root.
+            On MidnightBSD, this is handled by <code>seatd</code>, a lightweight seat management
+            daemon. It grants compositors privileged device access on behalf of logged-in users.</p>
+
+        <p>Install seatd from mports:</p>
+        <code>mport install seatd</code>
+
+        <p>Enable and start seatd:</p>
+        <code>sysrc seatd_enable="YES"</code>
+        <code>service seatd start</code>
+
+        <p>Add your user to the <code>_seatd</code> group so the compositor can communicate with
+            the daemon:</p>
+        <code>pw groupmod _seatd -m username</code>
+
+        <p>You must log out and log back in for group membership changes to take effect.</p>
+
+        <p>Set the <code>LIBSEAT_BACKEND</code> environment variable so compositors use seatd:</p>
+        <code>export LIBSEAT_BACKEND=seatd</code>
+
+        <p>Add this to your shell startup file (<code>~/.profile</code>, <code>~/.bashrc</code>,
+            or <code>~/.zshrc</code>) so it is set automatically at login.</p>
+
+        <h4 id="s1f">Compositors</h4>
+        <p>A Wayland compositor combines the roles of display server and window manager. Several
+            compositors are available in mports. The right choice depends on whether you prefer a
+            tiling or stacking (floating) window layout.</p>
+
+        <h5 id="s1f1">Sway</h5>
+        <p>Sway is a tiling Wayland compositor that is a drop-in replacement for the i3 window
+            manager. It is the most widely used and tested Wayland compositor on BSD systems.
+            Sway arranges windows automatically in a non-overlapping tiled layout and is
+            configured through a plain text file.</p>
+
+        <p>Install sway and its status bar:</p>
+        <code>mport install sway swaybar</code>
+
+        <p>Copy the default configuration as a starting point:</p>
+        <code>mkdir -p ~/.config/sway</code>
+        <code>cp /usr/local/etc/sway/config ~/.config/sway/config</code>
+
+        <p>Start sway from the console:</p>
+        <code>sway</code>
+
+        <p>The default configuration sets the Super (Windows) key as the modifier. Key bindings
+            of note from the default config:</p>
+        <ul>
+            <li><code>Super+Return</code> &mdash; open a terminal (foot or xterm)</li>
+            <li><code>Super+d</code> &mdash; open the application launcher (dmenu or wofi)</li>
+            <li><code>Super+Shift+q</code> &mdash; close the focused window</li>
+            <li><code>Super+Shift+e</code> &mdash; exit sway</li>
+            <li><code>Super+Arrow</code> &mdash; move focus between windows</li>
+            <li><code>Super+Shift+Arrow</code> &mdash; move windows within the layout</li>
+            <li><code>Super+number</code> &mdash; switch to workspace</li>
+        </ul>
+
+        <p>The sway configuration file at <code>~/.config/sway/config</code> uses the same
+            syntax as i3. Refer to <code>man 5 sway</code> for all available options.</p>
+
+        <h5 id="s1f2">Wayfire</h5>
+        <p>Wayfire is a stacking (floating) compositor with a plugin-based architecture and
+            visual effects. It is suitable for users who prefer a more traditional desktop
+            layout where windows can overlap freely.</p>
+
+        <p>Install Wayfire from mports:</p>
+        <code>mport install wayfire</code>
+
+        <p>Copy the example configuration:</p>
+        <code>mkdir -p ~/.config</code>
+        <code>cp /usr/local/share/doc/wayfire/wayfire.ini ~/.config/wayfire.ini</code>
+
+        <p>Start Wayfire from the console:</p>
+        <code>wayfire</code>
+
+        <p>Wayfire is configured through <code>~/.config/wayfire.ini</code>. Plugins for
+            window decorations, a panel, a background, and other features are enabled and
+            configured in this file. Refer to <code>man wayfire</code> and the project
+            documentation for the full list of available plugins.</p>
+
+        <h5 id="s1f3">labwc</h5>
+        <p>labwc is a lightweight stacking compositor modeled after Openbox. It uses XML
+            configuration files in the same format as Openbox and is well suited for users
+            migrating from an Openbox-based setup or who want a minimal, traditional floating
+            window manager under Wayland.</p>
+
+        <p>Install labwc from mports:</p>
+        <code>mport install labwc</code>
+
+        <p>Create the configuration directory and copy the default files:</p>
+        <code>mkdir -p ~/.config/labwc</code>
+        <code>cp /usr/local/etc/xdg/labwc/rc.xml ~/.config/labwc/rc.xml</code>
+        <code>cp /usr/local/etc/xdg/labwc/menu.xml ~/.config/labwc/menu.xml</code>
+
+        <p>Start labwc from the console:</p>
+        <code>labwc</code>
+
+        <h5 id="s1f4">Weston</h5>
+        <p>Weston is the reference Wayland compositor maintained by the Wayland project. It is
+            primarily intended as a demonstration and testing environment rather than a
+            daily-use desktop, but it is stable and useful for verifying that your Wayland
+            setup is working correctly before configuring a more full-featured compositor.</p>
+
+        <p>Install Weston from mports:</p>
+        <code>mport install weston</code>
+
+        <p>Start Weston from the console:</p>
+        <code>weston</code>
+
+        <p>Weston can also be started with a specific backend if needed, for example to run
+            inside an existing X session for testing:</p>
+        <code>weston --backend=x11</code>
+
+        <h4 id="s1g">XWayland</h4>
+        <p>XWayland is an X server that runs as a Wayland client, providing backward compatibility
+            for applications that have not yet been ported to Wayland. It allows X11 applications
+            to run inside a Wayland compositor session without a separate Xorg server. Most
+            compositors start XWayland automatically when an X11 application requests it.</p>
+
+        <p>Install XWayland from mports:</p>
+        <code>mport install xwayland</code>
+
+        <p>In sway, XWayland can be disabled if you do not need X11 application support, which
+            reduces the attack surface. Add to <code>~/.config/sway/config</code>:</p>
+        <code>xwayland disable</code>
+
+        <p>To force a specific application to use XWayland even within a Wayland session, set
+            <code>GDK_BACKEND=x11</code> for GTK applications or <code>QT_QPA_PLATFORM=xcb</code>
+            for Qt applications before launching them.</p>
+
+        <h4 id="s1h">Environment Variables</h4>
+        <p>Several environment variables must be set for a Wayland session to work correctly.
+            Add these to your shell startup file (<code>~/.profile</code> for login shells) so
+            they are available in all applications launched from the compositor.</p>
+
+        <h5>Required</h5>
+        <p><code>XDG_RUNTIME_DIR</code> points to a per-user directory for runtime files such
+            as the Wayland socket. It must be set before starting a compositor:</p>
+        <code>export XDG_RUNTIME_DIR=/var/run/user/$(id -u)</code>
+
+        <p>Create the directory if it does not exist and set the correct permissions:</p>
+        <code>mkdir -p /var/run/user/$(id -u)</code>
+        <code>chmod 700 /var/run/user/$(id -u)</code>
+
+        <p>The Wayland compositor sets <code>WAYLAND_DISPLAY</code> automatically. It is
+            typically <code>wayland-0</code> and points to the compositor's socket inside
+            <code>XDG_RUNTIME_DIR</code>.</p>
+
+        <h5>Toolkit Integration</h5>
+        <p>Tell GTK applications to use the Wayland backend:</p>
+        <code>export GDK_BACKEND=wayland</code>
+
+        <p>Tell Qt applications to use the Wayland platform plugin:</p>
+        <code>export QT_QPA_PLATFORM=wayland</code>
+
+        <p>Tell SDL2 applications to use Wayland:</p>
+        <code>export SDL_VIDEODRIVER=wayland</code>
+
+        <p>Enable native Wayland rendering in Firefox:</p>
+        <code>export MOZ_ENABLE_WAYLAND=1</code>
+
+        <p>Enable Wayland rendering in Electron applications such as VS Code:</p>
+        <code>export ELECTRON_OZONE_PLATFORM_HINT=wayland</code>
+
+        <p>Enable Wayland rendering in Chromium and Chromium-based browsers:</p>
+        <code>export CHROMIUM_FLAGS="--ozone-platform=wayland"</code>
+
+        <h5>Seat Management</h5>
+        <code>export LIBSEAT_BACKEND=seatd</code>
+
+        <h4 id="s1i">Application Compatibility</h4>
+        <p>Most GTK3, GTK4, and Qt5/Qt6 applications support Wayland natively. Applications
+            still using older toolkits or hardcoded X11 calls will run through XWayland
+            automatically as long as XWayland is installed and enabled.</p>
+
+        <p>Terminal emulators with native Wayland support available in mports include:</p>
+        <ul>
+            <li><code>foot</code> &mdash; a lightweight, fast terminal designed for Wayland</li>
+            <li><code>alacritty</code> &mdash; a GPU-accelerated terminal with Wayland support</li>
+            <li><code>kitty</code> &mdash; a feature-rich GPU terminal with Wayland support</li>
+        </ul>
+
+        <p>Application launchers compatible with Wayland:</p>
+        <ul>
+            <li><code>wofi</code> &mdash; a Wayland-native launcher similar to rofi</li>
+            <li><code>bemenu</code> &mdash; a Wayland-compatible dynamic menu library and program</li>
+            <li><code>fuzzel</code> &mdash; a lightweight application launcher for Wayland</li>
+        </ul>
+
+        <p>Status bars for use with sway and other wlroots compositors:</p>
+        <ul>
+            <li><code>waybar</code> &mdash; a highly customizable Wayland bar</li>
+            <li><code>swaybar</code> &mdash; the built-in status bar included with sway</li>
+        </ul>
+
+        <p>Screen capture and screenshot tools:</p>
+        <ul>
+            <li><code>grim</code> &mdash; a screenshot tool for Wayland compositors</li>
+            <li><code>slurp</code> &mdash; select a region on a Wayland display (used with grim)</li>
+            <li><code>wf-recorder</code> &mdash; screen recording for wlroots-based compositors</li>
+        </ul>
+
+        <p>Clipboard management:</p>
+        <ul>
+            <li><code>wl-clipboard</code> &mdash; provides <code>wl-copy</code> and <code>wl-paste</code>
+                command-line clipboard tools for Wayland</li>
+        </ul>
+
+        <h4 id="s1j">Troubleshooting</h4>
+
+        <h5>Compositor fails to start: no DRM device</h5>
+        <p>If the compositor exits immediately with an error about DRM or KMS, the GPU kernel
+            module may not be loaded. Verify with:</p>
+        <code>ls /dev/dri/</code>
+        <code>dmesg | grep drm</code>
+
+        <p>If <code>/dev/dri/</code> is empty, load the appropriate module manually and check
+            for errors:</p>
+        <code>kldload i915kms</code>
+        <code>dmesg | tail -20</code>
+
+        <h5>Permission denied on /dev/dri or /dev/input</h5>
+        <p>Ensure your user is a member of the <code>video</code> group and that seatd is
+            running. Group changes require logging out and back in to take effect.</p>
+        <code>id</code>
+        <code>service seatd status</code>
+
+        <h5>XDG_RUNTIME_DIR not set or wrong permissions</h5>
+        <p>The directory must exist, be owned by your user, and have mode 700. Check with:</p>
+        <code>ls -ld /var/run/user/$(id -u)</code>
+
+        <p>If it is missing, create it:</p>
+        <code>mkdir -p /var/run/user/$(id -u) && chmod 700 /var/run/user/$(id -u)</code>
+
+        <h5>X11 applications show a blank window or crash</h5>
+        <p>Ensure XWayland is installed and that the compositor has started it. Check for a
+            Wayland socket and an X display socket in the runtime directory:</p>
+        <code>ls $XDG_RUNTIME_DIR</code>
+
+        <p>You should see both <code>wayland-0</code> and a file like <code>.X0-lock</code>
+            when XWayland is running.</p>
+
+        <h5>Enabling verbose logging</h5>
+        <p>Start sway with debug logging to diagnose startup failures:</p>
+        <code>sway -d 2&gt; ~/sway-debug.log</code>
+
+        <p>For weston, verbose output is enabled with:</p>
+        <code>weston --log=~/weston.log</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
