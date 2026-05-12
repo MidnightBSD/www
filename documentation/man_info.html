@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Manual Pages and Info Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/man_info.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Manual Pages and Info Files</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Reading Manual Pages</a></li>
+                <li><a href="#s1d">Manual Page Sections</a></li>
+                <li><a href="#s1e">Specifying a Section</a></li>
+                <li><a href="#s1f">Searching Manual Pages</a></li>
+                <li><a href="#s1g">Manual Page Layout</a></li>
+                <li><a href="#s1h">Pager Navigation</a></li>
+                <li><a href="#s1i">MANPATH and Additional Pages</a></li>
+                <li><a href="#s1j">GNU Info Files</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Manual Pages and Info Files</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>The most comprehensive documentation on MidnightBSD is in the form of manual pages.
+            Nearly every program on the system comes with a short reference manual explaining the
+            basic operation and available arguments. Manual pages are always available offline and
+            are considered the authoritative reference for the commands, system calls, file formats,
+            and devices that ship with the operating system.</p>
+
+        <p>Manual pages are intentionally terse. They document what a command does and what options
+            it accepts, but they are not tutorials. For step-by-step guides and conceptual explanations,
+            consult the documentation on this website or the
+            <a href="http://www.freebsd.org/handbook">FreeBSD Handbook</a>, whose coverage of
+            base system topics applies equally to MidnightBSD.</p>
+
+        <p>MidnightBSD manual pages are also available online at
+            <a href="https://man.midnightbsd.org/">man.midnightbsd.org</a>.
+            This is useful for looking up documentation from another machine or when the system
+            is not available.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">Reading Manual Pages</h4>
+        <p>Manual pages are viewed with the <code>man</code> command:</p>
+        <code>man command</code>
+
+        <p>For example, to read the manual page for <code>ls</code>:</p>
+        <code>man ls</code>
+
+        <p>To read the manual page for <code>man</code> itself:</p>
+        <code>man man</code>
+
+        <p>Manual pages open in a pager (usually <code>less</code> or <code>more</code>) so you can
+            scroll through them. Press <code>q</code> to quit. See the
+            <a href="#s1h">Pager Navigation</a> section for a full list of navigation keys.</p>
+
+        <p>References to manual pages in written documentation use parenthetical section numbers,
+            such as <code>ls(1)</code> or <code>chmod(2)</code>. The number indicates which section
+            of the manual contains that entry. This notation is a hint that you can look up the
+            topic with <code>man</code>.</p>
+
+        <h4 id="s1d">Manual Page Sections</h4>
+        <p>Manual pages are divided into numbered sections representing the type of topic. In
+            MidnightBSD the following sections are available:</p>
+        <ul>
+            <li><strong>1</strong> &mdash; User commands. Programs you run from the shell, such as
+                <code>ls(1)</code>, <code>cp(1)</code>, and <code>grep(1)</code>.</li>
+            <li><strong>2</strong> &mdash; System calls and error numbers. Kernel interfaces called
+                directly from C programs, such as <code>open(2)</code>, <code>fork(2)</code>, and
+                <code>read(2)</code>.</li>
+            <li><strong>3</strong> &mdash; Functions in the C libraries. Library functions such as
+                <code>printf(3)</code>, <code>malloc(3)</code>, and <code>strcmp(3)</code>.</li>
+            <li><strong>4</strong> &mdash; Device drivers and special files. Documentation for
+                kernel drivers and devices under <code>/dev</code>, such as
+                <code>ada(4)</code> and <code>em(4)</code>.</li>
+            <li><strong>5</strong> &mdash; File formats and conventions. Descriptions of file
+                formats such as <code>fstab(5)</code>, <code>rc.conf(5)</code>, and
+                <code>passwd(5)</code>.</li>
+            <li><strong>6</strong> &mdash; Games and other diversions.</li>
+            <li><strong>7</strong> &mdash; Miscellaneous information. Overviews of topics that
+                do not fit elsewhere, such as <code>hier(7)</code> (the file system hierarchy)
+                and <code>environ(7)</code> (the process environment).</li>
+            <li><strong>8</strong> &mdash; System maintenance and operation commands. Administrative
+                tools typically run as root, such as <code>mount(8)</code>, <code>fsck(8)</code>,
+                and <code>sysctl(8)</code>.</li>
+            <li><strong>9</strong> &mdash; System kernel interfaces. Internal kernel functions and
+                interfaces for kernel developers, such as <code>malloc(9)</code> and
+                <code>mutex(9)</code>.</li>
+        </ul>
+
+        <p>A quick way to remember: sections 1 and 8 cover commands (user and admin respectively),
+            sections 2 and 3 cover programming interfaces, section 4 covers drivers, and section 5
+            covers configuration file formats.</p>
+
+        <h4 id="s1e">Specifying a Section</h4>
+        <p>In some cases, the same topic name appears in more than one section. For example,
+            <code>chmod</code> is both a user command (section 1) and a C library system call
+            (section 2). Running <code>man chmod</code> without a section number displays the
+            first match found, which may not be the one you want.</p>
+
+        <p>To display the manual page from a specific section, provide the section number before
+            the topic name:</p>
+        <code>man 1 chmod</code>
+        <code>man 2 chmod</code>
+
+        <p>Other examples where specifying the section matters:</p>
+        <code>man 5 passwd</code>
+        <code>man 4 ada</code>
+        <code>man 8 mount</code>
+        <code>man 3 printf</code>
+
+        <p>To see all available sections for a given name, use the <code>-a</code> flag. Each
+            matching manual page is displayed in turn; press <code>q</code> to advance to the
+            next one:</p>
+        <code>man -a chmod</code>
+
+        <h4 id="s1f">Searching Manual Pages</h4>
+        <p>If you do not know the exact name of a command or function, use <code>man -k</code> to
+            search the short description of every manual page for a keyword:</p>
+        <code>man -k mail</code>
+
+        <p>This displays a list of manual page entries whose descriptions contain the word
+            "mail". The output format is <em>name(section) &mdash; description</em>. This is
+            equivalent to the <code>apropos</code> command:</p>
+        <code>apropos mail</code>
+
+        <p>To search for an exact command name match rather than a keyword, use
+            <code>whatis</code>. It shows only entries whose name exactly matches the argument:</p>
+        <code>whatis chmod</code>
+
+        <p>To read the short descriptions for all commands in a directory:</p>
+        <code>cd /usr/sbin</code>
+        <code>whatis * | more</code>
+
+        <p>The <code>apropos</code> and <code>whatis</code> databases are built from the manual
+            pages installed on the system. If they return no results after installing new software,
+            rebuild the database as root:</p>
+        <code>makewhatis</code>
+
+        <h4 id="s1g">Manual Page Layout</h4>
+        <p>Most manual pages follow a standard structure. Knowing these sections makes it faster
+            to find the information you need:</p>
+        <ul>
+            <li><strong>NAME</strong> &mdash; The command name and a one-line description. This is
+                the text indexed by <code>whatis</code> and <code>apropos</code>.</li>
+            <li><strong>SYNOPSIS</strong> &mdash; The command syntax. Square brackets
+                (<code>[&nbsp;]</code>) enclose optional arguments. An ellipsis (<code>...</code>)
+                means the argument may be repeated. Items in <em>italics</em> or
+                <em>underline</em> are placeholders for values you supply.</li>
+            <li><strong>DESCRIPTION</strong> &mdash; A detailed explanation of what the command
+                does and what each option means.</li>
+            <li><strong>EXAMPLES</strong> &mdash; Practical usage examples (not always present but
+                very useful when included).</li>
+            <li><strong>FILES</strong> &mdash; Configuration files and other files the command
+                reads or writes.</li>
+            <li><strong>EXIT STATUS</strong> &mdash; The numeric exit codes the command returns
+                and what they mean.</li>
+            <li><strong>ENVIRONMENT</strong> &mdash; Environment variables that affect the
+                command's behavior.</li>
+            <li><strong>SEE ALSO</strong> &mdash; Related manual pages. This is a good way to
+                discover connected commands and concepts.</li>
+            <li><strong>BUGS</strong> &mdash; Known limitations or defects.</li>
+            <li><strong>HISTORY</strong> &mdash; When the command was introduced and notable
+                changes over time.</li>
+        </ul>
+
+        <p>When reading an unfamiliar manual page, start with NAME for a quick summary, then
+            SYNOPSIS to understand the argument structure, then DESCRIPTION for the details.
+            Check SEE ALSO to find related pages that may be more relevant to your task.</p>
+
+        <h4 id="s1h">Pager Navigation</h4>
+        <p>Manual pages are displayed through a pager. The default pager is set by the
+            <code>PAGER</code> environment variable; <code>less</code> is the most common choice.
+            See the <a href="shells.html">Shells documentation</a> for how to set
+            <code>PAGER</code>.</p>
+
+        <p>Key bindings when reading a manual page in <code>less</code>:</p>
+        <ul>
+            <li><code>Space</code> or <code>f</code> &mdash; scroll forward one screen</li>
+            <li><code>b</code> &mdash; scroll backward one screen</li>
+            <li><code>d</code> &mdash; scroll forward half a screen</li>
+            <li><code>u</code> &mdash; scroll backward half a screen</li>
+            <li><code>j</code> or <code>Down</code> &mdash; scroll down one line</li>
+            <li><code>k</code> or <code>Up</code> &mdash; scroll up one line</li>
+            <li><code>g</code> &mdash; go to the beginning</li>
+            <li><code>G</code> &mdash; go to the end</li>
+            <li><code>/pattern</code> &mdash; search forward for a pattern</li>
+            <li><code>?pattern</code> &mdash; search backward for a pattern</li>
+            <li><code>n</code> &mdash; repeat the last search forward</li>
+            <li><code>N</code> &mdash; repeat the last search backward</li>
+            <li><code>h</code> &mdash; display help for less itself</li>
+            <li><code>q</code> &mdash; quit</li>
+        </ul>
+
+        <p>To open a manual page at the first occurrence of a search term directly:</p>
+        <code>man -P "less -p pattern" command</code>
+
+        <p>To display a manual page formatted as plain text (useful for saving or piping):</p>
+        <code>man -P cat ls</code>
+
+        <h4 id="s1i">MANPATH and Additional Pages</h4>
+        <p>The <code>man</code> command searches a list of directories defined by the
+            <code>MANPATH</code> environment variable. The default path includes
+            <code>/usr/share/man</code> for the base system and <code>/usr/local/share/man</code>
+            for software installed via mports.</p>
+
+        <p>If you install software to a non-standard location, add its manual directory to
+            <code>MANPATH</code> in your shell startup file:</p>
+        <code>export MANPATH="/usr/share/man:/usr/local/share/man:/opt/myapp/man"</code>
+
+        <p>In tcsh:</p>
+        <code>setenv MANPATH "/usr/share/man:/usr/local/share/man:/opt/myapp/man"</code>
+
+        <p>To see the directories <code>man</code> is currently searching:</p>
+        <code>man --path</code>
+
+        <p>Manual pages for mports software are installed automatically when you install a
+            package. They are placed in <code>/usr/local/share/man</code>, which is included
+            in the default search path.</p>
+
+        <p>To display the manual page for a program installed in <code>/usr/local</code>
+            without setting <code>MANPATH</code>:</p>
+        <code>man -M /usr/local/share/man command</code>
+
+        <h4 id="s1j">GNU Info Files</h4>
+        <p>MidnightBSD includes several applications and utilities produced by the Free Software
+            Foundation (FSF). In addition to manual pages, these programs may include hypertext
+            documents called info files. Info files use a node-and-link structure similar to a
+            web page, allowing you to navigate between topics.</p>
+
+        <p>Info files are typically more detailed than manual pages for GNU software such as
+            <code>gcc</code>, <code>make</code>, and the GNU C library. If a manual page's SEE
+            ALSO section references an info file, the info file is likely the more complete
+            reference.</p>
+
+        <p>To open the info reader at the top-level directory of all installed info files:</p>
+        <code>info</code>
+
+        <p>To open the info documentation for a specific program:</p>
+        <code>info make</code>
+        <code>info gcc</code>
+
+        <p>Navigation inside the info reader:</p>
+        <ul>
+            <li><code>h</code> &mdash; display a brief introduction to info navigation</li>
+            <li><code>?</code> &mdash; display a quick command reference</li>
+            <li><code>Space</code> &mdash; scroll forward through the current node</li>
+            <li><code>Backspace</code> &mdash; scroll backward through the current node</li>
+            <li><code>n</code> &mdash; go to the next node at the same level</li>
+            <li><code>p</code> &mdash; go to the previous node at the same level</li>
+            <li><code>u</code> &mdash; go up to the parent node</li>
+            <li><code>t</code> &mdash; go to the top node of the current document</li>
+            <li><code>d</code> &mdash; go to the top-level info directory</li>
+            <li><code>s pattern</code> &mdash; search for a pattern in the current file</li>
+            <li><code>Enter</code> &mdash; follow a cross-reference link</li>
+            <li><code>l</code> &mdash; go back to the last node visited</li>
+            <li><code>q</code> &mdash; quit</li>
+        </ul>
+
+        <p>If <code>emacs</code> is installed from mports, you can browse info files in its
+            built-in info mode, which provides a more comfortable reading experience with mouse
+            support. Launch it with:</p>
+        <code>emacs -f info</code>
+
+        <p>Or from within emacs, press <code>C-h i</code> (Ctrl+h then i).</p>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
