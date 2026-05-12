@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Processes and Daemons Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/processes.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Processes and Daemons</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Daemons</a></li>
+                <li><a href="#s1d">Viewing Processes</a></li>
+                <li><a href="#s1e">Process States</a></li>
+                <li><a href="#s1f">Signals and Killing Processes</a></li>
+                <li><a href="#s1g">Process Priority</a></li>
+                <li><a href="#s1h">Background Jobs and Job Control</a></li>
+                <li><a href="#s1i">Managing Daemons with service</a></li>
+                <li><a href="#s1j">Starting Daemons at Boot</a></li>
+                <li><a href="#s1k">Detailed Process Information</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Processes and Daemons</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>MidnightBSD is a multi-tasking operating system. Each program running at any one time is
+            called a process. Every running command starts at least one new process and there are a
+            number of system processes that are run by MidnightBSD itself.</p>
+
+        <p>Each process is uniquely identified by a number called a process ID (PID). Similar to files,
+            each process has one owner and group, and the owner and group permissions are used to
+            determine which files and devices the process can open. Most processes also have a parent
+            process that started them. For example, the shell is a process, and any command started in
+            the shell is a process that has the shell as its parent process. The exception is a special
+            process called <code>init(8)</code>, which is always the first process to start at boot
+            time and which always has a PID of 1. All other processes on the system are ultimately
+            descendants of <code>init</code>.</p>
+
+        <p>PIDs are assigned starting at 1, increase up to 99999, then wrap around. A PID is not
+            reassigned if it is already in use. Each process also has a parent PID (PPID) identifying
+            the process that created it. When a parent process exits before its children, the children
+            are re-parented to <code>init</code>.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">Daemons</h4>
+        <p>Some programs are not designed to be run with continuous user input and disconnect from the
+            terminal at the first opportunity. For example, a web server responds to web requests rather
+            than user input. Mail servers are another example of this type of application. These types
+            of programs are known as daemons. The term daemon comes from Greek mythology and represents
+            an entity that is neither good nor evil, and which invisibly performs useful tasks. This is
+            why the BSD mascot is a daemon with sneakers and a pitchfork.</p>
+
+        <p>There is a convention to name programs that normally run as daemons with a trailing "d". For
+            example, BIND is the Berkeley Internet Name Domain, but the actual program that executes is
+            named <code>named</code>. The Apache web server program is <code>httpd</code> and the SSH
+            server is <code>sshd</code>. This is only a naming convention &mdash; the main daemon for
+            the Sendmail application is <code>sendmail</code>, not <code>maild</code>.</p>
+
+        <p>Daemons typically start at boot time, run as a dedicated system user with limited privileges,
+            write logs to <code>/var/log</code>, and store their PID in a file under <code>/var/run</code>
+            so that other programs can find and signal them. For example, the nginx web server writes
+            its PID to <code>/var/run/nginx.pid</code>.</p>
+
+        <h4 id="s1d">Viewing Processes</h4>
+        <p>To see the processes running on the system, use <code>ps(1)</code> or <code>top(1)</code>.
+            Use <code>ps</code> for a static snapshot and <code>top</code> for a live updating view.</p>
+
+        <h5>ps</h5>
+        <p>By default, <code>ps</code> only shows processes owned by the current user that are attached
+            to the current terminal:</p>
+        <code>ps</code>
+
+        <p>The output columns are:</p>
+        <ul>
+            <li><strong>PID</strong> &mdash; process ID</li>
+            <li><strong>TT</strong> &mdash; the controlling terminal (<code>??</code> means no terminal, i.e. a daemon)</li>
+            <li><strong>STAT</strong> &mdash; process state (see <a href="#s1e">Process States</a>)</li>
+            <li><strong>TIME</strong> &mdash; cumulative CPU time consumed</li>
+            <li><strong>COMMAND</strong> &mdash; the command that started the process</li>
+        </ul>
+
+        <p>The most useful set of options is <code>auxww</code>:</p>
+        <code>ps auxww</code>
+        <ul>
+            <li><code>a</code> &mdash; show processes of all users</li>
+            <li><code>u</code> &mdash; show username and memory usage</li>
+            <li><code>x</code> &mdash; include daemon processes with no controlling terminal</li>
+            <li><code>ww</code> &mdash; do not truncate long command lines</li>
+        </ul>
+
+        <p>To show the process tree (parent/child relationships):</p>
+        <code>ps auxwwd</code>
+
+        <p>To find all processes belonging to a specific user:</p>
+        <code>ps -U username</code>
+
+        <p>To find all processes with a given name, pipe through <code>grep</code>:</p>
+        <code>ps auxww | grep httpd</code>
+
+        <p>The <code>pgrep</code> command is a cleaner way to find PIDs by name:</p>
+        <code>pgrep httpd</code>
+
+        <h5>top</h5>
+        <p><code>top</code> displays a live-updating view of the most active processes and system
+            resource usage. It refreshes every two seconds by default.</p>
+        <code>top</code>
+
+        <p>The header section shows:</p>
+        <ul>
+            <li>The PID of the last process to run and the system load averages (1, 5, and 15 minute
+                averages). A load average near or above the number of CPU cores indicates the system
+                is heavily loaded.</li>
+            <li>System uptime and current time.</li>
+            <li>A count of running, sleeping, stopped, and zombie processes.</li>
+            <li>CPU time breakdown: user, system, idle, interrupt.</li>
+            <li>Memory usage: active, inactive, wired, cached, and free.</li>
+            <li>If ZFS is active, an ARC line showing how much data was served from the memory cache.</li>
+            <li>Swap usage.</li>
+        </ul>
+
+        <p>Useful interactive commands inside <code>top</code>:</p>
+        <ul>
+            <li><code>q</code> &mdash; quit</li>
+            <li><code>h</code> &mdash; show help</li>
+            <li><code>s</code> &mdash; change the refresh interval (prompts for seconds)</li>
+            <li><code>k</code> &mdash; kill a process by PID (prompts for PID and signal)</li>
+            <li><code>r</code> &mdash; renice a process (prompts for PID and new priority)</li>
+            <li><code>o</code> &mdash; change the sort column</li>
+            <li><code>u</code> &mdash; filter by username</li>
+            <li><code>m</code> &mdash; toggle memory display mode</li>
+            <li><code>p</code> &mdash; toggle display of idle processes</li>
+            <li><code>I</code> &mdash; toggle display of per-CPU idle time</li>
+        </ul>
+
+        <p>To run <code>top</code> with a specific refresh interval (e.g. 5 seconds):</p>
+        <code>top -s 5</code>
+
+        <p>To show only processes belonging to a specific user:</p>
+        <code>top -U username</code>
+
+        <h4 id="s1e">Process States</h4>
+        <p>The STAT column in <code>ps</code> output shows the current state of a process. The primary
+            state codes are:</p>
+        <ul>
+            <li><code>R</code> &mdash; runnable; currently on a CPU or waiting for one</li>
+            <li><code>S</code> &mdash; sleeping; waiting for an event such as I/O or a timer, can
+                be interrupted by a signal</li>
+            <li><code>D</code> &mdash; disk wait (uninterruptible sleep); typically waiting for I/O
+                to complete. A process stuck in this state usually indicates slow or failing storage.</li>
+            <li><code>T</code> &mdash; stopped; suspended by a signal such as SIGSTOP or by the job
+                control mechanism</li>
+            <li><code>Z</code> &mdash; zombie; the process has exited but its parent has not yet
+                collected its exit status via <code>wait(2)</code>. A zombie consumes no resources
+                other than a PID table entry.</li>
+            <li><code>W</code> &mdash; idle (kernel thread)</li>
+        </ul>
+
+        <p>Additional state modifiers that may follow the primary code:</p>
+        <ul>
+            <li><code>s</code> &mdash; session leader (typically the login shell)</li>
+            <li><code>+</code> &mdash; process is in the foreground process group</li>
+            <li><code>&lt;</code> &mdash; process has raised priority</li>
+            <li><code>N</code> &mdash; process has reduced priority (niced)</li>
+            <li><code>L</code> &mdash; process has pages locked in memory</li>
+        </ul>
+
+        <h4 id="s1f">Signals and Killing Processes</h4>
+        <p>One way to communicate with any running process or daemon is to send a signal using
+            <code>kill(1)</code>. Signals are numbered integer values with defined meanings. A user
+            can only send a signal to a process they own. Root can send signals to any process.</p>
+
+        <p>To send a signal to a process by PID:</p>
+        <code>kill -SIGNAL PID</code>
+
+        <p>The signal can be specified as a name or number. For example, to send SIGTERM to PID 1234:</p>
+        <code>kill 1234</code>
+        <code>kill -TERM 1234</code>
+        <code>kill -15 1234</code>
+
+        <p>Common signals:</p>
+        <ul>
+            <li><code>SIGTERM (15)</code> &mdash; politely request the process to terminate. The
+                process can catch this signal, flush buffers, close log files, and shut down cleanly.
+                This is the default signal sent by <code>kill</code> when no signal is specified.</li>
+            <li><code>SIGKILL (9)</code> &mdash; forcibly terminate the process immediately. This
+                signal cannot be caught or ignored by the process. Use it only after SIGTERM has
+                failed, as it gives the process no chance to clean up.</li>
+            <li><code>SIGHUP (1)</code> &mdash; "hang up". Many daemons interpret this as an
+                instruction to reload their configuration file without restarting. For example,
+                sending SIGHUP to <code>named</code> or <code>nginx</code> reloads the configuration.</li>
+            <li><code>SIGINT (2)</code> &mdash; interrupt. Equivalent to pressing Ctrl+C in a
+                terminal. Usually causes a process to stop what it is doing and exit.</li>
+            <li><code>SIGQUIT (3)</code> &mdash; quit and produce a core dump if the process does
+                not catch it. Equivalent to pressing Ctrl+\.</li>
+            <li><code>SIGSTOP (17)</code> &mdash; pause (suspend) the process. Cannot be caught or
+                ignored. The process resumes when it receives SIGCONT.</li>
+            <li><code>SIGCONT (19)</code> &mdash; resume a stopped process.</li>
+            <li><code>SIGUSR1 (30)</code> and <code>SIGUSR2 (31)</code> &mdash; application-defined
+                signals. Their meaning varies by program; consult the relevant daemon's documentation.</li>
+            <li><code>SIGWINCH (28)</code> &mdash; terminal window size changed. Sent automatically
+                when you resize a terminal; programs like <code>top</code> use it to redraw.</li>
+        </ul>
+
+        <p>To see a full list of signals and their numbers:</p>
+        <code>kill -l</code>
+
+        <p>To kill a process by name using <code>pkill</code> (sends SIGTERM by default):</p>
+        <code>pkill httpd</code>
+
+        <p>To send a specific signal by process name:</p>
+        <code>pkill -HUP named</code>
+
+        <p>To kill all processes matching a name as root:</p>
+        <code>pkill -9 httpd</code>
+
+        <p>Never send SIGKILL to <code>init</code> (PID 1). Killing init will halt or reboot the
+            system depending on how the kernel handles it. Likewise, killing core system processes
+            such as <code>devd</code> or the kernel threads visible in <code>ps</code> output can
+            destabilize or crash a running system.</p>
+
+        <h4 id="s1g">Process Priority</h4>
+        <p>MidnightBSD schedules CPU time among processes using a priority system. Lower priority
+            numbers mean higher priority. The "nice" value is an adjustment to a process's scheduling
+            priority, ranging from -20 (highest priority) to 20 (lowest priority). Regular users can
+            only increase the nice value (lower the priority) of their own processes. Root can set
+            any nice value.</p>
+
+        <p>Start a command with a reduced priority (nice value of 10):</p>
+        <code>nice -n 10 make -j8</code>
+
+        <p>Start a command with the maximum reduced priority:</p>
+        <code>nice -n 20 rsync -av /data /backup</code>
+
+        <p>Change the nice value of a running process with <code>renice</code>:</p>
+        <code>renice +10 1234</code>
+
+        <p>Increase the priority of a process (root only):</p>
+        <code>renice -5 1234</code>
+
+        <p>Setting long-running background tasks to a higher nice value prevents them from
+            competing with interactive work for CPU time.</p>
+
+        <h4 id="s1h">Background Jobs and Job Control</h4>
+        <p>The shell's job control feature lets you run multiple commands from a single terminal
+            session by suspending, resuming, and switching between foreground and background jobs.</p>
+
+        <p>Append <code>&amp;</code> to a command to run it in the background immediately:</p>
+        <code>long_running_command &amp;</code>
+
+        <p>The shell prints the job number and PID, for example <code>[1] 4823</code>. The job
+            continues running while you use the shell for other commands.</p>
+
+        <p>To suspend a foreground process and return to the shell prompt, press Ctrl+Z. The process
+            is stopped (SIGSTOP) and the shell reports:</p>
+        <code>[1]+ Stopped   long_running_command</code>
+
+        <p>To resume a suspended job in the background:</p>
+        <code>bg %1</code>
+
+        <p>To bring a background or suspended job back to the foreground:</p>
+        <code>fg %1</code>
+
+        <p>To list all current jobs in the shell session:</p>
+        <code>jobs</code>
+
+        <p>When you close a terminal, the shell normally sends SIGHUP to all its child processes,
+            terminating them. To start a process that survives terminal logout, use
+            <code>nohup</code>:</p>
+        <code>nohup long_running_command &amp;</code>
+
+        <p>Output that would have gone to the terminal is redirected to <code>nohup.out</code> in
+            the current directory. Alternatively, use <code>disown</code> after starting a
+            background job to remove it from the shell's job table:</p>
+        <code>long_running_command &amp;</code>
+        <code>disown %1</code>
+
+        <h4 id="s1i">Managing Daemons with service</h4>
+        <p>MidnightBSD uses the <code>rc</code> framework to start, stop, and manage daemons.
+            The <code>service(8)</code> command is the standard interface for interacting with
+            rc scripts without needing to call the scripts directly.</p>
+
+        <p>Start a daemon:</p>
+        <code>service sshd start</code>
+
+        <p>Stop a daemon:</p>
+        <code>service sshd stop</code>
+
+        <p>Restart a daemon (stop then start):</p>
+        <code>service sshd restart</code>
+
+        <p>Reload the daemon's configuration without a full restart (equivalent to SIGHUP for
+            most daemons):</p>
+        <code>service named reload</code>
+
+        <p>Check whether a daemon is running:</p>
+        <code>service sshd status</code>
+
+        <p>List all available rc services:</p>
+        <code>service -l</code>
+
+        <p>List services that are currently enabled in <code>/etc/rc.conf</code>:</p>
+        <code>service -e</code>
+
+        <p>Each daemon has a corresponding rc script in <code>/etc/rc.d/</code> (base system) or
+            <code>/usr/local/etc/rc.d/</code> (mports). You can call these scripts directly, but
+            using <code>service</code> is preferred as it sets the correct environment.</p>
+
+        <h4 id="s1j">Starting Daemons at Boot</h4>
+        <p>Whether a daemon starts at boot is controlled by <code>/etc/rc.conf</code>. Most daemons
+            are disabled by default and must be explicitly enabled. The rc script for each daemon
+            defines a variable name following the pattern <em>daemonname</em><code>_enable</code>.</p>
+
+        <p>To enable the SSH server so it starts at boot, add to <code>/etc/rc.conf</code>:</p>
+        <code>sshd_enable="YES"</code>
+
+        <p>Other common examples:</p>
+        <code>ntpd_enable="YES"<br>
+named_enable="YES"<br>
+nginx_enable="YES"<br>
+postgresql_enable="YES"</code>
+
+        <p>Many daemons also accept configuration flags through a corresponding
+            <em>daemonname</em><code>_flags</code> variable:</p>
+        <code>ntpd_flags="-g"</code>
+
+        <p>After editing <code>/etc/rc.conf</code>, start the newly enabled service immediately
+            without rebooting:</p>
+        <code>service sshd start</code>
+
+        <p>To check what rc.conf settings are currently active without opening the file:</p>
+        <code>sysrc sshd_enable</code>
+
+        <p>The <code>sysrc(8)</code> command also safely adds or removes values without manually
+            editing <code>/etc/rc.conf</code>:</p>
+        <code>sysrc sshd_enable="YES"</code>
+        <code>sysrc -x sshd_enable</code>
+
+        <h4 id="s1k">Detailed Process Information</h4>
+
+        <h5>procstat</h5>
+        <p><code>procstat(1)</code> provides detailed information about a process that goes beyond
+            what <code>ps</code> shows, including open file descriptors, memory mappings, and
+            kernel stack traces.</p>
+
+        <p>Show open files for a process:</p>
+        <code>procstat -f PID</code>
+
+        <p>Show virtual memory mappings:</p>
+        <code>procstat -v PID</code>
+
+        <p>Show the kernel thread stack (useful for diagnosing hangs):</p>
+        <code>procstat -k PID</code>
+
+        <p>Show all available information:</p>
+        <code>procstat -a PID</code>
+
+        <h5>fstat</h5>
+        <p><code>fstat(1)</code> lists open files across all processes or for a specific user.
+            It is useful for finding which process has a file or device open:</p>
+        <code>fstat /var/log/messages</code>
+        <code>fstat -u username</code>
+
+        <h5>sysctl</h5>
+        <p>Several <code>sysctl</code> values expose process and system information:</p>
+
+        <p>Show the maximum number of processes allowed on the system:</p>
+        <code>sysctl kern.maxproc</code>
+
+        <p>Show the current number of processes:</p>
+        <code>sysctl kern.nprocs</code>
+
+        <p>Show the load averages:</p>
+        <code>sysctl vm.loadavg</code>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
