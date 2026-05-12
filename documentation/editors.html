@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MidnightBSD Text Editor Documentation</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/editors.html">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For
+        Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt=""/> Text Editors</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Base System Editors</a>
+                    <ul>
+                        <li><a href="#s1c1">ee &mdash; Easy Editor</a></li>
+                        <li><a href="#s1c2">vi</a></li>
+                        <li><a href="#s1c3">mined &mdash; MINimal EDitor</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1d">Editors from mports</a>
+                    <ul>
+                        <li><a href="#s1d1">vim</a></li>
+                        <li><a href="#s1d2">nano</a></li>
+                        <li><a href="#s1d3">jupp &mdash; Joe's Own Editor</a></li>
+                        <li><a href="#s1d4">gedit</a></li>
+                        <li><a href="#s1d5">mousepad</a></li>
+                        <li><a href="#s1d6">Sublime Text</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1e">Setting a Default Editor</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Text Editors</h3>
+        <h4 id="s1b">Introduction</h4>
+        <p>Most MidnightBSD configuration is done by editing text files, so it is a good idea to become
+            familiar with a text editor. MidnightBSD comes with a few editors as part of the base system,
+            and many more are available through mports.</p>
+
+        <p>A simple editor to learn is <code>ee</code>, which stands for Easy Editor. More experienced
+            users often prefer <code>vi</code>, which is also included in the base system. Many applications
+            that need to open a text editor use the <code>EDITOR</code> environment variable to decide
+            which one to launch. See the <a href="shells.html">Shells documentation</a> for information
+            on setting <code>EDITOR</code>.</p>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1c">Base System Editors</h4>
+        <p>These editors are part of the MidnightBSD base system and are available on any installed
+            system without installing additional packages.</p>
+
+        <h5 id="s1c1">ee &mdash; Easy Editor</h5>
+        <p><code>ee</code> stands for Easy Editor and is the most approachable editor in the base system
+            for new users. All available commands are listed at the top of the screen, so you do not need
+            to memorize keyboard shortcuts before getting started.</p>
+
+        <p>To open a file:</p>
+        <code>ee filename</code>
+
+        <p>The caret symbol (<code>^</code>) in the on-screen menu represents the Ctrl key, so
+            <code>^e</code> means Ctrl+e. Navigation is done with the arrow keys. To exit, press
+            Escape and then choose <em>leave editor</em> from the menu. If the file has been modified,
+            <code>ee</code> will prompt you to save before exiting.</p>
+
+        <p>Some useful key bindings in ee:</p>
+        <ul>
+            <li><code>^a</code> &mdash; move to the beginning of line</li>
+            <li><code>^e</code> &mdash; move to the end of line</li>
+            <li><code>^k</code> &mdash; delete to the end of line</li>
+            <li><code>^u</code> &mdash; undelete last deleted line</li>
+            <li><code>^s</code> &mdash; search for a string</li>
+            <li><code>^y</code> &mdash; search and replace</li>
+            <li><code>Esc</code> &mdash; open the command menu</li>
+        </ul>
+
+        <h5 id="s1c2">vi</h5>
+        <p><code>vi</code> is a powerful modal text editor included in the base system. It has two
+            primary modes: <em>command mode</em>, where keystrokes are interpreted as editor commands,
+            and <em>insert mode</em>, where keystrokes are inserted as text. The editor starts in
+            command mode.</p>
+
+        <p>To open a file:</p>
+        <code>vi filename</code>
+
+        <p>Essential vi commands:</p>
+        <ul>
+            <li><code>i</code> &mdash; enter insert mode before the cursor</li>
+            <li><code>a</code> &mdash; enter insert mode after the cursor</li>
+            <li><code>Esc</code> &mdash; return to command mode</li>
+            <li><code>:w</code> &mdash; save (write) the file</li>
+            <li><code>:q</code> &mdash; quit (fails if there are unsaved changes)</li>
+            <li><code>:wq</code> &mdash; save and quit</li>
+            <li><code>:q!</code> &mdash; quit without saving</li>
+            <li><code>dd</code> &mdash; delete the current line</li>
+            <li><code>yy</code> &mdash; copy (yank) the current line</li>
+            <li><code>p</code> &mdash; paste after the cursor</li>
+            <li><code>/pattern</code> &mdash; search forward for a pattern</li>
+            <li><code>n</code> &mdash; repeat the last search forward</li>
+            <li><code>u</code> &mdash; undo the last change</li>
+        </ul>
+
+        <p>vi has a steeper learning curve than <code>ee</code>, but it is available on virtually every
+            Unix-like system, making it worth learning for anyone who works across multiple machines or
+            needs to edit files in minimal environments such as single-user mode.</p>
+
+        <h5 id="s1c3">mined &mdash; MINimal EDitor</h5>
+        <p><code>mined</code> is a simple, screen-oriented text editor included in the base system.
+            It is designed to be easy to use and was one of the earliest screen editors available on
+            Unix systems. mined uses control-key commands for its operations and is a reasonable
+            alternative to <code>ee</code> for users who prefer a slightly different interface.</p>
+
+        <p>To open a file:</p>
+        <code>mined filename</code>
+
+        <p>Some useful mined key bindings:</p>
+        <ul>
+            <li><code>^S</code> &mdash; save the file</li>
+            <li><code>^Q</code> &mdash; quit</li>
+            <li><code>^F</code> &mdash; search forward</li>
+            <li><code>^G</code> &mdash; global search and replace</li>
+            <li><code>^Y</code> &mdash; delete to the end of line</li>
+            <li><code>^A</code> &mdash; move to the beginning of line</li>
+            <li><code>^Z</code> &mdash; move to the end of line</li>
+        </ul>
+
+        <h4 id="s1d">Editors from mports</h4>
+        <p>The following editors are available through mports and offer additional features or
+            graphical interfaces not found in the base system editors.</p>
+
+        <h5 id="s1d1">vim</h5>
+        <p>vim (Vi IMproved) extends <code>vi</code> with syntax highlighting, multi-level undo,
+            split windows, plugin support, and many other features. It is one of the most popular
+            editors among developers and system administrators. vim retains full compatibility with
+            vi key bindings while adding a large set of additional capabilities.</p>
+
+        <p>Install vim from mports:</p>
+        <code>mport install vim</code>
+
+        <p>vim reads <code>~/.vimrc</code> for user configuration. A basic configuration to enable
+            syntax highlighting and line numbers:</p>
+        <pre>
+syntax on
+set number
+set tabstop=4
+set expandtab</pre>
+
+        <p>vim can be started in read-only mode with <code>view filename</code>, or opened at a
+            specific line number:</p>
+        <code>vim +42 filename</code>
+
+        <p>To search and replace across an entire file from vim's command mode:</p>
+        <code>:%s/oldtext/newtext/g</code>
+
+        <h5 id="s1d2">nano</h5>
+        <p>nano is a straightforward terminal editor modeled after the Pico editor. Like <code>ee</code>,
+            it displays available commands at the bottom of the screen, making it easy to use without
+            prior knowledge. It supports syntax highlighting, search and replace, and soft-wrapping
+            of long lines.</p>
+
+        <p>Install nano from mports:</p>
+        <code>mport install nano</code>
+
+        <p>To open a file:</p>
+        <code>nano filename</code>
+
+        <p>Key bindings use the same caret notation as <code>ee</code>, where <code>^</code> means Ctrl:</p>
+        <ul>
+            <li><code>^O</code> &mdash; save (write out) the file</li>
+            <li><code>^X</code> &mdash; exit (prompts to save if modified)</li>
+            <li><code>^W</code> &mdash; search</li>
+            <li><code>^\</code> &mdash; search and replace</li>
+            <li><code>^K</code> &mdash; cut the current line</li>
+            <li><code>^U</code> &mdash; paste (uncut)</li>
+            <li><code>^G</code> &mdash; display help</li>
+        </ul>
+
+        <h5 id="s1d3">jupp &mdash; Joe's Own Editor</h5>
+        <p>jupp is a port of Joe's Own Editor (JOE), a terminal editor with WordStar-style key
+            bindings. It supports syntax highlighting, multiple buffers, and a built-in help system
+            accessible at any time. Users familiar with WordStar or the Borland IDE will find the
+            key layout natural.</p>
+
+        <p>Install jupp from mports:</p>
+        <code>mport install jupp</code>
+
+        <p>To open a file:</p>
+        <code>jupp filename</code>
+
+        <p>Press <code>^K H</code> (Ctrl+K then H) at any time to toggle the built-in help screen,
+            which lists all available commands.</p>
+
+        <h5 id="s1d4">gedit</h5>
+        <p>gedit is the default graphical text editor for the GNOME desktop environment. It provides
+            a clean, modern interface with syntax highlighting for many programming languages, a plugin
+            system, and integration with GNOME services. gedit requires a running graphical environment
+            (X11 or Wayland).</p>
+
+        <p>Install gedit from mports:</p>
+        <code>mport install gedit</code>
+
+        <p>To open a file from the terminal:</p>
+        <code>gedit filename &amp;</code>
+
+        <h5 id="s1d5">mousepad</h5>
+        <p>mousepad is the default graphical text editor for the Xfce desktop environment. It is
+            lightweight, starts quickly, and supports syntax highlighting, line numbers, and basic
+            search and replace. mousepad is a good choice on systems where a minimal graphical editor
+            is preferred without pulling in GNOME dependencies.</p>
+
+        <p>Install mousepad from mports:</p>
+        <code>mport install mousepad</code>
+
+        <p>To open a file from the terminal:</p>
+        <code>mousepad filename &amp;</code>
+
+        <h5 id="s1d6">Sublime Text</h5>
+        <p>Sublime Text is a feature-rich graphical editor popular among developers for its speed,
+            multiple cursors, command palette, and large ecosystem of plugins. The
+            <code>linux-sublime</code> package provides the Linux binary running under MidnightBSD's
+            Linux binary compatibility layer.</p>
+
+        <p>Linux binary compatibility must be enabled before installing. See the
+            <a href="linux.html">Linux Binary Compatibility documentation</a> for setup instructions.</p>
+
+        <p>Install Sublime Text from mports:</p>
+        <code>mport install linux-sublime</code>
+
+        <p>To open a file from the terminal:</p>
+        <code>sublime_text filename &amp;</code>
+
+        <p>Sublime Text is free to evaluate but requires a license for continued use. License and
+            pricing information is available on the Sublime Text website.</p>
+
+        <h4 id="s1e">Setting a Default Editor</h4>
+        <p>Many programs that need to open a text editor consult the <code>EDITOR</code> and
+            <code>VISUAL</code> environment variables. Examples include <code>crontab -e</code>,
+            <code>git commit</code>, and <code>chsh</code>. Setting these variables in your shell's
+            startup file ensures your preferred editor is used consistently.</p>
+
+        <p>For Bourne-compatible shells (sh, bash, zsh, mksh), add to <code>~/.profile</code>
+            or <code>~/.bashrc</code> / <code>~/.zshrc</code>:</p>
+        <code>export EDITOR=vim<br>
+export VISUAL=vim</code>
+
+        <p>For tcsh, add to <code>~/.tcshrc</code> or <code>~/.cshrc</code>:</p>
+        <code>setenv EDITOR vim<br>
+setenv VISUAL vim</code>
+
+        <p>Replace <code>vim</code> with the full path or name of your preferred editor, for example
+            <code>/usr/local/bin/nano</code> or simply <code>nano</code> if it is on your
+            <code>PATH</code>.</p>
+
+        <p>For more information on environment variables and shell configuration, see the
+            <a href="shells.html">Shells documentation</a>.</p>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
