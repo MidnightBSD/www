@@ -63,7 +63,7 @@ sub print_html {
 
     # print the channel items
     foreach my $item (@{$rss->{'items'}}[0 .. 1]) {
-  	next unless defined($item->{'title'}) && defined($item->{'link'});
+	next unless defined($item) && defined($item->{'title'}) && defined($item->{'link'});
   	$desc = substr($hs->parse($item->{'description'}),0, 100);
   	
   	# Wed, 03 Sep 2008 06:58
