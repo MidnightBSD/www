@@ -9,3 +9,8 @@
 **Learning:** Older, seemingly static release notes pages might still contain active, third-party scripts loaded over insecure connections, creating a Man-in-the-Middle vulnerability.
 **Prevention:** Regularly scan for `src="http:` tags across the entire codebase, including historical or archived pages, not just the active templates.
 Learned to check and fix target='_blank' vulnerabilities by adding rel='noopener noreferrer' when linking to external resources. Fixed one such vulnerability in html5gallery.
+
+## 2025-02-23 - DOM-Based XSS via innerHTML stripping in html5gallery
+**Vulnerability:** A third-party library (`html5gallery.js`) implemented a custom HTML tag stripping function (`html2Text()`) that temporarily assigned untrusted input directly to `b.innerHTML = a;` in an effort to read back `b.innerText`.
+**Learning:** Functions that attempt to "strip" HTML tags by assigning to `innerHTML` are highly dangerous and create an immediate DOM-based XSS execution vector (e.g., `<img src=x onerror=alert(1)>` executes immediately upon assignment to `innerHTML`, before `innerText` is even returned).
+**Prevention:** Use `DOMParser().parseFromString(a, 'text/html').body.textContent` to securely extract text without executing scripts, or properly HTML-entity escape the input before assigning to `innerHTML`.
