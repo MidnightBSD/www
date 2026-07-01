@@ -176,6 +176,21 @@
 
         <h4>2022</h4>
         <ul>
+            <li><a href="adv/MNBSD-2022-16.html">MNBSD-2022-16</a></li>
+            <li><a href="adv/MNBSD-2022-15.html">MNBSD-2022-15</a></li>
+            <li><a href="adv/MNBSD-2022-14.html">MNBSD-2022-14</a></li>
+            <li><a href="adv/MNBSD-2022-13.html">MNBSD-2022-13</a></li>
+            <li><a href="adv/MNBSD-2022-12.html">MNBSD-2022-12</a></li>
+            <li><a href="adv/MNBSD-2022-11.html">MNBSD-2022-11</a></li>
+            <li><a href="adv/MNBSD-2022-10.html">MNBSD-2022-10</a></li>
+            <li><a href="adv/MNBSD-2022-9.html">MNBSD-2022-9</a></li>
+            <li><a href="adv/MNBSD-2022-8.html">MNBSD-2022-8</a></li>
+            <li><a href="adv/MNBSD-2022-7.html">MNBSD-2022-7</a></li>
+            <li><a href="adv/MNBSD-2022-6.html">MNBSD-2022-6</a></li>
+            <li><a href="adv/MNBSD-2022-5.html">MNBSD-2022-5</a></li>
+            <li><a href="adv/MNBSD-2022-4.html">MNBSD-2022-4</a></li>
+            <li><a href="adv/MNBSD-2022-3.html">MNBSD-2022-3</a></li>
+            <li><a href="adv/MNBSD-2022-2.html">MNBSD-2022-2</a></li>
             <li><a href="adv/MNBSD-2022-1.html">MNBSD-2022-1</a></li>
             <li><a href="adv/MNBSD-2022-0.html">MNBSD-2022-0</a></li>
         </ul>
@@ -187,97 +202,6 @@
             <p>MidnightBSD 2.2.7</p>
 
             <p>tzdata 2022g
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20221122">
-            <h3>November 11, 2022</h3>
-            <p>MidnightBSD 2.2.6</p>
-
-            <p>tzdata 2022f
-            <p>heimdal security patches
-            <br/>CVE-2022-42898 PAC parse integer overflows
-            <br/>CVE-2022-3437 Overflows and non-constant time leaks in DES{,3} and arcfour
-            <br/>CVE-2021-44758 NULL dereference DoS in SPNEGO acceptors
-            <br/>CVE-2022-44640 Heimdal KDC: invalid free in ASN.1 codec
-            <br/>CVE-2019-14870 Validate client attributes in protocol-transition
-            <br/>CVE-2019-14870 Apply forwardable policy in protocol-transition
-            <br/>CVE-2019-14870 Always lookup impersonate client in DB
-
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220831a">
-            <h3>August 31, 2022</h3>
-            <p>MidnightBSD 1.2.11</p>
-
-            <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
-                in inflate in inflate.c via a large gzip header extra field.</p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220831">
-            <h3>August 31, 2022</h3>
-            <p>MidnightBSD 2.2.4</p>
-
-            <p>zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
-                in inflate.c via a large gzip header extra field.</p>
-
-            <p>Update tzdata to 2022c</p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220829">
-            <h3>August 29, 2022</h3>
-            <p>MidnightBSD 2.2.3</p>
-
-            <p>Fix a security issue with CAM and when dumping core.</p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220702">
-            <h3>July 2, 2022</h3>
-            <p>MidnightBSD 2.2.1</p>
-
-            <p>Fix a resource leak in libmport that could result in a denial of service for other processes.</p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220607">
-            <h3>June 7, 2022</h3>
-            <p>MidnightBSD 2.2.0</p>
-
-            <p>Reject execve when new argc is zero. Fixes a security issue with NULL argv[0] entries similar to the recent CVE with polkit on Linux.
-            </p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220408">
-            <h3>April 8, 2022</h3>
-            <p>MidnightBSD 2.1.8</p>
-            <p>netmap</p>
-            Fix TOCTOU vulnerability in nmreq_copyin
-            The total size of the user-provided nmreq was first computed and then
-            trusted during the copyin. This might lead to kernel memory corruption
-            and escape from jails/containers.
-            Security: CVE-2022-23084
-
-            An unsanitized field in an option could be abused, causing an integer
-            overflow followed by kernel memory corruption. This might be used
-            to escape jails/containers.
-            Security: CVE-2022-23085
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220404">
-            <h3>April 4, 2022</h3>
-            <p>MidnightBSD 2.1.7</p>
-            <p>zlib 1.2.12</p>
-            <p>Fix a deflate bug when using the Z_FIXED strategy that can result in out-of-bound accesses.
-                Fix a deflate bug when the window is full in deflate_stored().
-                Speed up CRC-32 computations by a factor of 1.5 to 3.
-                Use the hardware CRC-32 instruction on ARMv8 processors.
-                Speed up crc32_combine() with powers of x tables.
-                Add crc32_combine_gen() and crc32_combine_op() for fast combines.</p>
-        </blockquote>
-
-        <blockquote class="bluebox" id="a20220315">
-            <h3>March 20, 2022</h3>
-            <p>MidnightBSD 2.1.6</p>
-            <p>Fix security vulnerability in OpenSSL and WiFi.</p>
-            <p>Update tzdata to 2022a</p>
         </blockquote>
 
         <blockquote class="bluebox" id="a20210116">

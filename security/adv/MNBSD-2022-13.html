@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2022-13 Out-of-bounds write in lib9p RWALK message handling</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2022-13: Out-of-bounds write in lib9p RWALK message handling</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> lib9p</p>
+  <p><strong>Summary:</strong> Out-of-bounds write in lib9p RWALK message handling</p>
+</div>
+
+<h2>Description</h2>
+<p>A missing bounds check in the RWALK message handling of lib9p, used by bhyve's virtio-9p (VirtFS) device, allowed a malicious guest to overwrite unrelated memory in the bhyve process, potentially enabling user-mode code execution on the host.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>lib9p</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-22:12.lib9p.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-22:12.lib9p.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-23092">https://www.cve.org/CVERecord?id=CVE-2022-23092</a></li>
+<li><a href="https://github.com/MidnightBSD/src/commit/c536045c51da">https://github.com/MidnightBSD/src/commit/c536045c51da</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2022-23092</p>
+<p class="dates">
+Published: August 09, 2022<br>
+Last Modified: August 09, 2022
+</p>
+</body>
+</html>

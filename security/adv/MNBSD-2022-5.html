@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2022-5 netmap TOCTOU and integer overflow leading to kernel memory corruption</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2022-5: netmap TOCTOU and integer overflow leading to kernel memory corruption</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> netmap TOCTOU and integer overflow leading to kernel memory corruption</p>
+</div>
+
+<h2>Description</h2>
+<p>Two flaws affected the netmap kernel module. In nmreq_copyin() the total size of the user-provided nmreq was computed and then trusted during the copyin, allowing a time-of-check-to-time-of-use race that could lead to kernel memory corruption and escape from jails/containers (CVE-2022-23084). Separately, an unsanitized field in an option could be abused to cause an integer overflow followed by kernel memory corruption (CVE-2022-23085). A related reference-counting bug in netmap_ioctl() for the NETMAP_REQ_PORT_INFO_GET command could also leak references.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-22:04.netmap.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-22:04.netmap.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-23084">https://www.cve.org/CVERecord?id=CVE-2022-23084</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2022-23085">https://www.cve.org/CVERecord?id=CVE-2022-23085</a></li>
+<li><a href="https://github.com/MidnightBSD/src/commit/ebc96eef6315">https://github.com/MidnightBSD/src/commit/ebc96eef6315</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2022-23084, CVE-2022-23085</p>
+<p class="dates">
+Published: April 06, 2022<br>
+Last Modified: April 06, 2022
+</p>
+</body>
+</html>
