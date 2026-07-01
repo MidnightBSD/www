@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-21 KTLS receive path may overwrite file-backed memory via shared mbufs</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-21: KTLS receive path may overwrite file-backed memory via shared mbufs</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> KTLS receive path may overwrite file-backed memory via shared mbufs</p>
+</div>
+
+<h2>Description</h2>
+<p>The KTLS receive path could decrypt records in place into detached records that contained non-anonymous M_EXTPG pages or sendfile EXT_SFBUF mbufs. Those buffers may reference file-backed memory that must not be modified by the receive path, leading to memory/data corruption. Fixed by rejecting shared mbufs on receive decrypt.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-45257">https://nvd.nist.gov/vuln/detail/CVE-2026-45257</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-45257</p>
+<p class="dates">
+Published: June 11, 2026<br>
+Last Modified: June 11, 2026
+</p>
+</body>
+</html>

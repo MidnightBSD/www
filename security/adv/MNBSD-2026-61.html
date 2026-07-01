@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-61 unlinkat(2)/funlinkat(2) ignore the AT_RESOLVE_BENEATH flag (CVE-2026-49421)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-61: unlinkat(2)/funlinkat(2) ignore the AT_RESOLVE_BENEATH flag (CVE-2026-49421)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/vfs</p>
+  <p><strong>Summary:</strong> unlinkat(2)/funlinkat(2) ignore the AT_RESOLVE_BENEATH flag (CVE-2026-49421)</p>
+</div>
+
+<h2>Description</h2>
+<p>kern_funlinkat_ex() validated the AT_RESOLVE_BENEATH flag but then invoked the underlying path lookup with a hardcoded flag argument, silently dropping the flag so that path resolution was not actually restricted.
+
+1. AT_RESOLVE_BENEATH containment bypass (CWE-22, CVE-2026-49421) - a caller relying on AT_RESOLVE_BENEATH with unlinkat(2)/funlinkat(2) for path containment could resolve and delete files outside the intended directory tree.
+
+Applications that use AT_RESOLVE_BENEATH with unlinkat(2)/funlinkat(2) to confine path resolution on untrusted paths lose that containment guarantee.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/vfs</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-49421">https://www.cve.org/CVERecord?id=CVE-2026-49421</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-49421</p>
+<p class="dates">
+Published: July 01, 2026<br>
+Last Modified: July 01, 2026
+</p>
+</body>
+</html>

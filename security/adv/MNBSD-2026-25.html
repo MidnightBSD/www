@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-25 ASLR bypass for setuid executables via procctl(2)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-25: ASLR bypass for setuid executables via procctl(2)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> ASLR bypass for setuid executables via procctl(2)</p>
+</div>
+
+<h2>Description</h2>
+<p>The ELF image activator cleared per-process ASLR preference flags for setuid binaries only after computing the PIE base address. An unprivileged user could call procctl(PROC_ASLR_CTL, PROC_ASLR_FORCE_DISABLE) before execve(2) to disable ASLR for a setuid PIE binary, easing exploitation of memory-corruption bugs in that binary. Fixed by clearing the credential setid ASLR flags before the load base is chosen. Ports FreeBSD-SA-26:32.elf.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-49414">https://nvd.nist.gov/vuln/detail/CVE-2026-49414</a></li>
+<li><a href="https://security.FreeBSD.org/advisories/FreeBSD-SA-26:32.elf.asc">https://security.FreeBSD.org/advisories/FreeBSD-SA-26:32.elf.asc</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-49414</p>
+<p class="dates">
+Published: June 11, 2026<br>
+Last Modified: June 11, 2026
+</p>
+</body>
+</html>

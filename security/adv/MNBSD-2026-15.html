@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-15 Incorrect libcap_net limitation list manipulation</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-15: Incorrect libcap_net limitation list manipulation</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> libcap_net</p>
+  <p><strong>Summary:</strong> Incorrect libcap_net limitation list manipulation</p>
+</div>
+
+<h2>Description</h2>
+<p>libcasper(3) allows Capsicum-sandboxed applications to define and use system
+interfaces which are otherwise not available in a capability sandbox, through
+implementing special services. One of these services, libcap_net, enables
+networking capabilities within the restricted environment.
+
+Casper services allow the application to define fine-grained limits on each
+operation handled by the service. Each service maintains a specific list of
+permitted operations. Certain operations can be further restricted by
+specifying an explicit list of allowed names. For example, libcap_net allows
+the application to limit the addresses to which the application may bind or
+connect. If it attempts to use libcap_net to bind or connect to addresses
+outside the allowed list, the operation will fail.
+
+In the case of the cap_net service, when a key present in the old limit was
+omitted from the new limit, the missing key was treated as "allow any"
+instead of being rejected.
+
+In certain scenarios, an application that had previously restricted a subset
+of network operations could ask for a new limit that extended the permissions
+of the process.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>libcap_net</h3><ul></ul><p>Specific versions:</p><ul><li>4.0.0</li><li>4.0.1</li><li>4.0.2</li><li>4.0.3</li><li>4.0.4</li><li>4.0.5</li></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://security.FreeBSD.org/advisories/FreeBSD-SA-26:24.cap_net.asc">https://security.FreeBSD.org/advisories/FreeBSD-SA-26:24.cap_net.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-45254">https://www.cve.org/CVERecord?id=CVE-2026-45254</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-45254</p>
+<p class="dates">
+Published: May 20, 2026<br>
+Last Modified: May 20, 2026
+</p>
+</body>
+</html>

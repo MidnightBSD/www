@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-57 Buffer overflows in iconv(3) encoding modules (CVE-2026-58081, CVE-2026-58082)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-57: Buffer overflows in iconv(3) encoding modules (CVE-2026-58081, CVE-2026-58082)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> libc/iconv</p>
+  <p><strong>Summary:</strong> Buffer overflows in iconv(3) encoding modules (CVE-2026-58081, CVE-2026-58082)</p>
+</div>
+
+<h2>Description</h2>
+<p>Multiple buffer overflows exist in the citrus iconv(3) character-set conversion modules in MidnightBSD. Applications that use iconv(3) to convert untrusted text to or from an affected encoding may be vulnerable.
+
+1. Missing output-buffer bounds checks in HZ, UTF-7, VIQR and ZW modules (CWE-787, CVE-2026-58081) - these encoders rewrote converted characters without checking the size of the caller-supplied output buffer.
+2. Stack buffer overflow in the ISO-2022 module (CWE-121, CVE-2026-58082) - the encoder used a stack buffer sized to MB_LEN_MAX (6 bytes), but some ISO-2022 variants require up to 10 bytes per character, allowing an out-of-bounds write of up to four bytes.
+
+An application converting untrusted input through an affected encoding can be made to write past a heap or stack buffer, leading to memory corruption.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>libc/iconv</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58081">https://www.cve.org/CVERecord?id=CVE-2026-58081</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58082">https://www.cve.org/CVERecord?id=CVE-2026-58082</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-58081, CVE-2026-58082</p>
+<p class="dates">
+Published: July 01, 2026<br>
+Last Modified: July 01, 2026
+</p>
+</body>
+</html>

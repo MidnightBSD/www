@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-20 heap buffer overflow in liblzma lzma_index_append() via an empty Index</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-20: heap buffer overflow in liblzma lzma_index_append() via an empty Index</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> xz</p>
+  <p><strong>Summary:</strong> heap buffer overflow in liblzma lzma_index_append() via an empty Index</p>
+</div>
+
+<h2>Description</h2>
+<p>XZ Utils provide a general-purpose data-compression library (liblzma) plus command-line tools. If lzma_index_decoder() was used to decode an Index that contained no Records, the resulting lzma_index was left in a state where a subsequent lzma_index_append() would allocate too little memory, causing a heap-based buffer overflow (CWE-122). Affects xz/liblzma before 5.8.3.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>xz</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-34743">https://nvd.nist.gov/vuln/detail/CVE-2026-34743</a></li>
+<li><a href="https://github.com/tukaani-project/xz/security/advisories/GHSA-x872-m794-cxhv">https://github.com/tukaani-project/xz/security/advisories/GHSA-x872-m794-cxhv</a></li>
+<li><a href="https://github.com/tukaani-project/xz/releases/tag/v5.8.3">https://github.com/tukaani-project/xz/releases/tag/v5.8.3</a></li>
+<li><a href="https://github.com/tukaani-project/xz/commit/c8c22869e780ff57c96b46939c3d79ff99395f87">https://github.com/tukaani-project/xz/commit/c8c22869e780ff57c96b46939c3d79ff99395f87</a></li>
+<li><a href="http://www.openwall.com/lists/oss-security/2026/03/31/13">http://www.openwall.com/lists/oss-security/2026/03/31/13</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-34743</p>
+<p class="dates">
+Published: June 11, 2026<br>
+Last Modified: June 11, 2026
+</p>
+</body>
+</html>
