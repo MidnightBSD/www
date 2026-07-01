@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2021-6 Linux compatibility layer futex(2) denial of service</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2021-6: Linux compatibility layer futex(2) denial of service</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> Linux compatibility layer futex(2) denial of service</p>
+</div>
+
+<h2>Description</h2>
+<p>A programming error in the Linux compatibility layer futex(2) system call, where an unprivileged local attacker could specify a negative wake or requeue value causing a signed integer overflow, might allow attackers to cause a denial of service. Systems not using the Linux binary compatibility layer are not affected.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2018-6927">https://www.cve.org/CVERecord?id=CVE-2018-6927</a></li>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-EN-21:22.linux_futex.asc">https://www.freebsd.org/security/advisories/FreeBSD-EN-21:22.linux_futex.asc</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2018-6927</p>
+<p class="dates">
+Published: June 29, 2021<br>
+Last Modified: June 29, 2021
+</p>
+</body>
+</html>

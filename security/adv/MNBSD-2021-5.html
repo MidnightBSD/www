@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2021-5 Jail escape via race between ".." lookup and remount</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2021-5: Jail escape via race between ".." lookup and remount</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> Jail escape via race between ".." lookup and remount</p>
+</div>
+
+<h2>Description</h2>
+<p>Due to a race condition between lookup of ".." and remounting a file system, a jailed process with superuser privileges and the allow.mount permission could access the filesystem hierarchy outside of the jail, gaining read and write access to files and directories on the host.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-21:10.jail_mount.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-21:10.jail_mount.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2020-25584">https://www.cve.org/CVERecord?id=CVE-2020-25584</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2020-25584</p>
+<p class="dates">
+Published: April 06, 2021<br>
+Last Modified: April 06, 2021
+</p>
+</body>
+</html>

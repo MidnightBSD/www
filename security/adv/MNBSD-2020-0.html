@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2020-0 libalias insufficient packet length validation causes memory disclosure</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2020-0: libalias insufficient packet length validation causes memory disclosure</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> libalias</p>
+  <p><strong>Summary:</strong> libalias insufficient packet length validation causes memory disclosure</p>
+</div>
+
+<h2>Description</h2>
+<p>libalias(3), the library used for NAT (including the in-kernel NAT in ipfw and the userspace natd(8)), performed insufficient packet length validation. The FTP packet handler incorrectly calculated some packet lengths, which could disclose small amounts of memory from the kernel or from the natd process (CVE-2020-7455). More broadly, malicious packets could trigger out-of-bounds read or write conditions in the libalias packet handlers (CVE-2020-7454).
+</p>
+
+<h2>Affected Versions</h2>
+<h3>libalias</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-20:12.libalias.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-20:12.libalias.asc</a></li>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-20:13.libalias.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-20:13.libalias.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2020-7454">https://www.cve.org/CVERecord?id=CVE-2020-7454</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2020-7455">https://www.cve.org/CVERecord?id=CVE-2020-7455</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2020-7454, CVE-2020-7455</p>
+<p class="dates">
+Published: May 12, 2020<br>
+Last Modified: May 12, 2020
+</p>
+</body>
+</html>

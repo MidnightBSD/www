@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2020-13 rtsold RDNSS/DNSSL option handling buffer overflow</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2020-13: rtsold RDNSS/DNSSL option handling buffer overflow</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> rtsold</p>
+  <p><strong>Summary:</strong> rtsold RDNSS/DNSSL option handling buffer overflow</p>
+</div>
+
+<h2>Description</h2>
+<p>Two bugs existed in rtsold(8)'s handling of RDNSS and DNSSL router advertisement options. rtsold(8) failed to perform sufficient bounds checking, not verifying that an option did not extend past the end of the received packet (CVE-2020-25577). In addition, when decoding DNSSL domain name labels, rtsold(8) did not validate label lengths correctly and could overflow the destination buffer (CVE-2020-25583). Because rtsold(8) runs as root, an attacker on the same physical link could potentially achieve remote code execution.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>rtsold</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-20:32.rtsold.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-20:32.rtsold.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2020-25577">https://www.cve.org/CVERecord?id=CVE-2020-25577</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2020-25583">https://www.cve.org/CVERecord?id=CVE-2020-25583</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2020-25577, CVE-2020-25583</p>
+<p class="dates">
+Published: December 01, 2020<br>
+Last Modified: December 01, 2020
+</p>
+</body>
+</html>

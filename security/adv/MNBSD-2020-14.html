@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2020-14 callout(9) may corrupt another CPU's data structures</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2020-14: callout(9) may corrupt another CPU's data structures</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> callout(9) may corrupt another CPU's data structures</p>
+</div>
+
+<h2>Description</h2>
+<p>Callouts may be bound to a specific CPU. When a kernel thread attempts to stop a callout while it is actively executing, it sleeps until execution completes; in the meantime the callout may be rescheduled and re-executed on a different CPU. When the sleeping thread finally completed removal of the callout, it could modify the wrong CPU's data structures, leaving them in an invalid state.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://github.com/MidnightBSD/src/commit/c849f305614c">https://github.com/MidnightBSD/src/commit/c849f305614c</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> </p>
+<p class="dates">
+Published: December 02, 2020<br>
+Last Modified: December 02, 2020
+</p>
+</body>
+</html>
