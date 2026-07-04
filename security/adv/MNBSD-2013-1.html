@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2013-1 NFS server uses client-supplied credentials for anonymous export mapping</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2013-1: NFS server uses client-supplied credentials for anonymous export mapping</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> nfsserver</p>
+  <p><strong>Summary:</strong> NFS server uses client-supplied credentials for anonymous export mapping</p>
+</div>
+
+<h2>Description</h2>
+<p>When -network or -host restrictions are configured on an NFS export, the kernel incorrectly uses client-supplied credentials instead of the credential configured in exports(5) when filling out the anonymous credential. A remote client may therefore supply privileged credentials (such as root) when accessing files under the share, bypassing normal access checks. Patch obtained from FreeBSD.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>nfsserver</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-13:08.nfsserver.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-13:08.nfsserver.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2013-4851">https://www.cve.org/CVERecord?id=CVE-2013-4851</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2013-4851</p>
+<p class="dates">
+Published: July 28, 2013<br>
+Last Modified: July 28, 2013
+</p>
+</body>
+</html>

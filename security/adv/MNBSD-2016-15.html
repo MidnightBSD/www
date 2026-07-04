@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2016-15 Multiple OpenSSL vulnerabilities (memory growth, overflows, OOB reads/writes, DoS)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2016-15: Multiple OpenSSL vulnerabilities (memory growth, overflows, OOB reads/writes, DoS)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> Multiple OpenSSL vulnerabilities (memory growth, overflows, OOB reads/writes, DoS)</p>
+</div>
+
+<h2>Description</h2>
+<p>OpenSSL security update addressing ten issues: unbounded memory growth from repeated large OCSP Status Request extensions, an MDC2_Update heap overflow, an SHA512 session-ticket OOB read DoS, an OOB write in BN_bn2dec, OOB reads in TS_OBJ_print_bio, undefined pointer arithmetic, a DSA non-constant-time side channel, DTLS out-of-order message buffering exhaustion, a DTLS replay-window DoS, and small OOB reads from missing message length checks. Fixed by importing the OpenSSL patch set in the 0.8.1 release.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-16:26.openssl.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-16:26.openssl.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-6304">https://www.cve.org/CVERecord?id=CVE-2016-6304</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-6303">https://www.cve.org/CVERecord?id=CVE-2016-6303</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-6302">https://www.cve.org/CVERecord?id=CVE-2016-6302</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2182">https://www.cve.org/CVERecord?id=CVE-2016-2182</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2180">https://www.cve.org/CVERecord?id=CVE-2016-2180</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2177">https://www.cve.org/CVERecord?id=CVE-2016-2177</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2178">https://www.cve.org/CVERecord?id=CVE-2016-2178</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2179">https://www.cve.org/CVERecord?id=CVE-2016-2179</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-2181">https://www.cve.org/CVERecord?id=CVE-2016-2181</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2016-6306">https://www.cve.org/CVERecord?id=CVE-2016-6306</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2016-6304, CVE-2016-6303, CVE-2016-6302, CVE-2016-2182, CVE-2016-2180, CVE-2016-2177, CVE-2016-2178, CVE-2016-2179, CVE-2016-2181, CVE-2016-6306</p>
+<p class="dates">
+Published: September 23, 2016<br>
+Last Modified: September 23, 2016
+</p>
+</body>
+</html>

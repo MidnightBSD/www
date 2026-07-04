@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2019-1 pts(4) write-after-free on close of posix_openpt descriptor</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2019-1: pts(4) write-after-free on close of posix_openpt descriptor</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> pts(4) write-after-free on close of posix_openpt descriptor</p>
+</div>
+
+<h2>Description</h2>
+<p>The code that handles close(2) of a descriptor created by posix_openpt(2) fails to undo the configuration that causes SIGIO to be raised. This bug can lead to a write-after-free of kernel memory, which malicious code may use to gain root privileges or escape a jail.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-19:13.pts.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-19:13.pts.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2019-5606">https://www.cve.org/CVERecord?id=CVE-2019-5606</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2019-5606</p>
+<p class="dates">
+Published: July 24, 2019<br>
+Last Modified: July 24, 2019
+</p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2015-3 OpenSSL multiple vulnerabilities (use-after-free, NULL deref, memory corruption)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2015-3: OpenSSL multiple vulnerabilities (use-after-free, NULL deref, memory corruption)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> OpenSSL multiple vulnerabilities (use-after-free, NULL deref, memory corruption)</p>
+</div>
+
+<h2>Description</h2>
+<p>Multiple OpenSSL vulnerabilities were fixed, including a use-after-free in d2i_ECPrivateKey, an invalid read crash in ASN1_TYPE_cmp, memory corruption via reused ASN.1 structures, a NULL pointer dereference in X509_to_X509_REQ, mishandled PKCS#7 parsing, and an assertion failure reachable via a crafted SSLv2 CLIENT-MASTER-KEY message. These allow denial of service and potentially memory corruption.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-15:06.openssl.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-15:06.openssl.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0209">https://www.cve.org/CVERecord?id=CVE-2015-0209</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0286">https://www.cve.org/CVERecord?id=CVE-2015-0286</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0287">https://www.cve.org/CVERecord?id=CVE-2015-0287</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0288">https://www.cve.org/CVERecord?id=CVE-2015-0288</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0289">https://www.cve.org/CVERecord?id=CVE-2015-0289</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-0293">https://www.cve.org/CVERecord?id=CVE-2015-0293</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2015-0209, CVE-2015-0286, CVE-2015-0287, CVE-2015-0288, CVE-2015-0289, CVE-2015-0293</p>
+<p class="dates">
+Published: March 19, 2015<br>
+Last Modified: March 19, 2015
+</p>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2013-3 Kernel memory disclosure via uninitialized SCTP state cookie</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2013-3: Kernel memory disclosure via uninitialized SCTP state cookie</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> Kernel memory disclosure via uninitialized SCTP state cookie</p>
+</div>
+
+<h2>Description</h2>
+<p>When initializing the SCTP state cookie sent in INIT-ACK chunks, a buffer allocated from the kernel stack is not completely zeroed, so padding bytes remain uninitialized. This uninitialized kernel memory is placed on the wire and can disclose sensitive data to a remote peer. Systems not using SCTP are unaffected. Patch obtained from FreeBSD.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-13:10.sctp.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-13:10.sctp.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2013-5209">https://www.cve.org/CVERecord?id=CVE-2013-5209</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2013-5209</p>
+<p class="dates">
+Published: August 22, 2013<br>
+Last Modified: August 22, 2013
+</p>
+</body>
+</html>

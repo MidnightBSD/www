@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2009-7 Missing permission check on IPv6 SIOCSIFINFO_IN6 ioctl</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2009-7: Missing permission check on IPv6 SIOCSIFINFO_IN6 ioctl</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> Missing permission check on IPv6 SIOCSIFINFO_IN6 ioctl</p>
+</div>
+
+<h2>Description</h2>
+<p>The SIOCSIFINFO_IN6 ioctl was missing a necessary permissions check, allowing any local user (including unprivileged users and users in jails) to change properties on IPv6 interfaces. The fix was applied to 0.2.1 (patch level p9) and 0.3-CURRENT; 0.3-CURRENT users with kern.osreldate 3005 or better had the patch. This corresponds to FreeBSD-SA-09:10.ipv6, announced the same day.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-09:10.ipv6.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-09:10.ipv6.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2009-2208">https://www.cve.org/CVERecord?id=CVE-2009-2208</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2009-2208</p>
+<p class="dates">
+Published: June 10, 2009<br>
+Last Modified: June 10, 2009
+</p>
+</body>
+</html>

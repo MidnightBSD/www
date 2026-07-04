@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2009-4 OpenSSL ASN1_STRING_print_ex length validation flaw</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2009-4: OpenSSL ASN1_STRING_print_ex length validation flaw</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> OpenSSL ASN1_STRING_print_ex length validation flaw</p>
+</div>
+
+<h2>Description</h2>
+<p>The OpenSSL function ASN1_STRING_print_ex does not properly validate the lengths of BMPString or UniversalString objects before attempting to print them, which could lead to a denial of service. The fix was included in MidnightBSD 0.2.1-RELEASE-p8 and 0.3-CURRENT. This corresponds to FreeBSD-SA-09:08.openssl.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-09:08.openssl.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-09:08.openssl.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2009-0590">https://www.cve.org/CVERecord?id=CVE-2009-0590</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2009-0590</p>
+<p class="dates">
+Published: April 22, 2009<br>
+Last Modified: April 22, 2009
+</p>
+</body>
+</html>

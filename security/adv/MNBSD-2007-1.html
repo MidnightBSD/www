@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2007-1 IPv6 Type 0 routing headers allow traffic amplification</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2007-1: IPv6 Type 0 routing headers allow traffic amplification</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> IPv6 Type 0 routing headers allow traffic amplification</p>
+</div>
+
+<h2>Description</h2>
+<p>IPv6 Type 0 routing headers (RH0) could cause packets to traverse the same link multiple times, enabling network amplification and denial-of-service attacks. The patch (which ignores RH0 by default) was applied to CURRENT and STABLE. This corresponds to FreeBSD-SA-07:03.ipv6.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-07:03.ipv6.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-07:03.ipv6.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2007-2242">https://www.cve.org/CVERecord?id=CVE-2007-2242</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2007-2242</p>
+<p class="dates">
+Published: May 02, 2007<br>
+Last Modified: May 02, 2007
+</p>
+</body>
+</html>

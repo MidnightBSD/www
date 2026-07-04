@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2017-0 Heimdal KDC-REP service name validation allows service impersonation</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2017-0: Heimdal KDC-REP service name validation allows service impersonation</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> heimdal</p>
+  <p><strong>Summary:</strong> Heimdal KDC-REP service name validation allows service impersonation</p>
+</div>
+
+<h2>Description</h2>
+<p>The Heimdal Kerberos implementation obtained the service-principal name from the unencrypted portion of the KDC-REP message instead of the encrypted enc_part, violating the Kerberos 5 protocol (the 'Orpheus' Lyre' attack). A man-in-the-middle attacker could impersonate a trusted service and intercept user credentials. Fixed by importing the Heimdal 7.4 correction from FreeBSD.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>heimdal</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-17:05.heimdal.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-17:05.heimdal.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2017-11103">https://www.cve.org/CVERecord?id=CVE-2017-11103</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2017-11103</p>
+<p class="dates">
+Published: August 08, 2017<br>
+Last Modified: August 08, 2017
+</p>
+</body>
+</html>

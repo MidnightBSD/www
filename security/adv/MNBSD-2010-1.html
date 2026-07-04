@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2010-1 pseudofs/procfs locking flaw allowing local code execution or system crash</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2010-1: pseudofs/procfs locking flaw allowing local code execution or system crash</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel</p>
+  <p><strong>Summary:</strong> pseudofs/procfs locking flaw allowing local code execution or system crash</p>
+</div>
+
+<h2>Description</h2>
+<p>All pseudofs-based filesystems, including procfs and linprocfs, contained a locking/use-after-free issue in 0.3-PRERELEASE and 0.4-CURRENT that could be exploited by a local user to execute code with kernel privileges or, at minimum, crash the system. Administrators unable to update the kernel were advised to disable proc and linproc mounts. MidnightBSD 0.2.1 was not believed to be affected because the relevant code differed significantly.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-10:09.pseudofs.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-10:09.pseudofs.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2010-4210">https://www.cve.org/CVERecord?id=CVE-2010-4210</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2010-4210</p>
+<p class="dates">
+Published: October 12, 2010<br>
+Last Modified: October 12, 2010
+</p>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2016-3 Multiple OpenSSL vulnerabilities (RSA PSS NULL deref, X509_ATTRIBUTE leak, PSK identity hint)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2016-3: Multiple OpenSSL vulnerabilities (RSA PSS NULL deref, X509_ATTRIBUTE leak, PSK identity hint)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> Multiple OpenSSL vulnerabilities (RSA PSS NULL deref, X509_ATTRIBUTE leak, PSK identity hint)</p>
+</div>
+
+<h2>Description</h2>
+<p>OpenSSL update addressing a NULL pointer dereference crash when verifying an RSA PSS signature with an absent mask generation function parameter, a memory leak when parsing a malformed X509_ATTRIBUTE structure, and incorrect updating of PSK identity hints in the parent SSL_CTX for multi-threaded clients. These could cause denial of service or memory corruption. Fixed in the 0.7.3 release.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3194">https://www.cve.org/CVERecord?id=CVE-2015-3194</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3195">https://www.cve.org/CVERecord?id=CVE-2015-3195</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2015-3196">https://www.cve.org/CVERecord?id=CVE-2015-3196</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2015-3194, CVE-2015-3195, CVE-2015-3196</p>
+<p class="dates">
+Published: January 14, 2016<br>
+Last Modified: January 14, 2016
+</p>
+</body>
+</html>

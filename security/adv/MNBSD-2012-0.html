@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2012-0 Multiple OpenSSL vulnerabilities (info leak, DoS, double-free, MMA, ASN.1 memory corruption)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2012-0: Multiple OpenSSL vulnerabilities (info leak, DoS, double-free, MMA, ASN.1 memory corruption)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> openssl</p>
+  <p><strong>Summary:</strong> Multiple OpenSSL vulnerabilities (info leak, DoS, double-free, MMA, ASN.1 memory corruption)</p>
+</div>
+
+<h2>Description</h2>
+<p>OpenSSL fails to clear bytes used as SSL 3.0 block-cipher padding, leaking up to 15 bytes of uninitialized (possibly sensitive) memory per record. SGC handshake restart handling enables a denial of service, X509 policy checking can trigger a double-free, the PKCS#7 code is vulnerable to Bleichenbacher's million-message attack, and asn1_d2i_read_bio() contains integer errors causing memory corruption when parsing untrusted ASN.1 data such as X.509 certificates or RSA public keys.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>openssl</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-12:01.openssl.asc">https://www.freebsd.org/security/advisories/FreeBSD-SA-12:01.openssl.asc</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2011-4576">https://www.cve.org/CVERecord?id=CVE-2011-4576</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2011-4619">https://www.cve.org/CVERecord?id=CVE-2011-4619</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2011-4109">https://www.cve.org/CVERecord?id=CVE-2011-4109</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2012-0884">https://www.cve.org/CVERecord?id=CVE-2012-0884</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2012-2110">https://www.cve.org/CVERecord?id=CVE-2012-2110</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2011-4576, CVE-2011-4619, CVE-2011-4109, CVE-2012-0884, CVE-2012-2110</p>
+<p class="dates">
+Published: May 03, 2012<br>
+Last Modified: May 03, 2012
+</p>
+</body>
+</html>
