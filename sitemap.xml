@@ -53,7 +53,7 @@
   <priority>0.0031</priority>
  </url>
  <url>
-  <loc>https://www.midnightbsd.org/documentation/mports/bsd.port.pre.mk.html</loc>
+  <loc>https://www.midnightbsd.org/documentation/mports/bsd.port.mk.html</loc>
   <priority>0.0031</priority>
  </url>
  <url>
@@ -262,6 +262,10 @@
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/3.2/</loc>
+  <priority>0.0094</priority>
+ </url>
+ <url>
+  <loc>https://www.midnightbsd.org/notes/4.0/</loc>
   <priority>0.0094</priority>
  </url>
  <url>
