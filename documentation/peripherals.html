@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Set up printers, scanners, removable storage, Bluetooth devices, and webcams on MidnightBSD.">
+        <meta property="og:title" content="MidnightBSD Documentation - Desktop Peripherals">
+        <meta property="og:description" content="Set up printers, scanners, removable storage, Bluetooth devices, and webcams on MidnightBSD.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/peripherals.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Desktop Peripherals</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/peripherals.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Desktop Peripherals</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Identify a device</a></li>
+                        <li><a href="#s1c">Base-system LPR printing</a></li>
+                        <li><a href="#s1d">CUPS printing</a></li>
+                        <li><a href="#s1e">Scanners</a></li>
+                        <li><a href="#s1f">Removable storage and phones</a></li>
+                        <li><a href="#s1g">Bluetooth devices</a></li>
+                        <li><a href="#s1h">Webcams</a></li>
+                        <li><a href="#s1i">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Desktop Peripherals</h3>
+                <h4 id="s1b">Identify a device</h4>
+                <p>Connect the device, then inspect the messages and buses before installing drivers or changing configuration:</p>
+                <pre><code>dmesg | tail -50
+usbconfig
+usbconfig list
+camcontrol devlist</code></pre>
+                <p><code>usbconfig</code> identifies USB devices, while <code>camcontrol devlist</code> shows storage devices attached through the CAM subsystem. For device names and further diagnostic tools, see <a href="devices.html">Devices and Device Nodes</a>.</p>
+
+                <h4 id="s1c">Base-system LPR printing</h4>
+                <p>MidnightBSD includes the traditional <code>lpr</code>, <code>lpq</code>, <code>lprm</code>, <code>lpc</code>, and <code>lpd</code> printing system. It is suitable for a simple text or raw-print queue when the printer and its data format are already understood. Use CUPS instead when you need printer discovery, drivers, PDF/image filtering, or a web administration interface.</p>
+                <p>For a USB printer, first check that <code>/dev/unlpt0</code> exists. Create a spool directory and add a minimal queue named <code>lp</code> to <code>/etc/printcap</code>:</p>
+                <pre><code>doas mkdir -p /var/spool/lpd/lp
+doas chown daemon:daemon /var/spool/lpd/lp
+doas chmod 770 /var/spool/lpd/lp</code></pre>
+                <pre><code>lp:\
+    :lp=/dev/unlpt0:\
+    :sh:\
+    :mx#0:\
+    :sd=/var/spool/lpd/lp:\
+    :lf=/var/log/lpd-errs:</code></pre>
+                <p>For a network printer that provides LPD, the device line is typically <code>:lp=:rm=printer.example:rp=raw:</code>; use the hostname and queue name supplied by the printer administrator. Enable the daemon and submit a plain-text test job:</p>
+                <pre><code>doas sysrc lpd_enable="YES"
+doas service lpd start
+printf "MidnightBSD printing test\n" | lpr
+lpq</code></pre>
+                <p>Print a file with <code>lpr file.txt</code>, select a configured queue with <code>lpr -P queue file.txt</code>, and remove a queued job with <code>lprm job-number</code>. LPR does not automatically make arbitrary document formats printable; use a printer that accepts the submitted format or configure suitable filters.</p>
+
+                <h4 id="s1d">CUPS printing</h4>
+                <p><a href="https://openprinting.github.io/cups/">CUPS</a> is the better default for most desktop printers. It provides printer discovery, drivers, filtering, and a local web interface. Install CUPS and its filters from mports:</p>
+                <pre><code>doas mport install cups cups-filters
+doas sysrc cupsd_enable="YES"
+doas service cupsd start</code></pre>
+                <p>Open <a href="http://localhost:631/">http://localhost:631/</a>, choose <strong>Administration</strong>, then add the USB or network printer. Select the printer's recommended driver or a driverless IPP option when it is offered. Do not expose the CUPS administration interface to an untrusted network without first reviewing its access controls.</p>
+                <p>After creating a queue, inspect it and submit a job with CUPS commands:</p>
+                <pre><code>lpstat -t
+lp -d printer-name document.pdf
+cancel -a printer-name</code></pre>
+                <p>CUPS includes LPR-compatible commands as well, but configure one intended spooler path per printer. Avoid maintaining conflicting LPR and CUPS queues for the same device.</p>
+
+                <h4 id="s1e">Scanners</h4>
+                <p>SANE provides scanner access. Install the backends and a graphical frontend, then list detected scanners:</p>
+                <pre><code>doas mport install sane-backends skanlite
+scanimage -L
+sane-find-scanner</code></pre>
+                <p>Run <code>skanlite</code> in the desktop session to scan. Detection by <code>sane-find-scanner</code> does not by itself guarantee that a SANE backend supports the model; consult the scanner vendor and the <a href="https://www.sane-project.org/sane-supported-devices.html">SANE supported-device list</a>. The <code>saned</code> service is only needed when sharing a scanner across the network.</p>
+
+                <h4 id="s1f">Removable storage and phones</h4>
+                <p>USB disks normally appear as <code>/dev/da0</code>, <code>/dev/da1</code>, and so on. Partitions may use names such as <code>/dev/da0p1</code> (GPT) or <code>/dev/da0s1</code> (MBR). Always identify the newly attached disk with <code>camcontrol devlist</code> and <code>dmesg</code>; do not assume a particular unit number.</p>
+                <p>For example, mount a known FAT-formatted partition on an existing mount point:</p>
+                <pre><code>doas mount_msdosfs /dev/da0s1 /media/usb
+doas umount /media/usb</code></pre>
+                <p>Unmount the filesystem before unplugging the device. Other filesystem formats may need additional software or a different mount command. Android devices using Media Transfer Protocol can be accessed with the <code>mtpfs</code> package:</p>
+                <pre><code>doas mport install mtpfs</code></pre>
+
+                <h4 id="s1g">Bluetooth devices</h4>
+                <p>Many USB Bluetooth adapters use the <code>ng_ubt</code> driver. After confirming that the adapter is supported, load it and start the Bluetooth service:</p>
+                <pre><code>doas kldload ng_ubt
+doas service bluetooth start ubt0</code></pre>
+                <p>To load the driver at boot, add <code>ng_ubt_load="YES"</code> to <code>/boot/loader.conf</code>. Discover nearby devices with:</p>
+                <pre><code>doas hccontrol -n ubt0hci inquiry</code></pre>
+                <p>Only discoverable devices appear. The exact pairing procedure depends on the device profile; for audio devices, continue with the selected desktop audio stack described in the <a href="sound.html">sound guide</a>. See the <a href="https://github.com/MidnightBSD/src/wiki/Bluetooth">MidnightBSD Bluetooth wiki</a> for lower-level controller commands.</p>
+
+                <h4 id="s1h">Webcams</h4>
+                <p>For USB webcams that are not supported directly by the base system, mports provides <code>webcamd</code>, which brings Linux USB webcam and DVB drivers into user space:</p>
+                <pre><code>doas mport install webcamd
+doas sysrc webcamd_enable="YES"
+doas service webcamd start
+webcamd -l</code></pre>
+                <p><code>webcamd -l</code> lists known connected devices and suggested startup flags. Test the camera in the application that will use it after the service has attached the device. Webcam compatibility varies by USB chipset and application.</p>
+
+                <h4 id="s1i">Troubleshooting</h4>
+                <ul>
+                    <li><strong>Peripheral is not detected:</strong> reconnect it, try another port or cable, then compare <code>usbconfig</code> and <code>dmesg</code> output before and after connection.</li>
+                    <li><strong>Printer is detected but does not print:</strong> check the selected queue, printer URI, driver, and <code>lpstat -t</code> or <code>lpq</code>. For LPR, inspect <code>/var/log/lpd-errs</code>.</li>
+                    <li><strong>Scanner is not found:</strong> run <code>sane-find-scanner</code> and <code>scanimage -L</code>; a detected USB device may still lack a SANE backend.</li>
+                    <li><strong>Removable disk cannot be unmounted:</strong> close file managers, terminals, and applications using it, then retry <code>umount</code>. Do not unplug a mounted filesystem.</li>
+                    <li><strong>Bluetooth or webcam fails:</strong> include the adapter or camera model, <code>usbconfig</code> output, relevant <code>dmesg</code> lines, and the service status in a report.</li>
+                </ul>
+
+                <h4>Further reading</h4>
+                <ul>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/printing/">FreeBSD Handbook: Printing</a></li>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/multimedia/#_image_scanners">FreeBSD Handbook: Image Scanners</a></li>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Bluetooth">MidnightBSD Bluetooth wiki</a></li>
+                </ul>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
