@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Configure and troubleshoot Wi-Fi connections on MidnightBSD using wpa_supplicant and DHCP.">
+        <meta property="og:title" content="MidnightBSD Documentation - Wi-Fi Setup">
+        <meta property="og:description" content="Configure and troubleshoot Wi-Fi connections on MidnightBSD using wpa_supplicant and DHCP.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/wifi.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Wi-Fi Setup</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/wifi.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Wi-Fi Setup</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Before you begin</a></li>
+                        <li><a href="#s1c">Identify the wireless device</a></li>
+                        <li><a href="#s1d">Configure a WPA-Personal network</a></li>
+                        <li><a href="#s1e">Scan and connect</a></li>
+                        <li><a href="#s1f">Country and regulatory settings</a></li>
+                        <li><a href="#s1g">Open and enterprise networks</a></li>
+                        <li><a href="#s1h">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Wi-Fi</h3>
+                <h4 id="s1b">Before you begin</h4>
+                <p>Most home and public Wi-Fi networks use DHCP for IP addressing and WPA-Personal for authentication. On MidnightBSD, a physical wireless device, such as <code>iwlwifi0</code> or <code>urtwn0</code>, is used to create a client interface such as <code>wlan0</code>. The client interface is then authenticated by <code>wpa_supplicant</code> and receives an address through DHCP.</p>
+                <p>You need the network name (SSID) and its password. Perform initial configuration from a local console when possible: restarting network services can disconnect an SSH session.</p>
+
+                <h4 id="s1c">Identify the wireless device</h4>
+                <p>List wireless devices known to the kernel:</p>
+                <pre><code>sysctl net.wlan.devices
+ifconfig -l</code></pre>
+                <p>The result of <code>net.wlan.devices</code> is the physical device name. For example, if it reports <code>iwlwifi0</code>, use that name in the configuration below. To identify PCI hardware and look for driver or firmware messages, use:</p>
+                <pre><code>pciconf -lv | grep -A1 -B3 network
+dmesg | grep -i -E 'wifi|wlan|firmware'</code></pre>
+                <p>If the adapter is unsupported or fails to attach, consult the <a href="https://github.com/MidnightBSD/src/wiki/Wireless-Network-Adapter-(WIFI)">MidnightBSD Wi-Fi hardware wiki</a> and the manual page for the detected driver.</p>
+
+                <h4 id="s1d">Configure a WPA-Personal network</h4>
+                <p>Create or edit <code>/etc/wpa_supplicant.conf</code> as root. The file contains credentials, so it must not be readable by other users:</p>
+                <pre><code>doas ee /etc/wpa_supplicant.conf
+doas chmod 600 /etc/wpa_supplicant.conf</code></pre>
+                <p>Add a network block, replacing the example values with your SSID and password:</p>
+                <pre><code>network={
+    ssid="ExampleNetwork"
+    psk="correct horse battery staple"
+}</code></pre>
+                <p>For a hidden network, add <code>scan_ssid=1</code> inside that network block. <code>wpa_passphrase "ExampleNetwork" "correct horse battery staple"</code> can generate a hashed PSK block; review its output before adding it to the configuration file.</p>
+                <p>Next, configure the physical device to create <code>wlan0</code> and configure that interface at boot. Substitute the physical device name shown by <code>sysctl net.wlan.devices</code>:</p>
+                <pre><code>doas sysrc wlans_iwlwifi0="wlan0"
+doas sysrc ifconfig_wlan0="WPA SYNCDHCP"</code></pre>
+                <p><code>WPA</code> starts <code>wpa_supplicant</code>; <code>SYNCDHCP</code> waits for DHCP to complete while the interface is configured. The settings are stored in <code>/etc/rc.conf</code>. If an installer or previous setup has already created Wi-Fi entries there, update them rather than adding conflicting ones.</p>
+
+                <h4 id="s1e">Scan and connect</h4>
+                <p>To create the client interface immediately, without waiting for a reboot:</p>
+                <pre><code>doas ifconfig wlan0 create wlandev iwlwifi0</code></pre>
+                <p>Replace <code>iwlwifi0</code> with your physical device. Scan for nearby access points:</p>
+                <pre><code>doas ifconfig wlan0 up list scan</code></pre>
+                <p>Apply the persistent configuration:</p>
+                <pre><code>doas service netif restart</code></pre>
+                <p>Confirm association and addressing, then test both IP connectivity and DNS:</p>
+                <pre><code>ifconfig wlan0
+ping -c 2 1.1.1.1
+ping -c 2 midnightbsd.org</code></pre>
+                <p>If the first ping succeeds but the second fails, the Wi-Fi link is working and the problem is DNS. See the <a href="dns.html">DNS configuration guide</a>.</p>
+
+                <h4 id="s1f">Country and regulatory settings</h4>
+                <p>Wireless channel availability depends on the country. Check the current settings and available country codes:</p>
+                <pre><code>ifconfig wlan0 list regdomain
+ifconfig wlan0 list countries</code></pre>
+                <p>Set the country and regulatory domain appropriate for your location. For example, the following is an Austria/ETSI example only:</p>
+                <pre><code>doas ifconfig wlan0 country AT regdomain ETSI2
+doas sysrc create_args_wlan0="country AT regdomain ETSI2"</code></pre>
+                <p>The second command preserves the setting in <code>/etc/rc.conf</code>. Check <code>/etc/regdomain.xml</code> and <code>ifconfig(8)</code> for the values applicable to your country and hardware. Do not use the example values outside their applicable region.</p>
+
+                <h4 id="s1g">Open and enterprise networks</h4>
+                <p>For an open network, connect temporarily by selecting its SSID and requesting DHCP:</p>
+                <pre><code>doas ifconfig wlan0 ssid "NetworkName"
+doas dhclient wlan0</code></pre>
+                <p>Open networks do not protect traffic; use HTTPS and avoid sensitive activity unless you trust the network. Hotel and café networks may also require a browser-based captive-portal login after DHCP succeeds.</p>
+                <p>Enterprise Wi-Fi uses organization-specific 802.1X/EAP credentials and certificates. Do not copy a WPA-Personal block for these networks; obtain the required settings from the network administrator and use <code>wpa_supplicant.conf(5)</code> as the configuration reference.</p>
+
+                <h4 id="s1h">Troubleshooting</h4>
+                <ul>
+                    <li><strong>No physical device:</strong> use <code>pciconf -lv</code> and <code>dmesg</code> to identify the adapter and any firmware failure. Verify that its driver is supported before changing configuration files.</li>
+                    <li><strong><code>wlan0</code> does not exist:</strong> check the physical device name, create the interface with <code>ifconfig wlan0 create wlandev &lt;device&gt;</code>, and verify the matching <code>wlans_&lt;device&gt;</code> entry in <code>/etc/rc.conf</code>.</li>
+                    <li><strong>Network is missing from scans:</strong> check the country/regulatory settings and whether the adapter supports the access point's band and channel.</li>
+                    <li><strong>Cannot associate:</strong> recheck the SSID, password, and security method. Use <code>doas service wpa_supplicant status wlan0</code> and <code>wpa_cli -i wlan0 status</code> for status.</li>
+                    <li><strong>Associated but no Internet:</strong> verify the DHCP address with <code>ifconfig wlan0</code>, test an IP address with <code>ping</code>, then check DNS and any captive portal.</li>
+                </ul>
+
+                <h4>Further reading</h4>
+                <ul>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Network-Setup">MidnightBSD Network Setup wiki</a></li>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Wireless-Network-Adapter-(WIFI)">MidnightBSD Wi-Fi hardware wiki</a></li>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/network/#network-wireless">FreeBSD Handbook: Wireless Networks</a></li>
+                </ul>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
