@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Set up and troubleshoot sound, USB audio devices, mixers, and optional audio services on MidnightBSD.">
+        <meta property="og:title" content="MidnightBSD Documentation - Sound">
+        <meta property="og:description" content="Set up and troubleshoot sound, USB audio devices, mixers, and optional audio services on MidnightBSD.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/sound.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Sound</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/sound.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Sound</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Introduction</a></li>
+                        <li><a href="#s1c">Checking audio devices</a></li>
+                        <li><a href="#s1d">Selecting the default device</a></li>
+                        <li><a href="#s1e">Volume and recording controls</a></li>
+                        <li><a href="#s1f">USB audio, headsets, and HDMI</a></li>
+                        <li><a href="#s1g">Headphones and speakers</a></li>
+                        <li><a href="#s1h">Optional desktop audio services</a></li>
+                        <li><a href="#s1i">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Sound</h3>
+                <h4 id="s1b">Introduction</h4>
+                <p>MidnightBSD's GENERIC kernel includes support for common onboard HDA audio and USB audio devices. In most cases, speakers or a headset work without extra configuration. The system can expose several audio devices at once: for example, HDMI or DisplayPort outputs on a graphics card, an onboard codec, and a USB headset.</p>
+                <p>Use the following steps to identify the devices, select the output you want, and check its mixer settings. Run commands that change system configuration with <code>doas</code> or as root.</p>
+
+                <h4 id="s1c">Checking audio devices</h4>
+                <p>List sound devices detected during boot:</p>
+                <pre><code>dmesg | grep pcm
+cat /dev/sndstat</code></pre>
+                <p>Each <code>pcm</code> entry is an audio device. In <code>/dev/sndstat</code>, <code>play</code> means it can produce sound, <code>rec</code> means it can record sound, and <code>default</code> marks the device selected for applications that do not choose one explicitly.</p>
+                <p>For example, a graphics card's HDMI outputs may appear before the onboard analog device. This is normal, but it can cause sound to be sent to an unused monitor output.</p>
+                <p>If no <code>pcm</code> device appears, inspect the boot messages for the audio controller:</p>
+                <pre><code>dmesg | grep -E 'pcm|hdac|uaudio'</code></pre>
+                <p>The <a href="https://man.midnightbsd.org/cgi-bin/man.cgi?query=sound&amp;sektion=4">sound(4)</a> and <a href="https://man.midnightbsd.org/cgi-bin/man.cgi?query=snd_hda&amp;sektion=4">snd_hda(4)</a> manual pages list the supported audio framework and HDA hardware.</p>
+
+                <h4 id="s1d">Selecting the default device</h4>
+                <p>Set the default output temporarily by using its number from <code>/dev/sndstat</code>. For example, to select <code>pcm2</code>:</p>
+                <pre><code>doas sysctl hw.snd.default_unit=2</code></pre>
+                <p>Confirm the change with <code>cat /dev/sndstat</code>. To retain it after a reboot, add the following line to <code>/etc/sysctl.conf</code>:</p>
+                <pre><code>hw.snd.default_unit=2</code></pre>
+                <p>Use the number for your own intended device. Restart the affected application, mixer, or audio session after changing the default device.</p>
+
+                <h4 id="s1e">Volume and recording controls</h4>
+                <p>The base-system <code>mixer</code> command displays the available playback and recording controls:</p>
+                <pre><code>mixer
+mixer recsrc</code></pre>
+                <p>Controls vary by hardware. Start by checking that the main volume, PCM volume, and the relevant microphone input are not muted or set to zero. <code>mixer(8)</code> documents changing a control and choosing a recording source.</p>
+                <p>After selecting an output and checking levels, test playback with a browser or a local media file. The <code>mpv</code> and <code>vlc</code> packages are available in mports:</p>
+                <pre><code>doas mport install mpv
+mpv /path/to/audio-file</code></pre>
+
+                <h4 id="s1f">USB audio, headsets, and HDMI</h4>
+                <p>USB DACs, headsets, and docking stations normally appear as additional <code>pcm</code> devices when connected. Run <code>cat /dev/sndstat</code> after connecting the device, select its number with <code>hw.snd.default_unit</code>, then restart the application that should use it.</p>
+                <p>HDMI and DisplayPort audio are also separate devices. If a monitor has no speakers, choose the onboard or USB device instead. For calls, confirm that the chosen device has <code>rec</code> capability and that the microphone source is enabled in <code>mixer</code>.</p>
+
+                <h4 id="s1g">Headphones and speakers</h4>
+                <p>Some HDA codecs expose headphones and speakers as separate <code>pcm</code> devices. Others switch automatically. If automatic switching does not work, first identify the codec nodes from <code>dmesg | grep pcm</code>. A codec-specific configuration can be added to <code>/boot/device.hints</code>; for example:</p>
+                <pre><code>hint.hdac.0.cad0.nid22.config="as=1 seq=15 device=Headphones"
+hint.hdac.0.cad0.nid26.config="as=2 seq=0 device=speakers"</code></pre>
+                <p>These values are only an example for one Realtek codec. Do not copy them unchanged: the controller, codec address, and node IDs must match the output from your own system. Keep a backup of the file before editing it and reboot to test the change.</p>
+
+                <h4 id="s1h">Optional desktop audio services</h4>
+                <p>The base sound system is sufficient for many applications. mports also contains <code>pulseaudio</code>, its GTK mixer <code>pavucontrol</code>, and the PipeWire stack with its <code>wireplumber</code> session and policy manager:</p>
+                <pre><code>doas mport install pulseaudio pavucontrol
+doas mport install pipewire wireplumber</code></pre>
+                <p>These services can provide per-application output selection and desktop mixer integration. Configure one audio-service stack at a time and follow its installed documentation; mixing PulseAudio and PipeWire setups without a plan can make device selection harder to diagnose. Bluetooth audio should likewise be configured through the selected desktop audio stack.</p>
+
+                <h4 id="s1i">Troubleshooting</h4>
+                <ul>
+                    <li><strong>No audio devices:</strong> confirm that <code>cat /dev/sndstat</code> lists a <code>pcm</code> device and inspect <code>dmesg</code> for <code>pcm</code>, <code>hdac</code>, or <code>uaudio</code> messages. Custom kernels must include the sound driver and the bridge driver for the hardware.</li>
+                    <li><strong>Sound comes from the wrong device:</strong> set <code>hw.snd.default_unit</code> to the intended <code>pcm</code> number and restart the application or audio service.</li>
+                    <li><strong>No microphone:</strong> choose a device marked <code>rec</code>, inspect <code>mixer recsrc</code>, and make sure the selected input is not muted.</li>
+                    <li><strong>USB headset not shown in an application:</strong> reconnect it, check <code>/dev/sndstat</code>, change the default device if necessary, and restart the application or its mixer.</li>
+                    <li><strong>Need help:</strong> include the output of <code>cat /dev/sndstat</code>, <code>dmesg | grep -E 'pcm|hdac|uaudio'</code>, the desktop or audio service in use, and the relevant application when reporting the problem.</li>
+                </ul>
+
+                <h4>Further reading</h4>
+                <ul>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Sound">MidnightBSD Sound wiki page</a></li>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/USB-Audio-Devices">MidnightBSD USB Audio Devices wiki page</a></li>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/multimedia/">FreeBSD Handbook: Multimedia</a></li>
+                </ul>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
