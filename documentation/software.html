@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Install, inspect, update, and remove desktop software packages with mport on MidnightBSD.">
+        <meta property="og:title" content="MidnightBSD Documentation - Desktop Software Management">
+        <meta property="og:description" content="Install, inspect, update, and remove desktop software packages with mport on MidnightBSD.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/software.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Desktop Software Management</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/software.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Desktop Software Management</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Packages and mports</a></li>
+                        <li><a href="#s1c">Common tasks</a></li>
+                        <li><a href="#s1d">Before updating</a></li>
+                        <li><a href="#s1e">Building from mports</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Desktop Software Management</h3>
+                <h4 id="s1b">Packages and mports</h4>
+                <p>For normal desktop use, install prebuilt packages with <code>mport</code>. It resolves required dependencies and records installed files. Use the mports source tree only when a package is unavailable or when you need to build with different options.</p>
+                <p>Commands that change installed software require <code>doas</code>. Read-only queries do not. Replace <code>package-name</code>, <code>search-term</code>, and paths with the values relevant to your system.</p>
+
+                <h4 id="s1c">Common tasks</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Command</th>
+                            <th>What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Search for software</td>
+                            <td><code>mport search search-term</code></td>
+                            <td>Searches the available package index.</td>
+                        </tr>
+                        <tr>
+                            <td>Inspect a package</td>
+                            <td><code>mport info package-name</code></td>
+                            <td>Shows the package description and metadata.</td>
+                        </tr>
+                        <tr>
+                            <td>Install software</td>
+                            <td><code>doas mport install package-name</code></td>
+                            <td>Installs a package and its required dependencies.</td>
+                        </tr>
+                        <tr>
+                            <td>List installed packages</td>
+                            <td><code>mport list</code></td>
+                            <td>Lists packages currently installed on the system.</td>
+                        </tr>
+                        <tr>
+                            <td>Find updates</td>
+                            <td><code>mport list updates</code></td>
+                            <td>Lists installed packages with available updates.</td>
+                        </tr>
+                        <tr>
+                            <td>Update one package</td>
+                            <td><code>doas mport update package-name</code></td>
+                            <td>Updates the specified installed package.</td>
+                        </tr>
+                        <tr>
+                            <td>Upgrade all packages</td>
+                            <td><code>doas mport upgrade</code></td>
+                            <td>Updates all installed packages that are out of date.</td>
+                        </tr>
+                        <tr>
+                            <td>Remove software</td>
+                            <td><code>doas mport delete package-name</code></td>
+                            <td>Removes the named installed package.</td>
+                        </tr>
+                        <tr>
+                            <td>Remove unused dependencies</td>
+                            <td><code>doas mport autoremove</code></td>
+                            <td>Removes automatically installed packages no longer needed by another package.</td>
+                        </tr>
+                        <tr>
+                            <td>Find a file's owner</td>
+                            <td><code>mport which /path/to/file</code></td>
+                            <td>Reports which installed package provided a file.</td>
+                        </tr>
+                        <tr>
+                            <td>Check package integrity</td>
+                            <td><code>doas mport verify package-name</code></td>
+                            <td>Verifies files installed by a package.</td>
+                        </tr>
+                        <tr>
+                            <td>Check security advisories</td>
+                            <td><code>doas mport audit</code></td>
+                            <td>Checks installed packages for known vulnerabilities.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 id="s1d">Before updating</h4>
+                <p>Review the update list first, then save open work and run the upgrade from a terminal. Desktop applications may need to be restarted after shared libraries are updated. Services such as CUPS, audio servers, or a graphical login manager may also need restarting, or a reboot may be the simplest way to ensure everything uses the new libraries.</p>
+                <p>Do not use <code>autoremove</code> until you have reviewed its proposed removals. A package installed automatically can still be useful if it is no longer required by another package.</p>
+
+                <h4 id="s1e">Building from mports</h4>
+                <p>Building from source takes more time and disk space than installing a package. When you deliberately choose that route, enter the port directory and install it:</p>
+                <pre><code>cd /usr/mports/category/port-name
+doas make install clean</code></pre>
+                <p>See the <a href="mports/index.html">mports documentation</a> for collection and maintainer details. For everyday desktop package management, prefer the commands in the table above.</p>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
