@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Use MidnightBSD on a laptop: check ACPI battery status, manage CPU power, suspend safely, and adjust display brightness.">
+        <meta property="og:title" content="MidnightBSD Documentation - Laptop Use and Power Management">
+        <meta property="og:description" content="Use MidnightBSD on a laptop: check ACPI battery status, manage CPU power, suspend safely, and adjust display brightness.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/laptop.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Laptop Use and Power Management</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/laptop.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Laptop Use and Power Management</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Before you begin</a></li>
+                        <li><a href="#s1c">Battery and AC status</a></li>
+                        <li><a href="#s1d">CPU power management</a></li>
+                        <li><a href="#s1e">Suspend, resume, and lid close</a></li>
+                        <li><a href="#s1f">Brightness and display controls</a></li>
+                        <li><a href="#s1g">Laptop hardware checklist</a></li>
+                        <li><a href="#s1h">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Laptop Use and Power Management</h3>
+                <h4 id="s1b">Before you begin</h4>
+                <p>Laptop support depends on ACPI firmware, graphics hardware, and the individual Wi-Fi, audio, touchpad, and camera devices. Check these features one at a time after installation, and record the output of <code>dmesg</code> before changing boot or power settings. The <a href="index.html#s1e">tested hardware list</a> and the <a href="https://github.com/MidnightBSD/src/wiki/Recommended-Hardware">MidnightBSD recommended-hardware wiki</a> are useful compatibility references.</p>
+                <p>Do not change a boot loader setting or configure lid-close suspend over SSH. Test power changes at the physical console with unsaved work closed and the charger available.</p>
+
+                <h4 id="s1c">Battery and AC status</h4>
+                <p>ACPI provides battery state, charge level, and AC-line status on supported laptops:</p>
+                <pre><code>sysctl hw.acpi.battery.life hw.acpi.battery.state hw.acpi.acline
+acpiconf -i 0</code></pre>
+                <p><code>hw.acpi.battery.life</code> is the battery percentage and <code>hw.acpi.acline</code> is normally <code>1</code> on external power and <code>0</code> on battery. <code>acpiconf -i 0</code> reports more detailed information for the first battery. If the system has more than one battery, use the appropriate battery number.</p>
+                <p>MidnightBSD also includes the <code>batt</code> utility for a short, desktop-friendly battery report:</p>
+                <pre><code>batt
+batt -l
+batt -t
+batt -u</code></pre>
+                <p>These report the current state, remaining capacity, remaining time in minutes when available, and the number of battery units. Use <code>batt -cltu</code> when a concise, script-friendly report is useful for a status bar or notification script.</p>
+                <p>Missing battery information usually indicates that the firmware does not expose it in a compatible form. Collect <code>dmesg | grep -i acpi</code> when reporting the issue.</p>
+
+                <h4 id="s1d">CPU power management</h4>
+                <p>First identify the active CPU-frequency driver and the current frequency:</p>
+                <pre><code>sysctl dev.cpufreq.0.freq_driver dev.cpu.0.freq_levels dev.cpu.0.freq</code></pre>
+                <p>MidnightBSD's <code>cpufreq</code> utility is a convenient read-only report of the current CPU frequency:</p>
+                <pre><code>cpufreq
+cpufreq --all
+cpufreq --mean
+cpufreq --verbose</code></pre>
+                <p>Use <code>--all</code> to show each CPU, <code>--mean</code> for a single average, and <code>--verbose</code> to include the available frequency information. This utility reports the active state; it does not select a governor or change the frequency.</p>
+                <p>On newer Intel systems, this may report <code>hwpstate_intel</code>. That driver lets the processor choose its frequency and may show only a single maximum value in <code>freq_levels</code>. Do not enable <code>powerd</code> on a system managed by <code>hwpstate_intel</code>; the traditional daemon does not control Intel Speed Shift as expected.</p>
+                <p>On systems using a traditional cpufreq driver, <code>powerd</code> can balance performance and battery life. Its default behavior is adaptive on battery and hiadaptive on AC power. Enable it only after confirming that <code>hwpstate_intel</code> is not the active driver:</p>
+                <pre><code>doas sysrc powerd_enable="YES"
+doas service powerd start</code></pre>
+                <p>Use <code>powerd(8)</code> before adding custom flags. Aggressive settings can make a desktop feel slow, and only one component should control CPU frequency.</p>
+
+                <h4 id="s1e">Suspend, resume, and lid close</h4>
+                <p>Check which sleep states the firmware advertises:</p>
+                <pre><code>sysctl hw.acpi.supported_sleep_state</code></pre>
+                <p>S3 is the usual suspend-to-RAM state. A listed state is only a firmware capability; it does not guarantee that every graphics, Wi-Fi, USB, or audio device will resume correctly. Test S3 from the local console:</p>
+                <pre><code>doas acpiconf -s 3</code></pre>
+                <p>After wake, test the display, keyboard, touchpad, network, and audio. This guide deliberately does not configure hibernation: do not assume that an advertised S4 state will resume an existing MidnightBSD desktop session.</p>
+                <p>Only after a successful manual S3 test should lid close be configured. Add this line to <code>/etc/sysctl.conf</code>:</p>
+                <pre><code>hw.acpi.lid_switch_state=S3</code></pre>
+                <p>Then reboot or load the setting with <code>doas sysctl hw.acpi.lid_switch_state=S3</code>. Keep a way to recover at the console if the machine immediately suspends when the lid is opened or closed.</p>
+
+                <h4 id="s1f">Brightness and display controls</h4>
+                <p>The generic <code>backlight</code> utility can adjust a supported internal display:</p>
+                <pre><code>backlight
+doas backlight decr 10
+doas backlight incr 10</code></pre>
+                <p>If this is unavailable, the ACPI video extension may expose brightness controls. Check its manual page and available values:</p>
+                <pre><code>sysctl -a | grep 'hw.acpi.video.*brightness'
+man acpi_video</code></pre>
+                <p>Some firmware requires a vendor-specific ACPI module, and some systems do not expose a controllable backlight. On systems using DRM/KMS, load graphics modules before <code>acpi_video</code> when both are used. See the <a href="desktop.html">Xorg and desktop guide</a> and <a href="wayland.html">Wayland guide</a> for graphics setup.</p>
+
+                <h4 id="s1g">Laptop hardware checklist</h4>
+                <ul>
+                    <li><strong>Wi-Fi:</strong> identify the physical adapter with <code>pciconf -lv</code> and follow the <a href="wifi.html">Wi-Fi setup guide</a>. An unsupported internal card may require a compatible USB adapter.</li>
+                    <li><strong>Audio:</strong> check <code>cat /dev/sndstat</code> and use the <a href="sound.html">sound guide</a> to select the proper output or headset.</li>
+                    <li><strong>Touchpad and keyboard:</strong> verify them in the graphical session. Use <code>dmesg</code>, <code>usbconfig</code>, and the input-device section of <a href="devices.html">Devices and Device Nodes</a> when hardware is not detected.</li>
+                    <li><strong>Camera:</strong> connect it before booting or inspect <code>dmesg</code> after attaching it. Webcam support varies by device and application.</li>
+                    <li><strong>External displays and docks:</strong> test them separately from suspend/resume. HDMI or USB-C docks can introduce additional graphics, audio, and network devices.</li>
+                </ul>
+
+                <h4 id="s1h">Troubleshooting</h4>
+                <ul>
+                    <li><strong>Suspend does not resume reliably:</strong> remove the lid-close setting, test S3 again, and check <code>dmesg</code> after reboot. Update graphics and wireless configuration before retrying.</li>
+                    <li><strong>Battery drains quickly:</strong> identify the CPU frequency driver before enabling a governor. Check the screen brightness, active graphics hardware, and unneeded USB or network devices.</li>
+                    <li><strong>Brightness keys do nothing:</strong> try <code>backlight</code>, then inspect ACPI video support. Function-key events and brightness controls are firmware-specific.</li>
+                    <li><strong>A feature worked before a sleep cycle:</strong> test the feature after a cold boot as well. This separates a driver resume failure from normal setup or hardware-detection problems.</li>
+                    <li><strong>Reporting a problem:</strong> include the MidnightBSD version, laptop model, <code>pciconf -lv</code> output, relevant <code>dmesg</code> lines, active graphics driver, and the output of the battery and CPU commands above.</li>
+                </ul>
+
+                <h4>Further reading</h4>
+                <ul>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Recommended-Hardware">MidnightBSD recommended hardware</a></li>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Lenovo-Thinkpad-A485">MidnightBSD ThinkPad A485 notes</a></li>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/config/#_power_and_resource_management">FreeBSD Handbook: Power and Resource Management</a></li>
+                </ul>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
