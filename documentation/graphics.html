@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Configure graphics, displays, and multi-monitor layouts on MidnightBSD.">
+        <meta property="og:title" content="MidnightBSD Documentation - Display, Graphics, and Multi-Monitor Setup">
+        <meta property="og:description" content="Configure graphics, displays, and multi-monitor layouts on MidnightBSD.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/graphics.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Display, Graphics, and Multi-Monitor Setup</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/graphics.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Display, Graphics, and Multi-Monitor Setup</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Identify the graphics hardware</a></li>
+                        <li><a href="#s1c">Choose a graphics stack</a></li>
+                        <li><a href="#s1d">Intel and AMD DRM/KMS</a></li>
+                        <li><a href="#s1e">NVIDIA</a></li>
+                        <li><a href="#s1f">Configure monitors with xrandr</a></li>
+                        <li><a href="#s1g">Make a layout persistent</a></li>
+                        <li><a href="#s1h">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Display, Graphics, and Multi-Monitor Setup</h3>
+                <p>Start with the driver that supports your exact GPU, then configure displays in the running desktop session. Avoid creating an <code>xorg.conf</code> unless automatic configuration fails; modern Xorg normally detects the monitor, input devices, and the appropriate modesetting driver itself.</p>
+
+                <h4 id="s1b">Identify the graphics hardware</h4>
+                <p>Find the graphics adapter and record the device description before installing a driver:</p>
+                <pre><code>pciconf -lv | less
+dmesg | grep -Ei 'drm|i915|amdgpu|radeon|nvidia'</code></pre>
+                <p>Look for a display or VGA controller in the <code>pciconf</code> output. On laptops with both integrated and discrete graphics, record both adapters. Display connectors wired to a different GPU may not be available to the desktop session you started.</p>
+                <p>The <a href="https://github.com/MidnightBSD/src/wiki/GPU-%E2%80%90-AMD">MidnightBSD AMD GPU wiki</a>, <a href="https://github.com/MidnightBSD/src/wiki/GPU-%E2%80%90-Nvidia">NVIDIA GPU wiki</a>, and <a href="https://github.com/MidnightBSD/src/wiki/Recommended-Hardware">recommended-hardware list</a> provide compatibility reports. They are useful guidance, not a substitute for checking the current release and the exact chipset.</p>
+
+                <h4 id="s1c">Choose a graphics stack</h4>
+                <p>Xorg is the established default for MidnightBSD desktops. The <a href="desktop.html">Xorg and Desktop Environments</a> page covers installing and starting a desktop. <a href="wayland.html">Wayland</a> is a separate path with its own compositor and session requirements.</p>
+                <p>For a basic display, first try Xorg without an extra Xorg video driver. The built-in modesetting driver is often sufficient. Hardware acceleration for supported Intel and AMD GPUs uses DRM/KMS kernel modules, firmware, and Mesa. The relevant current mports are:</p>
+                <pre><code>graphics/drm-515-kmod
+graphics/gpu-firmware-kmod
+graphics/mesa-dri
+x11/xrandr
+x11/nvidia-driver</code></pre>
+                <p><code>drm-515-kmod</code> requires MidnightBSD 4.1 or later and conflicts with other DRM kmod versions. Choose the DRM port appropriate for your operating-system release; do not install multiple DRM kmod packages together.</p>
+
+                <h4 id="s1d">Intel and AMD DRM/KMS</h4>
+                <p>For compatible Intel or AMD hardware on MidnightBSD 4.1 or later, install the DRM driver, firmware collection, and Mesa drivers:</p>
+                <pre><code>doas mport install drm-515-kmod gpu-firmware-kmod mesa-dri</code></pre>
+                <p>Load one module for the GPU type, then confirm that DRM devices were created:</p>
+                <pre><code>doas kldload i915kms       # Intel
+doas kldload amdgpu        # newer AMD
+doas kldload radeonkms     # older AMD
+ls /dev/dri
+kldstat | grep -E 'i915|amdgpu|radeon'</code></pre>
+                <p>Use only one of the three <code>kldload</code> commands. If it works, arrange for that same module to load at boot without replacing existing entries in <code>kld_list</code>:</p>
+                <pre><code>doas sysrc kld_list+=" i915kms"</code></pre>
+                <p>Replace <code>i915kms</code> with <code>amdgpu</code> or <code>radeonkms</code> when applicable. Log out and back in, or restart the graphical session, after changing a graphics module.</p>
+
+                <h4 id="s1e">NVIDIA</h4>
+                <p>Supported NVIDIA cards use the binary driver from the <code>x11/nvidia-driver</code> mport on amd64. The NVIDIA wiki lists known working series and notes that support depends on the driver branch. Older cards may need one of the versioned legacy driver mports rather than the current driver.</p>
+                <p>Install the driver only after confirming that it supports the card and MidnightBSD release:</p>
+                <pre><code>doas mport install nvidia-driver
+nvidia-smi</code></pre>
+                <p>Do not combine an NVIDIA driver configuration with Intel or AMD DRM instructions unless you understand the hybrid-graphics design of the machine. A black screen after switching drivers is best investigated from a text console using the Xorg log and <code>dmesg</code>.</p>
+
+                <h4 id="s1f">Configure monitors with xrandr</h4>
+                <p>Run <code>xrandr</code> inside the Xorg desktop session. It lists output names, connection state, available modes, the current mode (marked with <code>*</code>), and the preferred mode (marked with <code>+</code>):</p>
+                <pre><code>xrandr --query</code></pre>
+                <p>Use the names reported by your system, not the sample names below. Enable a connected external display to the right of the internal display:</p>
+                <pre><code>xrandr --output HDMI-1 --auto --right-of eDP-1</code></pre>
+                <p>Set a primary display and a known mode when needed:</p>
+                <pre><code>xrandr --output HDMI-1 --primary --mode 1920x1080
+xrandr --output HDMI-1 --off</code></pre>
+                <p>The first command changes only the current session. The second example disables the output. To test a longer command without applying it, add <code>--dryrun</code>. If a mode leaves a screen unusable, wait a moment and use a text console to restart the graphical session; do not reboot blindly.</p>
+
+                <h4 id="s1g">Make a layout persistent</h4>
+                <p>Many desktop environments provide a display settings panel that saves the arrangement for the logged-in user. Prefer that panel when it works. For a window manager or a session without display settings, put a tested <code>xrandr</code> command in the desktop session's startup file, such as <code>~/.xprofile</code> or the window manager's autostart configuration.</p>
+                <p>Do not place an <code>xrandr</code> command in system boot configuration: it needs a running Xorg session and the logged-in user's display. Keep a known-good one-monitor command so you can recover after docking or disconnecting an external display.</p>
+
+                <h4 id="s1h">Troubleshooting</h4>
+                <ul>
+                    <li><strong>External monitor is missing:</strong> try another cable, port, or monitor input; then compare <code>xrandr --query</code> and <code>dmesg</code> before and after connection.</li>
+                    <li><strong>No <code>/dev/dri</code> devices:</strong> confirm the intended DRM module loaded with <code>kldstat</code> and inspect <code>dmesg</code> for firmware or attachment errors.</li>
+                    <li><strong>Only low resolutions are available:</strong> inspect the connector and cable, then review <code>xrandr --verbose</code>. Avoid forcing modelines until the driver and monitor detection are known to work.</li>
+                    <li><strong>Black screen after a driver change:</strong> use a text console, capture the Xorg log and <code>dmesg</code>, and undo only the driver configuration you just added.</li>
+                    <li><strong>Dock or hybrid laptop behaves differently:</strong> test the internal panel and each external connector separately. Some ports are wired to a different GPU and require a different driver path.</li>
+                </ul>
+                <p>See <a href="troubleshooting.html">Desktop Troubleshooting</a> for logs, recovery, and reporting guidance, and <a href="laptop.html">Laptop Use and Power Management</a> for suspend and external-display considerations.</p>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
