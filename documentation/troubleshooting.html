@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Diagnose common MidnightBSD desktop, service, hardware, and network problems safely.">
+        <meta property="og:title" content="MidnightBSD Documentation - Desktop Troubleshooting">
+        <meta property="og:description" content="Diagnose common MidnightBSD desktop, service, hardware, and network problems safely.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/troubleshooting.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Desktop Troubleshooting</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/troubleshooting.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Desktop Troubleshooting</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Start with evidence</a></li>
+                        <li><a href="#s1c">Graphical desktop problems</a></li>
+                        <li><a href="#s1d">Services and applications</a></li>
+                        <li><a href="#s1e">Hardware and drivers</a></li>
+                        <li><a href="#s1f">Network problems</a></li>
+                        <li><a href="#s1g">Safe recovery steps</a></li>
+                        <li><a href="#s1h">Reporting a problem</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">Desktop Troubleshooting</h3>
+                <p>Start by identifying what changed and collecting output before changing configuration. A package update, a new device, a cable change, or a power event often narrows the cause. Commands in this guide only inspect the system unless they begin with <code>doas</code>.</p>
+
+                <h4 id="s1b">Start with evidence</h4>
+                <p>Record the operating-system version, the recent kernel messages, and the relevant hardware. Run these commands in a terminal and save the output when asking for help:</p>
+                <pre><code>uname -a
+dmesg | tail -100
+pciconf -lv
+kldstat</code></pre>
+                <p><code>dmesg</code> is especially useful immediately after connecting a device or reproducing a failure. Run it before and after the event and compare the new lines. Use <code>pciconf -lv</code> for graphics and network adapters, and <code>kldstat</code> to see loaded kernel modules.</p>
+                <p>For problems that appeared after a package change, first review installed updates with <code>mport list updates</code> and inspect the package with <code>mport info package-name</code>. See <a href="software.html">Desktop Software Management</a> for package commands.</p>
+
+                <h4 id="s1c">Graphical desktop problems</h4>
+                <p>If the graphical login screen or desktop does not start, first determine whether the system itself is still usable. Switch to a text console if necessary, log in, and check free disk space and recent messages:</p>
+                <pre><code>df -h
+dmesg | tail -100
+tail -100 /var/log/messages</code></pre>
+                <p>A full filesystem can prevent a session from creating its configuration and log files. Do not delete files simply to create space; identify large, unneeded files first.</p>
+                <p>When starting X manually with <code>startx</code>, retry it from the console and read the final output. Xorg log files are commonly located at <code>~/.local/share/xorg/Xorg.0.log</code> for a user session or <code>/var/log/Xorg.0.log</code> for a system-wide session. Look for lines marked <code>(EE)</code>, then retain the surrounding lines; warnings alone do not necessarily indicate the cause.</p>
+                <p>For a graphical login manager, check its service status. On systems using the default mlogind display manager:</p>
+                <pre><code>doas service mlogind status
+doas service mlogind restart</code></pre>
+                <p>Use the matching service name if you configured a different display manager. The <a href="desktop.html">Xorg and Desktop Environments</a> guide covers the initial desktop and login-manager setup.</p>
+
+                <h4 id="s1d">Services and applications</h4>
+                <p>Check whether the service is enabled and whether it is currently running:</p>
+                <pre><code>service -e
+doas service service-name status</code></pre>
+                <p><code>service -e</code> lists enabled services. Replace <code>service-name</code> with the applicable service, such as <code>cupsd</code> for CUPS. If a service fails, inspect its recent messages before restarting it. For a user application, start it from a terminal so that any error message remains visible.</p>
+                <p>A package integrity check may help when an application reports a missing or altered file:</p>
+                <pre><code>doas mport verify package-name
+mport which /path/to/file</code></pre>
+                <p>Do not remove packages or run <code>mport autoremove</code> as a first troubleshooting step. Review the package and any proposed removals first.</p>
+
+                <h4 id="s1e">Hardware and drivers</h4>
+                <p>Confirm that the operating system detects the device before changing desktop settings. For USB, storage, and printer devices:</p>
+                <pre><code>usbconfig list
+camcontrol devlist
+dmesg | tail -100</code></pre>
+                <p>Reconnect the device, try a known-good cable or port, then run the commands again. Record the device model and the new <code>dmesg</code> lines. See <a href="peripherals.html">Desktop Peripherals</a> for printers, scanners, Bluetooth, cameras, and removable storage; see <a href="sound.html">Sound</a> for audio devices.</p>
+                <p>For graphics or Wi-Fi hardware, include the matching section of <code>pciconf -lv</code> in a report. Driver support depends on the chipset, not only the computer or peripheral brand.</p>
+
+                <h4 id="s1f">Network problems</h4>
+                <p>Separate a link problem from a name-resolution problem. First inspect interfaces and test an IP address, then test a hostname:</p>
+                <pre><code>ifconfig
+ping -c 3 1.1.1.1
+ping -c 3 www.midnightbsd.org</code></pre>
+                <p>If the IP-address test succeeds but the hostname test fails, check <code>/etc/resolv.conf</code> and the <a href="dns.html">DNS configuration guide</a>. For wireless connections, use the <a href="wifi.html">Wi-Fi Setup</a> guide to confirm the interface, association, and DHCP configuration.</p>
+
+                <h4 id="s1g">Safe recovery steps</h4>
+                <p>Save your work, then restart the smallest affected component first: an application, then its service, and only then the graphical session or system. A reboot is reasonable after a kernel, driver, or shared-library update, but it should not replace collecting the error output.</p>
+                <p>If an automatic graphical login loop prevents access to a terminal, use a text console to stop the display manager temporarily:</p>
+                <pre><code>doas service mlogind stop</code></pre>
+                <p>Substitute the display manager you actually use. This command does not disable it permanently; it lets you work from the console and inspect logs. Avoid editing <code>/etc/rc.conf</code>, loader settings, or Xorg configuration unless you understand the specific change and can undo it.</p>
+
+                <h4 id="s1h">Reporting a problem</h4>
+                <p>A useful report includes the MidnightBSD version, desktop environment, exact hardware model or chipset, the steps that reproduce the issue, and the complete error message. Include relevant output from <code>uname -a</code>, <code>dmesg</code>, <code>pciconf -lv</code>, and the affected service or application. Remove passwords, private host names, network addresses, and other sensitive data before publishing logs.</p>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
