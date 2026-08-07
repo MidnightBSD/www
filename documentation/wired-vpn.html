@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Configure wired Ethernet and VPN connections on MidnightBSD.">
+        <meta property="og:title" content="MidnightBSD Documentation - Wired Networking and VPNs">
+        <meta property="og:description" content="Configure wired Ethernet and VPN connections on MidnightBSD.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/wired-vpn.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - Wired Networking and VPNs</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/wired-vpn.html">
+    </head>
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> Wired Networking and VPNs</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Identify the Ethernet interface</a></li>
+                        <li><a href="#s1c">DHCP and static IPv4</a></li>
+                        <li><a href="#s1d">IPv6 and adapters</a></li>
+                        <li><a href="#s1e">WireGuard</a></li>
+                        <li><a href="#s1f">OpenVPN</a></li>
+                        <li><a href="#s1g">Troubleshooting</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+                <h3 id="s1a">Wired Networking and VPNs</h3>
+                <p>Ethernet is normally configured through <code>/etc/rc.conf</code>. Replace every sample interface, address, key, and hostname with values supplied for your network. Do not apply a static or VPN configuration unless you know the required addressing, gateway, and credentials.</p>
+
+                <h4 id="s1b">Identify the Ethernet interface</h4>
+                <p>Interface names combine a driver and unit number, such as <code>em0</code> or <code>re0</code>. Find the interface and its link state:</p>
+                <pre><code>ifconfig -l
+ifconfig
+pciconf -lv | less
+dmesg | tail -100</code></pre>
+                <p>For an active wired connection, <code>ifconfig</code> normally reports <code>status: active</code>. If no suitable interface appears, the driver may not be attached or the adapter may need a driver from mports.</p>
+
+                <h4 id="s1c">DHCP and static IPv4</h4>
+                <p>Most home and office networks use DHCP. Add this to <code>/etc/rc.conf</code>, substituting the detected interface:</p>
+                <pre><code>ifconfig_em0="DHCP"</code></pre>
+                <p>For a static address, use the values assigned by the network administrator:</p>
+                <pre><code>ifconfig_em0="inet 192.0.2.10 netmask 255.255.255.0"
+defaultrouter="192.0.2.1"</code></pre>
+                <p>The example addresses are reserved for documentation and will not work on a real network. After changing the configuration, apply it locally or reboot when convenient:</p>
+                <pre><code>doas service netif restart
+doas service routing restart</code></pre>
+                <p>Restarting networking ends SSH and other active connections. Use console access or a maintenance window when changing a remote system.</p>
+
+                <h4 id="s1d">IPv6 and adapters</h4>
+                <p>For networks that provide IPv6 router advertisements, add:</p>
+                <pre><code>ipv6_enable="YES"
+ifconfig_em0_ipv6="inet6 accept_rtadv"
+rtsold_enable="YES"</code></pre>
+                <p>For static IPv6, use the allocated prefix and router, for example <code>ifconfig_em0_ipv6="inet6 2001:db8:1::10 prefixlen 64"</code> and <code>ipv6_defaultrouter="2001:db8:1::1"</code>.</p>
+                <p>The MidnightBSD wiki lists optional drivers for some hardware: <code>net/aquantia-atlantic-kmod</code>, <code>net/realtek-re-kmod</code>, <code>net/intel-ixl-kmod</code>, <code>net/intel-ix-kmod</code>, and <code>net/intel-em-kmod</code>. Identify the chipset with <code>pciconf -lv</code> first; many adapters already have a base-system driver.</p>
+                <p>If a working link drops or transfers fail, test another cable and switch port before changing settings. The wiki notes that some adapters are more stable with hardware offloads disabled; test only when diagnosing a real fault:</p>
+                <pre><code>ifconfig_em0="DHCP -lro -tso -rxcsum -txcsum -txcsum6"</code></pre>
+
+                <h4 id="s1e">WireGuard</h4>
+                <p>MidnightBSD provides the <code>wg</code> utility and, on releases with it, the <code>wg(4)</code> interface driver. Confirm the driver is available, then create a tunnel interface:</p>
+                <pre><code>man 4 wg
+doas kldload if_wg
+doas ifconfig wg0 create
+wg show interfaces</code></pre>
+                <p>Generate and protect a private key. The provider or peer administrator supplies the tunnel address, peer public key, endpoint, and allowed IP ranges:</p>
+                <pre><code>umask 077
+wg genkey &gt; ~/wg-private.key
+wg pubkey &lt; ~/wg-private.key &gt; ~/wg-public.key
+doas wg set wg0 private-key ~/wg-private.key peer provider-public-key endpoint vpn.example:51820 allowed-ips 10.8.0.0/24
+doas ifconfig wg0 inet 10.8.0.2/24 up
+wg show wg0</code></pre>
+                <p>Whether allowed IPs include only private networks or all traffic is a policy choice. To load the driver at boot, add <code>if_wg_load="YES"</code> to <code>/boot/loader.conf</code>. Never publish private keys or put them in shell history.</p>
+
+                <h4 id="s1f">OpenVPN</h4>
+                <p>For a provider or organization that supplies an <code>.ovpn</code> profile, install the OpenVPN client from mports and test it interactively:</p>
+                <pre><code>doas mport install openvpn
+doas openvpn-client /path/to/provider.ovpn</code></pre>
+                <p>The helper includes the client up/down scripts supplied by the mport. Treat the profile and its certificates as credentials, obtain them only from the provider or administrator, and review them before use. Configure a long-lived OpenVPN service only after the interactive connection works.</p>
+
+                <h4 id="s1g">Troubleshooting</h4>
+                <ul>
+                    <li><strong>No link:</strong> check for <code>status: active</code>, try another cable or switch port, and inspect <code>dmesg</code>.</li>
+                    <li><strong>No address:</strong> recheck DHCP or the static address, netmask, and default router.</li>
+                    <li><strong>Names fail but IP addresses work:</strong> inspect <code>/etc/resolv.conf</code> and the <a href="dns.html">DNS guide</a>.</li>
+                    <li><strong>WireGuard has no handshake:</strong> check peer keys, endpoint, firewall rules, and allowed IPs. Use <code>doas ifconfig wg0 debug</code> to write driver diagnostics to <code>dmesg</code>.</li>
+                    <li><strong>VPN connects but resources are unreachable:</strong> confirm tunnel addresses, routes, allowed IPs, and server policy before replacing a default route.</li>
+                </ul>
+                <p>See <a href="troubleshooting.html">Desktop Troubleshooting</a> for diagnostic guidance and <a href="wifi.html">Wi-Fi Setup</a> for wireless interfaces.</p>
+                <h4>Further reading</h4>
+                <ul>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Network-Setup">MidnightBSD wiki: Network Setup</a></li>
+                    <li><a href="https://github.com/MidnightBSD/src/wiki/Wired-Network-Adapters">MidnightBSD wiki: Wired Network Adapters</a></li>
+                    <li><a href="https://docs.freebsd.org/en/books/handbook/network/">FreeBSD Handbook: Network</a></li>
+                </ul>
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
