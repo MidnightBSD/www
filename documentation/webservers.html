@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Complete guide to setting up Nginx and Apache HTTP servers on MidnightBSD, including installation, configuration, HTTPS, virtual hosting, and performance tuning.">
+    <title>MidnightBSD Documentation - Web Server Configuration</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/webservers.html">
+		<meta property="og:title" content="MidnightBSD Documentation - Web Server Configuration">
+    <meta property="og:description" content="Complete guide to setting up Nginx and Apache HTTP servers on MidnightBSD, including installation, configuration, HTTPS, virtual hosting, and performance tuning.">
+    <meta property="og:url" content="https://www.midnightbsd.org/documentation/webservers.html">
+    <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MidnightBSD Documentation - Web Server Configuration">
+    <meta name="twitter:description" content="Complete guide to setting up Nginx and Apache HTTP servers on MidnightBSD, including installation, configuration, HTTPS, virtual hosting, and performance tuning.">
+    <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Web Server Configuration</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Choosing Between Nginx and Apache</a></li>
+                <li>Nginx
+                    <ul>
+                        <li><a href="#s2b">Installation</a></li>
+                        <li><a href="#s2c">Basic Configuration</a></li>
+                        <li><a href="#s2d">Virtual Hosts</a></li>
+                        <li><a href="#s2e">HTTPS with Let's Encrypt</a></li>
+                        <li><a href="#s2f">Performance Tuning</a></li>
+                        <li><a href="#s2g">Reverse Proxy Setup</a></li>
+                        <li><a href="#s2h">Common Nginx Tasks</a></li>
+                    </ul>
+                </li>
+                <li>Apache HTTP Server
+                    <ul>
+                        <li><a href="#s3b">Installation</a></li>
+                        <li><a href="#s3c">Basic Configuration</a></li>
+                        <li><a href="#s3d">Virtual Hosts</a></li>
+                        <li><a href="#s3e">HTTPS Configuration</a></li>
+                        <li><a href="#s3f">Performance Tuning</a></li>
+                        <li><a href="#s3g">Common Apache Tasks</a></li>
+                        <li><a href="#s3h">.htaccess Configuration</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1i">Security Hardening</a></li>
+                <li><a href="#s1j">Load Balancing</a></li>
+                <li><a href="#s1k">Monitoring and Logging</a></li>
+                <li><a href="#s1l">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Web Server Configuration</h3>
+        <h4 id="s1b">Introduction</h4>
+
+        <p>Setting up a web server on MidnightBSD allows you to host websites, web applications, and APIs. 
+        MidnightBSD supports both <code>nginx</code> and <code>Apache HTTP Server</code> through mports, 
+        giving you flexibility to choose the web server that best fits your needs. Both servers are production-ready 
+        and widely used in enterprise environments.</p>
+
+        <p>This guide covers installation, configuration, security hardening, and performance tuning for both 
+        nginx and Apache on MidnightBSD, including setting up HTTPS with Let's Encrypt certificates and 
+        configuring virtual hosts for multiple websites.</p>
+
+        <h4 id="s1c">Choosing Between Nginx and Apache</h4>
+
+        <p><strong>Use Nginx if you need:</strong></p>
+        <ul>
+            <li>High concurrency with low memory usage</li>
+            <li>Reverse proxy functionality</li>
+            <li>Load balancing capabilities</li>
+            <li>Fast static file serving</li>
+            <li>Simple configuration for most use cases</li>
+        </ul>
+
+        <p><strong>Use Apache if you need:</strong></p>
+        <ul>
+            <li>.htaccess file support</li>
+            <li>Extensive module ecosystem (mod_php, mod_perl, etc.)</li>
+            <li>Traditional hosting environments</li>
+            <li>Fine-grained directory-level configuration</li>
+            <li>Built-in dynamic content handling</li>
+        </ul>
+
+        <p><strong>Common approach:</strong> Many deployments use both - nginx as a reverse proxy in front of 
+        Apache for static content and SSL termination, with Apache handling dynamic content. This provides 
+        the performance benefits of nginx with the flexibility of Apache.</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h3>Nginx</h3>
+        <h4 id="s2b">Installation</h4>
+
+        <p>Nginx is available through mports and can be installed with:</p>
+        <code># mport install nginx</code>
+
+        <p><strong>Enable nginx to start at boot:</strong></p>
+        <pre>
+# sysrc nginx_enable=YES
+# service nginx start
+</pre>
+
+        <p><strong>Verify nginx is running:</strong></p>
+        <pre>
+# service nginx status
+# ps aux | grep nginx
+</pre>
+
+        <p><strong>Test nginx installation:</strong> After starting nginx, visit <code>http://localhost</code> in your 
+        browser. You should see the default nginx welcome page.</p>
+
+        <p><strong>Nginx files and directories:</strong></p>
+        <ul>
+            <li><code>/usr/local/etc/nginx/</code> - Main configuration directory</li>
+            <li><code>/usr/local/etc/nginx/nginx.conf</code> - Primary configuration file</li>
+            <li><code>/usr/local/etc/nginx/conf.d/</code> - Additional configuration files</li>
+            <li><code>/usr/local/www/nginx/</code> - Default web root directory</li>
+            <li><code>/usr/local/www/nginx/dist/</code> - Default static files</li>
+            <li><code>/var/log/nginx/</code> - Log files (access.log, error.log)</li>
+            <li><code>/usr/local/sbin/nginx</code> - Nginx binary</li>
+        </ul>
+
+        <h4 id="s2c">Basic Configuration</h4>
+
+        <p>The main nginx configuration file is <code>/usr/local/etc/nginx/nginx.conf</code>. It includes 
+        other configuration files from the <code>conf.d/</code> directory.</p>
+
+        <p><strong>Main configuration structure:</strong></p>
+        <pre>
+# Main context - affects all server blocks
+user  www;
+worker_processes  auto;
+
+# Error log location
+error_log  /var/log/nginx/error.log;
+pid        /var/run/nginx.pid;
+
+# Events context
+events {
+    worker_connections  1024;
+}
+
+# HTTP context - contains server blocks
+http {
+    include       /usr/local/etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    # Log format definitions
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    # Basic settings
+    sendfile        on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
+    keepalive_timeout  65;
+    types_hash_max_size 2048;
+
+    # Server configuration
+    include /usr/local/etc/nginx/conf.d/*.conf;
+}
+</pre>
+
+        <p><strong>Testing configuration:</strong> After making changes to nginx configuration:</p>
+        <pre>
+# Test configuration syntax
+nginx -t
+
+# If test passes, reload nginx
+service nginx reload
+</pre>
+
+        <p><strong>Basic server block:</strong></p>
+        <pre>
+server {
+    listen       80;
+    server_name  localhost;
+    
+    # Root directory
+    root   /usr/local/www/nginx;
+    index  index.html index.htm;
+
+    # Location blocks
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Error pages
+    error_page  404  /404.html;
+    error_page  500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/local/www/nginx;
+    }
+}
+</pre>
+
+        <p><strong>Common configuration directives:</strong></p>
+        <table>
+            <tr>
+                <th>Directive</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><code>listen</code></td>
+                <td>IP address and port to listen on</td>
+                <td><code>listen 80;</code> or <code>listen 192.168.1.100:80;</code></td>
+            </tr>
+            <tr>
+                <td><code>server_name</code></td>
+                <td>Server names (domain names) for this block</td>
+                <td><code>server_name example.com www.example.com;</code></td>
+            </tr>
+            <tr>
+                <td><code>root</code></td>
+                <td>Root directory for requests</td>
+                <td><code>root /usr/local/www/example;</code></td>
+            </tr>
+            <tr>
+                <td><code>index</code></td>
+                <td>Default files to serve</td>
+                <td><code>index index.html index.php;</code></td>
+            </tr>
+            <tr>
+                <td><code>location</code></td>
+                <td>Defines how to handle requests to specific paths</td>
+                <td><code>location /images/ { ... }</code></td>
+            </tr>
+            <tr>
+                <td><code>try_files</code></td>
+                <td>Try files in order until one is found</td>
+                <td><code>try_files $uri $uri/ =404;</code></td>
+            </tr>
+        </table>
+
+        <h4 id="s2d">Virtual Hosts</h4>
+
+        <p>Virtual hosts allow you to host multiple websites on a single server. Create separate configuration 
+        files for each site in <code>/usr/local/etc/nginx/conf.d/</code>.</p>
+
+        <p><strong>Basic virtual host setup:</strong></p>
+        <pre>
+# Create configuration file for example.com
+vi /usr/local/etc/nginx/conf.d/example.com.conf
+
+server {
+    listen       80;
+    server_name  example.com www.example.com;
+    
+    root         /usr/local/www/example.com;
+    index        index.html index.php;
+
+    # Custom error pages
+    error_page  404  /404.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # PHP-FPM configuration (if using PHP)
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+
+# Reload nginx to apply changes
+nginx -t && service nginx reload
+</pre>
+
+        <p><strong>IP-based virtual hosts:</strong></p>
+        <pre>
+# Multiple IPs on same server
+server {
+    listen       192.168.1.100:80;
+    server_name  site1.com;
+    root         /usr/local/www/site1;
+}
+
+server {
+    listen       192.168.1.101:80;
+    server_name  site2.com;
+    root         /usr/local/www/site2;
+}
+</pre>
+
+        <p><strong>Port-based virtual hosts:</strong></p>
+        <pre>
+# Same IP, different ports
+server {
+    listen       80;
+    server_name  example.com;
+    root         /usr/local/www/example-http;
+}
+
+server {
+    listen       8080;
+    server_name  example.com;
+    root         /usr/local/www/example-admin;
+}
+</pre>
+
+        <p><strong>Default server block:</strong></p>
+        <pre>
+# Default server - catches all requests not matching other server_name directives
+server {
+    listen       80 default_server;
+    server_name  _;
+    root         /usr/local/www/default;
+    
+    # Return 444 to drop connection for undefined server names
+    # return 444;
+}
+</pre>
+
+        <h4 id="s2e">HTTPS with Let's Encrypt</h4>
+
+        <p>Setting up HTTPS with free certificates from Let's Encrypt using Certbot.</p>
+
+        <p><strong>Install Certbot and nginx plugin:</strong></p>
+        <code># mport install certbot certbot-nginx</code>
+
+        <p><strong>Obtain certificate:</strong></p>
+        <pre>
+# Stop nginx temporarily
+service nginx stop
+
+# Obtain certificate (webroot method)
+certbot certonly --webroot -w /usr/local/www/example.com -d example.com -d www.example.com
+
+# Or standalone method (nginx must be stopped)
+certbot certonly --standalone -d example.com -d www.example.com
+
+# Start nginx again
+service nginx start
+</pre>
+
+        <p><strong>Automatic certificate renewal:</strong></p>
+        <pre>
+# Test renewal
+certbot renew --dry-run
+
+# Add to cron for automatic renewal (runs twice daily)
+0 */12 * * * /usr/local/bin/certbot renew --quiet --post-hook "service nginx reload"
+</pre>
+
+        <p><strong>Configure nginx for HTTPS:</strong></p>
+        <pre>
+server {
+    listen       80;
+    server_name  example.com www.example.com;
+    return       301 https://$host$request_uri;
+}
+
+server {
+    listen       443 ssl http2;
+    server_name  example.com www.example.com;
+    
+    # SSL certificate configuration
+    ssl_certificate      /usr/local/etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key  /usr/local/etc/letsencrypt/live/example.com/privkey.pem;
+    
+    # SSL protocols and ciphers
+    ssl_protocols        TLSv1.2 TLSv1.3;
+    ssl_ciphers          HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    # Strong SSL settings
+    ssl_session_cache    shared:SSL:10m;
+    ssl_session_timeout  10m;
+    ssl_session_tickets off;
+
+    # OCSP stapling
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    # Root directory
+    root   /usr/local/www/example.com;
+    index  index.html index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+</pre>
+
+        <p><strong>Security headers:</strong></p>
+        <pre>
+# Add to your HTTPS server block
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+</pre>
+
+        <p><strong>HTTP/2 support:</strong> nginx supports HTTP/2 automatically when using SSL. Just add 
+        <code>http2</code> to the listen directive: <code>listen 443 ssl http2;</code></p>
+
+        <h4 id="s2f">Performance Tuning</h4>
+
+        <p><strong>Worker processes:</strong></p>
+        <pre>
+# In nginx.conf
+events {
+    worker_connections  2048;  # Maximum connections per worker
+}
+
+http {
+    # Auto-detect number of CPU cores
+    worker_processes  auto;
+}
+</pre>
+
+        <p><strong>Buffer and timeout settings:</strong></p>
+        <pre>
+http {
+    # Buffer sizes
+    client_body_buffer_size     16k;
+    client_header_buffer_size   1k;
+    client_max_body_size        10m;
+    large_client_header_buffers 4 16k;
+
+    # Timeouts
+    client_body_timeout   12;
+    client_header_timeout 12;
+    keepalive_timeout    75;
+    send_timeout         12;
+}
+</pre>
+
+        <p><strong>Gzip compression:</strong></p>
+        <pre>
+http {
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_min_length 1000;
+}
+</pre>
+
+        <p><strong>File serving optimization:</strong></p>
+        <pre>
+http {
+    # Enable sendfile for static files
+    sendfile        on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
+
+    # Cache static files
+    open_file_cache          max=1000 inactive=20s;
+    open_file_cache_valid    30s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors   on;
+}
+
+# For static file locations
+location /static/ {
+    expires 30d;
+    add_header Cache-Control "public, no-transform";
+}
+</pre>
+
+        <h4 id="s2g">Reverse Proxy Setup</h4>
+
+        <p>Configure nginx as a reverse proxy to forward requests to backend servers (Apache, Node.js, etc.).</p>
+
+        <p><strong>Reverse proxy to application server:</strong></p>
+        <pre>
+server {
+    listen       80;
+    server_name  app.example.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+</pre>
+
+        <p><strong>Reverse proxy to Apache:</strong></p>
+        <pre>
+upstream apache_backend {
+    server 127.0.0.1:8080;
+}
+
+server {
+    listen       80;
+    server_name  example.com;
+
+    # Static files served by nginx
+    location / {
+        root /usr/local/www/example.com;
+        try_files $uri @apache;
+    }
+
+    # Dynamic content proxied to Apache
+    location @apache {
+        proxy_pass http://apache_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Static files cache
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+}
+</pre>
+
+        <p><strong>Load balancing across multiple backend servers:</strong></p>
+        <pre>
+upstream backend_servers {
+    server 192.168.1.101:8000;
+    server 192.168.1.102:8000;
+    server 192.168.1.103:8000;
+    
+    # Load balancing algorithm
+    least_conn;  # Send request to server with least active connections
+    # Other options: round_robin (default), ip_hash, least_time
+}
+
+server {
+    listen       80;
+    server_name  app.example.com;
+
+    location / {
+        proxy_pass http://backend_servers;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+</pre>
+
+        <h4 id="s2h">Common Nginx Tasks</h4>
+
+        <p><strong>Create a new website:</strong></p>
+        <pre>
+# 1. Create directory structure
+mkdir -p /usr/local/www/mysite.com/{public_html,logs,cgi-bin}
+
+# 2. Create basic index.html
+cat > /usr/local/www/mysite.com/public_html/index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head><title>Welcome to mysite.com</title></head>
+<body><h1>mysite.com</h1></body>
+</html>
+EOF
+
+# 3. Create nginx configuration
+cat > /usr/local/etc/nginx/conf.d/mysite.com.conf << 'EOF'
+server {
+    listen       80;
+    server_name  mysite.com www.mysite.com;
+    root         /usr/local/www/mysite.com/public_html;
+    index        index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+EOF
+
+# 4. Test and reload
+nginx -t && service nginx reload
+</pre>
+
+        <p><strong>Redirect HTTP to HTTPS:</strong></p>
+        <pre>
+server {
+    listen       80;
+    server_name  example.com www.example.com;
+    return       301 https://$host$request_uri;
+}
+</pre>
+
+        <p><strong>Redirect www to non-www:</strong></p>
+        <pre>
+server {
+    listen       80;
+    server_name  www.example.com;
+    return       301 http://example.com$request_uri;
+}
+</pre>
+
+        <p><strong>Serve static files efficiently:</strong></p>
+        <pre>
+location /static/ {
+    root /usr/local/www;
+    expires 30d;
+    add_header Cache-Control "public, no-transform";
+    
+    # Disable access logging for static files
+    access_log off;
+}
+</pre>
+
+        <p><strong>Disable directory listing:</strong></p>
+        <pre>
+location / {
+    autoindex off;
+}
+</pre>
+
+        <p><strong>Password protect a directory:</strong></p>
+        <pre>
+# 1. Create password file
+printf "admin:" | htpasswd -c /usr/local/etc/nginx/.htpasswd admin
+# You'll be prompted for the password
+
+# 2. Configure location
+location /admin/ {
+    auth_basic "Admin Area";
+    auth_basic_user_file /usr/local/etc/nginx/.htpasswd;
+}
+</pre>
+
+        <p><strong>Enable HTTP/2:</strong> Add <code>http2</code> to your listen directive:</p>
+        <pre>
+listen 443 ssl http2;
+</pre>
+
+        <h3>Apache HTTP Server</h3>
+        <h4 id="s3b">Installation</h4>
+
+        <p>Apache HTTP Server (httpd) is available through mports:</p>
+        <code># mport install apache24</code>
+
+        <p><strong>Enable Apache to start at boot:</strong></p>
+        <pre>
+# sysrc apache24_enable=YES
+# service apache24 start
+</pre>
+
+        <p><strong>Verify Apache is running:</strong></p>
+        <pre>
+# service apache24 status
+# ps aux | grep httpd
+</pre>
+
+        <p><strong>Test Apache installation:</strong> Visit <code>http://localhost</code> in your browser. 
+        You should see the Apache default page.</p>
+
+        <p><strong>Apache files and directories:</strong></p>
+        <ul>
+            <li><code>/usr/local/etc/apache24/</code> - Main configuration directory</li>
+            <li><code>/usr/local/etc/apache24/httpd.conf</code> - Primary configuration file</li>
+            <li><code>/usr/local/etc/apache24/extra/</code> - Additional configuration files</li>
+            <li><code>/usr/local/etc/apache24/Includes/</code> - Included configuration files</li>
+            <li><code>/usr/local/www/apache24/</code> - Default document root</li>
+            <li><code>/usr/local/www/apache24/cgi-bin/</code> - Default CGI directory</li>
+            <li><code>/usr/local/www/apache24/data/</code> - Default htdocs directory</li>
+            <li><code>/var/log/apache24/</code> - Log files</li>
+            <li><code>/usr/local/sbin/apachectl</code> - Apache control script</li>
+        </ul>
+
+        <h4 id="s3c">Basic Configuration</h4>
+
+        <p>The main Apache configuration file is <code>/usr/local/etc/apache24/httpd.conf</code>. 
+        It includes several other configuration files.</p>
+
+        <p><strong>Key configuration sections:</strong></p>
+        <pre>
+# Global Environment
+ServerRoot "/usr/local"
+
+# Main server configuration
+Listen 80
+ServerAdmin admin@example.com
+ServerName localhost:80
+
+# DocumentRoot: The directory out of which you will serve your
+# documents. By default, all requests are taken from this directory
+DocumentRoot "/usr/local/www/apache24/data"
+
+# Directory configuration
+<Directory "/usr/local/www/apache24/data">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+# Include additional configuration files
+Include /usr/local/etc/apache24/extra/*.conf
+</pre>
+
+        <p><strong>Testing configuration:</strong></p>
+        <pre>
+# Test configuration syntax
+apachectl -t
+
+# If test passes, restart Apache
+service apache24 restart
+</pre>
+
+        <p><strong>Configuration file hierarchy:</strong></p>
+        <ul>
+            <li><code>httpd.conf</code> - Main configuration</li>
+            <li><code>extra/httpd-ssl.conf</code> - SSL configuration</li>
+            <li><code>extra/httpd-vhosts.conf</code> - Virtual hosts</li>
+            <li><code>extra/httpd-default.conf</code> - Default server</li>
+            <li><code>extra/httpd-autoindex.conf</code> - Directory indexing</li>
+            <li><code>extra/httpd-cgi.conf</code> - CGI configuration</li>
+        </ul>
+
+        <p><strong>Common Apache directives:</strong></p>
+        <table>
+            <tr>
+                <th>Directive</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><code>Listen</code></td>
+                <td>IP address and port to listen on</td>
+                <td><code>Listen 80</code> or <code>Listen 192.168.1.100:80</code></td>
+            </tr>
+            <tr>
+                <td><code>ServerName</code></td>
+                <td>Server name and port</td>
+                <td><code>ServerName example.com:80</code></td>
+            </tr>
+            <tr>
+                <td><code>DocumentRoot</code></td>
+                <td>Root directory for documents</td>
+                <td><code>DocumentRoot /usr/local/www/example</code></td>
+            </tr>
+            <tr>
+                <td><code>DirectoryIndex</code></td>
+                <td>Default files to serve</td>
+                <td><code>DirectoryIndex index.html index.php</code></td>
+            </tr>
+            <tr>
+                <td><code>ErrorLog</code></td>
+                <td>Error log location</td>
+                <td><code>ErrorLog /var/log/apache24/error.log</code></td>
+            </tr>
+            <tr>
+                <td><code>CustomLog</code></td>
+                <td>Access log location and format</td>
+                <td><code>CustomLog /var/log/apache24/access.log common</code></td>
+            </tr>
+        </table>
+
+        <h4 id="s3d">Virtual Hosts</h4>
+
+        <p>Apache virtual hosts can be configured in <code>/usr/local/etc/apache24/extra/httpd-vhosts.conf</code> 
+        or in individual files in the <code>Includes/</code> directory.</p>
+
+        <p><strong>Name-based virtual hosts:</strong></p>
+        <pre>
+# In /usr/local/etc/apache24/extra/httpd-vhosts.conf
+
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName example.com
+    ServerAlias www.example.com
+    DocumentRoot /usr/local/www/example.com
+    
+    <Directory /usr/local/www/example.com>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/apache24/example.com-error.log
+    CustomLog /var/log/apache24/example.com-access.log common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin admin@anothersite.com
+    ServerName anothersite.com
+    ServerAlias www.anothersite.com
+    DocumentRoot /usr/local/www/anothersite.com
+    
+    <Directory /usr/local/www/anothersite.com>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/apache24/anothersite.com-error.log
+    CustomLog /var/log/apache24/anothersite.com-access.log common
+</VirtualHost>
+</pre>
+
+        <p><strong>IP-based virtual hosts:</strong></p>
+        <pre>
+<VirtualHost 192.168.1.100:80>
+    ServerName site1.com
+    DocumentRoot /usr/local/www/site1
+</VirtualHost>
+
+<VirtualHost 192.168.1.101:80>
+    ServerName site2.com
+    DocumentRoot /usr/local/www/site2
+</VirtualHost>
+</pre>
+
+        <p><strong>Port-based virtual hosts:</strong></p>
+        <pre>
+# Main site on port 80
+<VirtualHost *:80>
+    ServerName example.com
+    DocumentRoot /usr/local/www/example-http
+</VirtualHost>
+
+# Admin site on port 8080
+<VirtualHost *:8080>
+    ServerName example.com
+    DocumentRoot /usr/local/www/example-admin
+</VirtualHost>
+</pre>
+
+        <p><strong>Default virtual host:</strong></p>
+        <pre>
+# First virtual host defined becomes the default
+<VirtualHost *:80>
+    ServerName default.example.com
+    DocumentRoot /usr/local/www/default
+    
+    # Or redirect all undefined hosts
+    Redirect permanent / http://example.com/
+</VirtualHost>
+</pre>
+
+        <h4 id="s3e">HTTPS Configuration</h4>
+
+        <p>Setting up HTTPS with Apache using Let's Encrypt certificates.</p>
+
+        <p><strong>Enable SSL module:</strong></p>
+        <pre>
+# Check if SSL module is loaded (look for mod_ssl.so)
+httpd -M | grep ssl
+
+# If not enabled, uncomment or add to httpd.conf
+LoadModule ssl_module modules/mod_ssl.so
+
+# Include SSL configuration
+Include /usr/local/etc/apache24/extra/httpd-ssl.conf
+</pre>
+
+        <p><strong>Obtain Let's Encrypt certificate:</strong></p>
+        <pre>
+# Install certbot
+mport install certbot certbot-apache
+
+# Stop Apache temporarily
+service apache24 stop
+
+# Obtain certificate
+certbot certonly --standalone -d example.com -d www.example.com
+
+# Start Apache again
+service apache24 start
+</pre>
+
+        <p><strong>Configure HTTPS virtual host:</strong></p>
+        <pre>
+<VirtualHost *:443>
+    ServerName example.com
+    ServerAlias www.example.com
+    DocumentRoot /usr/local/www/example.com
+    
+    # SSL Configuration
+    SSLEngine on
+    SSLCertificateFile /usr/local/etc/letsencrypt/live/example.com/cert.pem
+    SSLCertificateKeyFile /usr/local/etc/letsencrypt/live/example.com/privkey.pem
+    SSLCertificateChainFile /usr/local/etc/letsencrypt/live/example.com/chain.pem
+    
+    # SSL protocols and ciphers
+    SSLProtocol -all +TLSv1.2 +TLSv1.3
+    SSLCipherSuite HIGH:!aNULL:!MD5:!3DES
+    SSLHonorCipherOrder on
+    
+    # Security headers
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    <Directory /usr/local/www/example.com>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/apache24/example.com-ssl-error.log
+    CustomLog /var/log/apache24/example.com-ssl-access.log common
+</VirtualHost>
+</pre>
+
+        <p><strong>Redirect HTTP to HTTPS:</strong></p>
+        <pre>
+<VirtualHost *:80>
+    ServerName example.com
+    ServerAlias www.example.com
+    
+    Redirect permanent / https://example.com/
+</VirtualHost>
+</pre>
+
+        <p><strong>Automatic certificate renewal:</strong></p>
+        <pre>
+# Add to cron
+0 */12 * * * /usr/local/bin/certbot renew --quiet --post-hook "service apache24 restart"
+</pre>
+
+        <h4 id="s3f">Performance Tuning</h4>
+
+        <p><strong>MPM (Multi-Processing Module) settings:</strong></p>
+        <pre>
+# Check current MPM
+httpd -V | grep -i mpm
+
+# For prefork MPM (traditional, one process per connection)
+<IfModule mpm_prefork_module>
+    StartServers          5
+    MinSpareServers       5
+    MaxSpareServers      10
+    MaxRequestWorkers   256
+    MaxConnectionsPerChild  1000
+</IfModule>
+
+# For event MPM (recommended for high traffic, similar to nginx)
+<IfModule mpm_event_module>
+    StartServers          3
+    MinSpareThreads      75
+    MaxSpareThreads     250
+    ThreadLimit          64
+    ThreadsPerChild      25
+    MaxRequestWorkers   400
+    MaxConnectionsPerChild  1000
+</IfModule>
+
+# For worker MPM (hybrid approach)
+<IfModule mpm_worker_module>
+    StartServers          3
+    MinSpareThreads      75
+    MaxSpareThreads     250
+    ThreadLimit          64
+    ThreadsPerChild      25
+    MaxRequestWorkers   400
+    MaxConnectionsPerChild  1000
+</IfModule>
+</pre>
+
+        <p><strong>KeepAlive settings:</strong></p>
+        <pre>
+KeepAlive On
+MaxKeepAliveRequests 100
+KeepAliveTimeout 15
+</pre>
+
+        <p><strong>Memory and cache settings:</strong></p>
+        <pre>
+# File cache
+CacheEnable disk /
+CacheDefaultExpire 3600
+CacheMaxFileSize 1000000
+CacheRoot /var/cache/apache24
+
+# Memory settings
+RLimitMEM 512000 1024000  # Min and Max memory in bytes
+</pre>
+
+        <p><strong>Compression (mod_deflate):</strong></p>
+        <pre>
+# Enable deflate module (usually already loaded)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript
+    # Don't compress images
+    SetOutputFilter DEFLATE
+    SetEnv no-gzip 1
+</IfModule>
+</pre>
+
+        <p><strong>Enable caching headers:</strong></p>
+        <pre>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+</IfModule>
+</pre>
+
+        <h4 id="s3g">Common Apache Tasks</h4>
+
+        <p><strong>Create a new website:</strong></p>
+        <pre>
+# 1. Create directory structure
+mkdir -p /usr/local/www/mysite.com/{public_html,logs,cgi-bin}
+
+# 2. Create basic index.html
+cat > /usr/local/www/mysite.com/public_html/index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head><title>Welcome to mysite.com</title></head>
+<body><h1>mysite.com</h1></body>
+</html>
+EOF
+
+# 3. Create virtual host configuration
+cat > /usr/local/etc/apache24/Includes/mysite.com.conf << 'EOF'
+<VirtualHost *:80>
+    ServerName mysite.com
+    ServerAlias www.mysite.com
+    DocumentRoot /usr/local/www/mysite.com/public_html
+    
+    <Directory /usr/local/www/mysite.com/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/apache24/mysite.com-error.log
+    CustomLog /var/log/apache24/mysite.com-access.log common
+</VirtualHost>
+EOF
+
+# 4. Test and restart Apache
+apachectl -t && service apache24 restart
+</pre>
+
+        <p><strong>Enable .htaccess files:</strong></p>
+        <pre>
+# In your virtual host or directory configuration
+<Directory /usr/local/www/mysite.com/public_html>
+    Options Indexes FollowSymLinks
+    AllowOverride All  # This enables .htaccess
+    Require all granted
+</Directory>
+</pre>
+
+        <p><strong>Password protect a directory:</strong></p>
+        <pre>
+# 1. Create password file
+htpasswd -c /usr/local/etc/apache24/.htpasswd admin
+# You'll be prompted for the password
+
+# 2. Configure directory in virtual host
+<Directory /usr/local/www/mysite.com/private>
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile /usr/local/etc/apache24/.htpasswd
+    Require valid-user
+</Directory>
+</pre>
+
+        <p><strong>Enable CGI scripts:</strong></p>
+        <pre>
+# 1. Ensure CGI module is loaded (usually enabled by default)
+# LoadModule cgid_module modules/mod_cgid.so
+
+# 2. Configure CGI directory
+<Directory /usr/local/www/mysite.com/cgi-bin>
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+# 3. Create a test CGI script
+cat > /usr/local/www/mysite.com/cgi-bin/test.cgi << 'EOF'
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+echo "<html><body><h1>CGI Test Successful</h1></body></html>"
+EOF
+chmod +x /usr/local/www/mysite.com/cgi-bin/test.cgi
+
+# 4. Test in browser: http://mysite.com/cgi-bin/test.cgi
+</pre>
+
+        <p><strong>Custom error pages:</strong></p>
+        <pre>
+# In your virtual host configuration
+ErrorDocument 401 /errors/401.html
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
+
+# Create error directory and pages
+mkdir -p /usr/local/www/mysite.com/errors
+# Create your custom error pages in this directory
+</pre>
+
+        <p><strong>Disable directory listing:</strong></p>
+        <pre>
+<Directory /usr/local/www/mysite.com/public_html>
+    Options -Indexes
+</Directory>
+</pre>
+
+        <h4 id="s3h">.htaccess Configuration</h4>
+
+        <p>.htaccess files allow directory-level configuration without editing the main Apache configuration.</p>
+
+        <p><strong>Enable .htaccess:</strong> Make sure <code>AllowOverride All</code> is set for the directory.</p>
+
+        <p><strong>Common .htaccess examples:</strong></p>
+
+        <p><strong>Basic authentication:</strong></p>
+        <pre>
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /usr/local/www/.htpasswd
+Require valid-user
+</pre>
+
+        <p><strong>Rewrite URLs:</strong></p>
+        <pre>
+RewriteEngine On
+RewriteRule ^old-page.html$ /new-page.html [R=301,L]
+
+# Remove .html extension
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.html [L]
+</pre>
+
+        <p><strong>Custom error documents:</strong></p>
+        <pre>
+ErrorDocument 404 /custom-404.html
+ErrorDocument 403 /custom-403.html
+</pre>
+
+        <p><strong>Prevent hotlinking:</strong></p>
+        <pre>
+RewriteEngine On
+RewriteCond %{HTTP_REFERER} !^$ [NC]
+RewriteCond %{HTTP_REFERER} !^https?://(www\)?example.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif)$ - [F,NC]
+</pre>
+
+        <p><strong>Redirect www to non-www:</strong></p>
+        <pre>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www.example.com [NC]
+RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+</pre>
+
+        <p><strong>Redirect HTTP to HTTPS:</strong></p>
+        <pre>
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</pre>
+
+        <p><strong>Cache control:</strong></p>
+        <pre>
+<FilesMatch "\.(html|htm|php|cgi|pl)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+    Header set Cache-Control "public, max-age=31536000"
+</FilesMatch>
+</pre>
+
+        <h4 id="s1i">Security Hardening</h4>
+
+        <p>Security is critical for web servers exposed to the internet. These recommendations apply to both 
+        nginx and Apache.</p>
+
+        <p><strong>General Security Best Practices:</strong></p>
+        <ul>
+            <li>Keep your web server and all software updated</li>
+            <li>Use HTTPS for all sites (not just login pages)</li>
+            <li>Regularly review access and error logs</li>
+            <li>Limit user permissions (run as non-root user when possible)</li>
+            <li>Disable unused modules and features</li>
+            <li>Use strong passwords for all accounts</li>
+            <li>Regularly back up your website files and databases</li>
+        </ul>
+
+        <p><strong>Nginx Security Configuration:</strong></p>
+        <pre>
+# In nginx.conf
+user  www;  # Run as www user, not root
+
+# Hide nginx version in error pages and headers
+server_tokens off;
+
+# Disable server version in response headers
+more_clear_headers 'Server';
+
+# Limit request methods
+if ($request_method !~ ^(GET|HEAD|POST|PUT|DELETE|OPTIONS)$ ) {
+    return 405;
+}
+
+# Block access to hidden files (starting with .)
+location ~ /\. {
+    deny all;
+    return 404;
+}
+
+# Prevent clickjacking
+add_header X-Frame-Options "SAMEORIGIN" always;
+
+# Prevent MIME type sniffing
+add_header X-Content-Type-Options "nosniff" always;
+
+# Enable XSS protection
+add_header X-XSS-Protection "1; mode=block" always;
+
+# Prevent content-type sniffing for uploads
+location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt|html)$ {
+    add_header X-Content-Type-Options "nosniff";
+}
+</pre>
+
+        <p><strong>Apache Security Configuration:</strong></p>
+        <pre>
+# Run as non-root user
+User www
+Group www
+
+# Hide Apache version
+ServerTokens Prod
+ServerSignature Off
+
+# Disable .htaccess in root directory (if not needed)
+<Directory />
+    AllowOverride None
+    Require all denied
+</Directory>
+
+# Protect configuration files
+<FilesMatch "^\.ht">
+    Require all denied
+</FilesMatch>
+
+# Limit request methods
+<LimitExcept GET POST HEAD>
+    Require all denied
+</LimitExcept>
+
+# Disable directory listing
+Options -Indexes
+
+# Security headers
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-XSS-Protection "1; mode=block"
+</pre>
+
+        <p><strong>Rate Limiting (Nginx):</strong></p>
+        <pre>
+# Limit connections from a single IP
+limit_conn_zone $binary_remote_addr zone=conn_limit:10m;
+limit_conn conn_limit 20;
+
+# Limit request rate
+limit_req_zone $binary_remote_addr zone=req_limit:10m rate=10r/s;
+limit_req zone=req_limit burst=20 nodelay;
+
+# Apply to specific location
+location /login {
+    limit_req zone=req_limit burst=5;
+}
+</pre>
+
+        <p><strong>Rate Limiting (Apache):</strong></p>
+        <pre>
+# Requires mod_evasive or mod_security
+# Example with mod_evasive (install via mports)
+<IfModule mod_evasive24.c>
+    DOSHashTableSize    3097
+    DOSPageCount        2
+    DOSSiteCount       50
+    DOSPageInterval    1
+    DOSSiteInterval    1
+    DOSBlockingPeriod   60
+</IfModule>
+</pre>
+
+        <p><strong>File Upload Security:</strong></p>
+        <pre>
+# Nginx
+client_max_body_size 10M;  # Limit upload size
+client_body_temp_path /tmp/nginx_upload;
+
+# Apache
+LimitRequestBody 10485760  # 10MB limit
+</pre>
+
+        <h4 id="s1j">Load Balancing</h4>
+
+        <p>Both nginx and Apache can be configured as load balancers to distribute traffic across 
+        multiple backend servers.</p>
+
+        <p><strong>Nginx Load Balancing:</strong></p>
+        <pre>
+# Define upstream servers
+upstream backend_servers {
+    # Weighted round-robin
+    server 192.168.1.101:8000 weight=3;
+    server 192.168.1.102:8000;
+    server 192.168.1.103:8000;
+    
+    # Health check
+    # check interval=5000 rise=2 fall=3 timeout=3000 type=http;
+    # check_http_send "HEAD / HTTP/1.0\r\n\r\n";
+    # check_http_expect_alive http_2xx http_3xx;
+}
+
+# Round-robin (default)
+upstream round_robin {
+    server 192.168.1.101:8000;
+    server 192.168.1.102:8000;
+}
+
+# IP hash (sticky sessions)
+upstream sticky_sessions {
+    ip_hash;
+    server 192.168.1.101:8000;
+    server 192.168.1.102:8000;
+}
+
+# Least connections
+upstream least_conn {
+    least_conn;
+    server 192.168.1.101:8000;
+    server 192.168.1.102:8000;
+}
+
+# Use in server block
+server {
+    listen 80;
+    server_name loadbalanced.example.com;
+    
+    location / {
+        proxy_pass http://backend_servers;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+</pre>
+
+        <p><strong>Apache Load Balancing (with mod_proxy_balancer):</strong></p>
+        <pre>
+# Enable required modules
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+
+# Configure balancer
+<Proxy balancer://mycluster>
+    BalancerMember http://192.168.1.101:8000
+    BalancerMember http://192.168.1.102:8000
+    BalancerMember http://192.168.1.103:8000
+    
+    # Sticky session using route
+    ProxySet stickysession=ROUTEID
+</Proxy>
+
+# Virtual host using load balancer
+<VirtualHost *:80>
+    ServerName loadbalanced.example.com
+    
+    ProxyPass / balancer://mycluster/
+    ProxyPassReverse / balancer://mycluster/
+</VirtualHost>
+</pre>
+
+        <p><strong>Health checks and failover:</strong></p>
+        <pre>
+# Nginx with health checks (requires nginx upstream check module)
+upstream backend_with_healthcheck {
+    server 192.168.1.101:8000 max_fails=3 fail_timeout=30s;
+    server 192.168.1.102:8000 max_fails=3 fail_timeout=30s;
+    server 192.168.1.103:8000 backup;
+}
+
+# Apache with failover
+<Proxy balancer://failover>
+    BalancerMember http://192.168.1.101:8000
+    BalancerMember http://192.168.1.102:8000
+    BalancerMember http://192.168.1.103:8000 status=+H
+    ProxySet failonstatus=500,502,503,504
+</Proxy>
+</pre>
+
+        <h4 id="s1k">Monitoring and Logging</h4>
+
+        <p>Proper monitoring and logging are essential for troubleshooting and performance optimization.</p>
+
+        <p><strong>Nginx Logging:</strong></p>
+        <pre>
+# Custom log format
+http {
+    log_format custom_log '$remote_addr - $remote_user [$time_local] "$request" '
+                          '$status $body_bytes_sent "$http_referer" '
+                          '"$http_user_agent" $request_time';
+    
+    access_log /var/log/nginx/access.log custom_log;
+    error_log /var/log/nginx/error.log warn;
+}
+
+# Per-server logging
+server {
+    access_log /var/log/nginx/example.com-access.log;
+    error_log /var/log/nginx/example.com-error.log;
+}
+
+# Disable logging for specific requests
+location /health-check {
+    access_log off;
+}
+</pre>
+
+        <p><strong>Apache Logging:</strong></p>
+        <pre>
+# Custom log format
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" extended
+
+# Use custom log format
+CustomLog /var/log/apache24/access.log extended
+ErrorLog /var/log/apache24/error.log
+
+# Per-virtual-host logging
+<VirtualHost *:80>
+    ServerName example.com
+    CustomLog /var/log/apache24/example.com-access.log combined
+    ErrorLog /var/log/apache24/example.com-error.log
+</VirtualHost>
+</pre>
+
+        <p><strong>Log rotation:</strong></p>
+        <pre>
+# Both nginx and Apache respect newsyslog configuration
+# Edit /etc/newsyslog.conf
+
+# Example log rotation entry
+/var/log/nginx/*.log       www:www   640  7     *    @T00  JC
+/var/log/apache24/*.log   www:www   640  7     *    @T00  JC
+
+# Or use logrotate (install via mports)
+mport install logrotate
+</pre>
+
+        <p><strong>Real-time log monitoring:</strong></p>
+        <pre>
+# Monitor access log in real-time
+tail -f /var/log/nginx/access.log
+
+# Filter for errors
+tail -f /var/log/nginx/error.log | grep error
+
+# Monitor Apache logs
+tail -f /var/log/apache24/access.log
+
+# Count requests per minute
+tail -n 1000 /var/log/nginx/access.log | awk '{print $4}' | cut -d: -f2,3 | uniq -c
+</pre>
+
+        <p><strong>Access statistics:</strong></p>
+        <pre>
+# Install log analysis tools
+mport install awstats
+mport install goaccess
+
+# Run awstats
+awstats -config=nginx -update
+
+# Run goaccess (real-time web log analyzer)
+goaccess /var/log/nginx/access.log --log-format=COMBINED
+</pre>
+
+        <p><strong>Monitoring with htop/htop:</strong></p>
+        <pre>
+# Install htop
+mport install htop
+
+# Monitor web server processes
+htop
+# Press F5 to sort by CPU usage
+</pre>
+
+        <p><strong>Status pages:</strong></p>
+        <pre>
+# Nginx status page (requires ngx_http_stub_status_module)
+location /nginx-status {
+    stub_status on;
+    access_log off;
+    allow 127.0.0.1;
+    allow 192.168.1.0/24;
+    deny all;
+}
+
+# Apache status page (requires mod_status)
+<Location /server-status>
+    SetHandler server-status
+    Require local
+    # Or for specific IPs:
+    # Require ip 192.168.1.100
+</Location>
+
+# Enable extended status
+ExtendedStatus On
+</pre>
+
+        <h4 id="s1l">Troubleshooting</h4>
+
+        <p><strong>Common Issues and Solutions:</strong></p>
+
+        <h5>Nginx Troubleshooting</h5>
+        <p><strong>"Address already in use" error:</strong></p>
+        <pre>
+# Check what's using port 80
+netstat -an | grep :80
+
+# Kill the conflicting process
+kill -9 [PID]
+
+# Or use sockstat
+sockstat -l | grep :80
+</pre>
+
+        <p><strong>Configuration syntax errors:</strong></p>
+        <pre>
+# Test configuration before applying
+nginx -t
+
+# If there's an error, it will tell you the file and line number
+</pre>
+
+        <p><strong>Permission denied errors:</strong></p>
+        <pre>
+# Check file permissions
+ls -la /usr/local/www/example.com
+
+# Ensure nginx worker process has access
+chown -R www:www /usr/local/www/example.com
+chmod -R 755 /usr/local/www/example.com
+</pre>
+
+        <p><strong>502 Bad Gateway (proxy issues):</strong></p>
+        <pre>
+# Check if backend server is running
+netstat -an | grep 8000
+
+# Check proxy configuration
+# Ensure proxy_pass directive points to correct backend
+
+# Test connection to backend
+curl http://localhost:8000
+</pre>
+
+        <p><strong>403 Forbidden:</strong></p>
+        <pre>
+# Check directory permissions
+ls -la /usr/local/www/example.com
+
+# Check nginx configuration for the location
+# Ensure root or alias directives are correct
+
+# Check if index files exist
+ls -la /usr/local/www/example.com/index.html
+</pre>
+
+        <h5>Apache Troubleshooting</h5>
+        <p><strong>"Address already in use" error:</strong></p>
+        <pre>
+# Check what's using port 80
+netstat -an | grep :80
+
+# Stop Apache first
+service apache24 stop
+
+# Then start again
+service apache24 start
+</pre>
+
+        <p><strong>Syntax errors:</strong></p>
+        <pre>
+# Test configuration
+apachectl -t
+
+# If there's an error, it will tell you the file and line number
+</pre>
+
+        <p><strong>Permission denied:</strong></p>
+        <pre>
+# Check file permissions
+ls -la /usr/local/www/example.com
+
+# Ensure Apache user has access
+chown -R www:www /usr/local/www/example.com
+chmod -R 755 /usr/local/www/example.com
+
+# Check SELinux/AppArmor (not typically on MidnightBSD)
+</pre>
+
+        <p><strong>Module not loaded:</strong></p>
+        <pre>
+# Check loaded modules
+httpd -M
+
+# Uncomment or add LoadModule directive in httpd.conf
+LoadModule rewrite_module modules/mod_rewrite.so
+
+# Restart Apache
+service apache24 restart
+</pre>
+
+        <p><strong>PHP not working:</strong></p>
+        <pre>
+# Ensure PHP module is loaded
+LoadModule php7_module modules/libphp7.so
+
+# Check PHP handler configuration
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# Or for PHP-FPM
+# LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+# ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/usr/local/www/$1
+</pre>
+
+        <p><strong>Debugging tools:</strong></p>
+        <pre>
+# Check open files by Apache
+fstat | grep httpd
+
+# Check network connections
+netstat -an | grep httpd
+
+# Check Apache modules
+httpd -M
+
+# Check nginx processes
+ps aux | grep nginx
+
+# Check nginx connections
+nginx -T  # Show full configuration with all includes
+</pre>
+
+        <p><strong>Debug log level:</strong></p>
+        <pre>
+# Nginx - set error_log level
+error_log /var/log/nginx/error.log debug;
+
+# Apache - set LogLevel
+echo "LogLevel debug" >> /usr/local/etc/apache24/httpd.conf
+service apache24 restart
+</pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
