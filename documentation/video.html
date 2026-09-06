@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Complete guide to video playback on MidnightBSD. Learn how to install and use MPV, VLC, MPlayer, Kodi, and other media players with hardware acceleration support.">
+    <title>MidnightBSD Documentation - Video Playback</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/video.html">
+		<meta property="og:title" content="MidnightBSD Documentation - Video Playback">
+    <meta property="og:description" content="Complete guide to video playback on MidnightBSD. Learn how to install and use MPV, VLC, MPlayer, Kodi, and other media players with hardware acceleration support.">
+    <meta property="og:url" content="https://www.midnightbsd.org/documentation/video.html">
+    <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MidnightBSD Documentation - Video Playback">
+    <meta name="twitter:description" content="Complete guide to video playback on MidnightBSD. Learn how to install and use MPV, VLC, MPlayer, Kodi, and other media players with hardware acceleration support.">
+    <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Video Playback</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Prerequisites</a></li>
+                <li><a href="#s1d">Available Video Players</a></li>
+                <li><a href="#s2b">MPV - Recommended Player</a></li>
+                <li><a href="#s2c">VLC Media Player</a></li>
+                <li><a href="#s2d">MPlayer</a></li>
+                <li><a href="#s2e">Kodi Media Center</a></li>
+                <li><a href="#s2f">Other Players</a></li>
+                <li><a href="#s1e">Hardware Acceleration</a></li>
+                <li><a href="#s1f">Codecs and Formats</a></li>
+                <li><a href="#s1g">Streaming Video</a></li>
+                <li><a href="#s1h">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Video Playback</h3>
+        <h4 id="s1b">Introduction</h4>
+
+        <p>MidnightBSD provides comprehensive support for video playback through various media players available 
+        via mports. This guide covers the available video players, hardware acceleration options, codec support, 
+        and troubleshooting common video playback issues.</p>
+
+        <p><strong>Available in mports:</strong> mpv, vlc, mplayer, xine, kodi, totem, dragon, parole, cheese, ffmpeg, streamlink, and more.</p>
+
+        <h4 id="s1c">Prerequisites</h4>
+
+        <p><strong>User Group Membership:</strong></p>
+        <pre>
+doas pw groupmod video -m username</pre>
+
+        <p><strong>Xorg Configuration:</strong> For GUI players, ensure X11 is working. See <a href="desktop.html">Xorg documentation</a>.</p>
+
+        <p><strong>Audio Configuration:</strong> Ensure sound is working. See <a href="sound.html">Sound documentation</a>.</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1d">Available Video Players</h4>
+
+        <table>
+            <tr>
+                <th>Player</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Package</th>
+            </tr>
+            <tr>
+                <td><strong>MPV</strong></td>
+                <td>CLI/Minimal GUI</td>
+                <td>Lightweight, highly configurable, excellent performance</td>
+                <td><code>mpv</code></td>
+            </tr>
+            <tr>
+                <td><strong>VLC</strong></td>
+                <td>GUI</td>
+                <td>Full-featured, cross-platform, built-in codecs</td>
+                <td><code>vlc</code></td>
+            </tr>
+            <tr>
+                <td><strong>MPlayer</strong></td>
+                <td>CLI/Minimal GUI</td>
+                <td>Mature player with extensive format support</td>
+                <td><code>mplayer</code></td>
+            </tr>
+            <tr>
+                <td><strong>Kodi</strong></td>
+                <td>GUI/Media Center</td>
+                <td>Full media center for TV, movies, music</td>
+                <td><code>kodi</code></td>
+            </tr>
+            <tr>
+                <td><strong>Xine</strong></td>
+                <td>GUI</td>
+                <td>Traditional media player with plugin architecture</td>
+                <td><code>xine</code></td>
+            </tr>
+            <tr>
+                <td><strong>Totem</strong></td>
+                <td>GUI (GNOME)</td>
+                <td>Simple GNOME media player</td>
+                <td><code>totem</code></td>
+            </tr>
+            <tr>
+                <td><strong>Dragon</strong></td>
+                <td>GUI (KDE)</td>
+                <td>KDE media player</td>
+                <td><code>dragon</code></td>
+            </tr>
+            <tr>
+                <td><strong>Parole</strong></td>
+                <td>GUI (XFCE)</td>
+                <td>XFCE media player using GStreamer</td>
+                <td><code>xfce4-parole</code></td>
+            </tr>
+        </table>
+
+        <p><strong>Recommendation:</strong> For most users, <strong>MPV</strong> is recommended. <strong>VLC</strong> is a good alternative with GUI.</p>
+
+        <h3>Player Configuration</h3>
+        <h4 id="s2b">MPV - Recommended Player</h4>
+
+        <p><code>MPV</code> is a lightweight, highly configurable media player with excellent performance and comprehensive format support.</p>
+
+        <p><strong>Installation:</strong></p>
+        <code># doas mport install mpv</code>
+
+        <p><strong>Basic Usage:</strong></p>
+        <pre>
+# Play a local file
+mpv /path/to/video.mp4
+
+# Play with subtitles
+mpv --sub-file=/path/to/subtitles.srt /path/to/video.mp4
+
+# Play from URL
+mpv https://example.com/video.mp4
+
+# Fullscreen
+mpv --fullscreen /path/to/video.mp4
+</pre>
+
+        <p><strong>Common Options:</strong></p>
+        <ul>
+            <li><code>--fullscreen</code> or <code>-fs</code> - Fullscreen mode</li>
+            <li><code>--sub-file=FILE</code> - Load subtitles</li>
+            <li><code>--volume=50</code> - Set initial volume (0-100)</li>
+            <li><code>--speed=1.25</code> - Set playback speed</li>
+            <li><code>--hwdec=auto</code> - Enable hardware decoding</li>
+            <li><code>--profile=gpu-hq</code> - High-quality GPU profile</li>
+        </ul>
+
+        <p><strong>Keyboard Controls:</strong></p>
+        <ul>
+            <li><kbd>Space</kbd> - Pause/Resume</li>
+            <li><kbd>→/←</kbd> - Seek forward/backward 5 seconds</li>
+            <li><kbd>↑/↓</kbd> - Seek forward/backward 1 minute</li>
+            <li><kbd>+/=</kbd> - Increase volume</li>
+            <li><kbd>-</kbd> - Decrease volume</li>
+            <li><kbd>m</kbd> - Mute</li>
+            <li><kbd>f</kbd> - Toggle fullscreen</li>
+            <li><kbd>q</kbd> - Quit</li>
+            <li><kbd>t</kbd> - Toggle subtitle visibility</li>
+            <li><kbd>s</kbd> - Take screenshot</li>
+        </ul>
+
+        <p><strong>Configuration File:</strong> <code>~/.config/mpv/mpv.conf</code></p>
+        <pre>
+fullscreen=yes
+vo=gpu
+hwdec=auto
+profile=gpu-hq
+volume=75
+cache=yes
+screenshot-directory=~/Pictures
+</pre>
+
+        <p><strong>Hardware Decoding:</strong></p>
+        <pre>
+mpv --hwdec=vaapi video.mp4    # VA-API
+mpv --hwdec=vdpau video.mp4    # VDPAU
+mpv --hwdec=auto video.mp4     # Automatic
+</pre>
+
+        <p><strong>Install Codecs:</strong></p>
+        <code># doas mport install ffmpeg libva libvdpau</code>
+
+        <h4 id="s2c">VLC Media Player</h4>
+
+        <p><code>VLC</code> is a full-featured, cross-platform media player with extensive format support and user-friendly interface.</p>
+
+        <p><strong>Installation:</strong></p>
+        <code># doas mport install vlc</code>
+
+        <p><strong>Basic Usage:</strong></p>
+        <pre>
+vlc                          # Launch GUI
+vlc /path/to/video.mp4        # Play file from CLI
+vlc dvd:///dev/cd0           # Play DVD
+</pre>
+
+        <p><strong>Hardware Acceleration:</strong></p>
+        <pre>
+vlc --avcodec=vaapi video.mp4
+vlc --avcodec=vdau video.mp4
+</pre>
+
+        <p><strong>Convert Media:</strong> <code>Media → Convert/Save...</code></p>
+        <p><strong>Stream Media:</strong> <code>Media → Open Network Stream...</code></p>
+
+        <p><strong>Preferences:</strong> <code>Tools → Preferences</code> (Show All for advanced settings)</p>
+
+        <h4 id="s2d">MPlayer</h4>
+
+        <p><code>MPlayer</code> is a mature media player with extensive format support and configurability.</p>
+
+        <p><strong>Installation:</strong></p>
+        <code># doas mport install mplayer mplayer-skins</code>
+
+        <p><strong>Basic Usage:</strong></p>
+        <pre>
+mplayer /path/to/video.mp4        # Play file
+mplayer dvd:///dev/cd0           # Play DVD
+mplayer -fs /path/to/video.mp4    # Fullscreen
+</pre>
+
+        <p><strong>Video Output Drivers:</strong></p>
+        <pre>
+mplayer -vo xv video.mp4         # X11 Video extension
+mplayer -vo opengl video.mp4     # OpenGL
+mplayer -vo vdpau video.mp4     # VDPAU
+mplayer -vo vaapi video.mp4     # VA-API
+</pre>
+
+        <p><strong>Audio Output Drivers:</strong></p>
+        <pre>
+mplayer -ao pulse video.mp4      # PulseAudio
+mplayer -ao oss video.mp4        # OSS audio
+</pre>
+
+        <p><strong>Hardware Acceleration:</strong></p>
+        <pre>
+mplayer -vc ffh264vdpau,ffmpeg12vdpau -vo vdpau video.mp4
+</pre>
+
+        <p><strong>Configuration:</strong> <code>~/.mplayer/config</code></p>
+
+        <h4 id="s2e">Kodi Media Center</h4>
+
+        <p><code>Kodi</code> is a full media center application designed for home theater PCs with a beautiful, 
+        user-friendly interface optimized for TV.</p>
+
+        <p><strong>Installation:</strong></p>
+        <code># doas mport install kodi</code>
+
+        <p><strong>Basic Usage:</strong></p>
+        <pre>
+kodi               # Launch Kodi
+kodi-standalone   # Launch in fullscreen
+</pre>
+
+        <p><strong>Setup:</strong></p>
+        <ol>
+            <li>Configure language, region, and appearance</li>
+            <li>Set up media sources (Videos, Music, Pictures)</li>
+            <li>Kodi will automatically scan and organize media</li>
+        </ol>
+
+        <p><strong>Hardware Acceleration:</strong> Enable in Settings → Player → Videos → Acceleration</p>
+        <p><strong>Useful Add-ons:</strong> YouTube, Netflix, PVR IPTV Simple Client, Subtitles</p>
+
+        <h4 id="s2f">Other Players</h4>
+
+        <p><strong>Xine:</strong></p>
+        <code># doas mport install xine</code>
+        <pre>xine /path/to/video.mp4</pre>
+
+        <p><strong>Totem (GNOME):</strong></p>
+        <code># doas mport install totem</code>
+        <pre>totem /path/to/video.mp4</pre>
+
+        <p><strong>Dragon (KDE):</strong></p>
+        <code># doas mport install dragon</code>
+        <pre>dragon /path/to/video.mp4</pre>
+
+        <p><strong>Parole (XFCE):</strong></p>
+        <code># doas mport install xfce4-parole</code>
+        <pre>parole /path/to/video.mp4</pre>
+
+        <h3 id="s1e">Hardware Acceleration</h3>
+
+        <p>Hardware acceleration can significantly improve video playback performance, especially for HD content.</p>
+
+        <h5>VA-API (Video Acceleration API)</h5>
+        <p><strong>Supported Hardware:</strong> Intel (G45+), AMD (Radeon HD 2000+)</p>
+        <p><strong>Installation:</strong></p>
+        <pre>
+doas mport install libva libva-intel-driver  # Intel
+doas mport install libva libva-vdpau-driver  # AMD
+</pre>
+        <p><strong>Verify:</strong></p>
+        <pre>vainfo</pre>
+        <p><strong>Usage:</strong></p>
+        <pre>
+mpv --hwdec=vaapi video.mp4
+vlc --avcodec=vaapi video.mp4
+</pre>
+
+        <h5>VDPAU (Video Decode and Presentation API)</h5>
+        <p><strong>Supported Hardware:</strong> NVIDIA (GeForce 8+), AMD (Radeon HD 2000+)</p>
+        <p><strong>Installation:</strong></p>
+        <pre>
+doas mport install libvdpau nvidia-driver  # NVIDIA
+doas mport install libvdpau libva-vdpau-driver  # AMD open-source
+</pre>
+        <p><strong>Verify:</strong></p>
+        <pre>vdpauinfo</pre>
+        <p><strong>Usage:</strong></p>
+        <pre>
+mpv --hwdec=vdpau video.mp4
+mplayer -vc ffh264vdpau -vo vdpau video.mp4
+vlc --avcodec=vdau video.mp4
+</pre>
+
+        <h5>Intel Quick Sync</h5>
+        <p><strong>Supported Hardware:</strong> Sandy Bridge+</p>
+        <p><strong>Installation:</strong></p>
+        <pre>
+doas mport install intel-media-sdk libva-intel-driver
+</pre>
+        <p><strong>Usage:</strong></p>
+        <pre>mpv --hwdec=vaapi video.mp4</pre>
+
+        <h5>NVIDIA NVDEC/NVENC</h5>
+        <p><strong>Supported Hardware:</strong> GeForce GTX 600+</p>
+        <p><strong>Installation:</strong></p>
+        <pre>
+doas mport install nvidia-driver libva-vdpau-driver
+</pre>
+        <p><strong>Usage:</strong></p>
+        <pre>
+mpv --hwdec=vdpau video.mp4  # VDPAU
+mpv --hwdec=vaapi video.mp4   # VA-API (newer drivers)
+</pre>
+
+        <p><strong>Driver Configuration:</strong></p>
+        <pre>
+kldload nvidia             # Load NVIDIA kernel module
+sysrc nvidia_load=YES       # Enable at boot
+nvidia-smi                 # Check driver status
+</pre>
+
+        <p><strong>Verify Hardware Acceleration:</strong></p>
+        <pre>
+mpv --hwdec=auto --verbose video.mp4  # Check for hwdec messages
+vainfo                              # VA-API info
+vdpauinfo                          # VDPAU info
+</pre>
+
+        <h3 id="s1f">Codecs and Formats</h3>
+
+        <p><strong>Common Video Codecs:</strong> H.264/AVC, H.265/HEVC, AV1, VP9, VP8, MPEG-2, MPEG-4, VC-1/WMV, Theora</p>
+
+        <p><strong>Common Video Containers:</strong> MP4, MKV, WebM, AVI, MOV, FLV, TS/M2TS, OGG, WMV/ASF</p>
+
+        <p><strong>Install Codec Support:</strong></p>
+        <pre>
+doas mport install ffmpeg libx264 libx265 libvpx libtheora
+
+# DVD support
+doas mport install libdvdcss libdvdnav libdvdread
+
+# Blu-ray support
+doas mport install libbluray libaacs
+
+# AV1 support
+doas mport install dav1d
+</pre>
+
+        <p><strong>Check File Information:</strong></p>
+        <pre>
+ffprobe /path/to/video.mp4
+ffmpeg -codecs          # List supported codecs
+ffmpeg -formats         # List supported formats
+</pre>
+
+        <h3 id="s1g">Streaming Video</h3>
+
+        <p><strong>Streamlink:</strong> CLI tool for extracting streams from YouTube, Twitch, and other sites.</p>
+        <p><strong>Installation:</strong></p>
+        <code># doas mport install streamlink</code>
+
+        <p><strong>Basic Usage:</strong></p>
+        <pre>
+# List available streams
+streamlink https://youtube.com/watch?v=ID --stream-types
+
+# Play best quality with MPV
+streamlink https://youtube.com/watch?v=ID best -p mpv
+
+# Play with VLC
+streamlink https://youtube.com/watch?v=ID best -p vlc
+
+# Save stream to file
+streamlink https://youtube.com/watch?v=ID best -o video.mp4
+</pre>
+
+        <p><strong>Streaming with MPV/VLC:</strong></p>
+        <pre>
+# MPV
+mpv https://youtube.com/watch?v=VIDEO_ID
+mpv https://twitch.tv/channel_name
+
+# VLC
+vlc https://example.com/stream.m3u8
+vlc rtsp://server/stream
+</pre>
+
+        <h3 id="s1h">Troubleshooting</h3>
+
+        <p><strong>No Video Output:</strong></p>
+        <ul>
+            <li>Check display server: <code>echo $DISPLAY</code></li>
+            <li>Try different output driver: <code>mpv -vo xv,opengl,gl video.mp4</code></li>
+            <li>Check GPU drivers: <code>kldstat | grep drm</code></li>
+            <li>Check permissions: <code>id username</code> (ensure in video group)</li>
+            <li>Try software rendering: <code>mpv -vo x11 video.mp4</code></li>
+        </ul>
+
+        <p><strong>Choppy/Stuttering Playback:</strong></p>
+        <ul>
+            <li>Check CPU usage: <code>htop</code></li>
+            <li>Enable hardware acceleration: <code>mpv --hwdec=auto video.mp4</code></li>
+            <li>Increase cache: <code>mpv --cache=5000 video.mp4</code></li>
+            <li>Reduce resolution or close other applications</li>
+        </ul>
+
+        <p><strong>No Audio:</strong></p>
+        <ul>
+            <li>Check volume: <code>mixer</code></li>
+            <li>Try different audio output: <code>mpv -ao pulse,oss,alsa video.mp4</code></li>
+            <li>Check sound configuration (see <a href="sound.html">Sound docs</a>)</li>
+        </ul>
+
+        <p><strong>Missing Codec:</strong></p>
+        <ul>
+            <li>Install FFmpeg: <code>doas mport install ffmpeg</code></li>
+            <li>Install additional codecs: <code>doas mport install libx264 libx265 libvpx</code></li>
+            <li>Check file info: <code>ffprobe video.mp4</code></li>
+            <li>Try software decoding: <code>mpv --hwdec=no video.mp4</code></li>
+        </ul>
+
+        <p><strong>Hardware Acceleration Not Working:</strong></p>
+        <ul>
+            <li>Check hardware support: <code>vainfo</code>, <code>vdpauinfo</code></li>
+            <li>Verify drivers: <code>kldstat | grep drm</code></li>
+            <li>Check device permissions: <code>ls -la /dev/dri/</code></li>
+            <li>Add user to video group: <code>doas pw groupmod video -m username</code></li>
+            <li>Try different backend: <code>mpv --hwdec=vaapi,vdpau,auto video.mp4</code></li>
+        </ul>
+
+        <p><strong>Diagnostic Commands:</strong></p>
+        <pre>
+# Video file information
+ffprobe /path/to/video.mp4
+
+# Hardware acceleration info
+vainfo
+vdpauinfo
+
+# GPU information
+kldstat | grep drm
+
+# Player version
+mpv --version
+vlc --version
+mplayer -v
+
+# Verbose logging
+mpv -v /path/to/video.mp4
+vlc -vvv /path/to/video.mp4
+</pre>
+
+        <p><strong>Performance Monitoring:</strong></p>
+        <pre>
+htop                        # CPU usage
+nvidia-smi                  # NVIDIA GPU info
+intel_gpu_top               # Intel GPU info
+</pre>
+
+        <p><strong>Configuration Files:</strong></p>
+        <pre>
+# MPV
+~/.config/mpv/mpv.conf
+
+# VLC
+~/.config/vlc/vlcrc
+
+# MPlayer
+~/.mplayer/config
+
+# Kodi
+~/.kodi/userdata/guisettings.xml
+</pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
