@@ -6,14 +6,17 @@
                       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://www.midnightbsd.org/legal/bsd-license.txt</loc>
+  <lastmod>2008-08-20T22:59:17Z</lastmod>
   <priority>0.0021</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/mbsd-trademarks.txt</loc>
+  <lastmod>2008-08-20T22:59:17Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/images/screen_login.jpg</loc>
+  <lastmod>2007-07-07T05:51:24Z</lastmod>
   <priority>0.0010</priority>
  </url>
 </urlset>

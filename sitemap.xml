@@ -6,14 +6,17 @@
                       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://www.midnightbsd.org/</loc>
+  <lastmod>2026-08-14T17:31:48-04:00</lastmod>
   <priority>0.5225</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/about/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0794</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/art/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0282</priority>
  </url>
  <url>
@@ -26,154 +29,192 @@
  </url>
  <url>
   <loc>https://www.midnightbsd.org/community/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0240</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/developer/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0230</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/</loc>
+  <lastmod>2026-09-06T02:03:00-04:00</lastmod>
   <priority>0.0627</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/kernel/modules.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/mports/</loc>
+  <lastmod>2026-07-31T22:45:00-04:00</lastmod>
   <priority>0.0021</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/mports/fake.html</loc>
+  <lastmod>2026-07-31T22:39:34-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/mports/policy.html</loc>
+  <lastmod>2026-07-31T22:39:34-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/mports/bsd.port.mk.html</loc>
+  <lastmod>2026-07-31T22:39:34-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/backups.html</loc>
+  <lastmod>2026-09-06T10:12:24-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/bind.html</loc>
+  <lastmod>2026-07-31T22:45:00-04:00</lastmod>
   <priority>0.0115</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/dateandtime.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0115</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/desktop.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0115</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/dns.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/dump.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/doas.html</loc>
+  <lastmod>2026-09-06T10:12:24-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/duo.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/email.html</loc>
+  <lastmod>2026-09-06T10:12:24-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/firewall.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/flashdriveboot.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/gpt.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/linux.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/livecd.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/ntp.html</loc>
+  <lastmod>2026-07-31T22:45:00-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/postgresql.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/zfs.html</loc>
+  <lastmod>2026-07-31T22:47:11-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/video.html</loc>
+  <lastmod>2026-09-06T10:12:24-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/documentation/webservers.html</loc>
+  <lastmod>2026-09-06T10:12:24-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/donate/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0240</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/download/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.1045</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/download/parallels.html</loc>
+  <lastmod>2026-07-31T22:30:28-04:00</lastmod>
   <priority>0.1045</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/download/vmware.html</loc>
+  <lastmod>2026-07-31T22:30:28-04:00</lastmod>
   <priority>0.1045</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0272</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/bsd-license.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0021</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/gnu-license.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/gnu-license.txt</loc>
+  <lastmod>2008-08-20T22:59:17Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/mbsd-license.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0052</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/mbsd-trademarks.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/legal/privacy.html</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
@@ -182,150 +223,187 @@
  </url>
  <url>
   <loc>https://www.midnightbsd.org/news/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0355</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.1045</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.1/errata.html</loc>
+  <lastmod>2025-04-17T23:11:35-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.1/</loc>
+  <lastmod>2025-04-17T23:11:35-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.1/notes.html</loc>
+  <lastmod>2026-07-31T22:45:00-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.1.1/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.1.1/errata.html</loc>
+  <lastmod>2025-04-17T23:11:35-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.2/</loc>
+  <lastmod>2026-07-31T22:57:25-04:00</lastmod>
   <priority>0.0052</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.2/errata.html</loc>
+  <lastmod>2026-07-31T22:57:25-04:00</lastmod>
   <priority>0.0052</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.2/notes.html</loc>
+  <lastmod>2026-07-31T22:57:25-04:00</lastmod>
   <priority>0.0052</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.3/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.3/errata.html</loc>
+  <lastmod>2025-04-17T23:11:35-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.4/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.5/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.6/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0063</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.7/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0042</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/0.8/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0031</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/1.0/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/1.1/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/1.2/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/2.0/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/2.1/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/2.2/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/3.0/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/3.1/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/3.2/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/notes/4.0/</loc>
+  <lastmod>2026-09-05T22:16:12-04:00</lastmod>
   <priority>0.0094</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.1672</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/0.7-gnome3.png</loc>
+  <lastmod>2015-10-03T16:47:38Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/0.8-lumina.png</loc>
+  <lastmod>2016-08-20T15:07:35-04:00</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/InstallingMidnightBSD.png</loc>
+  <lastmod>2008-08-22T03:20:23Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/MidnightBSD-Install.flv</loc>
+  <lastmod>2008-09-05T05:17:39Z</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/MidnightBSD-Setup.flv</loc>
+  <lastmod>2008-09-05T05:17:39Z</lastmod>
   <priority>0.0073</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/SettingUpMidnightBSD.png</loc>
+  <lastmod>2008-08-22T03:20:23Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/mbsd1a.png</loc>
+  <lastmod>2008-08-22T03:20:23Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/screenshots/mbsd2a.png</loc>
+  <lastmod>2008-08-22T03:20:23Z</lastmod>
   <priority>0.0010</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/security/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0502</priority>
  </url>
  <url>
@@ -334,14 +412,17 @@
  </url>
  <url>
   <loc>https://www.midnightbsd.org/sitemap/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0251</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/soc/</loc>
+  <lastmod>2026-07-31T22:35:13-04:00</lastmod>
   <priority>0.0209</priority>
  </url>
  <url>
   <loc>https://www.midnightbsd.org/support/</loc>
+  <lastmod>2026-08-14T17:33:21-04:00</lastmod>
   <priority>0.0209</priority>
  </url>
 </urlset>
