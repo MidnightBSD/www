@@ -169,32 +169,11 @@ $ mail
         <p><strong>Default mailer.conf:</strong></p>
         <pre>
 # $MidnightBSD$
-#
-# Execution environment for mail(1).
-#
-# This file specifies the execution environment for the mail(1) command
-# for different types of mail.  Each line specifies:
-#
-#   type  command
-#
-# Where &quot;type&quot; is one of the following:
-#
-#   send      - used for command line mail sending (mail -s subject user@domain)
-#   local     - used for local mail delivery (rmail)
-#   mailq     - used for mailq(1) command
-#   newaliases - used for newaliases(8) command
-#
-# Each command is executed with the arguments given by the mail(1) command.
-#
-# Example:
-#
-#sendmail        /usr/libexec/sendmail/sendmail
-#mailq          /usr/libexec/sendmail/sendmail
-#newaliases     /usr/libexec/sendmail/sendmail
-#
-sendmail        /usr/sbin/sendmail
-mailq           /usr/sbin/sendmail
-newaliases      /usr/sbin/newaliases
+sendmail       /usr/libexec/sendmail/sendmail
+mailq          /usr/libexec/sendmail/sendmail
+newaliases     /usr/libexec/sendmail/sendmail
+hoststat       /usr/libexec/sendmail/sendmail
+purgestat      /usr/libexec/sendmail/sendmail
 </pre>
 
         <p>When you install Postfix or Sendmail from mports, they will typically update this file to point to their  
@@ -307,9 +286,6 @@ R$* &lt; @ $=w . &gt;            $: $1         user@trusted.net
         <p><strong>Start Sendmail services:</strong></p>
         <pre>
 # service sendmail start
-# service sendmail_submit start
-# service sendmail_outbound start
-# service sendmail_msp_queue start
 </pre>
 
         <p><strong>Check Sendmail status:</strong></p>
@@ -402,6 +378,9 @@ virtual_mailbox_base = /var/vmail
 virtual_mailbox_domains = hash:/usr/local/etc/postfix/virtual_domains
 virtual_mailbox_maps = hash:/usr/local/etc/postfix/virtual_mailbox
 virtual_alias_maps = hash:/usr/local/etc/postfix/virtual_alias
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+virtual_minimum_uid = 5000
 </pre>
 
         <p><strong>Create virtual domains file:</strong></p>
@@ -432,11 +411,11 @@ postmaster@example.com   admin@example.com
 # postmap /usr/local/etc/postfix/virtual_alias
 </pre>
 
-        <p><strong>Create vmail directory:</strong></p>
+        <p><strong>Create the dedicated virtual-mail account and directory:</strong></p>
         <pre>
-# mkdir -p /var/vmail/example.com/user
-# chown -R vmail:vmail /var/vmail
-# chmod 700 /var/vmail
+# pw groupadd vmail -g 5000
+# pw useradd vmail -u 5000 -g vmail -d /var/vmail -s /usr/sbin/nologin
+# install -d -o vmail -g vmail -m 0750 /var/vmail/example.com/user
 </pre>
 
         <h5 id="postfix-start">Starting Postfix</h5>
@@ -595,7 +574,8 @@ $MAILDIR/spam/
         <p><strong>Install Dovecot with MySQL support (for virtual users):</strong></p>
         <pre>
 # cd /usr/mports/mail/dovecot
-# make WITH_MYSQL=yes install clean
+# make config       # Select the MYSQL database option
+# make install clean
 </pre>
 
         <h5 id="dovecot-config">Configuration</h5>
@@ -616,9 +596,10 @@ protocols = imap pop3
 # Listen on all interfaces
 listen = *
 
-# SSL certificate and key (recommended)
-ssl_cert_file = /etc/ssl/certs/dovecot.pem
-ssl_key_file = /etc/ssl/private/dovecot.key
+# CA-issued SSL certificate and key
+ssl_cert = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/fullchain.pem
+ssl_key = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/privkey.pem
+ssl_min_protocol = TLSv1.2
 
 # Mail location
 mail_location = maildir:~/Maildir
@@ -652,7 +633,7 @@ auth_mechanisms = plain login
 
 passdb {
   driver = passwd-file
-  args = scheme=SHA512 username_format=%u /usr/local/etc/dovecot/users
+  args = scheme=BLF-CRYPT username_format=%u /usr/local/etc/dovecot/users
 }
 
 userdb {
@@ -664,16 +645,16 @@ userdb {
         <p><strong>Create users file:</strong></p>
         <pre>
 # vi /usr/local/etc/dovecot/users
-user1:{SHA512}hashedpassword:1001:1001::/var/vmail/example.com/user1::
-user2:{SHA512}hashedpassword:1002:1002::/var/vmail/example.com/user2::
+user1:{BLF-CRYPT}hashedpassword:5000:5000::/var/vmail/example.com/user1::
+user2:{BLF-CRYPT}hashedpassword:5000:5000::/var/vmail/example.com/user2::
 </pre>
 
         <p><strong>Generate password hash:</strong></p>
         <pre>
-# doveadm pw -s SHA512
+# doveadm pw -s BLF-CRYPT
 Enter new password:
 Retype new password:
-{SHA512}longhashedstring
+{BLF-CRYPT}hashedstring
 </pre>
 
         <p><strong>Configure mail location for virtual users:</strong></p>
@@ -687,23 +668,21 @@ mail_gid = vmail
 
         <h5 id="dovecot-ssl">SSL/TLS Setup</h5>
 
-        <p><strong>Generate self-signed certificate:</strong></p>
+        <p><strong>Install a publicly trusted certificate:</strong></p>
+        <p>Use a CA-issued certificate whose subject covers the public mail hostname. Self-signed certificates are
+        appropriate only for isolated test systems where the issuing certificate is explicitly trusted by every client.</p>
         <pre>
-# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /etc/ssl/private/dovecot.key \
-  -out /etc/ssl/certs/dovecot.pem \
-  -subj "/CN=mail.yourdomain.com"
-
-# chmod 600 /etc/ssl/private/dovecot.key
+# chmod 600 /usr/local/etc/letsencrypt/live/mail.yourdomain.com/privkey.pem
+# openssl x509 -in /usr/local/etc/letsencrypt/live/mail.yourdomain.com/fullchain.pem \
+    -noout -dates -issuer -subject
 </pre>
 
         <p><strong>Configure SSL in dovecot.conf:</strong></p>
         <pre>
 ssl = required
-ssl_cert_file = /etc/ssl/certs/dovecot.pem
-ssl_key_file = /etc/ssl/private/dovecot.key
-ssl_protocols = !SSLv2 !SSLv3
-ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK
+ssl_cert = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/fullchain.pem
+ssl_key = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/privkey.pem
+ssl_min_protocol = TLSv1.2
 </pre>
 
         <p><strong>Enable SSL ports (IMAPS on 993, POP3S on 995):</strong></p>
@@ -750,42 +729,26 @@ service pop3s {
 # mport install rspamd
 </pre>
 
-        <p><strong>Configure rspamd:</strong></p>
+        <p><strong>Set local action thresholds:</strong></p>
         <pre>
-# vi /usr/local/etc/rspamd/rspamd.conf
+# vi /usr/local/etc/rspamd/local.d/actions.conf
+
+reject = 15;
+add_header = 6;
+greylist = 4;
 </pre>
-
-        <p><strong>Basic configuration for Postfix integration:</strong></p>
-        <pre>
-# Enable thespam filter module
-modules {
-    enabled = ["spam", "antivirus", "neural", "fuzzy", "ratelimit", "reputation", "dkim", "asn", "ip_score"];
-}
-
-# Spam actions
-actions {
-    reject = 15;
-    add_header = 6;
-    greylist = 4;
-}
-
-# Workers configuration
-workers {
-    count = 4;
-    master = true;
-}
-</pre>
+        <p>Rspamd's packaged module defaults remain active unless they are overridden in
+        <code>/usr/local/etc/rspamd/local.d/</code>. Validate changes with <code>rspamadm configtest</code>.</p>
 
         <p><strong>Configure rspamd to work with ClamAV for virus scanning:</strong></p>
         <pre>
-# vi /usr/local/etc/rspamd/modules.d/antivirus.conf
+# vi /usr/local/etc/rspamd/local.d/antivirus.conf
 
 clamav {
-    enabled = true;
-    socket = "clamav:/var/run/clamav/clamd.ctl";
+    type = "clamav";
+    servers = "127.0.0.1:3310";
     action = "reject";
-    symbol = "CLAMAV";
-    message = "Virus detected: %v";
+    symbol = "CLAM_VIRUS";
 }
 </pre>
 
@@ -795,32 +758,26 @@ clamav {
 # service rspamd start
 </pre>
 
-        <p><strong>Integrate rspamd with Postfix:</strong></p>
+        <p><strong>Enable rspamd's milter proxy on loopback:</strong></p>
         <pre>
-# Add to /usr/local/etc/postfix/main.cf
-smtp_milter_connect_macros = i j {daemon_name} v {if_name} _
-smtp_milter_macros = i j {tls_version} {cipher} {cipher_bits} {cert_issuer} {cert_subject}
-smtp_milter_command_timeout = 30
-smtp_milter_default_action = accept
-smtp_milter_protocol = 2
-milter_mail_macros = i {msg_id} {rcpt_addr}
-non_smtp_milter_macros = {msg_id} {rcpt_addr}
+# /usr/local/etc/rspamd/local.d/worker-proxy.inc
+bind_socket = "127.0.0.1:11332";
+milter = yes;
+timeout = 120s;
 
-# Add to /usr/local/etc/postfix/master.cf
-smtp       inet  n       -       n       -       -       smtpd
-  -o milter_macro_daemon_name=ORIGINATING
-
-127.0.0.1:11332 inet    n       -       n       -       -       smtpd
-  -o milter_macro_daemon_name=ORIGINATING
-
-# Add rspamd milter
-127.0.0.1:11334 inet    n       -       n       -       -       smtpd
+upstream "local" {
+    default = yes;
+    self_scan = yes;
+}
 </pre>
 
-        <p><strong>Create rspamd user for Postfix:</strong></p>
+        <p><strong>Connect Postfix to the local milter:</strong></p>
         <pre>
-# echo "rspamd:mail:/usr/local/etc/rspamd:/usr/local/bin/false" >> /etc/passwd
-# pw usermod rspamd -G mail
+# Add to /usr/local/etc/postfix/main.cf
+smtpd_milters = inet:127.0.0.1:11332
+non_smtpd_milters = inet:127.0.0.1:11332
+milter_protocol = 6
+milter_default_action = tempfail
 </pre>
 
         <h4 id="clamav">ClamAV</h4>
@@ -843,8 +800,7 @@ smtp       inet  n       -       n       -       -       smtpd
 # vi /usr/local/etc/freshclam.conf
 
 # Enable automatic updates
-DatabaseMirror db.local.clamav.net
-PrivateMirror mirror://user:pass@private.local.clamav.net:24
+DatabaseMirror database.clamav.net
 
 # Run as clamav user
 DatabaseOwner clamav
@@ -874,11 +830,9 @@ PidFile /var/run/clamav/clamd.pid
 # Database directory
 DatabaseDirectory /var/db/clamav
 
-# Local socket
-LocalSocket /var/run/clamav/clamd.ctl
-
-# Fix permissions
-FixStaleSocket yes
+# Listen only on loopback so rspamd can submit scans
+TCPSocket 3310
+TCPAddr 127.0.0.1
 
 # User and group
 User clamav
@@ -888,8 +842,8 @@ User clamav
         <pre>
 # sysrc clamav_clamd_enable=YES
 # sysrc clamav_freshclam_enable=YES
-# service clamav-clamd start
-# service clamav-freshclam start
+# service clamav_clamd start
+# service clamav_freshclam start
 </pre>
 
         <p><strong>Test ClamAV:</strong></p>
@@ -898,46 +852,8 @@ User clamav
 # clamscan -r /usr/local/etc/postfix
 </pre>
 
-        <p><strong>Integrate ClamAV with Postfix using clamd:</strong></p>
-        <pre>
-# Add to /usr/local/etc/postfix/main.cf
-content_filter = scan:127.0.0.1:10025
-</pre>
-
-        <p><strong>Create scan service in master.cf:</strong></p>
-        <pre>
-# Add to /usr/local/etc/postfix/master.cf
-scan unix    -       -       n       -       16      smtp
-    -o smtp_send_xforward_command=yes
-    -o disable_mime_output_conversion=yes
-    -o smtp_generic_maps=
-
-127.0.0.1:10025 inet n  -       n       -       16      smtpd
-    -o content_filter=
-    -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
-    -o smtpd_helo_restrictions=
-    -o smtpd_client_restrictions=
-    -o smtpd_sender_restrictions=
-    -o milter_macro_daemon_name=ORIGINATING
-    -o smtpd_recipient_restrictions=permit
-</pre>
-
-        <p><strong>Create filter script:</strong></p>
-        <pre>
-#!/bin/sh
-# /usr/local/bin/clamav-filter
-
-INTERFACE="127.0.0.1:10026"
-
-/usr/local/bin/clamdscan --fdpass --stream --no-summary --quiet --infected --stdout $1
-if [ $? -eq 1 ]; then
-    /usr/sbin/sendmail -G -i "$@" &lt; $1
-    exit $?
-fi
-
-/opt/postfix/libexec/postfix/sendmail -i "$@"
-exit $?
-</pre>
+        <p>With the rspamd antivirus module configured above, Postfix mail is scanned through the rspamd milter;
+        a separate Postfix content-filter transport or reinjection script is not required.</p>
 
         <h4 id="spamassassin">SpamAssassin</h4>
 
@@ -1034,8 +950,8 @@ $MAILDIR/spam/
 
         <h3 id="complete">Complete Server Example</h3>
 
-        <p>This section provides a complete example of setting up a production-ready mail server with Postfix,  
-        Dovecot, rspamd, ClamAV, and SpamAssassin.</p>
+        <p>This section provides a baseline example using Postfix, Dovecot, rspamd, ClamAV, and SpamAssassin.
+        Test and adapt it for your DNS, certificates, users, firewall, and delivery policy before production use.</p>
 
         <h4>Step 1: Install all required packages</h4>
         <pre>
@@ -1055,7 +971,7 @@ $MAILDIR/spam/
         <h4>Step 3: Configure Postfix</h4>
         <p>Edit <code>/usr/local/etc/postfix/main.cf</code>:</p>
         <pre>
-smyhostname = mail.yourdomain.com
+myhostname = mail.yourdomain.com
 mydomain = yourdomain.com
 myorigin = $mydomain
 inet_interfaces = all
@@ -1083,11 +999,15 @@ virtual_mailbox_base = /var/vmail
 virtual_mailbox_domains = hash:/usr/local/etc/postfix/virtual_domains
 virtual_mailbox_maps = hash:/usr/local/etc/postfix/virtual_mailbox
 virtual_alias_maps = hash:/usr/local/etc/postfix/virtual_alias
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+virtual_minimum_uid = 5000
 
-# Milter for spam/virus filtering
-milter_default_action = accept
-milter_protocol = 2
-smtp_milter_command_timeout = 30
+# Milter for spam/virus filtering (rspamd listens only on loopback)
+smtpd_milters = inet:127.0.0.1:11332
+non_smtpd_milters = inet:127.0.0.1:11332
+milter_default_action = tempfail
+milter_protocol = 6
 </pre>
 
         <h4>Step 4: Configure Dovecot</h4>
@@ -1098,8 +1018,9 @@ listen = *
 
 # SSL
 ssl = required
-ssl_cert_file = /etc/ssl/certs/dovecot.pem
-ssl_key_file = /etc/ssl/private/dovecot.key
+ssl_cert = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/fullchain.pem
+ssl_key = &lt;/usr/local/etc/letsencrypt/live/mail.yourdomain.com/privkey.pem
+ssl_min_protocol = TLSv1.2
 
 # Mail location for virtual users
 mail_location = maildir:/var/vmail/%d/%n
@@ -1117,18 +1038,15 @@ service auth {
 </pre>
 
         <h4>Step 5: Configure rspamd</h4>
-        <p>Enable rspamd in <code>/usr/local/etc/rspamd/rspamd.conf</code>:</p>
+        <p>Configure <code>/usr/local/etc/rspamd/local.d/worker-proxy.inc</code>:</p>
         <pre>
-modules {
-    enabled = ["spam", "antivirus", "neural", "fuzzy", "ratelimit", "reputation"];
+bind_socket = "127.0.0.1:11332";
+milter = yes;
+timeout = 120s;
+upstream "local" {
+    default = yes;
+    self_scan = yes;
 }
-
-workers {
-    count = 4;
-}
-
-# Listen on all interfaces for Postfix integration
-bind_socket = "*:11334";
 </pre>
 
         <h4>Step 6: Start all services</h4>
@@ -1143,8 +1061,8 @@ bind_socket = "*:11334";
 # service postfix start
 # service dovecot start
 # service rspamd start
-# service clamav-clamd start
-# service clamav-freshclam start
+# service clamav_clamd start
+# service clamav_freshclam start
 # service sa-spamd start
 </pre>
 
@@ -1213,7 +1131,7 @@ submission inet n       -       n       -       -       smtpd
 
         <p><strong>Virus scanning not working:</strong></p>
         <ul>
-            <li>Check ClamAV is running: <code>service clamav-clamd status</code></li>
+            <li>Check ClamAV is running: <code>service clamav_clamd status</code></li>
             <li>Update virus definitions: <code>freshclam</code></li>
             <li>Test ClamAV: <code>clamdscan /tmp/testfile</code></li>
             <li>Verify clamd socket permissions</li>
@@ -1255,7 +1173,7 @@ submission inet n       -       n       -       -       smtpd
             <li><code>openssl s_client</code> - Test SSL/TLS connections</li>
             <li><code>dig</code>, <code>nslookup</code> - Test DNS records</li>
             <li><code>traceroute</code>, <code>mtr</code> - Test network connectivity</li>
-            <li><code>strace</code> - Trace system calls (available via mports)</li>
+            <li><code>truss</code>, <code>ktrace</code> - Trace system calls using base-system tools</li>
         </ul>
 
         <p><strong>Log analysis:</strong></p>

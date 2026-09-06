@@ -291,7 +291,7 @@ server {
 }
 
 # Reload nginx to apply changes
-nginx -t && service nginx reload
+nginx -t &amp;&amp; service nginx reload
 </pre>
 
         <p><strong>IP-based virtual hosts:</strong></p>
@@ -344,7 +344,7 @@ server {
         <p>Setting up HTTPS with free certificates from Let's Encrypt using Certbot.</p>
 
         <p><strong>Install Certbot and nginx plugin:</strong></p>
-        <code># mport install certbot certbot-nginx</code>
+        <code># mport install py312-certbot py312-certbot-nginx</code>
 
         <p><strong>Obtain certificate:</strong></p>
         <pre>
@@ -379,7 +379,8 @@ server {
 }
 
 server {
-    listen       443 ssl http2;
+    listen       443 ssl;
+    http2        on;
     server_name  example.com www.example.com;
     
     # SSL certificate configuration
@@ -416,12 +417,13 @@ server {
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header X-Frame-Options "SAMEORIGIN" always;
-add_header X-XSS-Protection "1; mode=block" always;
+add_header Content-Security-Policy "frame-ancestors 'self'; object-src 'none'; base-uri 'self'" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
 </pre>
 
-        <p><strong>HTTP/2 support:</strong> nginx supports HTTP/2 automatically when using SSL. Just add 
-        <code>http2</code> to the listen directive: <code>listen 443 ssl http2;</code></p>
+        <p><strong>HTTP/2 support:</strong> Enable HTTP/2 in the HTTPS server block with
+        <code>listen 443 ssl;</code> followed by <code>http2 on;</code>.</p>
 
         <h4 id="s2f">Performance Tuning</h4>
 
@@ -579,16 +581,16 @@ server {
 mkdir -p /usr/local/www/mysite.com/{public_html,logs,cgi-bin}
 
 # 2. Create basic index.html
-cat > /usr/local/www/mysite.com/public_html/index.html << 'EOF'
-<!DOCTYPE html>
-<html>
-<head><title>Welcome to mysite.com</title></head>
-<body><h1>mysite.com</h1></body>
-</html>
+cat &gt; /usr/local/www/mysite.com/public_html/index.html &lt;&lt; 'EOF'
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Welcome to mysite.com&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;mysite.com&lt;/h1&gt;&lt;/body&gt;
+&lt;/html&gt;
 EOF
 
 # 3. Create nginx configuration
-cat > /usr/local/etc/nginx/conf.d/mysite.com.conf << 'EOF'
+cat &gt; /usr/local/etc/nginx/conf.d/mysite.com.conf &lt;&lt; 'EOF'
 server {
     listen       80;
     server_name  mysite.com www.mysite.com;
@@ -602,7 +604,7 @@ server {
 EOF
 
 # 4. Test and reload
-nginx -t && service nginx reload
+nginx -t &amp;&amp; service nginx reload
 </pre>
 
         <p><strong>Redirect HTTP to HTTPS:</strong></p>
@@ -619,7 +621,7 @@ server {
 server {
     listen       80;
     server_name  www.example.com;
-    return       301 http://example.com$request_uri;
+    return       301 https://example.com$request_uri;
 }
 </pre>
 
@@ -645,7 +647,7 @@ location / {
         <p><strong>Password protect a directory:</strong></p>
         <pre>
 # 1. Create password file
-printf "admin:" | htpasswd -c /usr/local/etc/nginx/.htpasswd admin
+htpasswd -c /usr/local/etc/nginx/.htpasswd admin
 # You'll be prompted for the password
 
 # 2. Configure location
@@ -655,9 +657,10 @@ location /admin/ {
 }
 </pre>
 
-        <p><strong>Enable HTTP/2:</strong> Add <code>http2</code> to your listen directive:</p>
+        <p><strong>Enable HTTP/2:</strong></p>
         <pre>
-listen 443 ssl http2;
+listen 443 ssl;
+http2 on;
 </pre>
 
         <h3>Apache HTTP Server</h3>
@@ -714,11 +717,11 @@ ServerName localhost:80
 DocumentRoot "/usr/local/www/apache24/data"
 
 # Directory configuration
-<Directory "/usr/local/www/apache24/data">
+&lt;Directory "/usr/local/www/apache24/data"&gt;
     Options Indexes FollowSymLinks
     AllowOverride None
     Require all granted
-</Directory>
+&lt;/Directory&gt;
 
 # Include additional configuration files
 Include /usr/local/etc/apache24/extra/*.conf
@@ -791,77 +794,77 @@ service apache24 restart
         <pre>
 # In /usr/local/etc/apache24/extra/httpd-vhosts.conf
 
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerAdmin admin@example.com
     ServerName example.com
     ServerAlias www.example.com
     DocumentRoot /usr/local/www/example.com
     
-    <Directory /usr/local/www/example.com>
+    &lt;Directory /usr/local/www/example.com&gt;
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
-    </Directory>
+    &lt;/Directory&gt;
     
     ErrorLog /var/log/apache24/example.com-error.log
     CustomLog /var/log/apache24/example.com-access.log common
-</VirtualHost>
+&lt;/VirtualHost&gt;
 
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerAdmin admin@anothersite.com
     ServerName anothersite.com
     ServerAlias www.anothersite.com
     DocumentRoot /usr/local/www/anothersite.com
     
-    <Directory /usr/local/www/anothersite.com>
+    &lt;Directory /usr/local/www/anothersite.com&gt;
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
-    </Directory>
+    &lt;/Directory&gt;
     
     ErrorLog /var/log/apache24/anothersite.com-error.log
     CustomLog /var/log/apache24/anothersite.com-access.log common
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>IP-based virtual hosts:</strong></p>
         <pre>
-<VirtualHost 192.168.1.100:80>
+&lt;VirtualHost 192.168.1.100:80&gt;
     ServerName site1.com
     DocumentRoot /usr/local/www/site1
-</VirtualHost>
+&lt;/VirtualHost&gt;
 
-<VirtualHost 192.168.1.101:80>
+&lt;VirtualHost 192.168.1.101:80&gt;
     ServerName site2.com
     DocumentRoot /usr/local/www/site2
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Port-based virtual hosts:</strong></p>
         <pre>
 # Main site on port 80
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName example.com
     DocumentRoot /usr/local/www/example-http
-</VirtualHost>
+&lt;/VirtualHost&gt;
 
 # Admin site on port 8080
-<VirtualHost *:8080>
+&lt;VirtualHost *:8080&gt;
     ServerName example.com
     DocumentRoot /usr/local/www/example-admin
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Default virtual host:</strong></p>
         <pre>
 # First virtual host defined becomes the default
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName default.example.com
     DocumentRoot /usr/local/www/default
     
     # Or redirect all undefined hosts
-    Redirect permanent / http://example.com/
-</VirtualHost>
+    Redirect permanent / https://example.com/
+&lt;/VirtualHost&gt;
 </pre>
 
         <h4 id="s3e">HTTPS Configuration</h4>
@@ -883,7 +886,7 @@ Include /usr/local/etc/apache24/extra/httpd-ssl.conf
         <p><strong>Obtain Let's Encrypt certificate:</strong></p>
         <pre>
 # Install certbot
-mport install certbot certbot-apache
+mport install py312-certbot py312-certbot-apache
 
 # Stop Apache temporarily
 service apache24 stop
@@ -897,16 +900,15 @@ service apache24 start
 
         <p><strong>Configure HTTPS virtual host:</strong></p>
         <pre>
-<VirtualHost *:443>
+&lt;VirtualHost *:443&gt;
     ServerName example.com
     ServerAlias www.example.com
     DocumentRoot /usr/local/www/example.com
     
     # SSL Configuration
     SSLEngine on
-    SSLCertificateFile /usr/local/etc/letsencrypt/live/example.com/cert.pem
+    SSLCertificateFile /usr/local/etc/letsencrypt/live/example.com/fullchain.pem
     SSLCertificateKeyFile /usr/local/etc/letsencrypt/live/example.com/privkey.pem
-    SSLCertificateChainFile /usr/local/etc/letsencrypt/live/example.com/chain.pem
     
     # SSL protocols and ciphers
     SSLProtocol -all +TLSv1.2 +TLSv1.3
@@ -918,25 +920,25 @@ service apache24 start
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
 
-    <Directory /usr/local/www/example.com>
+    &lt;Directory /usr/local/www/example.com&gt;
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
-    </Directory>
+    &lt;/Directory&gt;
     
     ErrorLog /var/log/apache24/example.com-ssl-error.log
     CustomLog /var/log/apache24/example.com-ssl-access.log common
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Redirect HTTP to HTTPS:</strong></p>
         <pre>
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName example.com
     ServerAlias www.example.com
     
     Redirect permanent / https://example.com/
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Automatic certificate renewal:</strong></p>
@@ -953,16 +955,16 @@ service apache24 start
 httpd -V | grep -i mpm
 
 # For prefork MPM (traditional, one process per connection)
-<IfModule mpm_prefork_module>
+&lt;IfModule mpm_prefork_module&gt;
     StartServers          5
     MinSpareServers       5
     MaxSpareServers      10
     MaxRequestWorkers   256
     MaxConnectionsPerChild  1000
-</IfModule>
+&lt;/IfModule&gt;
 
 # For event MPM (recommended for high traffic, similar to nginx)
-<IfModule mpm_event_module>
+&lt;IfModule mpm_event_module&gt;
     StartServers          3
     MinSpareThreads      75
     MaxSpareThreads     250
@@ -970,10 +972,10 @@ httpd -V | grep -i mpm
     ThreadsPerChild      25
     MaxRequestWorkers   400
     MaxConnectionsPerChild  1000
-</IfModule>
+&lt;/IfModule&gt;
 
 # For worker MPM (hybrid approach)
-<IfModule mpm_worker_module>
+&lt;IfModule mpm_worker_module&gt;
     StartServers          3
     MinSpareThreads      75
     MaxSpareThreads     250
@@ -981,7 +983,7 @@ httpd -V | grep -i mpm
     ThreadsPerChild      25
     MaxRequestWorkers   400
     MaxConnectionsPerChild  1000
-</IfModule>
+&lt;/IfModule&gt;
 </pre>
 
         <p><strong>KeepAlive settings:</strong></p>
@@ -1006,24 +1008,24 @@ RLimitMEM 512000 1024000  # Min and Max memory in bytes
         <p><strong>Compression (mod_deflate):</strong></p>
         <pre>
 # Enable deflate module (usually already loaded)
-<IfModule mod_deflate.c>
+&lt;IfModule mod_deflate.c&gt;
     AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript
     # Don't compress images
     SetOutputFilter DEFLATE
     SetEnv no-gzip 1
-</IfModule>
+&lt;/IfModule&gt;
 </pre>
 
         <p><strong>Enable caching headers:</strong></p>
         <pre>
-<IfModule mod_expires.c>
+&lt;IfModule mod_expires.c&gt;
     ExpiresActive On
     ExpiresByType text/html "access plus 1 hour"
     ExpiresByType text/css "access plus 1 week"
     ExpiresByType text/javascript "access plus 1 week"
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/png "access plus 1 month"
-</IfModule>
+&lt;/IfModule&gt;
 </pre>
 
         <h4 id="s3g">Common Apache Tasks</h4>
@@ -1034,44 +1036,44 @@ RLimitMEM 512000 1024000  # Min and Max memory in bytes
 mkdir -p /usr/local/www/mysite.com/{public_html,logs,cgi-bin}
 
 # 2. Create basic index.html
-cat > /usr/local/www/mysite.com/public_html/index.html << 'EOF'
-<!DOCTYPE html>
-<html>
-<head><title>Welcome to mysite.com</title></head>
-<body><h1>mysite.com</h1></body>
-</html>
+cat &gt; /usr/local/www/mysite.com/public_html/index.html &lt;&lt; 'EOF'
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Welcome to mysite.com&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;mysite.com&lt;/h1&gt;&lt;/body&gt;
+&lt;/html&gt;
 EOF
 
 # 3. Create virtual host configuration
-cat > /usr/local/etc/apache24/Includes/mysite.com.conf << 'EOF'
-<VirtualHost *:80>
+cat &gt; /usr/local/etc/apache24/Includes/mysite.com.conf &lt;&lt; 'EOF'
+&lt;VirtualHost *:80&gt;
     ServerName mysite.com
     ServerAlias www.mysite.com
     DocumentRoot /usr/local/www/mysite.com/public_html
     
-    <Directory /usr/local/www/mysite.com/public_html>
+    &lt;Directory /usr/local/www/mysite.com/public_html&gt;
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
-    </Directory>
+    &lt;/Directory&gt;
     
     ErrorLog /var/log/apache24/mysite.com-error.log
     CustomLog /var/log/apache24/mysite.com-access.log common
-</VirtualHost>
+&lt;/VirtualHost&gt;
 EOF
 
 # 4. Test and restart Apache
-apachectl -t && service apache24 restart
+apachectl -t &amp;&amp; service apache24 restart
 </pre>
 
         <p><strong>Enable .htaccess files:</strong></p>
         <pre>
 # In your virtual host or directory configuration
-<Directory /usr/local/www/mysite.com/public_html>
+&lt;Directory /usr/local/www/mysite.com/public_html&gt;
     Options Indexes FollowSymLinks
     AllowOverride All  # This enables .htaccess
     Require all granted
-</Directory>
+&lt;/Directory&gt;
 </pre>
 
         <p><strong>Password protect a directory:</strong></p>
@@ -1081,12 +1083,12 @@ htpasswd -c /usr/local/etc/apache24/.htpasswd admin
 # You'll be prompted for the password
 
 # 2. Configure directory in virtual host
-<Directory /usr/local/www/mysite.com/private>
+&lt;Directory /usr/local/www/mysite.com/private&gt;
     AuthType Basic
     AuthName "Restricted Area"
     AuthUserFile /usr/local/etc/apache24/.htpasswd
     Require valid-user
-</Directory>
+&lt;/Directory&gt;
 </pre>
 
         <p><strong>Enable CGI scripts:</strong></p>
@@ -1095,18 +1097,18 @@ htpasswd -c /usr/local/etc/apache24/.htpasswd admin
 # LoadModule cgid_module modules/mod_cgid.so
 
 # 2. Configure CGI directory
-<Directory /usr/local/www/mysite.com/cgi-bin>
+&lt;Directory /usr/local/www/mysite.com/cgi-bin&gt;
     Options +ExecCGI
     AddHandler cgi-script .cgi .pl
     Require all granted
-</Directory>
+&lt;/Directory&gt;
 
 # 3. Create a test CGI script
-cat > /usr/local/www/mysite.com/cgi-bin/test.cgi << 'EOF'
+cat &gt; /usr/local/www/mysite.com/cgi-bin/test.cgi &lt;&lt; 'EOF'
 #!/bin/sh
 echo "Content-type: text/html"
 echo ""
-echo "<html><body><h1>CGI Test Successful</h1></body></html>"
+echo "&lt;html&gt;&lt;body&gt;&lt;h1&gt;CGI Test Successful&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"
 EOF
 chmod +x /usr/local/www/mysite.com/cgi-bin/test.cgi
 
@@ -1128,9 +1130,9 @@ mkdir -p /usr/local/www/mysite.com/errors
 
         <p><strong>Disable directory listing:</strong></p>
         <pre>
-<Directory /usr/local/www/mysite.com/public_html>
+&lt;Directory /usr/local/www/mysite.com/public_html&gt;
     Options -Indexes
-</Directory>
+&lt;/Directory&gt;
 </pre>
 
         <h4 id="s3h">.htaccess Configuration</h4>
@@ -1179,7 +1181,7 @@ RewriteRule \.(jpg|jpeg|png|gif)$ - [F,NC]
         <pre>
 RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www.example.com [NC]
-RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+RewriteRule ^(.*)$ https://example.com/$1 [L,R=301]
 </pre>
 
         <p><strong>Redirect HTTP to HTTPS:</strong></p>
@@ -1191,13 +1193,13 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
         <p><strong>Cache control:</strong></p>
         <pre>
-<FilesMatch "\.(html|htm|php|cgi|pl)$">
+&lt;FilesMatch "\.(html|htm|php|cgi|pl)$"&gt;
     Header set Cache-Control "no-cache, no-store, must-revalidate"
-</FilesMatch>
+&lt;/FilesMatch&gt;
 
-<FilesMatch "\.(jpg|jpeg|png|gif|css|js)$">
+&lt;FilesMatch "\.(jpg|jpeg|png|gif|css|js)$"&gt;
     Header set Cache-Control "public, max-age=31536000"
-</FilesMatch>
+&lt;/FilesMatch&gt;
 </pre>
 
         <h4 id="s1i">Security Hardening</h4>
@@ -1244,8 +1246,8 @@ add_header X-Frame-Options "SAMEORIGIN" always;
 # Prevent MIME type sniffing
 add_header X-Content-Type-Options "nosniff" always;
 
-# Enable XSS protection
-add_header X-XSS-Protection "1; mode=block" always;
+# Restrict framing and executable resource types
+add_header Content-Security-Policy "frame-ancestors 'self'; object-src 'none'; base-uri 'self'" always;
 
 # Prevent content-type sniffing for uploads
 location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt|html)$ {
@@ -1264,20 +1266,20 @@ ServerTokens Prod
 ServerSignature Off
 
 # Disable .htaccess in root directory (if not needed)
-<Directory />
+&lt;Directory /&gt;
     AllowOverride None
     Require all denied
-</Directory>
+&lt;/Directory&gt;
 
 # Protect configuration files
-<FilesMatch "^\.ht">
+&lt;FilesMatch "^\.ht"&gt;
     Require all denied
-</FilesMatch>
+&lt;/FilesMatch&gt;
 
 # Limit request methods
-<LimitExcept GET POST HEAD>
+&lt;LimitExcept GET POST HEAD&gt;
     Require all denied
-</LimitExcept>
+&lt;/LimitExcept&gt;
 
 # Disable directory listing
 Options -Indexes
@@ -1285,7 +1287,8 @@ Options -Indexes
 # Security headers
 Header always set X-Frame-Options "SAMEORIGIN"
 Header always set X-Content-Type-Options "nosniff"
-Header always set X-XSS-Protection "1; mode=block"
+Header always set Content-Security-Policy "frame-ancestors 'self'; object-src 'none'; base-uri 'self'"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </pre>
 
         <p><strong>Rate Limiting (Nginx):</strong></p>
@@ -1308,14 +1311,14 @@ location /login {
         <pre>
 # Requires mod_evasive or mod_security
 # Example with mod_evasive (install via mports)
-<IfModule mod_evasive24.c>
+&lt;IfModule mod_evasive24.c&gt;
     DOSHashTableSize    3097
     DOSPageCount        2
     DOSSiteCount       50
     DOSPageInterval    1
     DOSSiteInterval    1
     DOSBlockingPeriod   60
-</IfModule>
+&lt;/IfModule&gt;
 </pre>
 
         <p><strong>File Upload Security:</strong></p>
@@ -1391,22 +1394,22 @@ LoadModule proxy_http_module modules/mod_proxy_http.so
 LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
 
 # Configure balancer
-<Proxy balancer://mycluster>
+&lt;Proxy balancer://mycluster&gt;
     BalancerMember http://192.168.1.101:8000
     BalancerMember http://192.168.1.102:8000
     BalancerMember http://192.168.1.103:8000
     
     # Sticky session using route
     ProxySet stickysession=ROUTEID
-</Proxy>
+&lt;/Proxy&gt;
 
 # Virtual host using load balancer
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName loadbalanced.example.com
     
     ProxyPass / balancer://mycluster/
     ProxyPassReverse / balancer://mycluster/
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Health checks and failover:</strong></p>
@@ -1419,12 +1422,12 @@ upstream backend_with_healthcheck {
 }
 
 # Apache with failover
-<Proxy balancer://failover>
+&lt;Proxy balancer://failover&gt;
     BalancerMember http://192.168.1.101:8000
     BalancerMember http://192.168.1.102:8000
     BalancerMember http://192.168.1.103:8000 status=+H
     ProxySet failonstatus=500,502,503,504
-</Proxy>
+&lt;/Proxy&gt;
 </pre>
 
         <h4 id="s1k">Monitoring and Logging</h4>
@@ -1458,18 +1461,18 @@ location /health-check {
         <p><strong>Apache Logging:</strong></p>
         <pre>
 # Custom log format
-LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" extended
+LogFormat "%h %l %u %t \"%r\" %&gt;s %b \"%{Referer}i\" \"%{User-Agent}i\" %D" extended
 
 # Use custom log format
 CustomLog /var/log/apache24/access.log extended
 ErrorLog /var/log/apache24/error.log
 
 # Per-virtual-host logging
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName example.com
     CustomLog /var/log/apache24/example.com-access.log combined
     ErrorLog /var/log/apache24/example.com-error.log
-</VirtualHost>
+&lt;/VirtualHost&gt;
 </pre>
 
         <p><strong>Log rotation:</strong></p>
@@ -1481,8 +1484,6 @@ ErrorLog /var/log/apache24/error.log
 /var/log/nginx/*.log       www:www   640  7     *    @T00  JC
 /var/log/apache24/*.log   www:www   640  7     *    @T00  JC
 
-# Or use logrotate (install via mports)
-mport install logrotate
 </pre>
 
         <p><strong>Real-time log monitoring:</strong></p>
@@ -1504,16 +1505,12 @@ tail -n 1000 /var/log/nginx/access.log | awk '{print $4}' | cut -d: -f2,3 | uniq
         <pre>
 # Install log analysis tools
 mport install awstats
-mport install goaccess
 
 # Run awstats
 awstats -config=nginx -update
-
-# Run goaccess (real-time web log analyzer)
-goaccess /var/log/nginx/access.log --log-format=COMBINED
 </pre>
 
-        <p><strong>Monitoring with htop/htop:</strong></p>
+        <p><strong>Monitoring with htop:</strong></p>
         <pre>
 # Install htop
 mport install htop
@@ -1535,12 +1532,12 @@ location /nginx-status {
 }
 
 # Apache status page (requires mod_status)
-<Location /server-status>
+&lt;Location /server-status&gt;
     SetHandler server-status
     Require local
     # Or for specific IPs:
     # Require ip 192.168.1.100
-</Location>
+&lt;/Location&gt;
 
 # Enable extended status
 ExtendedStatus On
@@ -1656,9 +1653,9 @@ service apache24 restart
 LoadModule php7_module modules/libphp7.so
 
 # Check PHP handler configuration
-<FilesMatch \.php$>
+&lt;FilesMatch \.php$&gt;
     SetHandler application/x-httpd-php
-</FilesMatch>
+&lt;/FilesMatch&gt;
 
 # Or for PHP-FPM
 # LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
@@ -1689,7 +1686,7 @@ nginx -T  # Show full configuration with all includes
 error_log /var/log/nginx/error.log debug;
 
 # Apache - set LogLevel
-echo "LogLevel debug" >> /usr/local/etc/apache24/httpd.conf
+echo "LogLevel debug" &gt;&gt; /usr/local/etc/apache24/httpd.conf
 service apache24 restart
 </pre>
 

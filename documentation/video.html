@@ -219,11 +219,9 @@ vlc /path/to/video.mp4        # Play file from CLI
 vlc dvd:///dev/cd0           # Play DVD
 </pre>
 
-        <p><strong>Hardware Acceleration:</strong></p>
-        <pre>
-vlc --avcodec=vaapi video.mp4
-vlc --avcodec=vdau video.mp4
-</pre>
+        <p><strong>Hardware Acceleration:</strong> Open <code>Tools → Preferences → Input / Codecs</code>, choose
+        an available hardware-accelerated decoder, and inspect VLC's messages while playing a file to confirm it
+        is active. The current VLC mport does not build its VA-API option.</p>
 
         <p><strong>Convert Media:</strong> <code>Media → Convert/Save...</code></p>
         <p><strong>Stream Media:</strong> <code>Media → Open Network Stream...</code></p>
@@ -312,18 +310,18 @@ kodi-standalone   # Launch in fullscreen
         <p>Hardware acceleration can significantly improve video playback performance, especially for HD content.</p>
 
         <h5>VA-API (Video Acceleration API)</h5>
-        <p><strong>Supported Hardware:</strong> Intel (G45+), AMD (Radeon HD 2000+)</p>
+        <p><strong>Supported Hardware:</strong> Depends on the GPU, kernel driver, and an installed VA-API back end.</p>
         <p><strong>Installation:</strong></p>
         <pre>
-doas mport install libva libva-intel-driver  # Intel
-doas mport install libva libva-vdpau-driver  # AMD
+doas mport install libva
 </pre>
+        <p>The current mports tree provides the VA-API library and tools but no separate Intel or AMD VA-API
+        driver package. Check <code>vainfo</code> on the target system before selecting this back end.</p>
         <p><strong>Verify:</strong></p>
         <pre>vainfo</pre>
         <p><strong>Usage:</strong></p>
         <pre>
 mpv --hwdec=vaapi video.mp4
-vlc --avcodec=vaapi video.mp4
 </pre>
 
         <h5>VDPAU (Video Decode and Presentation API)</h5>
@@ -331,7 +329,7 @@ vlc --avcodec=vaapi video.mp4
         <p><strong>Installation:</strong></p>
         <pre>
 doas mport install libvdpau nvidia-driver  # NVIDIA
-doas mport install libvdpau libva-vdpau-driver  # AMD open-source
+doas mport install libvdpau mesa-gallium-vdpau  # AMD open-source
 </pre>
         <p><strong>Verify:</strong></p>
         <pre>vdpauinfo</pre>
@@ -339,15 +337,16 @@ doas mport install libvdpau libva-vdpau-driver  # AMD open-source
         <pre>
 mpv --hwdec=vdpau video.mp4
 mplayer -vc ffh264vdpau -vo vdpau video.mp4
-vlc --avcodec=vdau video.mp4
 </pre>
 
         <h5>Intel Quick Sync</h5>
         <p><strong>Supported Hardware:</strong> Sandy Bridge+</p>
         <p><strong>Installation:</strong></p>
         <pre>
-doas mport install intel-media-sdk libva-intel-driver
+doas mport install intel-media-sdk libva
 </pre>
+        <p><code>intel-media-sdk</code> provides Intel media encode/decode components. VA-API playback also needs
+        a compatible driver; confirm the available capabilities with <code>vainfo</code>.</p>
         <p><strong>Usage:</strong></p>
         <pre>mpv --hwdec=vaapi video.mp4</pre>
 
@@ -355,18 +354,17 @@ doas mport install intel-media-sdk libva-intel-driver
         <p><strong>Supported Hardware:</strong> GeForce GTX 600+</p>
         <p><strong>Installation:</strong></p>
         <pre>
-doas mport install nvidia-driver libva-vdpau-driver
+doas mport install nvidia-driver libvdpau
 </pre>
         <p><strong>Usage:</strong></p>
         <pre>
 mpv --hwdec=vdpau video.mp4  # VDPAU
-mpv --hwdec=vaapi video.mp4   # VA-API (newer drivers)
 </pre>
 
         <p><strong>Driver Configuration:</strong></p>
         <pre>
-kldload nvidia             # Load NVIDIA kernel module
-sysrc nvidia_load=YES       # Enable at boot
+kldload nvidia-modeset             # Load NVIDIA kernel module
+sysrc kld_list+=nvidia-modeset     # Enable at boot
 nvidia-smi                 # Check driver status
 </pre>
 
@@ -385,7 +383,7 @@ vdpauinfo                          # VDPAU info
 
         <p><strong>Install Codec Support:</strong></p>
         <pre>
-doas mport install ffmpeg libx264 libx265 libvpx libtheora
+doas mport install ffmpeg libx264 x265 libvpx libtheora
 
 # DVD support
 doas mport install libdvdcss libdvdnav libdvdread
@@ -465,7 +463,7 @@ vlc rtsp://server/stream
         <p><strong>Missing Codec:</strong></p>
         <ul>
             <li>Install FFmpeg: <code>doas mport install ffmpeg</code></li>
-            <li>Install additional codecs: <code>doas mport install libx264 libx265 libvpx</code></li>
+            <li>Install additional codecs: <code>doas mport install libx264 x265 libvpx</code></li>
             <li>Check file info: <code>ffprobe video.mp4</code></li>
             <li>Try software decoding: <code>mpv --hwdec=no video.mp4</code></li>
         </ul>
@@ -476,7 +474,8 @@ vlc rtsp://server/stream
             <li>Verify drivers: <code>kldstat | grep drm</code></li>
             <li>Check device permissions: <code>ls -la /dev/dri/</code></li>
             <li>Add user to video group: <code>doas pw groupmod video -m username</code></li>
-            <li>Try different backend: <code>mpv --hwdec=vaapi,vdpau,auto video.mp4</code></li>
+            <li>Try automatic detection: <code>mpv --hwdec=auto video.mp4</code>, then test
+            <code>--hwdec=vaapi</code> or <code>--hwdec=vdpau</code> individually</li>
         </ul>
 
         <p><strong>Diagnostic Commands:</strong></p>

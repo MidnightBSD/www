@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <meta name="description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, duplicity, and duply for reliable data protection.">
     <title>MidnightBSD Documentation - Backup Solutions</title>
     <link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -11,13 +11,13 @@
     <link rel="stylesheet" type="text/css" href="../css/essence.css">
     <link rel="canonical" href="https://www.midnightbsd.org/documentation/backups.html">
 		<meta property="og:title" content="MidnightBSD Documentation - Backup Solutions">
-    <meta property="og:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <meta property="og:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, duplicity, and duply for reliable data protection.">
     <meta property="og:url" content="https://www.midnightbsd.org/documentation/backups.html">
     <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
     <meta property="og:type" content="article">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="MidnightBSD Documentation - Backup Solutions">
-    <meta name="twitter:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <meta name="twitter:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, duplicity, and duply for reliable data protection.">
     <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
 </head>
 <body>
@@ -43,8 +43,9 @@
                     <ul>
                         <li><a href="#s1e1">Restic</a></li>
                         <li><a href="#s1e2">Tarsnap</a></li>
-                        <li><a href="#s1e3">Duopoly</a></li>
+                        <li><a href="#s1e3">Duplicity and Duply</a></li>
                         <li><a href="#s1e4">BorgBackup</a></li>
+                        <li><a href="#s1e5">Other backup packages</a></li>
                     </ul>
                 </li>
                 <li><a href="#s1f">Offsite Backup Strategies</a></li>
@@ -140,16 +141,16 @@
             <li>Handles large directories efficiently</li>
         </ul>
 
-        <p><strong>Installation:</strong></p>
-        <code># mport install cpdup</code>
+        <p><code>cpdup</code> is included in the MidnightBSD base system, so no package installation is needed.
+        Confirm it is available with <code>command -v cpdup</code>.</p>
 
         <p><strong>Basic usage:</strong></p>
         <pre>
 # Local backup
 cpdup /source/directory /backup/directory
 
-# Backup to remote server via SSH
-cpdup -v -x -s user@remotehost:/backup/directory /local/directory
+# Backup to a remote server via SSH
+cpdup -v /local/directory user@remotehost:/backup/directory
 
 # Dry run (show what would be copied)
 cpdup -v -n /source /backup
@@ -158,11 +159,10 @@ cpdup -v -n /source /backup
         <p><strong>Common options:</strong></p>
         <ul>
             <li><code>-v</code> - Verbose output</li>
-            <li><code>-x</code> - Cross-device copy (for different file systems)</li>
-            <li><code>-s</code> - Source is on remote host (via SSH)</li>
             <li><code>-n</code> - Dry run (no actual copying)</li>
-            <li><code>-0</code> - Copy all files (ignore timestamps)</li>
-            <li><code>-u</code> - Update only (skip newer files)</li>
+            <li><code>-x</code> - Honor <code>.cpignore</code> exclusion files in source directories</li>
+            <li><code>-X file</code> - Use a named exclusion file</li>
+            <li><code>-F argument</code> - Pass an option to SSH, such as <code>-F-p2222</code></li>
         </ul>
 
         <p><strong>Automated backup script with cpdup:</strong></p>
@@ -184,7 +184,7 @@ fi
 
 # Run the backup
 echo "Starting cpdup backup: $(date)" >> "$LOG_FILE"
-cpdup -v -x "$BACKUP_SRC" "$BACKUP_DEST" >> "$LOG_FILE" 2>&1
+cpdup -v "$BACKUP_SRC" "$BACKUP_DEST" >> "$LOG_FILE" 2>&1
 
 # Unmount backup drive
 umount /mnt/backup
@@ -364,8 +364,9 @@ restic -r "$REPO" check --read-data-subset=10%
 # Backup to a remote server via SFTP
 restic -r sftp:user@backup-server:/backups/midnightbsd backup /home /etc
 
-# Set password via environment (or use password file)
-export RESTIC_PASSWORD="your-secure-password"
+# Store the password in a root-only file instead of shell history
+chmod 600 /root/.restic-password
+export RESTIC_PASSWORD_FILE=/root/.restic-password
 restic -r sftp:user@backup-server:/backups/midnightbsd backup /home
 </pre>
 
@@ -390,11 +391,10 @@ restic -r sftp:user@backup-server:/backups/midnightbsd backup /home
 # Register and create account at https://www.tarsnap.com/
 # After registration, you'll receive an account key
 
-# Create configuration directory
-tarsnap-keygen --user your-email@example.com --machine mymidnightbsd
-
-# Store your key file securely
-mv your-email+my-midnightbsd.key /root/.tarsnap/keyfile
+# Generate the key directly at the protected destination
+mkdir -p /root/.tarsnap
+tarsnap-keygen --keyfile /root/.tarsnap/keyfile \
+    --user your-email@example.com --machine mymidnightbsd
 chmod 600 /root/.tarsnap/keyfile
 </pre>
 
@@ -438,79 +438,47 @@ tarsnap --list-archives >> "$LOG_FILE" 2>&1
 echo "Backup completed: $(date)" >> "$LOG_FILE"
 </pre>
 
-        <h5 id="s1e3">Duopoly</h5>
-        <p><code>duopoly</code> is a powerful backup tool that creates deduplicated, encrypted, and compressed 
-        archives. It's designed to be efficient and secure for both local and remote backups.</p>
+        <h5 id="s1e3">Duplicity and Duply</h5>
+        <p><code>duplicity</code> creates encrypted, bandwidth-efficient incremental backups. <code>duply</code>
+        is a profile-based front end that makes duplicity configuration and recurring operations easier.</p>
 
         <p><strong>Key features:</strong></p>
         <ul>
-            <li>Deduplication at the block level</li>
-            <li>AES-256 encryption for data security</li>
-            <li>Compression using various algorithms</li>
-            <li>Supports local and remote storage</li>
-            <li>Incremental backups</li>
-            <li>Cross-platform compatibility</li>
+            <li>Full and incremental backups</li>
+            <li>GnuPG encryption and signing</li>
+            <li>Local and remote storage back ends</li>
+            <li>Retention and verification operations</li>
+            <li>Reusable profiles through Duply</li>
         </ul>
 
         <p><strong>Installation:</strong></p>
-        <code># mport install duopoly</code>
+        <code># mport install duplicity duply</code>
 
-        <p><strong>Creating your first repository:</strong></p>
+        <p><strong>Basic Duplicity usage:</strong></p>
         <pre>
-# Create a new duopoly repository
-duopoly init /backup/duopoly-repo
+# Create a full backup, followed by incrementals on later runs
+duplicity full /home file:///backup/duplicity
+duplicity incremental /home file:///backup/duplicity
 
-# For remote repositories (SSH)
-duopoly init user@remotehost:/backup/duopoly-repo
+# Inspect, verify, restore, and expire old backup sets
+duplicity collection-status file:///backup/duplicity
+duplicity verify file:///backup/duplicity /home
+duplicity restore file:///backup/duplicity /restore/home
+duplicity remove-older-than 30D --force file:///backup/duplicity
 </pre>
 
-        <p><strong>Backup and restore:</strong></p>
+        <p><strong>Using Duply profiles:</strong></p>
         <pre>
-# Create a backup
-# duopoly backup /home /etc --repository /backup/duopoly-repo
+# Create ~/.duply/home/conf, then edit source, target, and GPG settings
+duply home create
+chmod 600 ~/.duply/home/conf
 
-# Create backup with description
-duopoly backup /home /etc --repository /backup/duopoly-repo --description "Daily backup"
-
-# List all backups
-duopoly list --repository /backup/duopoly-repo
-
-# Restore a backup
-duopoly restore latest --repository /backup/duopoly-repo --target /restore
-
-# Restore specific backup
-duopoly restore backup-20250101 --repository /backup/duopoly-repo --target /restore
+duply home backup
+duply home status
+duply home restore /restore/home
 </pre>
-
-        <p><strong>Encryption and security:</strong></p>
-        <pre>
-# Create encrypted repository with password
-duopoly init /backup/secure-repo --password-file /root/.duopoly-pass
-
-# Backup with encryption
-duopoly backup /home --repository /backup/secure-repo --password-file /root/.duopoly-pass
-</pre>
-
-        <p><strong>Automated backup with duopoly:</strong></p>
-        <pre>
-#!/bin/sh
-# Automated duopoly backup
-REPO="/backup/duopoly-repo"
-PASS_FILE="/root/.duopoly-pass"
-LOG_FILE="/var/log/duopoly_backup.log"
-
-# Run backup
-echo "Starting duopoly backup: $(date)" >> "$LOG_FILE"
-duopoly backup /home /etc /var --repository "$REPO" --password-file "$PASS_FILE" --description "Daily backup $(date +%Y%m%d)" >> "$LOG_FILE" 2>&1
-
-# Prune old backups (keep last 30 days)
-duopoly prune --repository "$REPO" --password-file "$PASS_FILE" --keep-daily 30 >> "$LOG_FILE" 2>&1
-
-# Verify repository
-duopoly check --repository "$REPO" --password-file "$PASS_FILE" >> "$LOG_FILE" 2>&1
-
-echo "Backup completed: $(date)" >> "$LOG_FILE"
-</pre>
+        <p>Keep the profile and any referenced passphrase file readable only by the backup account. Do not put
+        passphrases directly in scripts, command lines, or source control.</p>
 
         <h5 id="s1e4">BorgBackup</h5>
         <p><code>borg</code> is a deduplicating backup program that supports compression, authentication, and 
@@ -527,7 +495,7 @@ echo "Backup completed: $(date)" >> "$LOG_FILE"
         </ul>
 
         <p><strong>Installation:</strong></p>
-        <code># mport install borgbackup</code>
+        <code># mport install py312-borgbackup</code>
 
         <p><strong>Basic usage:</strong></p>
         <pre>
@@ -552,10 +520,8 @@ borg mount /backup/borg-repo /mnt/borg
 # Create encrypted repository
 borg init --encryption=keyfile /backup/borg-repo
 
-# Backup with passphrase
-BORG_PASSPHRASE="your-passphrase" borg create /backup/borg-repo::mybackup /home /etc
-
-# Use key file for encryption
+# Read the passphrase from a protected file
+chmod 600 /root/.borg-passphrase
 BORG_PASSCOMMAND="cat /root/.borg-passphrase" borg create /backup/borg-repo::mybackup /home
 </pre>
 
@@ -585,6 +551,23 @@ BORG_PASSCOMMAND="cat $PASS_FILE" borg check "$REPO" >> "$LOG_FILE" 2>&1
 echo "Backup completed: $(date)" >> "$LOG_FILE"
 </pre>
 
+        <h5 id="s1e5">Other backup packages</h5>
+        <p>The current mports tree also provides these packages:</p>
+        <ul>
+            <li><code>flashback</code> for archiving volume content to tarballs</li>
+            <li><code>zetaback</code> for managing ZFS backup and recovery</li>
+            <li><code>bacula9-client</code> and <code>bacula9-server</code> for network backup deployments</li>
+            <li><code>backuppc</code> for centralized, disk-based backups of multiple systems</li>
+        </ul>
+        <pre>
+# Install only the tools needed for your backup design
+mport install flashback zetaback
+mport install bacula9-client bacula9-server
+mport install backuppc
+</pre>
+        <p>Consult each package's installed documentation before enabling services; Bacula and BackupPC require
+        site-specific access controls, storage paths, and retention policies.</p>
+
         <h4 id="s1f">Offsite Backup Strategies</h4>
 
         <p>Offsite backups are crucial for disaster recovery. Here are several approaches for backing up 
@@ -597,7 +580,7 @@ echo "Backup completed: $(date)" >> "$LOG_FILE"
 rsync -av -e "ssh -p 2222" /home/user/ user@remote:/backup/home
 
 # Using cpdup over SSH
-cpdup -v -x -s user@remote:/backup/destination /local/source
+cpdup -v /local/source user@remote:/backup/destination
 
 # Using tar over SSH
 tar czf - /home | ssh user@remote "cat > /backup/home-$(date +%Y%m%d).tar.gz"
@@ -635,17 +618,9 @@ restic -r gs:bucket-name backup /home
 
         <p><strong>Configuration for cloud providers:</strong></p>
         <pre>
-# Set environment variables for AWS S3
-AWS_ACCESS_KEY_ID="your-access-key"
-AWS_SECRET_ACCESS_KEY="your-secret-key"
+# Configure credentials with the provider's authenticated CLI or a root-only file,
+# then export them from that protected store before invoking restic.
 restic -r s3:s3.amazonaws.com/bucket-name backup /home
-
-# Or use configuration file
-cat > ~/.aws/credentials << EOF
-[default]
-aws_access_key_id = your-access-key
-aws_secret_access_key = your-secret-key
-EOF
 </pre>
 
         <h5>Network Attached Storage (NAS)</h5>
@@ -744,36 +719,6 @@ crontab -e
 0 4 1 * * tarsnap -c -f monthly-$(date +%Y%m) /home /etc >> /var/log/tarsnap.log 2>&1
 </pre>
 
-        <h5>Systemd Timers (if available)</h5>
-        <p>For systems with systemd, timers can be used instead of cron:</p>
-        <pre>
-# Create a service file: /usr/local/etc/systemd/system/backup.service
-[Unit]
-Description=Daily Backup
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/daily-backup.sh
-User=root
-StandardOutput=journal
-StandardError=journal
-
-# Create a timer file: /usr/local/etc/systemd/system/backup.timer
-[Unit]
-Description=Daily Backup Timer
-
-[Timer]
-OnCalendar=daily
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-
-# Enable the timer
-# systemctl enable backup.timer
-# systemctl start backup.timer
-</pre>
-
         <h5>Backup Wrapper Script</h5>
         <p>A comprehensive backup wrapper script that handles multiple backup methods:</p>
         <pre>
@@ -782,7 +727,8 @@ WantedBy=timers.target
 BACKUP_CONFIG="/etc/backup.conf"
 LOG_DIR="/var/log/backups"
 
-# Load configuration
+# Load a root-owned configuration file (chmod 600 /etc/backup.conf)
+[ -r "$BACKUP_CONFIG" ] || exit 1
 . "$BACKUP_CONFIG"
 
 # Create log directory
@@ -804,7 +750,8 @@ log "Starting backup sequence"
 # If using restic
 if [ "$USE_RESTIC" = "yes" ] && command_exists restic; then
     log "Running restic backup"
-    restic -r "$RESTIC_REPO" backup "$RESTIC_SOURCES" >> "${LOG_DIR}/restic.log" 2>&1
+    set -- "$RESTIC_SOURCE_HOME" "$RESTIC_SOURCE_ETC" "$RESTIC_SOURCE_VAR"
+    restic -r "$RESTIC_REPO" backup "$@" >> "${LOG_DIR}/restic.log" 2>&1
     restic -r "$RESTIC_REPO" forget --keep-daily "$RESTIC_KEEP_DAILY" >> "${LOG_DIR}/restic.log" 2>&1
 fi
 
@@ -832,7 +779,9 @@ USE_CPDUP="no"
 
 # Restic configuration
 RESTIC_REPO="/backup/restic-repo"
-RESTIC_SOURCES="/home /etc /var"
+RESTIC_SOURCE_HOME="/home"
+RESTIC_SOURCE_ETC="/etc"
+RESTIC_SOURCE_VAR="/var"
 RESTIC_KEEP_DAILY=30
 
 # Rsync configuration
@@ -879,8 +828,8 @@ restic -r /backup/restic-repo check
 # Borg repository check
 borg check /backup/borg-repo
 
-# Duopoly repository check
-duopoly check --repository /backup/duopoly-repo
+# Duplicity backup verification
+duplicity verify file:///backup/duplicity /home
 
 # Tarsnap integrity check (list archives)
 tarsnap --list-archives
@@ -894,8 +843,9 @@ restic -r /backup/restic-repo restore latest --target /tmp/test-restore
 ls -la /tmp/test-restore
 rm -rf /tmp/test-restore
 
-# Test restore with borg
-borg extract /backup/borg-repo::latest /tmp/test-restore
+# Test restore with borg (extract runs relative to the current directory)
+mkdir -p /tmp/test-restore/borg
+(cd /tmp/test-restore/borg && borg extract /backup/borg-repo::latest)
 ls -la /tmp/test-restore
 rm -rf /tmp/test-restore
 
@@ -929,7 +879,8 @@ fi
 # Test borg restore
 if command -v borg >/dev/null 2>&1; then
     log "Testing borg restore"
-    if borg extract /backup/borg-repo::latest "$TEST_DIR/borg" >> "$VERIFY_LOG" 2>&1; then
+    mkdir -p "$TEST_DIR/borg"
+    if (cd "$TEST_DIR/borg" && borg extract /backup/borg-repo::latest) >> "$VERIFY_LOG" 2>&1; then
         log "Borg restore: SUCCESS"
     else
         log "Borg restore: FAILED"
@@ -992,8 +943,9 @@ cp /backup/home/user/missing-file /home/user/
 # Using restic
 restic -r /backup/restic-repo restore latest --target /restore --include /home/user
 
-# Using borg
-borg extract /backup/borg-repo::latest home/user /restore/
+# Using borg (paths are extracted beneath the current directory)
+mkdir -p /restore
+(cd /restore && borg extract /backup/borg-repo::latest home/user)
 
 # Using rsync
 rsync -av /backup/home/user/ /restore/user/

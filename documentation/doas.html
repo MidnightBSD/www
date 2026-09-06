@@ -84,7 +84,7 @@ $ which doas
 
         <h4 id="s1e">Configuration File</h4>
 
-        <p>The main configuration file for <code>doas</code> is <code>/etc/doas.conf</code>. If this file does not 
+        <p>The main configuration file for <code>doas</code> is <code>/etc/doas.conf</code>. If this file does not
         exist, you need to create it. The configuration file uses a simple syntax:</p>
 
         <pre>
@@ -96,7 +96,8 @@ $ which doas
             <li><code>permit</code> - Allows the specified action</li>
             <li><code>deny</code> - Explicitly denies the specified action</li>
             <li><code>identity</code> - The user or group who is allowed to execute the command</li>
-            <li><code>targetuser</code> - The user as whom the command should be executed (defaults to root)</li>
+            <li><code>targetuser</code> - The user as whom the command may be executed. If <code>as</code> is omitted,
+            the rule matches any target user; the <code>doas</code> command itself defaults to root unless <code>-u</code> is used.</li>
             <li><code>cmd</code> - The command and arguments that are allowed</li>
         </ul>
 
@@ -120,16 +121,16 @@ permit john as root
         <h5>Allow a user to run specific commands</h5>
         <p>To allow user <code>john</code> to run only specific commands as root:</p>
         <pre>
-permit john as root cmd service
-permit john as root cmd ifconfig
-permit john as root cmd mport
+permit john as root cmd /usr/sbin/service
+permit john as root cmd /sbin/ifconfig
+permit john as root cmd /usr/sbin/mport
 </pre>
 
         <h5>Allow a user to run commands without a password</h5>
         <p>By default, <code>doas</code> will prompt for the user's password. To allow a user to run commands without 
         a password prompt:</p>
         <pre>
-permit nopass john as root cmd service
+permit nopass john as root cmd /usr/sbin/service
 </pre>
 
         <h5>Allow a group to run commands</h5>
@@ -141,52 +142,56 @@ permit :wheel as root
         <h5>Allow specific commands with arguments</h5>
         <p>To allow user <code>john</code> to run <code>service</code> with specific arguments:</p>
         <pre>
-permit john as root cmd service args start
-permit john as root cmd service args stop
-permit john as root cmd service args restart
+permit john as root cmd /usr/sbin/service args nginx start
+permit john as root cmd /usr/sbin/service args nginx stop
+permit john as root cmd /usr/sbin/service args nginx restart
 </pre>
 
         <h5>Run commands as a different user</h5>
         <p>To allow user <code>john</code> to run commands as user <code>backup</code>:</p>
         <pre>
-permit john as backup cmd rsync
+permit john as backup cmd /usr/local/bin/rsync
 </pre>
 
         <h5>Deny specific commands</h5>
         <p>You can explicitly deny certain commands even if other rules would permit them:</p>
         <pre>
-deny john as root cmd shutdown
+deny john as root cmd /sbin/shutdown
 </pre>
 
         <h4 id="s1g">Advanced Usage</h4>
 
         <h5>Using doas with specific environments</h5>
-        <p>You can preserve or modify the environment when using <code>doas</code>:</p>
+        <p>Use <code>keepenv</code> to preserve the caller's environment or <code>setenv</code> to retain only named
+        variables. Preserve only variables required by the command:</p>
         <pre>
-permit john as root cmd ee env HOME
-permit john as root cmd mport env PATH
+permit keepenv john as root cmd /usr/bin/ee
+permit setenv { TERM } john as root cmd /usr/sbin/mport
 </pre>
 
-        <h5>Wildcards in commands</h5>
-        <p>Use wildcards to match multiple commands or paths:</p>
+        <h5>Argument matching</h5>
+        <p><code>doas.conf</code> does not use shell wildcards in command rules. Omitting <code>args</code> permits
+        any arguments to that command; specify <code>args</code> to require an exact argument list:</p>
         <pre>
-permit john as root cmd service *
-permit john as root cmd mport *
+permit john as root cmd /usr/sbin/service args nginx restart
+permit john as root cmd /usr/sbin/mport args update
 </pre>
 
         <h5>Multiple users and commands</h5>
         <p>Combine multiple rules for different users and commands:</p>
         <pre>
-permit john as root cmd service
-permit john as root cmd mport
-permit jane as root cmd git
-permit :wheel as root cmd ifconfig
+permit john as root cmd /usr/sbin/service
+permit john as root cmd /usr/sbin/mport
+permit jane as root cmd /usr/local/bin/git
+permit :wheel as root cmd /sbin/ifconfig
 </pre>
 
         <h5>Testing configuration</h5>
-        <p>After editing the configuration file, test it by having the user attempt to run a permitted command:</p>
-        <code>$ doas ls /root</code>
-        <p>The command should execute if the configuration is correct.</p>
+        <p>Check the syntax before opening a separate session to test a permitted command:</p>
+        <pre>
+# doas -C /etc/doas.conf
+$ doas /usr/bin/whoami
+</pre>
 
         <h4 id="s1h">Security Considerations</h4>
 
@@ -195,7 +200,7 @@ permit :wheel as root cmd ifconfig
 
         <ul>
             <li><strong>Be specific with commands</strong> - Avoid allowing users to run any command as root unless absolutely necessary</li>
-            <li><strong>Use command arguments carefully</strong> - Be aware that allowing commands with wildcards or without argument restrictions can be exploited</li>
+            <li><strong>Use command arguments carefully</strong> - Omitting an <code>args</code> restriction permits every argument list for that command</li>
             <li><strong>Secure the configuration file</strong> - Ensure <code>/etc/doas.conf</code> is only readable and writable by root</li>
             <li><strong>Monitor usage</strong> - Regularly review who has <code>doas</code> permissions and what they can execute</li>
             <li><strong>Use groups wisely</strong> - Consider creating specific groups for administrative tasks rather than granting individual user permissions</li>
@@ -238,7 +243,8 @@ $ doas whoami
         <p>If <code>doas</code> is not working at all, verify it's installed:</p>
         <pre>
 # which doas
-# doas -V  # Check version
+# doas -C /etc/doas.conf
+# man 1 doas
 </pre>
 
         <!--#include virtual="/disqus.html"-->
