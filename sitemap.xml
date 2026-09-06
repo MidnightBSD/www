@@ -108,6 +108,11 @@
   <priority>0.0042</priority>
  </url>
  <url>
+  <loc>https://www.midnightbsd.org/documentation/email.html</loc>
+  <lastmod>2026-09-06T01:30:00+00:00</lastmod>
+  <priority>0.0073</priority>
+ </url>
+ <url>
   <loc>https://www.midnightbsd.org/documentation/firewall.html</loc>
   <lastmod>2026-07-31T22:34:53+00:00</lastmod>
   <priority>0.0063</priority>

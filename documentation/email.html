@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Complete email server setup guide for MidnightBSD. Covers base system mail, Sendmail, Postfix, Procmail, Dovecot, rspamd, ClamAV, and SpamAssassin.">
+    <title>MidnightBSD Documentation - Email Server Configuration</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/email.html">
+		<meta property="og:title" content="MidnightBSD Documentation - Email Server Configuration">
+    <meta property="og:description" content="Complete email server setup guide for MidnightBSD. Covers base system mail, Sendmail, Postfix, Procmail, Dovecot, rspamd, ClamAV, and SpamAssassin.">
+    <meta property="og:url" content="https://www.midnightbsd.org/documentation/email.html">
+    <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MidnightBSD Documentation - Email Server Configuration">
+    <meta name="twitter:description" content="Complete email server setup guide for MidnightBSD. Covers base system mail, Sendmail, Postfix, Procmail, Dovecot, rspamd, ClamAV, and SpamAssassin.">
+    <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Email Server Configuration</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Email Architecture Overview</a></li>
+                <li><a href="#base">Base System Mail Delivery</a>
+                    <ul>
+                        <li><a href="#maildelivery">Local Mail Delivery</a></li>
+                        <li><a href="#mailwrapper">mailwrapper</a></li>
+                        <li><a href="#aliases">Aliases and Forwarding</a></li>
+                    </ul>
+                </li>
+                <li>Mail Transfer Agents (MTA)
+                    <ul>
+                        <li><a href="#sendmail">Sendmail</a>
+                            <ul>
+                                <li><a href="#sendmail-install">Installation and Configuration</a></li>
+                                <li><a href="#sendmail-config">Configuration Files</a></li>
+                                <li><a href="#sendmail-start">Starting Sendmail</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#postfix">Postfix</a>
+                            <ul>
+                                <li><a href="#postfix-install">Installation</a></li>
+                                <li><a href="#postfix-config">Basic Configuration</a></li>
+                                <li><a href="#postfix-virtual">Virtual Domains</a></li>
+                                <li><a href="#postfix-start">Starting Postfix</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Local Delivery Agents
+                    <ul>
+                        <li><a href="#procmail">Procmail</a>
+                            <ul>
+                                <li><a href="#procmail-install">Installation</a></li>
+                                <li><a href="#procmail-config">Configuration</a></li>
+                                <li><a href="#procmail-recipes">Recipe Examples</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Mail Retrieval
+                    <ul>
+                        <li><a href="#dovecot">Dovecot</a>
+                            <ul>
+                                <li><a href="#dovecot-install">Installation</a></li>
+                                <li><a href="#dovecot-config">Configuration</a></li>
+                                <li><a href="#dovecot-ssl">SSL/TLS Setup</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Security and Filtering
+                    <ul>
+                        <li><a href="#rspamd">rspamd</a></li>
+                        <li><a href="#clamav">ClamAV</a></li>
+                        <li><a href="#spamassassin">SpamAssassin</a></li>
+                    </ul>
+                </li>
+                <li><a href="#complete">Complete Server Example</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Email Server Configuration</h3>
+        <h4 id="s1b">Introduction</h4>
+
+        <p>Setting up an email server on MidnightBSD provides full control over your email infrastructure.  
+        MidnightBSD includes mail delivery utilities derived from FreeBSD and DragonFly BSD, and supports  
+        popular mail server software through mports including Sendmail, Postfix, Dovecot, rspamd, ClamAV,  
+        and SpamAssassin.</p>
+
+        <p>This guide covers the complete email stack: Mail Transfer Agents (MTA) for sending and receiving mail,  
+        Local Delivery Agents (LDA) for delivering mail to local mailboxes, Mail Retrieval Agents (MRA) for IMAP/POP3  
+        access, and security/filtering components to protect your server from spam and malware.</p>
+
+        <h4 id="s1c">Email Architecture Overview</h4>
+
+        <p>A complete email server typically consists of several components working together:</p>
+        <ul>
+            <li><strong>MTA (Mail Transfer Agent)</strong> - Handles sending and receiving email via SMTP (port 25). Examples: Sendmail, Postfix</li>
+            <li><strong>LDA (Local Delivery Agent)</strong> - Delivers mail to local mailboxes. Examples: Procmail, Dovecot LDA, base system <code>mail.local</code></li>
+            <li><strong>MRA (Mail Retrieval Agent)</strong> - Allows users to retrieve mail via IMAP/POP3. Examples: Dovecot</li>
+            <li><strong>Spam Filtering</strong> - Filters unwanted email. Examples: rspamd, SpamAssassin</li>
+            <li><strong>Virus Scanning</strong> - Scans for malware. Examples: ClamAV</li>
+        </ul>
+
+        <p><strong>Typical mail flow:</strong> Incoming mail → MTA → Spam/Virus Filter → LDA → Mailbox ← MRA ← Email Client</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h3 id="base">Base System Mail Delivery</h3>
+
+        <h4 id="maildelivery">Local Mail Delivery</h4>
+
+        <p>MidnightBSD includes several mail-related utilities in the base system, inherited from FreeBSD and DragonFly BSD:</p>
+        <ul>
+            <li><code>/usr/sbin/sendmail</code> - The traditional Sendmail binary (often a wrapper)</li>
+            <li><code>/usr/libexec/mail.local</code> - Local mail delivery agent</li>
+            <li><code>/usr/libexec/mailwrapper</code> - Wrapper for switching between MTAs</li>
+            <li><code>/usr/bin/mail</code> - Command-line mail client</li>
+            <li><code>/usr/bin/mailq</code> - View the mail queue</li>
+        </ul>
+
+        <p>The base system <code>mail.local</code> is a simple local mail delivery agent that delivers mail to  
+        <code>/var/mail</code> mailboxes in mbox format. It supports basic features like forwarding via <code>.forward</code> files.</p>
+
+        <p><strong>Viewing mail queues:</strong></p>
+        <pre>
+# mailq
+</pre>
+
+        <p><strong>Sending a test email from command line:</strong></p>
+        <pre>
+$ echo "Test message body" | mail -s "Test Subject" user@localhost
+</pre>
+
+        <p><strong>Reading mail with the <code>mail</code> command:</strong></p>
+        <pre>
+$ mail
+</pre>
+
+        <h4 id="mailwrapper">mailwrapper</h4>
+
+        <p><code>mailwrapper</code> is a lightweight MTA wrapper that allows switching between different MTAs  
+        without modifying system configurations. It examines the <code>/etc/mail/mailer.conf</code> file to  
+        determine which MTA to use for various mail operations.</p>
+
+        <p><strong>Default mailer.conf:</strong></p>
+        <pre>
+# $MidnightBSD$
+#
+# Execution environment for mail(1).
+#
+# This file specifies the execution environment for the mail(1) command
+# for different types of mail.  Each line specifies:
+#
+#   type  command
+#
+# Where &quot;type&quot; is one of the following:
+#
+#   send      - used for command line mail sending (mail -s subject user@domain)
+#   local     - used for local mail delivery (rmail)
+#   mailq     - used for mailq(1) command
+#   newaliases - used for newaliases(8) command
+#
+# Each command is executed with the arguments given by the mail(1) command.
+#
+# Example:
+#
+#sendmail        /usr/libexec/sendmail/sendmail
+#mailq          /usr/libexec/sendmail/sendmail
+#newaliases     /usr/libexec/sendmail/sendmail
+#
+sendmail        /usr/sbin/sendmail
+mailq           /usr/sbin/sendmail
+newaliases      /usr/sbin/newaliases
+</pre>
+
+        <p>When you install Postfix or Sendmail from mports, they will typically update this file to point to their  
+        respective binaries.</p>
+
+        <h4 id="aliases">Aliases and Forwarding</h4>
+
+        <p>Email aliases allow you to forward mail for one user to another, or to multiple recipients. The base system  
+        uses <code>/etc/mail/aliases</code> for this purpose.</p>
+
+        <p><strong>Editing aliases:</strong></p>
+        <pre>
+# vi /etc/mail/aliases
+</pre>
+
+        <p><strong>Example aliases file:</strong></p>
+        <pre>
+# Basic format: alias: recipient1, recipient2, ...
+# System aliases
+root: laffer1
+postmaster: root
+webmaster: root
+
+# Forward user john's mail to external address
+john: john@example.com
+
+# Forward to multiple recipients
+admin: root, laffer1, backup@example.com
+
+# Mailing list
+staff: alice, bob, charlie
+</pre>
+
+        <p><strong>After modifying aliases, run:</strong></p>
+        <pre>
+# newaliases
+</pre>
+
+        <p><strong>User-level forwarding:</strong> Individual users can create a <code>.forward</code> file in their home  
+        directory to forward their mail:</p>
+        <pre>
+$ echo "user@example.com" > ~/.forward
+</pre>
+
+        <p>Note: Be careful with .forward files as they can create mail loops if not configured properly.</p>
+
+        <h3>Mail Transfer Agents (MTA)</h3>
+
+        <h4 id="sendmail">Sendmail</h4>
+
+        <p>Sendmail is the traditional Unix MTA and is available in mports. It is feature-rich but has a reputation  
+        for complex configuration.</p>
+
+        <h5 id="sendmail-install">Installation and Configuration</h5>
+
+        <p><strong>Install Sendmail from mports:</strong></p>
+        <pre>
+# mport install sendmail
+</pre>
+
+        <p>Sendmail configuration is primarily done through the <code>sendmail.mc</code> file which is compiled into  
+        <code>sendmail.cf</code>.</p>
+
+        <p><strong>Basic sendmail.mc configuration:</strong></p>
+        <pre>
+# vi /usr/local/etc/mail/sendmail.mc
+</pre>
+
+        <p><strong>Common configuration directives:</strong></p>
+        <pre>
+# Set the hostname
+MASQUERADE_AS(`yourdomain.com')
+
+# Allow relay for local networks
+ACCESS_DB(`hash -o /etc/mail/access.db')
+
+# Set trusted networks
+LOCAL_NET_CONFIG
+R$* &lt; @ $=w . &gt;            $: $1         user@trusted.net
+</pre>
+
+        <p><strong>Compile the configuration:</strong></p>
+        <pre>
+# cd /usr/local/etc/mail
+# make
+# make install
+# make restart
+</pre>
+
+        <h5 id="sendmail-config">Configuration Files</h5>
+        <ul>
+            <li><code>/usr/local/etc/mail/sendmail.mc</code> - Main configuration macro file</li>
+            <li><code>/usr/local/etc/mail/sendmail.cf</code> - Compiled configuration (do not edit directly)</li>
+            <li><code>/usr/local/etc/mail/access</code> - Access control database (relay permissions)</li>
+            <li><code>/usr/local/etc/mail/aliases</code> - Aliases file (may override /etc/mail/aliases)</li>
+            <li><code>/usr/local/etc/mail/virtusertable</code> - Virtual user table</li>
+            <li><code>/usr/local/etc/mail/local-host-names</code> - Accepted hostnames</li>
+        </ul>
+
+        <h5 id="sendmail-start">Starting Sendmail</h5>
+
+        <p><strong>Enable Sendmail at boot:</strong></p>
+        <pre>
+# sysrc sendmail_enable=YES
+# sysrc sendmail_submit_enable=YES
+# sysrc sendmail_outbound_enable=YES
+# sysrc sendmail_msp_queue_enable=YES
+</pre>
+
+        <p><strong>Start Sendmail services:</strong></p>
+        <pre>
+# service sendmail start
+# service sendmail_submit start
+# service sendmail_outbound start
+# service sendmail_msp_queue start
+</pre>
+
+        <p><strong>Check Sendmail status:</strong></p>
+        <pre>
+# service sendmail status
+# ps aux | grep sendmail
+</pre>
+
+        <p><strong>View mail queue:</strong></p>
+        <pre>
+# mailq
+# sendmail -bp
+</pre>
+
+        <p><strong>Flush the mail queue:</strong></p>
+        <pre>
+# sendmail -q
+# sendmail -q10m  # Process queue every 10 minutes
+</pre>
+
+        <h4 id="postfix">Postfix</h4>
+
+        <p>Postfix is a modern, secure, and easy-to-configure MTA that is widely used as an alternative to Sendmail.  
+        It has a modular design with a focus on security and performance.</p>
+
+        <h5 id="postfix-install">Installation</h5>
+
+        <p><strong>Install Postfix from mports:</strong></p>
+        <pre>
+# mport install postfix
+</pre>
+
+        <p><strong>If installing Postfix alongside Sendmail:</strong> You may need to disable Sendmail first:</p>
+        <pre>
+# sysrc sendmail_enable=NO
+# service sendmail stop
+</pre>
+
+        <p>Postfix installation will prompt you to configure the default mailer.conf. Typically, you want Postfix  
+        to be the default MTA.</p>
+
+        <h5 id="postfix-config">Basic Configuration</h5>
+
+        <p>Postfix uses two main configuration files: <code>main.cf</code> and <code>master.cf</code>.</p>
+
+        <p><strong>Main configuration file:</strong></p>
+        <pre>
+# vi /usr/local/etc/postfix/main.cf
+</pre>
+
+        <p><strong>Essential main.cf settings:</strong></p>
+        <pre>
+# Basic settings
+myhostname = mail.yourdomain.com
+mydomain = yourdomain.com
+myorigin = $mydomain
+inet_interfaces = all
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+
+# Trusted networks (allow relay)
+mynetworks = 127.0.0.0/8, [::1]/128, 192.168.1.0/24
+
+# Reject unknown users
+local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+
+# Use canonical maps for address rewriting
+canonical_maps = hash:/usr/local/etc/postfix/canonical
+
+# Bounce configuration
+bounce_queue_lifetime = 5d
+maximal_queue_lifetime = 7d
+</pre>
+
+        <p><strong>Master process configuration:</strong></p>
+        <pre>
+# vi /usr/local/etc/postfix/master.cf
+</pre>
+
+        <p>The master.cf file controls how Postfix processes different types of connections. By default, it includes  
+        configuration for SMTP (port 25), submission (port 587), and pickup services.</p>
+
+        <h5 id="postfix-virtual">Virtual Domains</h5>
+
+        <p>Postfix supports hosting multiple domains on a single server using virtual domains.</p>
+
+        <p><strong>Set up virtual mailbox domains:</strong></p>
+        <pre>
+# Add to main.cf
+virtual_mailbox_base = /var/vmail
+virtual_mailbox_domains = hash:/usr/local/etc/postfix/virtual_domains
+virtual_mailbox_maps = hash:/usr/local/etc/postfix/virtual_mailbox
+virtual_alias_maps = hash:/usr/local/etc/postfix/virtual_alias
+</pre>
+
+        <p><strong>Create virtual domains file:</strong></p>
+        <pre>
+# vi /usr/local/etc/postfix/virtual_domains
+example.com    OK
+example.org    OK
+</pre>
+
+        <p><strong>Create virtual mailbox file:</strong></p>
+        <pre>
+# vi /usr/local/etc/postfix/virtual_mailbox
+user@example.com    example.com/user/
+admin@example.com   example.com/admin/
+</pre>
+
+        <p><strong>Create virtual alias file:</strong></p>
+        <pre>
+# vi /usr/local/etc/postfix/virtual_alias
+webmaster@example.com    admin@example.com
+postmaster@example.com   admin@example.com
+</pre>
+
+        <p><strong>Compile the hash databases:</strong></p>
+        <pre>
+# postmap /usr/local/etc/postfix/virtual_domains
+# postmap /usr/local/etc/postfix/virtual_mailbox
+# postmap /usr/local/etc/postfix/virtual_alias
+</pre>
+
+        <p><strong>Create vmail directory:</strong></p>
+        <pre>
+# mkdir -p /var/vmail/example.com/user
+# chown -R vmail:vmail /var/vmail
+# chmod 700 /var/vmail
+</pre>
+
+        <h5 id="postfix-start">Starting Postfix</h5>
+
+        <p><strong>Enable Postfix at boot:</strong></p>
+        <pre>
+# sysrc postfix_enable=YES
+</pre>
+
+        <p><strong>Start Postfix:</strong></p>
+        <pre>
+# service postfix start
+</pre>
+
+        <p><strong>Check Postfix status:</strong></p>
+        <pre>
+# service postfix status
+# postfix status
+</pre>
+
+        <p><strong>View mail queue:</strong></p>
+        <pre>
+# postqueue -p
+# mailq
+</pre>
+
+        <p><strong>Flush the mail queue:</strong></p>
+        <pre>
+# postqueue -f
+</pre>
+
+        <p><strong>Reload configuration after changes:</strong></p>
+        <pre>
+# postfix reload
+</pre>
+
+        <h3>Local Delivery Agents</h3>
+
+        <h4 id="procmail">Procmail</h4>
+
+        <p>Procmail is a versatile local delivery agent (LDA) that can filter, sort, and process incoming mail  
+        based on flexible rules. It is commonly used with Sendmail or Postfix for mail filtering.</p>
+
+        <h5 id="procmail-install">Installation</h5>
+
+        <p><strong>Install Procmail from mports:</strong></p>
+        <pre>
+# mport install procmail
+</pre>
+
+        <h5 id="procmail-config">Configuration</h5>
+
+        <p>Procmail uses <code>.procmailrc</code> files in users' home directories to define filtering rules.</p>
+
+        <p><strong>Global procmail configuration:</strong></p>
+        <pre>
+# vi /usr/local/etc/procmailrc
+</pre>
+
+        <p><strong>Configure MTA to use Procmail for local delivery:</strong></p>
+        <ul>
+            <li><strong>For Sendmail:</strong> Edit <code>/etc/mail/mailer.conf</code> or Sendmail configuration to use Procmail as the local delivery agent</li>
+            <li><strong>For Postfix:</strong> Set <code>mailbox_command</code> in <code>main.cf</code>:
+                <pre>
+mailbox_command = /usr/local/bin/procmail -a "$EXTENSION"
+</pre>
+            </li>
+        </ul>
+
+        <p><strong>Basic user .procmailrc:</strong></p>
+        <pre>
+# Set default mailbox location
+MAILDIR=$HOME/Maildir
+DEFAULT=$MAILDIR/
+
+# Log file location
+LOGFILE=$HOME/.procmail.log
+
+# Verbose logging (optional)
+VERBOSE=off
+</pre>
+
+        <h5 id="procmail-recipes">Recipe Examples</h5>
+
+        <p><strong>Simple filtering by subject:</strong></p>
+        <pre>
+:0
+* ^Subject:.*spam
+/dev/null
+</pre>
+
+        <p><strong>Forward specific emails:</strong></p>
+        <pre>
+:0
+* ^From:.*important@client.com
+! backup@example.com
+</pre>
+
+        <p><strong>Deliver to different folders based on sender:</strong></p>
+        <pre>
+:0
+* ^From:.*family-member@
+$MAILDIR/family/
+
+:0
+* ^From:.*work@
+$MAILDIR/work/
+
+:0
+* ^List-Id:.*midnightbsd-users
+$MAILDIR/lists/midnightbsd/
+</pre>
+
+        <p><strong>Pipe mail to a script:</strong></p>
+        <pre>
+:0
+* ^Subject:.*backup report
+| /usr/local/bin/process-backup-report.sh
+</pre>
+
+        <p><strong>Automatic vacation reply:</strong></p>
+        <pre>
+:0 Wh
+* !^FROM_DAEMON
+* !^X-Loop: myaddress@myhost
+* !^FROM: myaddress@myhost
+| (formail -r -A "X-Loop: myaddress@myhost"; \
+   echo "I am on vacation until January 1. I will read your mail when I return.") | \
+  /usr/sbin/sendmail -t
+</pre>
+
+        <p><strong>Spam filtering with SpamAssassin:</strong></p>
+        <pre>
+:0fw
+| /usr/local/bin/spamc
+
+:0
+* ^X-Spam-Level: \*\*\*\*
+$MAILDIR/spam/
+</pre>
+
+        <h3>Mail Retrieval</h3>
+
+        <h4 id="dovecot">Dovecot</h4>
+
+        <p>Dovecot is a modern, secure IMAP and POP3 server that works well with both Sendmail and Postfix.  
+        It supports various mailbox formats and provides excellent performance.</p>
+
+        <h5 id="dovecot-install">Installation</h5>
+
+        <p><strong>Install Dovecot from mports:</strong></p>
+        <pre>
+# mport install dovecot
+</pre>
+
+        <p><strong>Install Dovecot with MySQL support (for virtual users):</strong></p>
+        <pre>
+# cd /usr/mports/mail/dovecot
+# make WITH_MYSQL=yes install clean
+</pre>
+
+        <h5 id="dovecot-config">Configuration</h5>
+
+        <p><strong>Main configuration:</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/dovecot.conf
+</pre>
+
+        <p><strong>Basic dovecot.conf:</strong></p>
+        <pre>
+# OS specific configuration
+!include conf.d/*.conf
+
+# Protocols to enable
+protocols = imap pop3
+
+# Listen on all interfaces
+listen = *
+
+# SSL certificate and key (recommended)
+ssl_cert_file = /etc/ssl/certs/dovecot.pem
+ssl_key_file = /etc/ssl/private/dovecot.key
+
+# Mail location
+mail_location = maildir:~/Maildir
+
+# User and group
+mail_uid = vmail
+mail_gid = vmail
+
+# First valid UID and GID
+first_valid_uid = 1000
+first_valid_gid = 1000
+
+# Authentication
+!include auth-system.conf.ext
+!include auth-passwdfile.conf.ext
+</pre>
+
+        <p><strong>Authentication configuration for system users:</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/conf.d/10-auth.conf
+
+auth_mechanisms = plain login
+
+# System users authentication
+!include auth-system.conf.ext
+</pre>
+
+        <p><strong>For virtual users with passwd-file:</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/conf.d/auth-passwdfile.conf.ext
+
+passdb {
+  driver = passwd-file
+  args = scheme=SHA512 username_format=%u /usr/local/etc/dovecot/users
+}
+
+userdb {
+  driver = passwd-file
+  args = username_format=%u /usr/local/etc/dovecot/users
+}
+</pre>
+
+        <p><strong>Create users file:</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/users
+user1:{SHA512}hashedpassword:1001:1001::/var/vmail/example.com/user1::
+user2:{SHA512}hashedpassword:1002:1002::/var/vmail/example.com/user2::
+</pre>
+
+        <p><strong>Generate password hash:</strong></p>
+        <pre>
+# doveadm pw -s SHA512
+Enter new password:
+Retype new password:
+{SHA512}longhashedstring
+</pre>
+
+        <p><strong>Configure mail location for virtual users:</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/conf.d/10-mail.conf
+
+mail_location = maildir:/var/vmail/%d/%n
+mail_uid = vmail
+mail_gid = vmail
+</pre>
+
+        <h5 id="dovecot-ssl">SSL/TLS Setup</h5>
+
+        <p><strong>Generate self-signed certificate:</strong></p>
+        <pre>
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/ssl/private/dovecot.key \
+  -out /etc/ssl/certs/dovecot.pem \
+  -subj "/CN=mail.yourdomain.com"
+
+# chmod 600 /etc/ssl/private/dovecot.key
+</pre>
+
+        <p><strong>Configure SSL in dovecot.conf:</strong></p>
+        <pre>
+ssl = required
+ssl_cert_file = /etc/ssl/certs/dovecot.pem
+ssl_key_file = /etc/ssl/private/dovecot.key
+ssl_protocols = !SSLv2 !SSLv3
+ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK
+</pre>
+
+        <p><strong>Enable SSL ports (IMAPS on 993, POP3S on 995):</strong></p>
+        <pre>
+# vi /usr/local/etc/dovecot/conf.d/10-master.conf
+
+service imaps {
+  inet_listener imaps {
+    port = 993
+    ssl = yes
+  }
+}
+
+service pop3s {
+  inet_listener pop3s {
+    port = 995
+    ssl = yes
+  }
+}
+</pre>
+
+        <p><strong>Enable Dovecot:</strong></p>
+        <pre>
+# sysrc dovecot_enable=YES
+# service dovecot start
+</pre>
+
+        <p><strong>Verify Dovecot is running:</strong></p>
+        <pre>
+# service dovecot status
+# dovecot --version
+</pre>
+
+        <h3>Security and Filtering</h3>
+
+        <h4 id="rspamd">rspamd</h4>
+
+        <p>rspamd (Real-time Spam Protection And Mail Delivery) is a modern spam filtering system that uses a  
+        variety of techniques including statistical analysis, DNS blacklists, and custom rules. It is designed  
+        to be fast, efficient, and easy to integrate with your mail server.</p>
+
+        <p><strong>Install rspamd from mports:</strong></p>
+        <pre>
+# mport install rspamd
+</pre>
+
+        <p><strong>Configure rspamd:</strong></p>
+        <pre>
+# vi /usr/local/etc/rspamd/rspamd.conf
+</pre>
+
+        <p><strong>Basic configuration for Postfix integration:</strong></p>
+        <pre>
+# Enable thespam filter module
+modules {
+    enabled = ["spam", "antivirus", "neural", "fuzzy", "ratelimit", "reputation", "dkim", "asn", "ip_score"];
+}
+
+# Spam actions
+actions {
+    reject = 15;
+    add_header = 6;
+    greylist = 4;
+}
+
+# Workers configuration
+workers {
+    count = 4;
+    master = true;
+}
+</pre>
+
+        <p><strong>Configure rspamd to work with ClamAV for virus scanning:</strong></p>
+        <pre>
+# vi /usr/local/etc/rspamd/modules.d/antivirus.conf
+
+clamav {
+    enabled = true;
+    socket = "clamav:/var/run/clamav/clamd.ctl";
+    action = "reject";
+    symbol = "CLAMAV";
+    message = "Virus detected: %v";
+}
+</pre>
+
+        <p><strong>Start rspamd:</strong></p>
+        <pre>
+# sysrc rspamd_enable=YES
+# service rspamd start
+</pre>
+
+        <p><strong>Integrate rspamd with Postfix:</strong></p>
+        <pre>
+# Add to /usr/local/etc/postfix/main.cf
+smtp_milter_connect_macros = i j {daemon_name} v {if_name} _
+smtp_milter_macros = i j {tls_version} {cipher} {cipher_bits} {cert_issuer} {cert_subject}
+smtp_milter_command_timeout = 30
+smtp_milter_default_action = accept
+smtp_milter_protocol = 2
+milter_mail_macros = i {msg_id} {rcpt_addr}
+non_smtp_milter_macros = {msg_id} {rcpt_addr}
+
+# Add to /usr/local/etc/postfix/master.cf
+smtp       inet  n       -       n       -       -       smtpd
+  -o milter_macro_daemon_name=ORIGINATING
+
+127.0.0.1:11332 inet    n       -       n       -       -       smtpd
+  -o milter_macro_daemon_name=ORIGINATING
+
+# Add rspamd milter
+127.0.0.1:11334 inet    n       -       n       -       -       smtpd
+</pre>
+
+        <p><strong>Create rspamd user for Postfix:</strong></p>
+        <pre>
+# echo "rspamd:mail:/usr/local/etc/rspamd:/usr/local/bin/false" >> /etc/passwd
+# pw usermod rspamd -G mail
+</pre>
+
+        <h4 id="clamav">ClamAV</h4>
+
+        <p>ClamAV is an open-source antivirus engine designed for detecting trojans, viruses, malware, and other  
+        malicious threats. It can be integrated with your mail server to scan incoming and outgoing email.</p>
+
+        <p><strong>Install ClamAV from mports:</strong></p>
+        <pre>
+# mport install clamav
+</pre>
+
+        <p><strong>Update virus definitions:</strong></p>
+        <pre>
+# freshclam
+</pre>
+
+        <p><strong>Configure freshclam to run periodically:</strong></p>
+        <pre>
+# vi /usr/local/etc/freshclam.conf
+
+# Enable automatic updates
+DatabaseMirror db.local.clamav.net
+PrivateMirror mirror://user:pass@private.local.clamav.net:24
+
+# Run as clamav user
+DatabaseOwner clamav
+
+# Number of database updates per day
+Checks 24
+
+# Log freshclam activity
+LogSyslog yes
+LogFacility LOG_LOCAL6
+</pre>
+
+        <p><strong>Configure clamd:</strong></p>
+        <pre>
+# vi /usr/local/etc/clamd.conf
+
+# Comment out Example line
+#Example
+
+# Log file
+LogSyslog yes
+LogFacility LOG_LOCAL6
+
+# Pid file
+PidFile /var/run/clamav/clamd.pid
+
+# Database directory
+DatabaseDirectory /var/db/clamav
+
+# Local socket
+LocalSocket /var/run/clamav/clamd.ctl
+
+# Fix permissions
+FixStaleSocket yes
+
+# User and group
+User clamav
+</pre>
+
+        <p><strong>Start ClamAV:</strong></p>
+        <pre>
+# sysrc clamav_clamd_enable=YES
+# sysrc clamav_freshclam_enable=YES
+# service clamav-clamd start
+# service clamav-freshclam start
+</pre>
+
+        <p><strong>Test ClamAV:</strong></p>
+        <pre>
+# clamscan --version
+# clamscan -r /usr/local/etc/postfix
+</pre>
+
+        <p><strong>Integrate ClamAV with Postfix using clamd:</strong></p>
+        <pre>
+# Add to /usr/local/etc/postfix/main.cf
+content_filter = scan:127.0.0.1:10025
+</pre>
+
+        <p><strong>Create scan service in master.cf:</strong></p>
+        <pre>
+# Add to /usr/local/etc/postfix/master.cf
+scan unix    -       -       n       -       16      smtp
+    -o smtp_send_xforward_command=yes
+    -o disable_mime_output_conversion=yes
+    -o smtp_generic_maps=
+
+127.0.0.1:10025 inet n  -       n       -       16      smtpd
+    -o content_filter=
+    -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
+    -o smtpd_helo_restrictions=
+    -o smtpd_client_restrictions=
+    -o smtpd_sender_restrictions=
+    -o milter_macro_daemon_name=ORIGINATING
+    -o smtpd_recipient_restrictions=permit
+</pre>
+
+        <p><strong>Create filter script:</strong></p>
+        <pre>
+#!/bin/sh
+# /usr/local/bin/clamav-filter
+
+INTERFACE="127.0.0.1:10026"
+
+/usr/local/bin/clamdscan --fdpass --stream --no-summary --quiet --infected --stdout $1
+if [ $? -eq 1 ]; then
+    /usr/sbin/sendmail -G -i "$@" &lt; $1
+    exit $?
+fi
+
+/opt/postfix/libexec/postfix/sendmail -i "$@"
+exit $?
+</pre>
+
+        <h4 id="spamassassin">SpamAssassin</h4>
+
+        <p>SpamAssassin is a powerful spam filtering system that uses a variety of mechanisms including header and  
+        text analysis, Bayesian filtering, DNS blocklists, and collaborative filtering databases.</p>
+
+        <p><strong>Install SpamAssassin from mports:</strong></p>
+        <pre>
+# mport install spamassassin
+</pre>
+
+        <p><strong>Enable SpamAssassin:</strong></p>
+        <pre>
+# sysrc sa-spamd_enable=YES
+# service sa-spamd start
+</pre>
+
+        <p><strong>Configure SpamAssassin:</strong></p>
+        <pre>
+# vi /usr/local/etc/mail/spamassassin/local.cf
+
+# Required score to flag as spam
+required_score 5.0
+
+# Required score to reject
+required_hits 6.0
+
+# Rewrite subject for spam
+rewrite_header Subject **** SPAM _SCORE_ ***
+
+# Add report to message
+report_safe 1
+
+# Enable Bayesian filtering
+use_bayes 1
+bayes_auto_learn 1
+bayes_path /var/db/spamassassin/bayes
+
+# Enable network tests
+skip_rbl_checks 0
+
+# Custom rules
+header MY_CUSTOM_RULE  Subject =~ /Free Viagra/i
+score MY_CUSTOM_RULE 5.0
+</pre>
+
+        <p><strong>Integrate SpamAssassin with Postfix:</strong></p>
+        <pre>
+# Add to /usr/local/etc/postfix/main.cf
+smtp_milter_connect_macros = i j {daemon_name} v {if_name} _
+smtp_milter_macros = i j {tls_version} {cipher} {cipher_bits} {cert_issuer} {cert_subject}
+milter_default_action = accept
+milter_protocol = 2
+smtp_milter_command_timeout = 30
+
+# Add to /usr/local/etc/postfix/master.cf
+smtp       inet  n       -       n       -       -       smtpd
+  -o milter_macro_daemon_name=ORIGINATING
+
+# Add spamassassin milter
+127.0.0.1:783 inet    n       -       n       -       -       smtpd
+  -o milter_macro_daemon_name=ORIGINATING
+</pre>
+
+        <p><strong>Integrate SpamAssassin with Procmail:</strong></p>
+        <pre>
+# Add to user's .procmailrc
+:0fw
+| /usr/local/bin/spamc
+
+:0
+* ^X-Spam-Level: \*\*\*\*
+$MAILDIR/spam/
+
+:0
+* ^X-Spam-Status: Yes
+$MAILDIR/spam/
+</pre>
+
+        <p><strong>Update SpamAssassin rules:</strong></p>
+        <pre>
+# sa-update
+</pre>
+
+        <p><strong>Run SpamAssassin in test mode:</strong></p>
+        <pre>
+# spamassassin -t &lt; /path/to/test-message.eml
+</pre>
+
+        <p><strong>Check SpamAssassin logs:</strong></p>
+        <pre>
+# tail -f /var/log/maillog | grep spam
+</pre>
+
+        <h3 id="complete">Complete Server Example</h3>
+
+        <p>This section provides a complete example of setting up a production-ready mail server with Postfix,  
+        Dovecot, rspamd, ClamAV, and SpamAssassin.</p>
+
+        <h4>Step 1: Install all required packages</h4>
+        <pre>
+# mport install postfix dovecot rspamd clamav spamassassin
+</pre>
+
+        <h4>Step 2: Configure networking</h4>
+        <p>Ensure your server has proper DNS records:</p>
+        <ul>
+            <li><strong>A record:</strong> mail.yourdomain.com → your server IP</li>
+            <li><strong>MX record:</strong> yourdomain.com → mail.yourdomain.com (priority 10)</li>
+            <li><strong>PTR record:</strong> Your server IP → mail.yourdomain.com (reverse DNS)</li>
+            <li><strong>SPF record:</strong> TXT record for yourdomain.com: <code>v=spf1 mx ~all</code></li>
+            <li><strong>DKIM record:</strong> TXT record for rspamd selector</li>
+        </ul>
+
+        <h4>Step 3: Configure Postfix</h4>
+        <p>Edit <code>/usr/local/etc/postfix/main.cf</code>:</p>
+        <pre>
+smyhostname = mail.yourdomain.com
+mydomain = yourdomain.com
+myorigin = $mydomain
+inet_interfaces = all
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+mynetworks = 127.0.0.0/8, [::1]/128, 192.168.1.0/24
+
+# Relay restrictions
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+
+# TLS configuration
+smtpd_use_tls = yes
+smtpd_tls_cert_file = /etc/ssl/certs/postfix.pem
+smtpd_tls_key_file = /etc/ssl/private/postfix.key
+smtpd_tls_security_level = may
+
+# SASL authentication
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+
+# Virtual mailbox domains
+virtual_mailbox_base = /var/vmail
+virtual_mailbox_domains = hash:/usr/local/etc/postfix/virtual_domains
+virtual_mailbox_maps = hash:/usr/local/etc/postfix/virtual_mailbox
+virtual_alias_maps = hash:/usr/local/etc/postfix/virtual_alias
+
+# Milter for spam/virus filtering
+milter_default_action = accept
+milter_protocol = 2
+smtp_milter_command_timeout = 30
+</pre>
+
+        <h4>Step 4: Configure Dovecot</h4>
+        <p>Edit <code>/usr/local/etc/dovecot/dovecot.conf</code>:</p>
+        <pre>
+protocols = imap pop3
+listen = *
+
+# SSL
+ssl = required
+ssl_cert_file = /etc/ssl/certs/dovecot.pem
+ssl_key_file = /etc/ssl/private/dovecot.key
+
+# Mail location for virtual users
+mail_location = maildir:/var/vmail/%d/%n
+mail_uid = vmail
+mail_gid = vmail
+
+# SASL for Postfix
+service auth {
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0660
+    user = postfix
+    group = postfix
+  }
+}
+</pre>
+
+        <h4>Step 5: Configure rspamd</h4>
+        <p>Enable rspamd in <code>/usr/local/etc/rspamd/rspamd.conf</code>:</p>
+        <pre>
+modules {
+    enabled = ["spam", "antivirus", "neural", "fuzzy", "ratelimit", "reputation"];
+}
+
+workers {
+    count = 4;
+}
+
+# Listen on all interfaces for Postfix integration
+bind_socket = "*:11334";
+</pre>
+
+        <h4>Step 6: Start all services</h4>
+        <pre>
+# sysrc postfix_enable=YES
+# sysrc dovecot_enable=YES
+# sysrc rspamd_enable=YES
+# sysrc clamav_clamd_enable=YES
+# sysrc clamav_freshclam_enable=YES
+# sysrc sa-spamd_enable=YES
+
+# service postfix start
+# service dovecot start
+# service rspamd start
+# service clamav-clamd start
+# service clamav-freshclam start
+# service sa-spamd start
+</pre>
+
+        <h4>Step 7: Test the setup</h4>
+        <pre>
+# telnet localhost 25
+# EHLO test
+# MAIL FROM:&lt;test@yourdomain.com&gt;
+# RCPT TO:&lt;user@yourdomain.com&gt;
+# DATA
+# Subject: Test
+# 
+# Test message
+# .
+# QUIT
+
+# Test IMAP
+# telnet localhost 143
+
+# Check logs
+# tail -f /var/log/maillog
+</pre>
+
+        <h4>Step 8: Enable submission port (587) for authenticated sending</h4>
+        <p>Edit <code>/usr/local/etc/postfix/master.cf</code>:</p>
+        <pre>
+submission inet n       -       n       -       -       smtpd
+  -o syslog_name=postfix/submission
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
+</pre>
+
+        <p>Then reload Postfix:</p>
+        <pre>
+# postfix reload
+</pre>
+
+        <h3 id="troubleshooting">Troubleshooting</h3>
+
+        <p><strong>Mail is not being delivered:</strong></p>
+        <ul>
+            <li>Check the mail queue: <code>mailq</code> or <code>postqueue -p</code></li>
+            <li>Check logs: <code>tail -f /var/log/maillog</code></li>
+            <li>Verify Postfix is running: <code>service postfix status</code></li>
+            <li>Check DNS records: <code>dig MX yourdomain.com</code></li>
+            <li>Test SMTP: <code>telnet localhost 25</code></li>
+        </ul>
+
+        <p><strong>Authentication failures with Dovecot:</strong></p>
+        <ul>
+            <li>Verify Dovecot is running: <code>service dovecot status</code></li>
+            <li>Check Dovecot logs: <code>tail -f /var/log/dovecot.log</code></li>
+            <li>Verify SASL socket permissions</li>
+            <li>Test IMAP login: <code>telnet localhost 143</code></li>
+        </ul>
+
+        <p><strong>Spam filtering not working:</strong></p>
+        <ul>
+            <li>Check rspamd is running: <code>service rspamd status</code></li>
+            <li>Check rspamd logs: <code>tail -f /var/log/rspamd.log</code></li>
+            <li>Test rspamd: <code>rspamc check &lt; test-message.eml</code></li>
+            <li>Verify milter integration in Postfix</li>
+        </ul>
+
+        <p><strong>Virus scanning not working:</strong></p>
+        <ul>
+            <li>Check ClamAV is running: <code>service clamav-clamd status</code></li>
+            <li>Update virus definitions: <code>freshclam</code></li>
+            <li>Test ClamAV: <code>clamdscan /tmp/testfile</code></li>
+            <li>Verify clamd socket permissions</li>
+        </ul>
+
+        <p><strong>Connection refused errors:</strong></p>
+        <ul>
+            <li>Check firewall: <code>ipfw list</code> or <code>pfctl -sr</code></li>
+            <li>Verify service is listening: <code>sockstat -l | grep port</code></li>
+            <li>Check service configuration for correct IP binding</li>
+        </ul>
+
+        <p><strong>Common error messages:</strong></p>
+        <pre>
+# 451 Temporary local problem - please try later
+#   → Usually a permissions issue or service not ready
+
+# 550 Relay not permitted
+#   → Check mynetworks or authentication configuration
+
+# 550 No such user
+#   → Check virtual user maps or system user existence
+
+# Connection timed out
+#   → Check firewall, network connectivity, or service status
+</pre>
+
+        <p><strong>Performance issues:</strong></p>
+        <ul>
+            <li>Check system resources: <code>top</code>, <code>vmstat</code></li>
+            <li>Adjust Postfix process limits in <code>master.cf</code></li>
+            <li>Tune rspamd worker count based on CPU cores</li>
+            <li>Consider using SSD storage for mail directories</li>
+        </ul>
+
+        <p><strong>Debugging tools:</strong></p>
+        <ul>
+            <li><code>telnet</code> - Test SMTP/IMAP connections manually</li>
+            <li><code>openssl s_client</code> - Test SSL/TLS connections</li>
+            <li><code>dig</code>, <code>nslookup</code> - Test DNS records</li>
+            <li><code>traceroute</code>, <code>mtr</code> - Test network connectivity</li>
+            <li><code>strace</code> - Trace system calls (available via mports)</li>
+        </ul>
+
+        <p><strong>Log analysis:</strong></p>
+        <pre>
+# Show recent mail log entries
+# tail -100 /var/log/maillog
+
+# Filter for errors
+# grep -i error /var/log/maillog
+
+# Filter for specific service
+# grep postfix /var/log/maillog
+# grep dovecot /var/log/maillog
+# grep rspamd /var/log/maillog
+
+# Real-time log monitoring
+# tail -f /var/log/maillog | grep -E "(postfix|dovecot|rspamd|clamav)"
+</pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
