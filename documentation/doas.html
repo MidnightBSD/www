@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Configure doas for privileged command execution on MidnightBSD. Learn how to set up doas as a sudo alternative for user permissions.">
+    <title>MidnightBSD Documentation - doas Configuration</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/doas.html">
+		<meta property="og:title" content="MidnightBSD Documentation - doas Configuration">
+    <meta property="og:description" content="Configure doas for privileged command execution on MidnightBSD. Learn how to set up doas as a sudo alternative for user permissions.">
+    <meta property="og:url" content="https://www.midnightbsd.org/documentation/doas.html">
+    <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MidnightBSD Documentation - doas Configuration">
+    <meta name="twitter:description" content="Configure doas for privileged command execution on MidnightBSD. Learn how to set up doas as a sudo alternative for user permissions.">
+    <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> doas Configuration</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">doas vs sudo</a></li>
+                <li><a href="#s1d">Installation</a></li>
+                <li><a href="#s1e">Configuration File</a></li>
+                <li><a href="#s1f">Basic Configuration Examples</a></li>
+                <li><a href="#s1g">Advanced Usage</a></li>
+                <li><a href="#s1h">Security Considerations</a></li>
+                <li><a href="#s1i">Troubleshooting</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">doas Configuration</h3>
+        <h4 id="s1b">Introduction</h4>
+
+        <p><code>doas</code> is a utility for executing commands as another user, primarily designed as a simpler 
+        alternative to <code>sudo</code>. It is the default privilege escalation tool in MidnightBSD and is 
+        included in the base system. <code>doas</code> allows authorized users to run commands as root or other 
+        users without requiring the root password.</p>
+
+        <p>The <code>doas</code> command is particularly useful for system administration tasks where regular users 
+        need to perform specific administrative functions without full root access.</p>
+
+        <h4 id="s1c">doas vs sudo</h4>
+
+        <p><code>doas</code> is the OpenBSD approach to privilege escalation and has several advantages over 
+        <code>sudo</code>:</p>
+        
+        <ul>
+            <li><strong>Simplicity</strong> - Minimal configuration with straightforward syntax</li>
+            <li><strong>Security</strong> - Smaller codebase means fewer potential vulnerabilities</li>
+            <li><strong>Default in base</strong> - Included with MidnightBSD, no need to install separately</li>
+            <li><strong>Cleaner syntax</strong> - More intuitive command structure</li>
+        </ul>
+
+        <p>Unlike <code>sudo</code>, <code>doas</code> does not have extensive logging capabilities by default, but it 
+        provides the essential functionality needed for most use cases in a BSD environment.</p>
+
+        <h4 id="s1d">Installation</h4>
+
+        <p><code>doas</code> is included in the MidnightBSD base system, so no additional installation is required. 
+        However, you may need to enable it:</p>
+
+        <pre>
+# sysrc doas_enable=YES
+# service doas start
+</pre>
+
+        <p>To verify that <code>doas</code> is available:</p>
+        <code>which doas</code>
+        <p>This should return <code>/usr/bin/doas</code>.</p>
+
+        <h4 id="s1e">Configuration File</h4>
+
+        <p>The main configuration file for <code>doas</code> is <code>/etc/doas.conf</code>. If this file does not 
+        exist, you need to create it. The configuration file uses a simple syntax:</p>
+
+        <pre>
+# permit|deny [options] identity [as targetuser] [cmd command [args...]]
+</pre>
+
+        <p>Where:</p>
+        <ul>
+            <li><code>permit</code> - Allows the specified action</li>
+            <li><code>deny</code> - Explicitly denies the specified action</li>
+            <li><code>identity</code> - The user or group who is allowed to execute the command</li>
+            <li><code>targetuser</code> - The user as whom the command should be executed (defaults to root)</li>
+            <li><code>cmd</code> - The command and arguments that are allowed</li>
+        </ul>
+
+        <p>Create the configuration file if it doesn't exist:</p>
+        <pre>
+# touch /etc/doas.conf
+</pre>
+
+        <p>Always set secure permissions on the configuration file:</p>
+        <code># chmod 640 /etc/doas.conf</code>
+        <code># chown root:wheel /etc/doas.conf</code>
+
+        <h4 id="s1f">Basic Configuration Examples</h4>
+
+        <h5>Allow a specific user to run any command as root</h5>
+        <p>To allow user <code>john</code> to run any command as root:</p>
+        <pre>
+permit john as root
+</pre>
+
+        <h5>Allow a user to run specific commands</h5>
+        <p>To allow user <code>john</code> to run only specific commands as root:</p>
+        <pre>
+permit john as root cmd service
+permit john as root cmd ifconfig
+permit john as root cmd mport
+</pre>
+
+        <h5>Allow a user to run commands without a password</h5>
+        <p>By default, <code>doas</code> will prompt for the user's password. To allow a user to run commands without 
+        a password prompt:</p>
+        <pre>
+permit nopass john as root cmd service
+</pre>
+
+        <h5>Allow a group to run commands</h5>
+        <p>To allow all users in the <code>wheel</code> group to run any command as root:</p>
+        <pre>
+permit :wheel as root
+</pre>
+
+        <h5>Allow specific commands with arguments</h5>
+        <p>To allow user <code>john</code> to run <code>service</code> with specific arguments:</p>
+        <pre>
+permit john as root cmd service args start
+permit john as root cmd service args stop
+permit john as root cmd service args restart
+</pre>
+
+        <h5>Run commands as a different user</h5>
+        <p>To allow user <code>john</code> to run commands as user <code>backup</code>:</p>
+        <pre>
+permit john as backup cmd rsync
+</pre>
+
+        <h5>Deny specific commands</h5>
+        <p>You can explicitly deny certain commands even if other rules would permit them:</p>
+        <pre>
+deny john as root cmd shutdown
+</pre>
+
+        <h4 id="s1g">Advanced Usage</h4>
+
+        <h5>Using doas with specific environments</h5>
+        <p>You can preserve or modify the environment when using <code>doas</code>:</p>
+        <pre>
+permit john as root cmd ee env HOME
+permit john as root cmd mport env PATH
+</pre>
+
+        <h5>Wildcards in commands</h5>
+        <p>Use wildcards to match multiple commands or paths:</p>
+        <pre>
+permit john as root cmd service *
+permit john as root cmd mport *
+</pre>
+
+        <h5>Multiple users and commands</h5>
+        <p>Combine multiple rules for different users and commands:</p>
+        <pre>
+permit john as root cmd service
+permit john as root cmd mport
+permit jane as root cmd git
+permit :wheel as root cmd ifconfig
+</pre>
+
+        <h5>Testing configuration</h5>
+        <p>After editing the configuration file, test it by having the user attempt to run a permitted command:</p>
+        <code>$ doas service -e</code>
+        <p>The command should execute if the configuration is correct.</p>
+
+        <h4 id="s1h">Security Considerations</h4>
+
+        <p><strong>Always follow the principle of least privilege</strong> - only grant the minimum permissions necessary 
+        for users to perform their tasks.</p>
+
+        <ul>
+            <li><strong>Be specific with commands</strong> - Avoid allowing users to run any command as root unless absolutely necessary</li>
+            <li><strong>Use command arguments carefully</strong> - Be aware that allowing commands with wildcards or without argument restrictions can be exploited</li>
+            <li><strong>Secure the configuration file</strong> - Ensure <code>/etc/doas.conf</code> is only readable and writable by root</li>
+            <li><strong>Monitor usage</strong> - Regularly review who has <code>doas</code> permissions and what they can execute</li>
+            <li><strong>Use groups wisely</strong> - Consider creating specific groups for administrative tasks rather than granting individual user permissions</li>
+        </ul>
+
+        <p><strong>Important security notes:</strong></p>
+        <ul>
+            <li>If you permit users to run text editors like <code>vi</code> or <code>ee</code> as root, they may be able to edit system files and gain elevated privileges</li>
+            <li>Avoid permitting shell access (<code>sh</code>, <code>bash</code>, <code>tcsh</code>) as root, as this effectively gives the user a root shell</li>
+            <li>Be cautious with commands that can execute other commands (e.g., <code>find -exec</code>, <code>xargs</code>)</li>
+        </ul>
+
+        <h4 id="s1i">Troubleshooting</h4>
+
+        <h5>"doas: Operation not permitted"</h5>
+        <p>This error typically occurs when:</p>
+        <ul>
+            <li>The user is not authorized in the <code>doas.conf</code> file</li>
+            <li>The configuration file does not exist or has incorrect permissions</li>
+            <li>The <code>doas</code> service is not running</li>
+        </ul>
+        <p>Solution: Verify the configuration file exists, has correct permissions, and contains the appropriate rules.</p>
+
+        <h5>"doas: No configuration file"</h5>
+        <p>This indicates that <code>doas</code> cannot find its configuration file. Ensure that <code>/etc/doas.conf</code> exists.</p>
+
+        <h5>"doas: permission denied"</h5>
+        <p>This error can occur if the user's password is incorrect or if the command being attempted is not explicitly permitted.</p>
+
+        <h5>Debugging configuration</h5>
+        <p>You can test <code>doas</code> configuration by running commands as the target user:</p>
+        <pre>
+$ su - john
+$ doas service -e
+</pre>
+
+        <p>Check that the configuration file syntax is correct and that the file permissions are set properly.</p>
+
+        <h5>Verifying doas installation</h5>
+        <p>If <code>doas</code> is not working at all, verify it's installed and running:</p>
+        <pre>
+# which doas
+# service doas status
+# ps aux | grep doas
+</pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
