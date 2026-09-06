@@ -138,12 +138,12 @@
 
         <p>Added new functionality to mport verify:
 
-        <p>You can check a single port now with mport verify
-        <p>You can repair checksums now on a port. mport verify -r This often indicates a security issue, modified files after installation by the user, or a problem with mport package manager where an install was damaged.
-        <p>Fixed build issues with newer LLVM versions.
-        <p>Change the behavior of mport_install to include dependencies. make a new function mport_install_single to keep the old behavior for users. switch upgrade over to it.
-        <p>Attempt to detect packages that have the same origin for upgrades.
-        <p>The last one needs more refinement in future releases. When you do mport list updates now, it may show you updates are available but if you run mport update it will fail for some. The reason is that it now figures out that we don't have a package for say py37-foo when there is for py311-foo. So it will suggest an update. It's not yet updating the package in this scenario. I need to rework some things for this to happen. My first implementation was reverted because of some other complications. Ideally, a user will need to be prompted to do this. There are cases it's wrong. (like if a packge was just not built on the last package build in magus)
+        <p>You can check a single port now with mport verify.</p>
+        <p>You can repair checksums now on a port. mport verify -r This often indicates a security issue, modified files after installation by the user, or a problem with mport package manager where an install was damaged.</p>
+        <p>Fixed build issues with newer LLVM versions.</p>
+        <p>Change the behavior of mport_install to include dependencies. A new function mport_install_single keeps the old behavior for users. Switch upgrade over to it.</p>
+        <p>Attempt to detect packages that have the same origin for upgrades.</p>
+        <p>The last one needs more refinement in future releases. When you do mport list updates now, it may show you updates are available but if you run mport update it will fail for some. The reason is that it now figures out that we don't have a package for say py37-foo when there is for py311-foo. So it will suggest an update. It's not yet updating the package in this scenario. I need to rework some things for this to happen. My first implementation was reverted because of some other complications. Ideally, a user will need to be prompted to do this. There are cases it's wrong (like if a package was just not built on the last package build in magus).</p>
 
         <p>I've also improved a lot of messages to the user, usage() output, and added more error handling in several places. There were a few small memory leaks fixed as well.</p>
 
@@ -341,10 +341,9 @@
 
         <p>MSS clamping has been improved for ppp(8).
 
-        <p>Metric aliasing has been changed in prometheus_sysctl_exporter(8) to avoid confusing Prometheus server due to conflicting metric names.
-        The tcp_log_bucket UMA zone has been renamed to tcp_log_id_bucket, and tcp_log_node was renamed to tcp_log_id_node for consistency.
-        Sysctl variables with (LEGACY) in their descriptions are no longer being exported, these are used by ZFS sysctls that have been replaced by others, many of which alias to the same
-        Prometheus metric name (like vfs.zfs.arc_max and vfs.zfs.arc.max).
+        <p>Metric aliasing has been changed in prometheus_sysctl_exporter(8) to avoid confusing Prometheus server due to conflicting metric names.</p>
+        <p>The tcp_log_bucket UMA zone has been renamed to tcp_log_id_bucket, and tcp_log_node was renamed to tcp_log_id_node for consistency.</p>
+        <p>Sysctl variables with (LEGACY) in their descriptions are no longer being exported. These are used by ZFS sysctls that have been replaced by others, many of which alias to the same Prometheus metric name (like vfs.zfs.arc_max and vfs.zfs.arc.max).</p>
 
         <p>The uuidgen(1) utility has a new option -r to generate a random UUID, version 4.
 
