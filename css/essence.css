@@ -71,7 +71,7 @@ a:active, a:hover {
 .my-button:disabled {
     background-color: #cccccc;
     border-color: #cccccc;
-    color: #666666;
+    color: #555555;
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
@@ -299,4 +299,3 @@ td {
         display: none;
     }
 }
-
