@@ -71,16 +71,16 @@
         <h4 id="s1d">Installation</h4>
 
         <p><code>doas</code> is included in the MidnightBSD base system, so no additional installation is required. 
-        However, you may need to enable it:</p>
-
-        <pre>
-# sysrc doas_enable=YES
-# service doas start
-</pre>
+        It is available as a command and does not require any service to be started.</p>
 
         <p>To verify that <code>doas</code> is available:</p>
-        <code>which doas</code>
+        <pre>
+$ which doas
+</pre>
         <p>This should return <code>/usr/bin/doas</code>.</p>
+
+        <p>If <code>doas</code> is not found, ensure that the base system is installed correctly. <code>doas</code> is part of 
+        the standard MidnightBSD installation.</p>
 
         <h4 id="s1e">Configuration File</h4>
 
@@ -185,7 +185,7 @@ permit :wheel as root cmd ifconfig
 
         <h5>Testing configuration</h5>
         <p>After editing the configuration file, test it by having the user attempt to run a permitted command:</p>
-        <code>$ doas service -e</code>
+        <code>$ doas ls /root</code>
         <p>The command should execute if the configuration is correct.</p>
 
         <h4 id="s1h">Security Considerations</h4>
@@ -215,7 +215,7 @@ permit :wheel as root cmd ifconfig
         <ul>
             <li>The user is not authorized in the <code>doas.conf</code> file</li>
             <li>The configuration file does not exist or has incorrect permissions</li>
-            <li>The <code>doas</code> service is not running</li>
+            <li>Syntax error in the configuration file</li>
         </ul>
         <p>Solution: Verify the configuration file exists, has correct permissions, and contains the appropriate rules.</p>
 
@@ -229,17 +229,16 @@ permit :wheel as root cmd ifconfig
         <p>You can test <code>doas</code> configuration by running commands as the target user:</p>
         <pre>
 $ su - john
-$ doas service -e
+$ doas whoami
 </pre>
 
         <p>Check that the configuration file syntax is correct and that the file permissions are set properly.</p>
 
         <h5>Verifying doas installation</h5>
-        <p>If <code>doas</code> is not working at all, verify it's installed and running:</p>
+        <p>If <code>doas</code> is not working at all, verify it's installed:</p>
         <pre>
 # which doas
-# service doas status
-# ps aux | grep doas
+# doas -V  # Check version
 </pre>
 
         <!--#include virtual="/disqus.html"-->
