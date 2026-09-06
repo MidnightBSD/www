@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <title>MidnightBSD Documentation - Backup Solutions</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/essence.css">
+    <link rel="canonical" href="https://www.midnightbsd.org/documentation/backups.html">
+		<meta property="og:title" content="MidnightBSD Documentation - Backup Solutions">
+    <meta property="og:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <meta property="og:url" content="https://www.midnightbsd.org/documentation/backups.html">
+    <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MidnightBSD Documentation - Backup Solutions">
+    <meta name="twitter:description" content="Comprehensive backup guide for MidnightBSD. Learn about dump/restore, rsync, cpdup, restic, tarsnap, and duopoly for reliable data protection.">
+    <meta name="twitter:image" content="https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png">
+</head>
+<body>
+<div id="globe">
+    <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+    <!--#include virtual="/menu.html"-->
+    <div class="clear"></div>
+    <div id="text">
+        <h2><img src="../images/oxygen/doc32.png" alt="" /> Backup Solutions</h2>
+        <div id="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#s1b">Introduction</a></li>
+                <li><a href="#s1c">Backup Strategy Basics</a></li>
+                <li><a href="#s1d">Built-in Tools</a>
+                    <ul>
+                        <li><a href="#s1d1">dump and restore</a></li>
+                        <li><a href="#s1d2">cpdup</a></li>
+                        <li><a href="#s1d3">rsync</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1e">Third-Party Tools via mports</a>
+                    <ul>
+                        <li><a href="#s1e1">Restic</a></li>
+                        <li><a href="#s1e2">Tarsnap</a></li>
+                        <li><a href="#s1e3">Duopoly</a></li>
+                        <li><a href="#s1e4">BorgBackup</a></li>
+                    </ul>
+                </li>
+                <li><a href="#s1f">Offsite Backup Strategies</a></li>
+                <li><a href="#s1g">Automating Backups</a></li>
+                <li><a href="#s1h">Backup Verification and Testing</a></li>
+                <li><a href="#s1i">Recovery Procedures</a></li>
+                <li><a href="index.html"><strong>Documentation</strong></a></li>
+            </ul>
+        </div>
+
+        <h3 id="s1a">Backup Solutions</h3>
+        <h4 id="s1b">Introduction</h4>
+
+        <p>Regular backups are essential for protecting your data from hardware failures, accidental deletions, 
+        or system corruption. MidnightBSD provides several built-in backup tools and supports many third-party 
+        solutions through mports. This guide covers various backup methods to help you implement a robust 
+        backup strategy tailored to your needs.</p>
+
+        <p>Backup solutions range from simple file copying to sophisticated, encrypted, deduplicated backups to 
+        remote servers. The right approach depends on your data volume, sensitivity, and recovery requirements.</p>
+
+        <h4 id="s1c">Backup Strategy Basics</h4>
+
+        <p><strong>Follow the 3-2-1 rule for critical data:</strong></p>
+        <ul>
+            <li><strong>3 copies</strong> - Keep at least three copies of your data</li>
+            <li><strong>2 different media</strong> - Store backups on at least two different types of storage (e.g., local disk + external drive)</li>
+            <li><strong>1 offsite</strong> - Keep at least one backup offsite (cloud storage, remote server, or physical media stored elsewhere)</li>
+        </ul>
+
+        <p><strong>Consider these factors when choosing backup tools:</strong></p>
+        <ul>
+            <li><strong>Data volume</strong> - Large datasets may require efficient deduplication</li>
+            <li><strong>Backup frequency</strong> - Daily, hourly, or continuous backups</li>
+            <li><strong>Retention period</strong> - How long backups need to be kept</li>
+            <li><strong>Security requirements</strong> - Need for encryption and access controls</li>
+            <li><strong>Recovery speed</strong> - Time to restore individual files vs. entire systems</li>
+            <li><strong>Storage location</strong> - Local, network, or cloud storage</li>
+        </ul>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-format="fluid"
+             data-ad-layout="in-article"
+             data-ad-client="ca-pub-1321195614665440"
+             data-ad-slot="7690332509"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <h4 id="s1d">Built-in Tools</h4>
+
+        <h5 id="s1d1">dump and restore</h5>
+        <p>The <code>dump</code> and <code>restore</code> utilities are traditional Unix tools for backing up 
+        entire file systems. They are included in the MidnightBSD base system and work at the file system level.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Supports full and incremental backups</li>
+            <li>Preserves file metadata (permissions, ownership, timestamps)</li>
+            <li>Works with UFS file systems</li>
+            <li>Can backup live file systems</li>
+            <li>Efficient for large file systems</li>
+        </ul>
+
+        <p><strong>Basic usage:</strong></p>
+        <pre>
+# Full backup of a file system
+# dump -0 -f backupfile.dump /dev/ada0s1a
+
+# Incremental backup (levels 1-9)
+# dump -1 -f backupfile.dump /dev/ada0s1a
+
+# Restore from backup
+# cd /destination
+# restore -r -f backupfile.dump
+</pre>
+
+        <p>For more details, see the <a href="dump.html">Dump & Restore documentation</a>.</p>
+
+        <h5 id="s1d2">cpdup</h5>
+        <p><code>cpdup</code> is a fast file copying utility designed for efficient directory synchronization. It's 
+        particularly useful for maintaining mirrors of file systems or creating backup copies with minimal 
+        overhead.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Fast incremental updates</li>
+            <li>Minimal memory usage</li>
+            <li>Preserves permissions and attributes</li>
+            <li>Supports network transfers</li>
+            <li>Handles large directories efficiently</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install cpdup</code>
+
+        <p><strong>Basic usage:</strong></p>
+        <pre>
+# Local backup
+cpdup /source/directory /backup/directory
+
+# Backup to remote server via SSH
+cpdup -v -x -s user@remotehost:/backup/directory /local/directory
+
+# Dry run (show what would be copied)
+cpdup -v -n /source /backup
+</pre>
+
+        <p><strong>Common options:</strong></p>
+        <ul>
+            <li><code>-v</code> - Verbose output</li>
+            <li><code>-x</code> - Cross-device copy (for different file systems)</li>
+            <li><code>-s</code> - Source is on remote host (via SSH)</li>
+            <li><code>-n</code> - Dry run (no actual copying)</li>
+            <li><code>-0</code> - Copy all files (ignore timestamps)</li>
+            <li><code>-u</code> - Update only (skip newer files)</li>
+        </ul>
+
+        <p><strong>Automated backup script with cpdup:</strong></p>
+        <pre>
+#!/bin/sh
+# Backup home directories to external drive
+BACKUP_SRC="/home"
+BACKUP_DEST="/mnt/backup/home"
+LOG_FILE="/var/log/cpdup_backup.log"
+
+# Ensure backup destination is mounted
+if ! mount | grep -q "$BACKUP_DEST"; then
+    mount /dev/da1s1 /mnt/backup
+    if [ $? -ne 0 ]; then
+        echo "Failed to mount backup drive" | logger
+        exit 1
+    fi
+fi
+
+# Run the backup
+echo "Starting cpdup backup: $(date)" >> "$LOG_FILE"
+cpdup -v -x "$BACKUP_SRC" "$BACKUP_DEST" >> "$LOG_FILE" 2>&1
+
+# Unmount backup drive
+umount /mnt/backup
+
+echo "Backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h5 id="s1d3">rsync</h5>
+        <p><code>rsync</code> is a versatile file synchronization tool that efficiently transfers and synchronizes 
+        files between directories, local drives, or remote servers. It's widely used for backups due to its 
+        efficiency and flexibility.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Delta transfer algorithm (only sends changed portions of files)</li>
+            <li>Preserves file attributes, permissions, and timestamps</li>
+            <li>Supports compression during transfer</li>
+            <li>Works over SSH for secure remote transfers</li>
+            <li>Can maintain hard links, symbolic links, and device files</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install rsync</code>
+
+        <p><strong>Basic usage:</strong></p>
+        <pre>
+# Local directory sync
+rsync -av /source/directory/ /backup/directory/
+
+# Remote backup via SSH
+rsync -av -e ssh /local/source/ user@remote:/backup/destination/
+
+# Dry run (show what would be transferred)
+rsync -avn /source/ /backup/
+
+# Compressed transfer
+rsync -avz /source/ remote:/backup/
+</pre>
+
+        <p><strong>Common options:</strong></p>
+        <ul>
+            <li><code>-a</code> - Archive mode (preserves permissions, ownership, timestamps)</li>
+            <li><code>-v</code> - Verbose output</li>
+            <li><code>-z</code> - Compress data during transfer</li>
+            <li><code>-P</code> - Show progress during transfer</li>
+            <li><code>--delete</code> - Delete files in destination that no longer exist in source</li>
+            <li><code>--dry-run</code> - Perform a trial run without transferring files</li>
+            <li><code>--exclude=PATTERN</code> - Exclude files matching pattern</li>
+        </ul>
+
+        <p><strong>Excluding files and directories:</strong></p>
+        <pre>
+# Exclude specific files
+rsync -av --exclude='*.tmp' --exclude='*.bak' /source/ /backup/
+
+# Exclude using a file
+rsync -av --exclude-from='/etc/rsync_exclude.txt' /source/ /backup/
+</pre>
+
+        <p><strong>Incremental backup with rsync:</strong></p>
+        <pre>
+#!/bin/sh
+# Incremental backup with date-stamped directories
+BACKUP_SRC="/home"
+BACKUP_DEST="/backup/home"
+DATE=$(date +%Y%m%d_%H%M%S)
+
+# Create date-stamped backup directory
+mkdir -p "${BACKUP_DEST}/${DATE}"
+
+# Run rsync with compression and progress
+rsync -avzP --delete "${BACKUP_SRC}/" "${BACKUP_DEST}/${DATE}/"
+
+# Create latest symlink for easy access
+rm -f "${BACKUP_DEST}/latest"
+ln -s "${BACKUP_DEST}/${DATE}" "${BACKUP_DEST}/latest"
+</pre>
+
+        <p><strong>Backup to external drive with rsync:</strong></p>
+        <pre>
+#!/bin/sh
+EXTERNAL_MOUNT="/mnt/external"
+BACKUP_SRC="/home"
+LOG_FILE="/var/log/rsync_backup.log"
+
+# Mount external drive
+mount /dev/da0s1 "$EXTERNAL_MOUNT"
+if [ $? -ne 0 ]; then
+    echo "Failed to mount external drive" | logger
+    exit 1
+fi
+
+# Run backup
+echo "Starting rsync backup: $(date)" >> "$LOG_FILE"
+rsync -av --delete --stats "$BACKUP_SRC/" "$EXTERNAL_MOUNT/backup/" >> "$LOG_FILE" 2>&1
+
+# Unmount external drive
+umount "$EXTERNAL_MOUNT"
+
+echo "Backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h4 id="s1e">Third-Party Tools via mports</h4>
+
+        <h5 id="s1e1">Restic</h5>
+        <p><code>restic</code> is a modern backup program that is fast, efficient, and secure. It supports 
+        deduplication, compression, and encrypted backups to various storage backends.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Client-side deduplication (reduces storage requirements)</li>
+            <li>Encrypted backups (data is encrypted before leaving your machine)</li>
+            <li>Supports multiple backends (local, SFTP, HTTP, Amazon S3, etc.)</li>
+            <li>Incremental backups (only stores changes)</li>
+            <li>Efficient snapshots and pruning of old backups</li>
+            <li>Cross-platform compatibility</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install restic</code>
+
+        <p><strong>Initializing a repository:</strong></p>
+        <pre>
+# Create a local repository
+restic -r /backup/restic-repo init
+
+# Create a repository on a remote server via SFTP
+restic -r sftp:user@remotehost:/backup/restic-repo init
+
+# Create a repository on Amazon S3
+restic -r s3:s3.amazonaws.com/bucket-name init
+</pre>
+
+        <p><strong>Basic backup and restore:</strong></p>
+        <pre>
+# Backup a directory
+restic -r /backup/restic-repo backup /home
+
+# List snapshots
+restic -r /backup/restic-repo snapshots
+
+# Restore latest snapshot to /restore
+restic -r /backup/restic-repo restore latest --target /restore
+
+# Mount a repository for browsing
+restic -r /backup/restic-repo mount /mnt/restic &
+</pre>
+
+        <p><strong>Automating with restic:</strong></p>
+        <pre>
+#!/bin/sh
+# Automated restic backup script
+REPO="/backup/restic-repo"
+BACKUP_DIRS="/home /etc /var"
+PASSWORD_FILE="/root/.restic-password"
+
+# Set environment variables for password
+export RESTIC_PASSWORD_FILE="$PASSWORD_FILE"
+
+# Run backup for each directory
+for dir in $BACKUP_DIRS; do
+    restic -r "$REPO" backup "$dir" --verbose
+    if [ $? -ne 0 ]; then
+        echo "Backup failed for $dir" | logger
+    fi
+done
+
+# Forget old snapshots (keep last 30 days)
+restic -r "$REPO" forget --keep-daily 30 --group-by paths,tags
+
+# Check repository integrity
+restic -r "$REPO" check --read-data-subset=10%
+</pre>
+
+        <p><strong>Backup to remote server:</strong></p>
+        <pre>
+# Backup to a remote server via SFTP
+restic -r sftp:user@backup-server:/backups/midnightbsd backup /home /etc
+
+# Set password via environment (or use password file)
+export RESTIC_PASSWORD="your-secure-password"
+restic -r sftp:user@backup-server:/backups/midnightbsd backup /home
+</pre>
+
+        <h5 id="s1e2">Tarsnap</h5>
+        <p><code>tarsnap</code> is a secure, efficient online backup service for Unix-like operating systems. It uses 
+        Amazon S3 for storage and provides client-side deduplication, compression, and encryption.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Secure encryption (all data encrypted before upload)</li>
+            <li>Deduplication (only changed data is uploaded)</li>
+            <li>Compression (reduces storage costs)</li>
+            <li>Cost-effective (pay only for what you store)</li>
+            <li>Command-line interface (easy to automate)</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install tarsnap</code>
+
+        <p><strong>Setup and configuration:</strong></p>
+        <pre>
+# Register and create account at https://www.tarsnap.com/
+# After registration, you'll receive an account key
+
+# Create configuration directory
+tarsnap-keygen --user your-email@example.com --machine mymidnightbsd
+
+# Store your key file securely
+mv your-email+my-midnightbsd.key /root/.tarsnap/keyfile
+chmod 600 /root/.tarsnap/keyfile
+</pre>
+
+        <p><strong>Basic usage:</strong></p>
+        <pre>
+# Create a backup archive
+# tarsnap -c -f backup-$(date +%Y%m%d) /etc /home /var
+
+# More efficient: use cache directory for deduplication
+tarsnap --cachedir /var/cache/tarsnap -c -f backup-$(date +%Y%m%d) /etc /home /var
+
+# List all archives
+tarsnap --list-archives
+
+# Restore files
+tarsnap -x -f backup-20250101 -C /restore etc/passwd
+
+# Delete old archives
+tarsnap -d -f backup-20241201
+</pre>
+
+        <p><strong>Automated backup script:</strong></p>
+        <pre>
+#!/bin/sh
+# Automated tarsnap backup
+CACHE_DIR="/var/cache/tarsnap"
+LOG_FILE="/var/log/tarsnap_backup.log"
+BACKUP_NAME="midnightbsd-$(date +%Y%m%d-%H%M%S)"
+
+# Create cache directory if it doesn't exist
+mkdir -p "$CACHE_DIR"
+
+# Run backup
+echo "Starting tarsnap backup: $(date)" >> "$LOG_FILE"
+tarsnap --cachedir "$CACHE_DIR" -c -f "$BACKUP_NAME" /etc /home /usr/local/etc >> "$LOG_FILE" 2>&1
+
+# List archives
+echo "Current archives:" >> "$LOG_FILE"
+tarsnap --list-archives >> "$LOG_FILE" 2>&1
+
+echo "Backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h5 id="s1e3">Duopoly</h5>
+        <p><code>duopoly</code> is a powerful backup tool that creates deduplicated, encrypted, and compressed 
+        archives. It's designed to be efficient and secure for both local and remote backups.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Deduplication at the block level</li>
+            <li>AES-256 encryption for data security</li>
+            <li>Compression using various algorithms</li>
+            <li>Supports local and remote storage</li>
+            <li>Incremental backups</li>
+            <li>Cross-platform compatibility</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install duopoly</code>
+
+        <p><strong>Creating your first repository:</strong></p>
+        <pre>
+# Create a new duopoly repository
+duopoly init /backup/duopoly-repo
+
+# For remote repositories (SSH)
+duopoly init user@remotehost:/backup/duopoly-repo
+</pre>
+
+        <p><strong>Backup and restore:</strong></p>
+        <pre>
+# Create a backup
+# duopoly backup /home /etc --repository /backup/duopoly-repo
+
+# Create backup with description
+duopoly backup /home /etc --repository /backup/duopoly-repo --description "Daily backup"
+
+# List all backups
+duopoly list --repository /backup/duopoly-repo
+
+# Restore a backup
+duopoly restore latest --repository /backup/duopoly-repo --target /restore
+
+# Restore specific backup
+duopoly restore backup-20250101 --repository /backup/duopoly-repo --target /restore
+</pre>
+
+        <p><strong>Encryption and security:</strong></p>
+        <pre>
+# Create encrypted repository with password
+duopoly init /backup/secure-repo --password-file /root/.duopoly-pass
+
+# Backup with encryption
+duopoly backup /home --repository /backup/secure-repo --password-file /root/.duopoly-pass
+</pre>
+
+        <p><strong>Automated backup with duopoly:</strong></p>
+        <pre>
+#!/bin/sh
+# Automated duopoly backup
+REPO="/backup/duopoly-repo"
+PASS_FILE="/root/.duopoly-pass"
+LOG_FILE="/var/log/duopoly_backup.log"
+
+# Run backup
+echo "Starting duopoly backup: $(date)" >> "$LOG_FILE"
+duopoly backup /home /etc /var --repository "$REPO" --password-file "$PASS_FILE" --description "Daily backup $(date +%Y%m%d)" >> "$LOG_FILE" 2>&1
+
+# Prune old backups (keep last 30 days)
+duopoly prune --repository "$REPO" --password-file "$PASS_FILE" --keep-daily 30 >> "$LOG_FILE" 2>&1
+
+# Verify repository
+duopoly check --repository "$REPO" --password-file "$PASS_FILE" >> "$LOG_FILE" 2>&1
+
+echo "Backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h5 id="s1e4">BorgBackup</h5>
+        <p><code>borg</code> is a deduplicating backup program that supports compression, authentication, and 
+        encryption. It's optimized for fast and efficient backups with powerful search and restore capabilities.</p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Space-efficient storage with deduplication</li>
+            <li>Optional compression (zstd, lz4, lzma, etc.)</li>
+            <li>Authentication and encryption</li>
+            <li>Fast and efficient</li>
+            <li>Mountable backups for easy browsing</li>
+            <li>Powerful search capabilities</li>
+        </ul>
+
+        <p><strong>Installation:</strong></p>
+        <code># mport install borgbackup</code>
+
+        <p><strong>Basic usage:</strong></p>
+        <pre>
+# Initialize a repository
+borg init --encryption=repokey /backup/borg-repo
+
+# Create a backup
+borg create --stats /backup/borg-repo::home-$(date +%Y%m%d) /home
+
+# List archives
+borg list /backup/borg-repo
+
+# Extract files from an archive
+borg extract /backup/borg-repo::home-20250101
+
+# Mount repository for browsing
+borg mount /backup/borg-repo /mnt/borg
+</pre>
+
+        <p><strong>Backup with encryption:</strong></p>
+        <pre>
+# Create encrypted repository
+borg init --encryption=keyfile /backup/borg-repo
+
+# Backup with passphrase
+BORG_PASSPHRASE="your-passphrase" borg create /backup/borg-repo::mybackup /home /etc
+
+# Use key file for encryption
+BORG_PASSCOMMAND="cat /root/.borg-passphrase" borg create /backup/borg-repo::mybackup /home
+</pre>
+
+        <p><strong>Automated borg backup:</strong></p>
+        <pre>
+#!/bin/sh
+# Automated borg backup
+REPO="/backup/borg-repo"
+PASS_FILE="/root/.borg-passphrase"
+LOG_FILE="/var/log/borg_backup.log"
+ARCHIVE_NAME="midnightbsd-{now:%Y-%m-%d_%H-%M-%S}"
+
+# Run backup
+echo "Starting borg backup: $(date)" >> "$LOG_FILE"
+BORG_PASSCOMMAND="cat $PASS_FILE" borg create --stats --progress \
+    "$REPO::$ARCHIVE_NAME" \
+    /home /etc /usr/local/etc >> "$LOG_FILE" 2>&1
+
+# Prune old archives (keep daily for 7 days, weekly for 4 weeks, monthly for 6 months)
+BORG_PASSCOMMAND="cat $PASS_FILE" borg prune --stats \
+    --keep-daily 7 --keep-weekly 4 --keep-monthly 6 \
+    "$REPO" >> "$LOG_FILE" 2>&1
+
+# Check repository integrity
+BORG_PASSCOMMAND="cat $PASS_FILE" borg check "$REPO" >> "$LOG_FILE" 2>&1
+
+echo "Backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h4 id="s1f">Offsite Backup Strategies</h4>
+
+        <p>Offsite backups are crucial for disaster recovery. Here are several approaches for backing up 
+        data to remote locations:</p>
+
+        <h5>SSH-based Backups</h5>
+        <p>Using SSH for secure remote backups is a common and reliable approach:</p>
+        <pre>
+# Using rsync over SSH
+rsync -av -e "ssh -p 2222" /home/user/ user@remote:/backup/home
+
+# Using cpdup over SSH
+cpdup -v -x -s user@remote:/backup/destination /local/source
+
+# Using tar over SSH
+tar czf - /home | ssh user@remote "cat > /backup/home-$(date +%Y%m%d).tar.gz"
+</pre>
+
+        <p><strong>SSH key-based authentication:</strong></p>
+        <pre>
+# Generate SSH key on backup server
+ssh-keygen -t ed25519 -f /root/.ssh/backup_key
+
+# Copy public key to remote server
+ssh-copy-id -i /root/.ssh/backup_key.pub user@remote
+
+# Use specific key for backup scripts
+rsync -av -e "ssh -i /root/.ssh/backup_key" /home user@remote:/backup
+</pre>
+
+        <h5>Cloud Storage Backups</h5>
+        <p>Many tools support cloud storage providers for offsite backups:</p>
+
+        <p><strong>Restic with cloud providers:</strong></p>
+        <pre>
+# Amazon S3
+restic -r s3:s3.amazonaws.com/bucket-name backup /home
+
+# Backblaze B2
+restic -r b2:bucket-name backup /home
+
+# Microsoft Azure
+restic -r azure:container-name backup /home
+
+# Google Cloud Storage
+restic -r gs:bucket-name backup /home
+</pre>
+
+        <p><strong>Configuration for cloud providers:</strong></p>
+        <pre>
+# Set environment variables for AWS S3
+AWS_ACCESS_KEY_ID="your-access-key"
+AWS_SECRET_ACCESS_KEY="your-secret-key"
+restic -r s3:s3.amazonaws.com/bucket-name backup /home
+
+# Or use configuration file
+cat > ~/.aws/credentials << EOF
+[default]
+aws_access_key_id = your-access-key
+aws_secret_access_key = your-secret-key
+EOF
+</pre>
+
+        <h5>Network Attached Storage (NAS)</h5>
+        <p>Using NAS devices for backups:</p>
+        <pre>
+# Mount NAS share
+mount -t nfs nas-server:/volume1/backups /mnt/nas
+
+# Backup using rsync
+rsync -av /home /mnt/nas/midnightbsd-backup
+
+# Unmount after backup
+umount /mnt/nas
+</pre>
+
+        <h5>External Hard Drives</h5>
+        <p>Rotating external drives provide a simple offsite solution:</p>
+        <pre>
+# List available disks
+dmesg | grep da
+
+# Mount external drive
+mount /dev/da0s1 /mnt/backup
+
+# Run backup
+rsync -av --delete /home /mnt/backup/home-$(date +%Y%m%d)
+
+# Unmount when done
+umount /mnt/backup
+</pre>
+
+        <p><strong>Automated external drive backup:</strong></p>
+        <pre>
+#!/bin/sh
+# Rotating drive backup script
+MOUNT_POINT="/mnt/backup"
+LOG_FILE="/var/log/external_backup.log"
+
+# Check for external drive
+if ! ls /dev/da*; then
+    echo "No external drive found" | logger
+    exit 1
+fi
+
+# Get the first external drive
+DRIVE=$(ls /dev/da* | head -1)
+
+# Create mount point and mount
+mkdir -p "$MOUNT_POINT"
+mount "$DRIVE" "$MOUNT_POINT"
+if [ $? -ne 0 ]; then
+    echo "Failed to mount $DRIVE" | logger
+    exit 1
+fi
+
+# Run backup
+echo "Starting external drive backup: $(date)" >> "$LOG_FILE"
+rsync -av --delete /home "$MOUNT_POINT/backup-$(date +%Y%m%d)" >> "$LOG_FILE" 2>&1
+
+# Sync and unmount
+sync
+umount "$MOUNT_POINT"
+
+echo "External backup completed: $(date)" >> "$LOG_FILE"
+</pre>
+
+        <h4 id="s1g">Automating Backups</h4>
+
+        <p>Automating backups ensures they happen regularly and consistently. Here are several approaches:</p>
+
+        <h5>Cron Jobs</h5>
+        <p>Use <code>cron</code> for scheduled backups:</p>
+        <pre>
+# Edit root's crontab
+crontab -e
+
+# Daily backup at 2:00 AM
+0 2 * * * /usr/local/bin/daily-backup.sh >> /var/log/daily-backup.log 2>&1
+
+# Weekly full backup on Sundays at 3:00 AM
+0 3 * * 0 /usr/local/bin/weekly-backup.sh >> /var/log/weekly-backup.log 2>&1
+
+# Monthly backup on 1st at 4:00 AM
+0 4 1 * * /usr/local/bin/monthly-backup.sh >> /var/log/monthly-backup.log 2>&1
+</pre>
+
+        <p><strong>Cron examples for different backup tools:</strong></p>
+        <pre>
+# Daily rsync backup
+0 2 * * * rsync -av --delete /home /mnt/backup/home >> /var/log/rsync.log 2>&1
+
+# Weekly restic backup
+0 3 * * 0 restic -r /backup/restic-repo backup /home /etc >> /var/log/restic.log 2>&1
+
+# Monthly tarsnap backup
+0 4 1 * * tarsnap -c -f monthly-$(date +%Y%m) /home /etc >> /var/log/tarsnap.log 2>&1
+</pre>
+
+        <h5>Systemd Timers (if available)</h5>
+        <p>For systems with systemd, timers can be used instead of cron:</p>
+        <pre>
+# Create a service file: /usr/local/etc/systemd/system/backup.service
+[Unit]
+Description=Daily Backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/daily-backup.sh
+User=root
+StandardOutput=journal
+StandardError=journal
+
+# Create a timer file: /usr/local/etc/systemd/system/backup.timer
+[Unit]
+Description=Daily Backup Timer
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+# Enable the timer
+# systemctl enable backup.timer
+# systemctl start backup.timer
+</pre>
+
+        <h5>Backup Wrapper Script</h5>
+        <p>A comprehensive backup wrapper script that handles multiple backup methods:</p>
+        <pre>
+#!/bin/sh
+# Comprehensive backup wrapper
+BACKUP_CONFIG="/etc/backup.conf"
+LOG_DIR="/var/log/backups"
+
+# Load configuration
+. "$BACKUP_CONFIG"
+
+# Create log directory
+mkdir -p "$LOG_DIR"
+
+# Function for logging
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "${LOG_DIR}/backup-$(date +%Y%m%d).log"
+}
+
+# Function to check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Run backups based on configuration
+log "Starting backup sequence"
+
+# If using restic
+if [ "$USE_RESTIC" = "yes" ] && command_exists restic; then
+    log "Running restic backup"
+    restic -r "$RESTIC_REPO" backup "$RESTIC_SOURCES" >> "${LOG_DIR}/restic.log" 2>&1
+    restic -r "$RESTIC_REPO" forget --keep-daily "$RESTIC_KEEP_DAILY" >> "${LOG_DIR}/restic.log" 2>&1
+fi
+
+# If using rsync
+if [ "$USE_RSYNC" = "yes" ] && command_exists rsync; then
+    log "Running rsync backup"
+    rsync -av --delete "$RSYNC_SOURCES" "$RSYNC_DEST" >> "${LOG_DIR}/rsync.log" 2>&1
+fi
+
+# If using cpdup
+if [ "$USE_CPDUP" = "yes" ] && command_exists cpdup; then
+    log "Running cpdup backup"
+    cpdup "$CPDUP_SOURCES" "$CPDUP_DEST" >> "${LOG_DIR}/cpdup.log" 2>&1
+fi
+
+log "Backup sequence completed"
+</pre>
+
+        <p><strong>Sample configuration file (/etc/backup.conf):</strong></p>
+        <pre>
+# Enable/disable different backup methods
+USE_RESTIC="yes"
+USE_RSYNC="yes"
+USE_CPDUP="no"
+
+# Restic configuration
+RESTIC_REPO="/backup/restic-repo"
+RESTIC_SOURCES="/home /etc /var"
+RESTIC_KEEP_DAILY=30
+
+# Rsync configuration
+RSYNC_SOURCES="/home"
+RSYNC_DEST="/mnt/backup/home"
+
+# Cpdup configuration
+CPDUP_SOURCES="/home"
+CPDUP_DEST="/mnt/backup/home"
+</pre>
+
+        <h5>Email Notifications</h5>
+        <p>Set up email notifications for backup success/failure:</p>
+        <pre>
+#!/bin/sh
+# Backup with email notifications
+LOG_FILE="/var/log/backup.log"
+EMAIL="admin@example.com"
+
+# Run backup
+rsync -av /home /backup/home >> "$LOG_FILE" 2>&1
+
+# Check if backup succeeded
+if [ $? -eq 0 ]; then
+    SUBJECT="Backup Success: $(date +%Y%m%d)"
+    echo "Backup completed successfully" | mail -s "$SUBJECT" "$EMAIL"
+else
+    SUBJECT="Backup Failed: $(date +%Y%m%d)"
+    echo "Backup failed. See $LOG_FILE for details" | mail -s "$SUBJECT" "$EMAIL"
+    cat "$LOG_FILE" | mail -s "Backup Log: $(date +%Y%m%d)" "$EMAIL"
+fi
+</pre>
+
+        <h4 id="s1h">Backup Verification and Testing</h4>
+
+        <p>Regular verification and testing of backups is crucial to ensure data can be restored when needed.</p>
+
+        <h5>Verifying Backup Integrity</h5>
+        <p>Most backup tools provide commands to verify repository integrity:</p>
+        <pre>
+# Restic repository check
+restic -r /backup/restic-repo check
+
+# Borg repository check
+borg check /backup/borg-repo
+
+# Duopoly repository check
+duopoly check --repository /backup/duopoly-repo
+
+# Tarsnap integrity check (list archives)
+tarsnap --list-archives
+</pre>
+
+        <h5>Testing Restores</h5>
+        <p>Regularly test restoring files to ensure your backups work:</p>
+        <pre>
+# Test restore with restic
+restic -r /backup/restic-repo restore latest --target /tmp/test-restore
+ls -la /tmp/test-restore
+rm -rf /tmp/test-restore
+
+# Test restore with borg
+borg extract /backup/borg-repo::latest /tmp/test-restore
+ls -la /tmp/test-restore
+rm -rf /tmp/test-restore
+
+# Test restore with rsync (verify files exist)
+rsync -av --dry-run /backup/home/ /tmp/test-restore/
+</pre>
+
+        <p><strong>Automated verification script:</strong></p>
+        <pre>
+#!/bin/sh
+# Backup verification script
+VERIFY_LOG="/var/log/backup-verify.log"
+TEST_DIR="/tmp/backup-verify-$(date +%Y%m%d)"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$VERIFY_LOG"
+}
+
+mkdir -p "$TEST_DIR"
+
+# Test restic restore
+if command -v restic >/dev/null 2>&1; then
+    log "Testing restic restore"
+    if restic -r /backup/restic-repo restore latest --target "$TEST_DIR/restic" >> "$VERIFY_LOG" 2>&1; then
+        log "Restic restore: SUCCESS"
+    else
+        log "Restic restore: FAILED"
+    fi
+fi
+
+# Test borg restore
+if command -v borg >/dev/null 2>&1; then
+    log "Testing borg restore"
+    if borg extract /backup/borg-repo::latest "$TEST_DIR/borg" >> "$VERIFY_LOG" 2>&1; then
+        log "Borg restore: SUCCESS"
+    else
+        log "Borg restore: FAILED"
+    fi
+fi
+
+# Clean up
+rm -rf "$TEST_DIR"
+log "Verification completed"
+</pre>
+
+        <h5>Backup Log Analysis</h5>
+        <p>Regularly review backup logs to catch issues early:</p>
+        <pre>
+# Check recent backup logs
+tail -n 50 /var/log/backup.log
+
+# Search for errors
+grep -i "error\|failed\|warning" /var/log/backup*.log
+
+# Check disk space usage
+du -sh /backup/*
+
+# Check when backups were last run
+ls -lt /var/log/backup*.log
+</pre>
+
+        <h4 id="s1i">Recovery Procedures</h4>
+
+        <p>Knowing how to restore data is just as important as creating backups. Here are recovery procedures 
+        for different scenarios:</p>
+
+        <h5>Single File Recovery</h5>
+        <p>Recovering individual files from various backup types:</p>
+        <pre>
+# From restic
+restic -r /backup/restic-repo mount /mnt/restic
+# Browse /mnt/restic to find your file, then copy it
+cp /mnt/restic/latest/home/user/important-file /home/user/
+umount /mnt/restic
+
+# From borg
+borg mount /backup/borg-repo /mnt/borg
+cp /mnt/borg/latest/home/user/document.txt /home/user/
+umount /mnt/borg
+
+# From dump/restore
+# Find the archive containing the file
+ls -la /backup/dump/
+# Mount dump archive and extract
+# This typically requires knowing which dump file contains the file
+
+# From rsync backups
+cp /backup/home/user/missing-file /home/user/
+</pre>
+
+        <h5>Directory Recovery</h5>
+        <p>Recovering entire directories:</p>
+        <pre>
+# Using restic
+restic -r /backup/restic-repo restore latest --target /restore --include /home/user
+
+# Using borg
+borg extract /backup/borg-repo::latest home/user /restore/
+
+# Using rsync
+rsync -av /backup/home/user/ /restore/user/
+
+# Using cpdup
+cpdup /backup/home/user /restore/user
+</pre>
+
+        <h5>Full System Recovery</h5>
+        <p>For complete system recovery, you'll need a recovery environment:</p>
+        <ol>
+            <li>Boot from MidnightBSD installation media or live CD</li>
+            <li>Mount your backup destination (external drive, network share, etc.)</li>
+            <li>Restore critical system files first (/etc, /root, etc.)</li>
+            <li>Restore user data</li>
+            <li>Reinstall any packages if needed</li>
+            <li>Verify system configuration</li>
+        </ol>
+
+        <p><strong>Full system restore using restic:</strong></p>
+        <pre>
+# Boot from live media
+# Mount backup repository (adjust for your setup)
+mount /dev/da0s1 /mnt
+
+# Restore system files
+restic -r /mnt/restic-repo restore latest --target / --host midnightbsd
+
+# For ZFS systems, restore to alternate location first
+restic -r /mnt/restic-repo restore latest --target /mnt/restored
+
+# Then manually handle ZFS pool imports and data restoration
+</pre>
+
+        <p><strong>Full system restore using dump:</strong></p>
+        <pre>
+# Boot from live media
+# Mount backup drive
+mount /dev/da0s1 /mnt
+
+# Restore each file system
+cd /mnt
+restore -r -f /mnt/dump/root.dump
+restore -r -f /mnt/dump/var.dump
+restore -r -f /mnt/dump/usr.dump
+restore -r -f /mnt/dump/home.dump
+</pre>
+
+        <p><strong>Disaster Recovery Checklist:</strong></p>
+        <ul>
+            <li>Verify backup media is accessible</li>
+            <li>Confirm backup passwords/keys are available</li>
+            <li>Test restore process in a non-production environment first</li>
+            <li>Have a spare system or recovery environment ready</li>
+            <li>Document your recovery procedures</li>
+            <li>Keep recovery documentation with your backup media</li>
+        </ul>
+
+        <p><strong>Recovery Documentation Template:</strong></p>
+        <pre>
+# System Recovery Documentation
+# System: midnightbsd-server
+# Last Updated: $(date)
+
+## Backup Locations
+- Local: /backup
+- Remote: backup-server:/backups/midnightbsd
+- Cloud: s3://my-backups/midnightbsd
+
+## Backup Tools Used
+- Primary: restic
+- Secondary: rsync
+- Configuration: /etc/backup.conf
+
+## Recovery Procedures
+1. Boot from MidnightBSD installation USB
+2. Mount backup repository: mount /dev/da0s1 /mnt
+3. Run: restic -r /mnt/restic-repo restore latest --target /restore
+4. Copy critical files: cp -R /restore/etc /etc
+5. Reboot and verify
+
+## Important Files to Restore First
+- /etc/rc.conf
+- /etc/fstab
+- /etc/ssh/sshd_config
+- /etc/passwd
+- /etc/group
+- /home/*/.ssh/authorized_keys
+
+## Contacts for Recovery Assistance
+- Admin: admin@example.com (555-1234)
+- Backup Provider: support@backup-service.com
+</pre>
+
+        <!--#include virtual="/disqus.html"-->
+    </div>
+    <!--#include virtual="/footer.html"-->
+</body>
+</html>
