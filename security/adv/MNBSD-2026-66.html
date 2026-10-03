@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-66 Multiple buffer overflows in ppp(8) multilink endpoint discriminator handling (CVE-2026-58095, CVE-2026-58096, CVE-2026-58097)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-66: Multiple buffer overflows in ppp(8) multilink endpoint discriminator handling (CVE-2026-58095, CVE-2026-58096, CVE-2026-58097)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> ppp</p>
+  <p><strong>Summary:</strong> Multiple buffer overflows in ppp(8) multilink endpoint discriminator handling (CVE-2026-58095, CVE-2026-58096, CVE-2026-58097)</p>
+</div>
+
+<h2>Description</h2>
+<p>ppp(8) is a user-space Point-to-Point Protocol implementation. It supports the Multilink PPP extension, which uses endpoint discriminators to identify individual links within a bundle. The ppp(8) executable is installed setuid root; unprivileged users must belong to the "network" group to run it.
+
+1. Undersized hex output buffer in mp_Enddisc() (CWE-787, CVE-2026-58095) - for the magic and unrecognised discriminator classes, mp_Enddisc() in usr.sbin/ppp/mp.c emits two hex digits per byte but clamped the length as though each byte took one character, so a discriminator longer than about half the 100 byte static buffer overflowed it.
+2. Missing minimum length check on TY_ENDDISC (CWE-787, CVE-2026-58096) - LcpDecodeConfig() in usr.sbin/ppp/lcp.c computed opt->hdr.len - 3 without enforcing the three byte minimum from RFC 1717. A two byte option made that -1, which reached both memcpy() and an address[-1] store.
+3. Unbounded copy in mp_SetEnddisc() (CWE-121, CVE-2026-58097) - the set enddisc psn command copied its argument into the fixed size endpoint address buffer with strcpy().
+
+A malicious PPP peer can exploit the first two issues to crash ppp(8) or potentially execute arbitrary code as root. A local user with access to the ppp(8) command interface can exploit the third similarly.
+
+Systems that do not use ppp(8) are not affected.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>ppp</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58095">https://www.cve.org/CVERecord?id=CVE-2026-58095</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58096">https://www.cve.org/CVERecord?id=CVE-2026-58096</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58097">https://www.cve.org/CVERecord?id=CVE-2026-58097</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-58095, CVE-2026-58096, CVE-2026-58097</p>
+<p class="dates">
+Published: August 26, 2026<br>
+Last Modified: August 26, 2026
+</p>
+</body>
+</html>

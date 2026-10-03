@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-65 Use-after-free via the sound(4) SNDCTL_DSP_SYNCSTART ioctl (CVE-2026-58091)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-65: Use-after-free via the sound(4) SNDCTL_DSP_SYNCSTART ioctl (CVE-2026-58091)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/sound</p>
+  <p><strong>Summary:</strong> Use-after-free via the sound(4) SNDCTL_DSP_SYNCSTART ioctl (CVE-2026-58091)</p>
+</div>
+
+<h2>Description</h2>
+<p>The sound(4) driver presents each audio device as a set of character device nodes such as /dev/dsp. The SNDCTL_DSP_SYNCSTART ioctl(2) starts playback or capture on all channels of a sync group in unison.
+
+dsp_oss_syncstart() in sys/dev/sound/pcm/dsp.c looks up a sync group by id and then tries to lock every member channel with CHN_TRYLOCK(). When a trylock failed it dropped the locks it had already taken and msleep()ed on the sync group list lock, then resumed walking the group's member list.
+
+Dropping that lock allows another thread to trigger or tear down the same sync group, freeing both the member entries and the group itself, so the resumed iteration walked freed memory.
+
+An unprivileged local user with access to two or more sound devices can race this to trigger a use-after-free in the kernel, which may be leveraged for privilege escalation.
+
+Systems with zero or one sound devices are not affected.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/sound</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58091">https://www.cve.org/CVERecord?id=CVE-2026-58091</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-58091</p>
+<p class="dates">
+Published: August 26, 2026<br>
+Last Modified: August 26, 2026
+</p>
+</body>
+</html>

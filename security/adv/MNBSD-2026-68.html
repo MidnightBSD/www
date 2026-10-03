@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-68 TOCTOU race in POSIX shared memory large page configuration (CVE-2026-58094)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-68: TOCTOU race in POSIX shared memory large page configuration (CVE-2026-58094)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/posixshm</p>
+  <p><strong>Summary:</strong> TOCTOU race in POSIX shared memory large page configuration (CVE-2026-58094)</p>
+</div>
+
+<h2>Description</h2>
+<p>The POSIX shared memory object module supports "largepage" objects, which are backed by physically contiguous memory and created with shm_create_largepage(3). The FIOSSHMLPGCNF ioctl(2) operation configures the page size for such an object, and is intended to be used immediately after creation, before any memory is allocated for it.
+
+The FIOSSHMLPGCNF handler in sys/kern/uipc_shm.c tested whether the object already had a page size configured, and validated the requested psind and allocation policy, before acquiring the object's rangelock; only the assignment ran under the lock.
+
+Two concurrent callers could therefore both observe an unconfigured object and set conflicting page sizes. The object could end up recorded as psind == 2 while only pagesizes[1] worth of pages had been populated for it.
+
+An unprivileged local user can exploit this race to leave a largepage shared memory object in an inconsistent state, which may be leveraged for privilege escalation.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/posixshm</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-58094">https://www.cve.org/CVERecord?id=CVE-2026-58094</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-58094</p>
+<p class="dates">
+Published: August 26, 2026<br>
+Last Modified: August 26, 2026
+</p>
+</body>
+</html>
