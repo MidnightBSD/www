@@ -33,23 +33,6 @@ table { text-align: left; }
 	padding: 0;
 }
 
-.menu ul li table {
-	margin: 0;
-	border-collapse: collapse;
-	font-size: 15pt;        /* this sets the base font size for our entire menu */
-}
-
-.drop {
-	display: block;
-	padding: 0 0.33em;	       /* this sets the l/r margins for our menu item */
-	margin: 0;
-	text-align: right;   /* this right alignment goes with the float:left below */
-	cursor: hand;           /* IE5 only knows about "hand", so set it both ways */
-}
-
-.drop span {        /* this simultaneously left and right aligns the text and */
-	float: left;       /* the >> in the drop-down menus which link to sub-menus */
-}
 
 /*======================== TOP LEVEL MENU DEFINITIONS ========================*/
 
@@ -89,26 +72,6 @@ table { text-align: left; }
 	background: transparent;         /* this sets our menu's effective "border" color */
 }
 
-.menu ul li:hover ul.leftbutton,
-.menu ul li a:hover ul.leftbutton {/* our first dropdown should not be skewed */
-	left: 0;
-}
-
-.menu ul li:hover ul.skinny,
-.menu ul li a:hover ul.skinny {             /* 2nd level skinny drop-down box */
-	width: 8.08333em;   /* with a 12px default font, this is 97px width (97/12) */
-}
-
-.menu ul.rightmenu li:hover ul,
-.menu ul.rightmenu li a:hover ul {    /* 2nd level neighborhood drop-down box */
-	left: auto;
-	right: 0;         /* nudge the right menu right to line up under the border */
-}
-
-* html .menu ul.rightmenu li a:hover ul {         /* IE5/6 needs a tweak here */
-	right: -1px;
-}
-
 .menu ul li:hover ul li a,
 .menu ul li a:hover ul li a {                   /* 2nd level unselected items */
 	border: 0;
@@ -124,13 +87,6 @@ table { text-align: left; }
 .menu ul li a:hover ul li a:hover {                /* 2nd level selected item */
 	color: #fff;
 	background: #1b3752;
-}
-
-.menu ul li:hover ul.skinny li a,
-.menu ul li a:hover ul.skinny li a,
-.menu ul li:hover ul.skinny li a:hover,
-.menu ul li a:hover ul.skinny li a:hover {     /* 2nd level un+selected items */
-	width: 5em;
 }
 
 }
