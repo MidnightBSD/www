@@ -160,11 +160,6 @@ hr {
     line-height: 18px;
 }
 
-#socialshare {
-    border: none;
-    width: 600px;
-}
-
 #text {
     line-height: 135%;
 }
@@ -282,20 +277,3 @@ td {
 
 }
 
-@media screen and (max-width: 600px) {
-    #socialshare {
-        display: none;
-    }
-
-    #logomobile {
-        visibility: visible;
-        display: inline;
-        max-width: 80%;
-        height: auto;
-    }
-
-    #mobilenoshow {
-        visibility: hidden;
-        display: none;
-    }
-}

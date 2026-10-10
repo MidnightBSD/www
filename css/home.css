@@ -5,19 +5,15 @@ blockquote { line-height: 130%; }
     font-weight: 400;
     font-style: normal;
     line-height: 1.3em; }
-#welcome h2 { text-align: center; margin: 0 25px 0 25px; , font-size: 16px; line-height: 2em; font-family: "Macondo", cursive;
+#welcome h2 { text-align: center; margin: 0 25px 0 25px; font-size: 16px; line-height: 2em; font-family: "Macondo", cursive;
     font-weight: 400;
     font-style: normal; }
 
 #getbox { background: url("/images/getbox.png") no-repeat; width: 271px; height: 208px; text-align: center;
     color: #333; float: right; margin: -10px 0 0 0; }
 #getbox * { font-weight: normal; }
-#getbox h2, h3, h4 { margin: 0; padding: 0; }
-#getbox h2 a { text-decoration: none; font-size: 17pt; }
-#getbox h3 { font-size: 12pt; margin-bottom: 10px; }
-#gettext { margin-top: 10px; }
-#getbox * { font-weight: normal; }
 #getbox h2, h3, h4 { margin: 0; padding: 0; line-height: 1.2em; }
+#getbox h2 a { text-decoration: none; font-size: 17pt; }
 #getbox h3 { font-size: 12pt; margin-bottom: 10px; }
 #gettext { margin-top: 10px; }
 #getcd { width: 215px; height: 107px; }
@@ -32,17 +28,9 @@ blockquote { line-height: 130%; }
 
 #news, #tweets, #security { width: 300px; font-size: 90% }
 
-.macondo-regular {
-    font-family: "Macondo", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
-
-
 .date { font-style: italic; color: #808080; text-align: center; }
 .update { height: 3.8em; overflow: hidden; }
 
-#midnight { float: left; margin: 0 10px 0 0; border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 8pt; }
 #text ul li { font-size: 14px; }
 #text img { border: none; }
 
