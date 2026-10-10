@@ -109,7 +109,6 @@ a:active, a:hover {
     background-color: #1b3752;
     width: 928px;
     margin: 0 auto;
-    z-index: 4; /* So IE has "layout" */
     font-size: 10px;
 }
 
@@ -140,8 +139,7 @@ a:active, a:hover {
 }
 
 hr {
-    height: 1px; /* Normalize look for Opera */
-    color: #999;
+    height: 1px;
     background: #999;
     border: 0;
     width: 100%;
