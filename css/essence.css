@@ -2,11 +2,22 @@
 @import url("home.css");
 @import url("xtra.css");
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 html, body {
     /* Normalize browser defaults */
     margin: 0;
     padding: 0;
     height: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
 }
 
 body {
@@ -122,6 +133,7 @@ a:active, a:hover {
     margin: 0 auto;
     display: block;
     overflow: hidden; /* We don't want the text to show */
+    box-sizing: content-box;
 }
 
 .horiz {
@@ -182,6 +194,13 @@ table {
     margin: 0 auto;
     border: 1px solid #ccc;
     border-collapse: collapse;
+    max-width: 100%;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 th {
@@ -219,59 +238,79 @@ td {
 }
 
 @media screen and (max-width: 900px) {
-    html {
-        overflow-x: auto !important;
-    }
-
-    body {
-        overflow-x: auto !important;
+    html, body {
+        overflow-x: hidden;
     }
 
     #globe {
         width: 100%;
+        max-width: 100%;
         background: none;
+        overflow-x: hidden;
     }
 
     .horiz, .horiz blockquote {
-        width: 80%;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
     }
 
     #header h1 {
         width: 100%;
         margin: 0 auto;
-        font-size: 2em;
+        font-size: 1.5em;
         clear: both;
+        text-align: center;
+        background-color: #1b3752;
     }
 
     #header a {
         background: none;
         width: 100%;
-        height: 2.1em !important;
-        padding: 10px;
+        height: auto !important;
+        padding: 14px 10px;
         margin: 0 auto;
         display: block;
-        overflow: auto;
+        overflow: visible;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        box-sizing: border-box;
     }
 
     #footer {
         width: 100%;
+        padding: 0 16px;
     }
 
     #text {
-        width: 80%;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
     }
 
     #logomobile {
-          visibility: visible;
-          display: inline;
-          max-width: 80%;
-          height: auto;
-      }
+        visibility: visible;
+        display: inline;
+        max-width: 80%;
+        height: auto;
+    }
 
-      #mobilenoshow {
-          visibility: hidden;
-          display: none;
-      }
+    #mobilenoshow {
+        visibility: hidden;
+        display: none;
+    }
 
+    table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    pre {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
 }
 
