@@ -26,7 +26,8 @@ blockquote { line-height: 130%; }
 #gravity h2 a { color: #333; text-decoration: none; }
 #gravity h2 a:hover { color: #666; }
 
-#news, #tweets, #security { width: 300px; font-size: 90% }
+#news, #security { width: 285px; font-size: 90%; }
+#tweets { width: 290px; font-size: 90%; }
 
 .date { font-style: italic; color: #808080; text-align: center; }
 .update { height: 3.8em; overflow: hidden; }
