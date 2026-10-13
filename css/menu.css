@@ -1,8 +1,6 @@
 /*====== GLOBAL OVERRIDES FOR MAJOR ITEMS AND DIFFERING BROWSER DEFAULTS =====*/
 table { text-align: left; }
 
-@media screen and (min-width: 900px) {
-
 .menu-toggle,
 .menu-toggle-label {
 	display: none !important;
@@ -11,6 +9,8 @@ table { text-align: left; }
 .menu-nav-items {
 	display: block;
 }
+
+@media screen and (min-width: 901px) {
 
  /*========================= TOP OF THE MENU CASCADE =========================*/
 
@@ -100,8 +100,8 @@ table { text-align: left; }
 
 }
 
-/*========================= MOBILE MENU (< 900px) =========================*/
-@media screen and (max-width: 899px) {
+/*========================= MOBILE MENU (<= 900px) =========================*/
+@media screen and (max-width: 900px) {
 	.menu {
 		width: 100%;
 		margin: 0 0 15px 0;
@@ -111,11 +111,11 @@ table { text-align: left; }
 	}
 
 	.menu-toggle {
-		display: none;
+		display: none !important;
 	}
 
 	.menu-toggle-label {
-		display: block;
+		display: block !important;
 		background-color: #0e1d2c;
 		color: #ffffff;
 		padding: 12px 16px;
