@@ -35,24 +35,78 @@ blockquote { line-height: 130%; }
 #text img { border: none; }
 
 @media screen and (max-width: 900px) {
-    #tweets, #getbox, #gettext, #getcd {
+    #getcd {
         display: none;
     }
 
     #welcomebox {
         width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        padding: 0 10px;
     }
 
     #welcome {
         width: 100%;
+        max-width: 100%;
+        float: none;
+    }
+
+    #getbox {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        float: none;
+        background: #f2fbff;
+        border: 2px solid #dff2fb;
+        border-radius: 6px;
+        padding: 16px;
+        margin: 15px 0;
+        text-align: center;
+        height: auto;
+    }
+
+    #gettext {
+        margin-top: 0;
+    }
+
+    #gettext h3 {
+        font-size: 14px;
+        margin-bottom: 12px;
+        color: #1b3752;
+        font-weight: 600;
+    }
+
+    #gettext .my-button {
+        margin: 4px 6px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #gravity {
         width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 0;
     }
 
-    #news, #security {
-        width: 45%;
+    #gravity div {
+        float: none;
     }
 
+    #news, #security, #tweets {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 0 20px 0;
+        padding: 0;
+        float: none;
+        display: block;
+        font-size: 100%;
+    }
+
+    #tweets {
+        text-align: center;
+    }
 }
