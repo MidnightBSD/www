@@ -17,111 +17,56 @@
     .dates { font-style: italic; }
     ul { padding-left: 20px; }
 </style>
-  <script type="application/ld+json">
-  {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "MidnightBSD Advisory: MNBSD-2026-78 Removal of trust in emSign root certificates",
-  "description": "Removal of trust in emSign root certificates",
-  "identifier": "MNBSD-2026-78",
-  "author": {
-    "@type": "Organization",
-    "name": "MidnightBSD Project",
-    "url": "https://www.midnightbsd.org/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "MidnightBSD Project",
-    "url": "https://www.midnightbsd.org/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.midnightbsd.org/art/logo/MidnightBSDLogo128x128.png"
-    }
-  },
-  "mainEntityOfPage": "https://www.midnightbsd.org/security/adv/MNBSD-2026-78.html",
-  "datePublished": "2026-10-20",
-  "dateModified": "2026-10-20",
-  "about": {
-    "@type": "SoftwareApplication",
-    "name": "caroot",
-    "operatingSystem": "MidnightBSD"
-  }
-}
-  </script>
 </head>
 <body>
 <h1>MNBSD-2026-78: Removal of trust in emSign root certificates</h1>
 
 <div class="summary">
   <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
-  <p><strong>Affected Package:</strong> caroot (base system), ca_root_nss, nss</p>
+  <p><strong>Affected Package:</strong> caroot</p>
   <p><strong>Summary:</strong> Removal of trust in emSign root certificates</p>
 </div>
 
 <h2>Description</h2>
-<p>The base system ships a set of trusted root certificates in /usr/share/certs/trusted, generated from the Mozilla NSS root store. certctl(8) links them into /etc/ssl/certs, which base OpenSSL and the applications built on it use to verify TLS server certificates. The security/ca_root_nss mport installs the same root store as a single bundle in /usr/local/share/certs/ca-root-nss.crt, which /etc/ssl/cert.pem points to, and the security/nss mport carries it in libnssckbi.so for applications that use NSS.
+<p>The base system ships a set of trusted root certificates in /usr/share/certs/trusted, generated from the Mozilla NSS root store. certctl(8) links them into /etc/ssl/certs, which base OpenSSL and the applications built on it use to verify TLS server certificates.
 
-On 20 October 2026 Mozilla released NSS 3.131.1, which removes trust in three roots operated by emSign:</p>
-<ul>
-<li>emSign Root CA - C1 (Mozilla bug 2083709)</li>
-<li>emSign ECC Root CA - C3 (Mozilla bug 2083709)</li>
-<li>emSign ECC Root CA - G3 (Mozilla bug 2084101)</li>
-</ul>
-<p>According to Mozilla, the G3 removal responds to a recent security incident that affected some intermediate certificates issued under that root. Firefox clients were protected through a OneCRL update delivered on 19 October 2026; the NSS release protects consumers of the root store that do not receive revocation information or cannot block individual intermediate certificates. MidnightBSD's base system and its OpenSSL-based applications are in that position.
+On 20 October 2026 Mozilla released NSS 3.131.1, which removes trust in three roots operated by emSign:
+
+- emSign Root CA - C1 (Mozilla bug 2083709)
+- emSign ECC Root CA - C3 (Mozilla bug 2083709)
+- emSign ECC Root CA - G3 (Mozilla bug 2084101)
+
+According to Mozilla, the G3 removal responds to a recent security incident that affected some intermediate certificates issued under that root. Firefox clients were protected through a OneCRL update delivered on 19 October 2026. Consumers of the root store that do not receive revocation information or cannot block individual intermediates, which includes the MidnightBSD base system, are protected only by removing the roots.
 
 A system that still trusts these roots accepts TLS server certificates issued under them, including certificates issued from the affected intermediates.
 
-The base system trust store has been regenerated from NSS 3.131.1 on current (master), stable/4.1 and stable/4.0. emSign Root CA - C1 and emSign ECC Root CA - C3 are removed. emSign ECC Root CA - G3 is moved to /usr/share/certs/blacklisted, so certctl(8) refuses it even when a copy is present in another trust directory. emSign Root CA - G1 is not affected and remains trusted.
+Copy the three certificates into the local blacklist directory and rehash. Copy rather than link, because a later base update removes the originals:
 
-The regeneration also brings the base store up to date with other changes in the NSS root store since the previous update. It adds the SECOM TLS RSA and ECC Root CA 2024 and Telia RSA and EC TLS Root CA v3 roots, and stops trusting Atos TrustedRoot 2011, SecureSign Root CA12 and ePKI Root Certification Authority for TLS.
-
-security/ca_root_nss and security/nss have been updated to 3.131.1. NSS 3.131.1 requires NSPR 4.39, which devel/nspr already provides.
-</p>
-
-<h2>Affected Versions</h2>
-<h3>caroot</h3><ul></ul><p>Specific versions:</p><ul><li>4.0 (stable/4.0) before a8c784f07f</li><li>4.1 (stable/4.1) before a6a1105cf5</li><li>current (master) before 41f3493099</li></ul>
-<h3>ca_root_nss</h3><ul></ul><p>Specific versions:</p><ul><li>before 3.131.1</li></ul>
-<h3>nss</h3><ul></ul><p>Specific versions:</p><ul><li>before 3.131.1</li></ul>
-
-<h2>Recommendations</h2>
-<p>Upgrade the base system to a revision that includes the fix, rebuild and install world, and then remove the obsolete certificate files and rebuild the trust store links:</p>
-<pre>
-cd /usr/src
-make buildworld &amp;&amp; make installworld
-make delete-old
-certctl rehash
-</pre>
-<p>installworld rehashes the trust store before delete-old runs, so the removed emSign C1 and C3 roots remain trusted until delete-old and certctl rehash have both been run.
-
-Update the mports:</p>
-<pre>
-mport update ca_root_nss
-mport update nss
-</pre>
-<p>As a workaround on a system that cannot be upgraded right away, copy the three certificates into the local blacklist directory and rehash. Copy the files rather than linking them, because a later base system update removes the originals.</p>
-<pre>
 mkdir -p /usr/local/etc/ssl/blacklisted
 cd /usr/share/certs/trusted
 install -m 444 emSign_Root_CA_-_C1.pem emSign_ECC_Root_CA_-_C3.pem \
     emSign_ECC_Root_CA_-_G3.pem /usr/local/etc/ssl/blacklisted/
 certctl rehash
-</pre>
-<p>Do not use certctl blacklist for this on MidnightBSD 4.x: the entries it creates are discarded by the next certctl rehash, which installworld and the ca_root_nss package both run. Check the result with certctl list and certctl blacklisted. This workaround covers base OpenSSL only; applications that read /etc/ssl/cert.pem or use NSS still need the ca_root_nss and nss updates.</p>
+
+Do not use certctl blacklist for this on MidnightBSD 4.x: the entries it creates are discarded by the next certctl rehash, which installworld and the ca_root_nss package both run. This workaround covers base OpenSSL only; applications that read /etc/ssl/cert.pem or use NSS still need the mport updates.
+
+The regeneration also brings the base store up to date with other NSS root store changes since the previous update. It adds the SECOM TLS RSA and ECC Root CA 2024 and Telia RSA and EC TLS Root CA v3 roots, and stops trusting Atos TrustedRoot 2011, SecureSign Root CA12 and ePKI Root Certification Authority for TLS. ObsoleteFiles.inc gains entries for the certificates that are no longer installed. The base tree still uses blacklisted/ where FreeBSD now uses untrusted/.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>caroot</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
 
 <h2>References</h2>
 <ul>
-<li><a href="https://groups.google.com/a/mozilla.org/g/dev-tech-crypto/c/vSxZxnOMMvs">https://groups.google.com/a/mozilla.org/g/dev-tech-crypto/c/vSxZxnOMMvs</a></li>
-<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=2083709">https://bugzilla.mozilla.org/show_bug.cgi?id=2083709</a></li>
-<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=2084101">https://bugzilla.mozilla.org/show_bug.cgi?id=2084101</a></li>
-<li><a href="https://github.com/MidnightBSD/src/commit/41f3493099129c6c3092040af609f12cd6d8e235">https://github.com/MidnightBSD/src/commit/41f3493099129c6c3092040af609f12cd6d8e235</a></li>
-<li><a href="https://github.com/MidnightBSD/src/commit/a6a1105cf5f52dd49737edc465b31d759c1f9b97">https://github.com/MidnightBSD/src/commit/a6a1105cf5f52dd49737edc465b31d759c1f9b97</a></li>
-<li><a href="https://github.com/MidnightBSD/src/commit/a8c784f07f5bfde7d3145681c85cf9ef319c58a1">https://github.com/MidnightBSD/src/commit/a8c784f07f5bfde7d3145681c85cf9ef319c58a1</a></li>
-<li><a href="https://github.com/MidnightBSD/mports/commit/3366471c63664e6781e09cbe8f7290e1e3b1033a">https://github.com/MidnightBSD/mports/commit/3366471c63664e6781e09cbe8f7290e1e3b1033a</a></li>
-<li><a href="https://github.com/MidnightBSD/mports/commit/75b7a63995e7ba48e88ee1416b0dc06c2811ec71">https://github.com/MidnightBSD/mports/commit/75b7a63995e7ba48e88ee1416b0dc06c2811ec71</a></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-113470">https://www.cve.org/CVERecord?id=CVE-2026-113470</a></li>
+<li><a href="https://github.com/MidnightBSD/src/security/advisories/GHSA-pj84-22f5-q69x">https://github.com/MidnightBSD/src/security/advisories/GHSA-pj84-22f5-q69x</a></li>
 </ul>
 
 <h2>Additional Information</h2>
-<p><strong>Aliases:</strong> None</p>
+<p><strong>Aliases:</strong> CVE-2026-113470</p>
 <p class="dates">
 Published: October 20, 2026<br>
 Last Modified: October 20, 2026
