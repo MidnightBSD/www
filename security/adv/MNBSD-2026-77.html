@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-77 Stack buffer overflow in tftp(1) and incomplete privilege drop in tftpd(8)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-77: Stack buffer overflow in tftp(1) and incomplete privilege drop in tftpd(8)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> tftpd</p>
+  <p><strong>Summary:</strong> Stack buffer overflow in tftp(1) and incomplete privilege drop in tftpd(8)</p>
+</div>
+
+<h2>Description</h2>
+<p>Two issues in the TFTP client and server shipped in the base system.
+
+tftp(1) stack buffer overflow. send_rrq() and send_wrq() in libexec/tftpd/tftp-io.c (shared by the client) copy the requested file name and transfer mode into a fixed-size packet buffer on the stack with strlcpy(), but never check the return value and advance the write pointer by the full string length. A file name longer than the remaining buffer space causes writes past the end of the buffer. The affected functions are only reachable from the tftp(1) client, including through a tftp:// URL passed on the command line, so this is a local crash or memory corruption in the invoking user's process rather than a remote issue against tftpd(8).
+
+tftpd(8) incomplete privilege drop. When started as root without -u, tftpd dropped supplemental groups but never called setgid(), so the effective group id remained that of the starting process (normally wheel). Files served or written by the daemon were accessed with group wheel privileges rather than nobody.
+
+Run tftpd(8) with -u <user> so it switches to a dedicated unprivileged user and group. There is no workaround for the tftp(1) client other than avoiding untrusted tftp:// URLs.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>tftp</h3><ul></ul><h3>tftpd</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://github.com/MidnightBSD/src/security/advisories/GHSA-m5f9-cg7p-w4rm">https://github.com/MidnightBSD/src/security/advisories/GHSA-m5f9-cg7p-w4rm</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> </p>
+<p class="dates">
+Published: October 20, 2026<br>
+Last Modified: October 20, 2026
+</p>
+</body>
+</html>
