@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-93 Privilege escalation via TCP urgent data on read-only mbufs (CVE-2026-127748)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-93: Privilege escalation via TCP urgent data on read-only mbufs (CVE-2026-127748)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/tcp</p>
+  <p><strong>Summary:</strong> Privilege escalation via TCP urgent data on read-only mbufs (CVE-2026-127748)</p>
+</div>
+
+<h2>Description</h2>
+<p>TCP urgent data (out-of-band data, MSG_OOB) is a single byte that the receiver can read separately from the normal data stream. When it arrives, the kernel removes it from the received data.
+
+tcp_pulloutofband() in sys/netinet/tcp_input.c removed the urgent byte by moving the rest of the mbuf's data over it, assuming the mbuf could be modified. That is not always the case. For example, data sent with sendfile(2) over a local connection is carried in mbufs that reference shared file pages.
+
+A local user can use urgent data to modify read-only memory, such as the cached pages of a file they can only read, and use this to obtain root privileges.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/tcp</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-127748">https://www.cve.org/CVERecord?id=CVE-2026-127748</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-127748</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>

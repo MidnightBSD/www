@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-85 Host crash via guest TSC_AUX writes in bhyve (CVE-2026-101319)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-85: Host crash via guest TSC_AUX writes in bhyve (CVE-2026-101319)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/vmm</p>
+  <p><strong>Summary:</strong> Host crash via guest TSC_AUX writes in bhyve (CVE-2026-101319)</p>
+</div>
+
+<h2>Description</h2>
+<p>vmm(4) is the kernel side of the bhyve(8) hypervisor. On Intel CPUs it emulates guest accesses to model-specific registers, including IA32_TSC_AUX, which the RDTSCP and RDPID instructions read.
+
+vmx_wrmsr() in sys/amd64/vmm/intel/vmx_msr.c stored a guest's write to IA32_TSC_AUX in the vCPU's MSR array without checking that bits 63:32, which are reserved, were clear. vmx_msr_guest_enter_tsc_aux() later loaded the stored value into the physical MSR before entering the guest.
+
+A guest with kernel privileges can make the host attempt to load an invalid value into IA32_TSC_AUX, which raises a general protection fault in the host kernel and crashes the host. Hosts running bhyve on AMD CPUs, and hosts that do not run bhyve, are not affected.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/vmm</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-101319">https://www.cve.org/CVERecord?id=CVE-2026-101319</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-101319</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>

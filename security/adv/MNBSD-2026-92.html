@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-92 Missing access check for O_CREAT directory opens (CVE-2026-127746)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-92: Missing access check for O_CREAT directory opens (CVE-2026-127746)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/vfs</p>
+  <p><strong>Summary:</strong> Missing access check for O_CREAT directory opens (CVE-2026-127746)</p>
+</div>
+
+<h2>Description</h2>
+<p>open(2) accepts O_CREAT together with O_DIRECTORY. Since open(2) cannot create directories, the combination opens an existing directory.
+
+vn_open_cred() in sys/kern/vfs_vnops.c handled O_CREAT with O_DIRECTORY as a plain lookup, but left O_CREAT set. vn_open_vnode() skips the access check for O_CREAT opens, assuming the file was just created by the caller, so the directory was opened without the read or search permission check.
+
+A local user can open a directory they have no read or search permission for, and read its entries.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/vfs</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-127746">https://www.cve.org/CVERecord?id=CVE-2026-127746</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-127746</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>

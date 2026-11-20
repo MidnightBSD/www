@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-87 Socket buffer corruption via 32-bit control messages (CVE-2026-101321)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-87: Socket buffer corruption via 32-bit control messages (CVE-2026-101321)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/freebsd32</p>
+  <p><strong>Summary:</strong> Socket buffer corruption via 32-bit control messages (CVE-2026-101321)</p>
+</div>
+
+<h2>Description</h2>
+<p>The freebsd32 compatibility layer lets 32-bit programs run on 64-bit MidnightBSD systems. When such a program receives control messages (ancillary data) from a socket, the kernel converts them from the native layout to the 32-bit layout.
+
+freebsd32_copy_msg_out() in sys/compat/freebsd32/freebsd32_misc.c converted each control message header by temporarily rewriting it in place. When a large control message is received with MSG_PEEK, the kernel returns it by referencing the mbuf cluster that is still queued in the socket buffer, so the non-atomic in-place rewrite modified data shared with the queue.
+
+A local user who can run 32-bit programs can corrupt the socket's message queue and use this to escalate privileges. Systems built without COMPAT_FREEBSD32 are not affected.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/freebsd32</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-101321">https://www.cve.org/CVERecord?id=CVE-2026-101321</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-101321</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>

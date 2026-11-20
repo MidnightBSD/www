@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-94 Setgid bit kept on tmpfs files created by nonmembers (CVE-2026-127749)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-94: Setgid bit kept on tmpfs files created by nonmembers (CVE-2026-127749)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/tmpfs</p>
+  <p><strong>Summary:</strong> Setgid bit kept on tmpfs files created by nonmembers (CVE-2026-127749)</p>
+</div>
+
+<h2>Description</h2>
+<p>tmpfs(5) is a memory-backed file system. As on other file systems, new files inherit the group of their parent directory.
+
+When a file was created on tmpfs with the setgid bit set, tmpfs_alloc_file() in sys/fs/tmpfs/tmpfs_subr.c kept the bit even when the creator was not a member of the file's group (inherited from the directory). UFS and chmod(2) on tmpfs clear the bit in that case.
+
+A local user can create a setgid file on tmpfs for a group they do not belong to, in a directory owned by that group, and use it to gain that group's privileges.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/tmpfs</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-127749">https://www.cve.org/CVERecord?id=CVE-2026-127749</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-127749</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>

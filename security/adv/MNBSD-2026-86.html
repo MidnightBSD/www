@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MidnightBSD Advisory: MNBSD-2026-86 Use after free when detaching kqueue timers (CVE-2026-101320)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+    h2 { color: #34495e; margin-top: 30px; }
+    h3 { color: #7f8c8d; }
+    .severity { font-weight: bold; }
+    .severity.critical { color: #c0392b; }
+    .severity.high { color: #e74c3c; }
+    .severity.medium { color: #f39c12; }
+    .severity.low { color: #16a085; }
+    .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .dates { font-style: italic; }
+    ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>MNBSD-2026-86: Use after free when detaching kqueue timers (CVE-2026-101320)</h1>
+
+<div class="summary">
+  <p><strong>Severity:</strong> <span class="severity unknown">Unknown</span></p>
+  <p><strong>Affected Package:</strong> kernel/kqueue</p>
+  <p><strong>Summary:</strong> Use after free when detaching kqueue timers (CVE-2026-101320)</p>
+</div>
+
+<h2>Description</h2>
+<p>kqueue(2) timers (EVFILT_TIMER) are implemented with callouts. When the process that owns a timer knote is stopped, its timers are kept on a per-process list and re-armed when the process continues.
+
+filt_timerdetach() in sys/kern/kern_event.c drained the timer's callout, removed the timer from the stopped-timers list, and repeated the drain if the callout had been re-armed in the meantime. Because softclock clears a callout's pending bit without holding the callout lock, a callout that fired during this check could be missed. It then ran after the timer data had been freed.
+
+A local user can exploit the resulting use after free to corrupt kernel memory and gain root privileges.
+
+The related FreeBSD issue in kqueue_fork_copy_list() (CVE-2026-127750, also part of FreeBSD-SA-26:85) does not affect MidnightBSD, which does not have that code.
+</p>
+
+<h2>Affected Versions</h2>
+<h3>kernel/kqueue</h3><ul></ul>
+
+<h2>Recommendations</h2>
+<p>No specific recommendations provided.</p>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-101320">https://www.cve.org/CVERecord?id=CVE-2026-101320</a></li>
+</ul>
+
+<h2>Additional Information</h2>
+<p><strong>Aliases:</strong> CVE-2026-101320</p>
+<p class="dates">
+Published: November 18, 2026<br>
+Last Modified: November 18, 2026
+</p>
+</body>
+</html>
