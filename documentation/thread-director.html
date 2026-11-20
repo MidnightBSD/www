@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Use MidnightBSD's Michaelangelo (sched_mic) hybrid-core scheduler, Intel Hardware Feedback Interface (hfi), and Intel Thread Director features.">
+        <meta property="og:title" content="MidnightBSD Documentation - MIC Scheduler &amp; Intel Thread Director">
+        <meta property="og:description" content="Use MidnightBSD's Michaelangelo (sched_mic) hybrid-core scheduler, Intel Hardware Feedback Interface (hfi), and Intel Thread Director features.">
+        <meta property="og:url" content="https://www.midnightbsd.org/documentation/thread-director.html">
+        <meta property="og:image" content="https://www.midnightbsd.org/apple-touch-icon.png">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary">
+        <title>MidnightBSD Documentation - MIC Scheduler &amp; Intel Thread Director</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="stylesheet" type="text/css" href="../css/essence.css">
+        <link rel="canonical" href="https://www.midnightbsd.org/documentation/thread-director.html">
+    </head>
+
+    <body>
+        <div id="globe">
+            <div id="header"><h1 title="MidnightBSD Home"><a href="../" title="MidnightBSD Home">MidnightBSD: The BSD For Everyone</a></h1></div>
+            <!--#include virtual="/menu.html"-->
+            <div class="clear"></div>
+            <div id="text">
+                <h2><img src="../images/oxygen/doc32.png" alt=""> MIC Scheduler &amp; Intel Thread Director</h2>
+                <div id="toc">
+                    <h3>Contents</h3>
+                    <ul>
+                        <li><a href="#s1b">Overview</a></li>
+                        <li><a href="#s1c">Core classes and the MIC scheduler</a></li>
+                        <li><a href="#s1d">Intel HFI and Thread Director (hfi(4))</a></li>
+                        <li><a href="#s1e">Checking status and monitoring</a></li>
+                        <li><a href="#s1f">Tuning and configuration</a></li>
+                        <li><a href="#s1g">Opting out or reverting to sched_ule(4)</a></li>
+                        <li><a href="#s1h">Testing on homogeneous hardware or VMs</a></li>
+                        <li><a href="#s1i">Further reading</a></li>
+                        <li><a href="index.html"><strong>Documentation</strong></a></li>
+                    </ul>
+                </div>
+
+                <h3 id="s1a">MIC Scheduler &amp; Intel Thread Director</h3>
+
+                <h4 id="s1b">Overview</h4>
+                <p>Starting in MidnightBSD 4.2-CURRENT, the <code>amd64</code> <code>GENERIC</code> kernel uses the <code>sched_mic(4)</code> (<strong>Michaelangelo</strong>) scheduler by default and includes the <code>hfi(4)</code> driver for Intel Hardware Feedback Interface (HFI) and Intel Thread Director (ITD).</p>
+                <p>These components work together through the <code>cpucap(9)</code> CPU capability layer:</p>
+                <ul>
+                    <li><strong><code>cpucap(9)</code></strong> collects static topology classes (at boot via CPUID) and dynamic per-CPU scores, publishing updates to the scheduler outside the hot path.</li>
+                    <li><strong><code>hfi(4)</code></strong> reads hardware performance and energy-efficiency tables from Intel hybrid processors and, when Thread Director is supported, enables per-thread instruction classification.</li>
+                    <li><strong><code>sched_mic(4)</code></strong> uses precomputed per-CPU cost and rank tables to steer threads to appropriate cores and swap running CPU-bound threads when their instruction mix favors a different core class.</li>
+                </ul>
+                <p>On homogeneous processors (AMD non-hybrid, non-hybrid Intel, or virtual machines without exposed HFI), <code>sched_mic(4)</code> behaves identically to <code>sched_ule(4)</code> and <code>hfi(4)</code> does not attach. The only visible difference is that <code>kern.sched.name</code> reports <code>MIC</code>.</p>
+
+                <h4 id="s1c">Core classes and the MIC scheduler</h4>
+                <p>On heterogeneous (hybrid) x86 processors, <code>sched_mic(4)</code> recognizes four priority tiers when placing threads:</p>
+                <ol>
+                    <li><strong>Performance cores (class 1):</strong> Intel P-cores and AMD 3D V-Cache CCD cores.</li>
+                    <li><strong>Efficiency cores (class 2):</strong> Intel E-cores, AMD compute-CCD cores, and AMD mobile &ldquo;C&rdquo; cores.</li>
+                    <li><strong>Secondary SMT threads:</strong> the second thread of a core whose sibling SMT thread is already busy.</li>
+                    <li><strong>Low-power efficiency cores (class 4):</strong> Intel LP-E cores, which are scheduled last.</li>
+                </ol>
+                <p>Core preference is a soft, tunable bias: real CPU load always decides first, and core class orders CPUs whose load is otherwise acceptable. When an idle CPU looks for queued work to steal, a CPU of the same or better class steals immediately once <code>kern.sched.steal_thresh</code> allows, whereas a worse-class CPU (or an idle SMT sibling of a busy core) waits until the thread has been queued for <code>kern.sched.steal_delay</code> ticks (about 4 ms by default). This prevents brief interrupt preemptions from bouncing threads off performance cores while allowing real backlogs to spill onto efficiency cores.</p>
+                <p>By default, <code>kern.sched.prefer_compute</code> is <code>1</code> (preferring Intel P-cores or AMD frequency/compute cores), except on AMD X3D parts where it defaults to <code>0</code> so threads prefer the large-cache 3D V-Cache CCD. Setting <code>kern.sched.prefer_compute=0</code> on a hybrid Intel system instructs the scheduler to prefer efficiency cores using their efficiency scores.</p>
+
+                <h4 id="s1d">Intel HFI and Thread Director (<code>hfi(4)</code>)</h4>
+                <p>Intel hybrid processors starting with the 12th generation Core (Alder Lake) provide the Hardware Feedback Interface. The <code>hfi(4)</code> driver allocates one table per physical package, and the processor writes per-core performance and energy-efficiency scores (0&ndash;255, where 0 indicates the processor recommends scheduling nothing on that core) into the table and raises a local APIC thermal interrupt when thermal or power limits change.</p>
+                <p>When <code>kern.sched.use_scores</code> is <code>1</code> (the default), <code>sched_mic(4)</code> derives placement costs directly from those scores using <code>cost = (m - s) * 384 / m</code> (where <code>s</code> is the CPU's score and <code>m</code> is the best score across all CPUs). CPUs within 1/16 of the best score (cost at most 24) rank alongside performance cores for work stealing and class swapping, so slightly lower-scoring P-cores remain peers while throttled P-cores rank with efficiency cores.</p>
+                <p>On processors that also support <strong>Intel Thread Director</strong> (<code>CPUID.06H:EAX[23]</code>), <code>hfi(4)</code> enables per-thread hardware classification (4 classes on current processors) by default:</p>
+                <ul>
+                    <li><strong>Per-tick classification:</strong> <code>sched_mic(4)</code> reads the running thread's hardware class once per statistics clock tick and places it using that class's cost table. A thread whose instruction mix runs nearly as well on an E-core as on a P-core is steered less strongly toward P-cores than an AVX-heavy thread.</li>
+                    <li><strong>Context switch isolation:</strong> On processors with <code>HRESET</code>, <code>sched_mic(4)</code> executes <code>HRESET</code> at every context switch so one thread's execution history is not attributed to the next thread.</li>
+                    <li><strong>Class-based thread swapping:</strong> Because placement only runs when a thread is queued, CPU-bound threads that rarely sleep could stay on the wrong core type. With <code>kern.sched.itd_swap=1</code> (the default), each pass of the periodic load balancer checks running threads and asks a pair to swap CPUs when doing so lowers the sum of their class costs by more than <code>kern.sched.itd_swap_margin</code> (default 32 load points). Stability (<code>kern.sched.itd_swap_stable</code>, default 8 ticks), cooldown (<code>kern.sched.itd_swap_cooldown</code>, default 2 seconds in <code>hz</code> ticks), and per-pass limits (<code>kern.sched.itd_swap_max</code>, default 2 pairs) prevent wavering threads from bouncing between cores.</li>
+                </ul>
+                <p>Note that once <code>hfi(4)</code> hands table memory to the processor, those pages must remain allocated for the rest of the boot. As a result, <code>hfi(4)</code> cannot be detached or unloaded once attached (returning <code>EBUSY</code>).</p>
+
+                <h4 id="s1e">Checking status and monitoring</h4>
+                <p>Use <code>sysctl(8)</code> to verify that the MIC scheduler, <code>hfi(4)</code>, and Thread Director are active and inspect live scores and classification counters.</p>
+                <p>Check the active scheduler and score mode:</p>
+                <pre><code>sysctl kern.sched.name kern.sched.use_scores kern.sched.scores_active</code></pre>
+                <p>Check hardware Thread Director support and <code>hfi(4)</code> attachment:</p>
+                <pre><code>sysctl hw.itd.supported hw.itd.hreset hw.itd.classes
+sysctl dev.hfi.0.enabled dev.hfi.0.itd dev.hfi.0.classes</code></pre>
+                <p>View the per-CPU HFI table summary (each entry shows <code>cpuN:row:perf/eff</code>, followed by additional <code>,perf/eff</code> pairs for each Thread Director class):</p>
+                <pre><code>sysctl dev.hfi.0.summary</code></pre>
+                <p>Inspect <code>cpucap(9)</code> providers, detected core classes (<code>1</code>=P, <code>2</code>=E, <code>4</code>=LP-E), and computed scheduler costs and ranks:</p>
+                <pre><code>sysctl kern.cpucap.providers kern.cpucap.class
+sysctl kern.sched.cpu_cost kern.sched.cpu_rank kern.sched.class_cost</code></pre>
+                <p>Monitor Thread Director classification and swap activity:</p>
+                <pre><code>sysctl kern.sched.itd_active kern.sched.itd_classes
+sysctl kern.sched.itd_reads kern.sched.itd_invalid kern.sched.itd_changes kern.sched.itd_hist
+sysctl kern.sched.itd_swaps kern.sched.itd_swap_follows kern.sched.itd_swap_skipped</code></pre>
+                <p>On some processors (such as 12th-gen Alder Lake mobile parts), the hardware writes the HFI table once at boot and may report invalid class reads while a thread is on an E-core; in that case <code>sched_mic(4)</code> preserves the thread's last valid class. Newer parts (such as Core Ultra processors) update the table dynamically at run time, which can be observed via rising <code>dev.hfi.0.pkg.N.interrupts</code> and <code>dev.hfi.0.pkg.N.updates</code> counters.</p>
+
+                <h4 id="s1f">Tuning and configuration</h4>
+                <p>The table below summarizes the primary loader tunables (set in <code>/boot/loader.conf</code>) and runtime sysctl variables (set with <code>sysctl(8)</code> or <code>/etc/sysctl.conf</code>):</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>hw.hfi.itd</code></td>
+                            <td>Loader tunable</td>
+                            <td><code>1</code></td>
+                            <td>Enable Intel Thread Director at <code>hfi(4)</code> attach when supported by hardware.</td>
+                        </tr>
+                        <tr>
+                            <td><code>hint.hfi.0.disabled</code></td>
+                            <td>Loader tunable</td>
+                            <td><code>0</code></td>
+                            <td>Set to <code>1</code> to prevent <code>hfi(4)</code> from attaching at boot.</td>
+                        </tr>
+                        <tr>
+                            <td><code>dev.hfi.0.delay_ms</code></td>
+                            <td>Tunable / sysctl</td>
+                            <td><code>100</code></td>
+                            <td>Debounce delay in milliseconds between an HFI table update and publishing to <code>cpucap(9)</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.use_scores</code></td>
+                            <td>Tunable / sysctl</td>
+                            <td><code>1</code></td>
+                            <td>Derive CPU placement costs from dynamic HFI scores instead of fixed class weights.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.itd</code></td>
+                            <td>Sysctl</td>
+                            <td><code>1</code></td>
+                            <td>Use per-thread Thread Director class tables when <code>hw.hfi.itd</code> and <code>use_scores</code> are active.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.itd_swap</code></td>
+                            <td>Sysctl</td>
+                            <td><code>1</code></td>
+                            <td>Allow the periodic balancer to swap running threads between core classes.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.prefer_compute</code></td>
+                            <td>Sysctl</td>
+                            <td><code>1</code> (<code>0</code> on AMD X3D)</td>
+                            <td>Set to <code>1</code> to prefer performance/compute cores, or <code>0</code> to prefer efficiency/3D V-Cache cores.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.steal_delay</code></td>
+                            <td>Sysctl</td>
+                            <td>~4 ms (in ticks)</td>
+                            <td>Ticks a thread must wait in a queue before an idle worse-class CPU may steal it.</td>
+                        </tr>
+                        <tr>
+                            <td><code>kern.sched.smt_busy_penalty</code></td>
+                            <td>Sysctl</td>
+                            <td><code>192</code></td>
+                            <td>Penalty for an idle SMT sibling of a busy core. Set to <code>0</code> to restore <code>sched_ule(4)</code> SMT behavior.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 id="s1g">Opting out or reverting to <code>sched_ule(4)</code></h4>
+                <p>If you want to disable Thread Director, score-based placement, or <code>hfi(4)</code> without rebuilding the kernel, add the appropriate option to <code>/boot/loader.conf</code> and reboot:</p>
+                <pre><code># Disable Thread Director only (keep HFI base scores)
+hw.hfi.itd="0"
+
+# Or disable score-based placement (fall back to static class weights)
+kern.sched.use_scores="0"
+
+# Or prevent hfi(4) from attaching entirely
+hint.hfi.0.disabled="1"</code></pre>
+                <p>At runtime, you can also toggle Thread Director placement or swapping without rebooting:</p>
+                <pre><code>doas sysctl kern.sched.itd=0
+doas sysctl kern.sched.itd_swap=0</code></pre>
+                <p>To build a custom kernel using the traditional <code>sched_ule(4)</code> scheduler instead of <code>sched_mic(4)</code> and <code>hfi(4)</code>, create a kernel configuration file that includes <code>GENERIC</code> and removes both:</p>
+                <pre><code>include GENERIC
+ident MYKERNEL
+
+nooptions SCHED_MIC
+nodevice hfi</code></pre>
+
+                <h4 id="s1h">Testing on homogeneous hardware or VMs</h4>
+                <p>Developers and testers can exercise hybrid placement and score tables on homogeneous systems or virtual machines using <code>cpucap(9)</code> and <code>sched_mic(4)</code> overrides:</p>
+                <ul>
+                    <li><strong><code>kern.cpucap.force_classes</code></strong> (boot-time tunable): accepts a comma-separated list of CPU classes (<code>1</code>=P, <code>2</code>=E, <code>4</code>=LP-E), such as <code>kern.cpucap.force_classes="1,1,1,1,2,2,2,2,4,4"</code>.</li>
+                    <li><strong><code>kern.cpucap.force_scores</code></strong> (sysctl): overrides per-CPU scores with comma-separated <code>perf/eff</code> pairs (e.g. <code>60/92,60/92,34/100,34/100</code>). Set to an empty string to clear.</li>
+                    <li><strong><code>kern.sched.mic.itd_force_class</code></strong> (sysctl): forces a Thread Director class (<code>-1</code> off, <code>0..3</code> for a specific class, or <code>8</code> to spread threads across classes by thread ID).</li>
+                </ul>
+
+                <h4 id="s1i">Further reading</h4>
+                <ul>
+                    <li>Manual pages: <code>sched_mic(4)</code>, <code>hfi(4)</code>, <code>cpucap(9)</code>, <code>sched_ule(4)</code>, <code>sysctl(8)</code>, <code>loader.conf(5)</code></li>
+                    <li><a href="processes.html">Processes and Daemons</a></li>
+                    <li><a href="laptop.html">Laptop Use and Power Management</a></li>
+                    <li><a href="kernel/modules.html">Kernel Modules</a></li>
+                </ul>
+
+                <!--#include virtual="/disqus.html"-->
+            </div>
+            <!--#include virtual="/footer.html"-->
+        </div>
+    </body>
+</html>
